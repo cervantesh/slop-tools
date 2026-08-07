@@ -109,9 +109,9 @@ de cada hallazgo excluye el número de línea, así que mover código no lo conv
 | `references/adversarial.md` | Cómo montar un panel de modelos que no se engañe a sí mismo |
 | `references/hallmark-extracto.md` | **hallmark, vaciado.** 58 gates clasificados, umbrales, géneros y arquetipos |
 | `references/sources.md` | Bibliografía anotada |
-| `data/rules.json` | Catálogo declarativo: 28 reglas con patrón, umbral, porqué y arreglo |
+| `data/rules.json` | Catálogo declarativo: 32 reglas con patrón, umbral, porqué y arreglo |
 | `scripts/slop-scan.mjs` | CLI y orquestación |
-| `scripts/lib/checks.mjs` | Las 21 comprobaciones que exigen ratios o distribuciones |
+| `scripts/lib/checks.mjs` | Las 26 comprobaciones que exigen ratios o distribuciones |
 | `scripts/lib/color.mjs` | OKLCH, resolución de tokens y puertas cromáticas |
 | `scripts/lib/structure.mjs` | Huellas estructurales: nav, footer, cromo falso |
 | `scripts/lib/baseline.mjs` | Trinquete y registro entre ejecuciones |
