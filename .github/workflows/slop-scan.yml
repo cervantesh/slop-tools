@@ -27,12 +27,14 @@ jobs:
           repository: cervantesh/slop-tools
           path: .slop-tools
 
+      # Trinquete: tolera lo que ya habia y falla solo ante deriva NUEVA.
+      # Genera .slop/baseline.json una vez con --write-baseline y comitealo.
       - name: Auditar
         run: |
           node .slop-tools/scripts/slop-scan.mjs ./src \
             --profile producto \
             --brand "TuMarca" \
-            --min-score 60
+            --since-baseline --fail-on-new-drift
 
       - name: Informe para el resumen del PR
         if: always()

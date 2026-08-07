@@ -48,6 +48,36 @@ Trátalas como indicios de segundo orden. Nunca construyas un veredicto sobre el
   clases de gradiente de Tailwind, pero no resuelve valores calculados en tiempo de
   ejecución.
 
+## Trampas al importar reglas de otras herramientas
+
+Detectadas verificando fuente por fuente. Todas son formas de copiar algo que parece un
+umbral y no lo es:
+
+- **Los valores de ejemplo del README no son los defaults.** En `stylelint-magic-numbers`,
+  `acceptedNumbers: [0, 0.25, 0.5, 1, 1.5, 2]` es un ejemplo; el código usa `|| []`, así que
+  de fábrica **todo literal numérico viola**.
+- **Los patrones de cadena pueden ir anclados por dentro.** `eslint-plugin-i18next` envuelve
+  todo patrón en `^…$`. Copiar `[A-Z_-]+` sin anclar casa con cualquier cadena que contenga
+  una mayúscula y silencia casi todos los hallazgos reales.
+- **Las listas de términos pueden no normalizarse.** En `anchor-ambiguous-text`, la opción
+  `words` del usuario no pasa por la normalización, así que una entrada con mayúsculas nunca
+  casa. Hay que pre-minusculizar.
+- **Las blocklists de color necesitan tabla de alias.** Buscar `#6366f1` falla ante la forma
+  mucho más común `bg-indigo-500`. Y el mismo valor puede ser la marca legítima de alguien:
+  la propia fuente que lo declara slop lista el índigo real de Linear. Por eso existe
+  `--brand-colors`.
+- **Expandir shorthands puede ser un fallback, no una regla.** En
+  `declaration-strict-value`, la expansión sólo actúa cuando no hay coincidencia exacta de
+  propiedad.
+
+## Las puntuaciones no son comparables entre versiones
+
+Añadir comprobaciones cambia el denominador. Un proyecto que sacaba 32 puede sacar 53 sin
+haber cambiado una línea, sólo porque el catálogo creció y pasa las nuevas.
+
+Para seguir la evolución de un proyecto usa el **trinquete de baseline**, que mide deriva
+nueva, no la puntuación absoluta.
+
 ## El error de razonamiento más frecuente
 
 **Confundir "mal hecho" con "hecho por máquina".**

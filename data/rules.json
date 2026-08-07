@@ -1,0 +1,243 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "descripcion": "Reglas declarativas de slop-tools. Las que son expresables como patron viven aqui; las que exigen ratios, distribuciones o resolucion de tokens estan en scripts/lib/checks.mjs y color.mjs.",
+    "esquema": "id, name, category, severity, applies(landing|producto|ambos), weight(1-3), scope(style|code|all), pattern, flags, threshold, why, fix, exempt(generos exentos), source",
+    "generos": ["editorial", "atmospheric", "modern-minimal", "playful"]
+  },
+  "rules": [
+    {
+      "id": "A1", "name": "Gradiente morado-azul", "category": "Color",
+      "severity": "high", "applies": "ambos", "weight": 3, "scope": "all",
+      "pattern": "\\b(from|via|to)-(indigo|violet|purple|fuchsia)-\\d{3}\\b|#(6366f1|8b5cf6|818cf8|a855f7|7c3aed)\\b",
+      "flags": "i", "threshold": 1,
+      "why": "Es la eleccion estadisticamente segura: pasa contraste y no exige teoria del color. El tell mas citado de todas las fuentes.",
+      "fix": "Elige un tono con intencion de marca. Si tu marca ES indigo, declara --brand-colors para exentarlo.",
+      "source": "vibecodekit, anti-ai-slop, sikora"
+    },
+    {
+      "id": "A4", "name": "Resplandor de acento tras el hero", "category": "Color",
+      "severity": "medium", "applies": "landing", "weight": 2, "scope": "style",
+      "pattern": "radial-gradient\\(\\s*(circle|ellipse)", "flags": "i", "threshold": 1,
+      "exempt": ["atmospheric"],
+      "why": "Firma de v0/Cursor: orbe de acento difuminado detras del contenido.",
+      "fix": "Si el fondo necesita profundidad, usa un escalon de luminancia en vez de un orbe.",
+      "source": "vibecodekit"
+    },
+    {
+      "id": "A5", "name": "Neon sobre oscuro con bordes que brillan", "category": "Color",
+      "severity": "medium", "applies": "ambos", "weight": 2, "scope": "style",
+      "pattern": "box-shadow:[^;]*0\\s+0\\s+\\d{2,}px[^;]*(#[0-9a-f]{6}|rgba)", "flags": "i", "threshold": 3,
+      "why": "Resplandor de color como sustituto de jerarquia.",
+      "fix": "Comunica elevacion con luminancia y borde, no con halo.",
+      "source": "vibecodekit"
+    },
+    {
+      "id": "B4", "name": "Etiquetas en mayusculas por todas partes", "category": "Tipografia",
+      "severity": "low", "applies": "ambos", "weight": 1, "scope": "style",
+      "pattern": "text-transform:\\s*uppercase", "flags": "i", "threshold": 6,
+      "why": "El eyebrow en mayusculas repetido en cada seccion es tic de plantilla.",
+      "fix": "Reserva las mayusculas para una funcion concreta, no para decorar cada bloque.",
+      "source": "vibecodekit"
+    },
+    {
+      "id": "C2", "name": "Franja lateral de color de 3-4px", "category": "Layout",
+      "severity": "medium", "applies": "ambos", "weight": 2, "scope": "style",
+      "pattern": "border-left:\\s*[34]px\\s+solid", "flags": "i", "threshold": 1,
+      "why": "Adorno sin esfuerzo para estados semanticos.",
+      "fix": "Usa fondo tintado o icono; el filete lateral no escala a mas de dos estados.",
+      "source": "vibecodekit, sikora"
+    },
+    {
+      "id": "D1", "name": "Enlaces a bancos de imagenes", "category": "Imagen",
+      "severity": "critical", "applies": "ambos", "weight": 3, "scope": "all",
+      "pattern": "(images\\.)?(unsplash|pexels|pixabay)\\.com", "flags": "i", "threshold": 1,
+      "why": "Assets nunca curados. Si el diseno cuenta con la fotografia para aportar calidez, sin ella queda geometria vacia.",
+      "fix": "Fotografia propia. Con seis fotos reales basta para empezar.",
+      "source": "925studios, sikora"
+    },
+    {
+      "id": "D5", "name": "Emojis donde correspondia un icono", "category": "Imagen",
+      "severity": "medium", "applies": "ambos", "weight": 2, "scope": "code",
+      "pattern": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}]", "flags": "u", "threshold": 5,
+      "why": "El emoji es el camino mas corto de generar a publicar.",
+      "fix": "Un set de iconos real, con trazo y rejilla consistentes.",
+      "source": "sikora"
+    },
+    {
+      "id": "E1", "name": "Abuso del em dash", "category": "Copy",
+      "severity": "medium", "applies": "ambos", "weight": 2, "scope": "code",
+      "pattern": "\\u2014", "flags": "", "threshold": 12,
+      "why": "Puntuacion correcta, pero la densidad anomala delata prosa generada. El umbral es 12, no 1.",
+      "fix": "Sustituye por punto o dos puntos donde la frase lo admita.",
+      "source": "sikora, 925studios"
+    },
+    {
+      "id": "E2", "name": "Comillas curvas sin tocar", "category": "Copy",
+      "severity": "low", "applies": "ambos", "weight": 1, "scope": "code",
+      "pattern": "[\\u2018\\u2019\\u201C\\u201D]", "flags": "", "threshold": 10,
+      "why": "Indican texto pegado que nadie reescribio.",
+      "fix": "Normaliza las comillas a la convencion del proyecto.",
+      "source": "sikora, 925studios"
+    },
+    {
+      "id": "E5", "name": "Densidad de palabras vacias", "category": "Copy",
+      "severity": "medium", "applies": "ambos", "weight": 2, "scope": "code",
+      "pattern": "\\b(seamless|innovador|innovative|leverage|potenciar|sinergia|synergy|end-to-end|revoluciona|delve into|all-in-one|todo en uno|de vanguardia|cutting-edge)\\b",
+      "flags": "i", "threshold": 3,
+      "why": "Vocabulario que no dice nada y funciona para cualquier empresa.",
+      "fix": "Sustituye por la afirmacion concreta que haya detras. Si no la hay, borra la frase.",
+      "source": "growthguys"
+    },
+    {
+      "id": "E6", "name": "Nombres de relleno", "category": "Copy",
+      "severity": "medium", "applies": "ambos", "weight": 2, "scope": "code",
+      "pattern": "\\b(John Smith|Jane Doe|Sarah Johnson|John Doe|Usuario Demo|[A-Z\\u00c1\\u00c9\\u00cd\\u00d3\\u00da][a-z\\u00e1\\u00e9\\u00ed\\u00f3\\u00fa]+ (Cliente|Usuario|Demo|Test|Admin|Ejemplo))\\b",
+      "flags": "", "threshold": 1,
+      "why": "Es la forma en que un modelo evita inventar un nombre real.",
+      "fix": "Datos de prueba con la textura del mercado objetivo.",
+      "source": "sikora, growthguys"
+    },
+    {
+      "id": "E7", "name": "Restos de andamiaje visibles al usuario", "category": "Copy",
+      "severity": "critical", "applies": "producto", "weight": 3, "scope": "code",
+      "pattern": "\\b(lorem ipsum|dummy|placeholder(?!\\s*=)|MVP|4242[\\s-]?4242|4111[\\s-]?1111|5555[\\s-]?5555|@example\\.com|\\.demo\\b)",
+      "flags": "i", "threshold": 1,
+      "why": "Senal inequivoca de que la salida nunca se reviso antes de ensenarla.",
+      "fix": "Barrido de contenido antes de cualquier demo.",
+      "source": "propia"
+    },
+    {
+      "id": "L2", "name": "Fechas y monedas escritas a mano", "category": "Localizacion",
+      "severity": "medium", "applies": "producto", "weight": 2, "scope": "code",
+      "pattern": "[\"'`][^\"'`]*(RD\\$|US\\$|\\u20ac|\\$)\\s?\\{?\\d|toLocale(Date|Time)?String\\(\\s*\\)",
+      "flags": "", "threshold": 1,
+      "why": "Concatenar el simbolo rompe en cuanto cambia el mercado.",
+      "fix": "Intl.NumberFormat e Intl.DateTimeFormat con locale explicito.",
+      "source": "QAwerk"
+    },
+
+    {
+      "id": "UX1", "name": "Rejilla de tres tarjetas iguales", "category": "Layout",
+      "severity": "high", "applies": "landing", "weight": 2, "scope": "all",
+      "pattern": "grid-cols-3\\b|grid-template-columns:\\s*repeat\\(\\s*3\\s*,", "flags": "i", "threshold": 1,
+      "why": "La media de toda landing page: tres features equiprobables.",
+      "fix": "Si una de las tres importa mas, que ocupe mas.",
+      "source": "ux-skill three-equal-card-grid"
+    },
+    {
+      "id": "UX2", "name": "Pastilla redondeada en todo", "category": "Layout",
+      "severity": "low", "applies": "ambos", "weight": 1, "scope": "all",
+      "pattern": "rounded-full\\b|border-radius:\\s*9999px", "flags": "i", "threshold": 8,
+      "why": "Radio maximo aplicado sin jerarquia.",
+      "fix": "El radio deberia senalar la funcion del elemento, no ser uniforme.",
+      "source": "ux-skill pill-rounded-full-everywhere"
+    },
+    {
+      "id": "UX3", "name": "Duracion 300ms por defecto", "category": "Motion",
+      "severity": "low", "applies": "ambos", "weight": 1, "scope": "all",
+      "pattern": "duration-300\\b|transition[^;]*\\b300ms\\b", "flags": "i", "threshold": 3,
+      "why": "El valor que sale de fabrica en todas las herramientas.",
+      "fix": "Elige la duracion por el recorrido del elemento, no por el default.",
+      "source": "ux-skill timing-300ms-default"
+    },
+    {
+      "id": "UX4", "name": "Curva de Material como unica", "category": "Motion",
+      "severity": "low", "applies": "ambos", "weight": 1, "scope": "style",
+      "pattern": "cubic-bezier\\(\\s*0?\\.4\\s*,\\s*0\\s*,\\s*0?\\.2\\s*,\\s*1\\s*\\)", "flags": "i", "threshold": 2,
+      "why": "La curva estandar de Material copiada sin decidir nada.",
+      "fix": "Una curva propia, o ninguna.",
+      "source": "ux-skill cubic-bezier-material-only"
+    },
+    {
+      "id": "UX5", "name": "z-index arbitrario 9999", "category": "Calidad",
+      "severity": "medium", "applies": "ambos", "weight": 1, "scope": "all",
+      "pattern": "z-index:\\s*9{3,}|z-\\[9{3,}\\]", "flags": "i", "threshold": 1,
+      "why": "Sintoma de que no hay escala de apilamiento.",
+      "fix": "Declara una escala de z-index con nombres.",
+      "source": "ux-skill arbitrary-z-index-9999"
+    },
+    {
+      "id": "UX6", "name": "console.log olvidado", "category": "Calidad",
+      "severity": "high", "applies": "producto", "weight": 2, "scope": "code",
+      "pattern": "console\\.(log|debug)\\s*\\(", "flags": "", "threshold": 3,
+      "why": "Resto de desarrollo que llega a produccion.",
+      "fix": "Elimina o enruta a un logger con niveles.",
+      "source": "ux-skill console-log-leak"
+    },
+    {
+      "id": "UX7", "name": "Estilos en linea", "category": "Calidad",
+      "severity": "medium", "applies": "ambos", "weight": 1, "scope": "code",
+      "pattern": "style=\\{\\{|style=\"[^\"]{20,}\"", "flags": "", "threshold": 8,
+      "why": "Estilo que escapa del sistema y no se puede auditar.",
+      "fix": "Mueve a clases o tokens.",
+      "source": "ux-skill inline-style-attribute"
+    },
+    {
+      "id": "UX8", "name": "Defaults de shadcn sin tocar", "category": "Layout",
+      "severity": "medium", "applies": "ambos", "weight": 2, "scope": "all",
+      "pattern": "rounded-2xl[^\"']*shadow-lg[^\"']*p-6|p-6[^\"']*rounded-2xl[^\"']*shadow-lg", "flags": "i", "threshold": 1,
+      "why": "La terna por defecto de la libreria, publicada tal cual.",
+      "fix": "Ajusta radio, sombra y padding a tu sistema.",
+      "source": "ux-skill shadcn-default-everywhere"
+    },
+    {
+      "id": "UX9", "name": "TODO o FIXME en el arbol", "category": "Calidad",
+      "severity": "low", "applies": "producto", "weight": 1, "scope": "code",
+      "pattern": "//\\s*(TODO|FIXME|HACK|XXX)\\b", "flags": "", "threshold": 5,
+      "why": "Trabajo pendiente que nadie recogio.",
+      "fix": "Convierte en incidencias o resuelve.",
+      "source": "ux-skill todo-fixme-comment"
+    },
+    {
+      "id": "UX10", "name": "Texto con gradiente arcoiris", "category": "Color",
+      "severity": "medium", "applies": "landing", "weight": 2, "scope": "all",
+      "pattern": "bg-clip-text|background-clip:\\s*text", "flags": "i", "threshold": 1,
+      "why": "Titular con gradiente como sustituto de direccion tipografica.",
+      "fix": "Que el titular funcione en un solo color.",
+      "source": "ux-skill gradient-text-rainbow"
+    },
+    {
+      "id": "UX11", "name": "Tamano de titular arbitrario", "category": "Tipografia",
+      "severity": "medium", "applies": "ambos", "weight": 1, "scope": "all",
+      "pattern": "text-\\[\\d{2,3}px\\]|font-size:\\s*(9[0-9]|1[0-9]{2})px", "flags": "i", "threshold": 1,
+      "why": "Valor fuera de escala elegido a ojo.",
+      "fix": "Escala modular declarada, con clamp() para fluidez.",
+      "source": "ux-skill hero-text-arbitrary-90px"
+    },
+    {
+      "id": "UX12", "name": "Pila de avatares superpuestos", "category": "Layout",
+      "severity": "low", "applies": "landing", "weight": 1, "scope": "all",
+      "pattern": "-space-x-\\d|margin-left:\\s*-\\d+px[^;]*;[^}]*border-radius:\\s*(50%|9999px)", "flags": "i", "threshold": 1,
+      "why": "Prueba social generica: cinco caras solapadas y un contador.",
+      "fix": "Nombres reales, o nada.",
+      "source": "ux-skill avatar-stack-overlapping"
+    },
+
+    {
+      "id": "AS1", "name": "transition: all", "category": "Motion",
+      "severity": "medium", "applies": "ambos", "weight": 2, "scope": "style",
+      "pattern": "transition:\\s*all\\b", "flags": "i", "threshold": 1,
+      "why": "Anima todo lo que cambie, incluido lo que no deberia. Es el idiom reflexivo por excelencia.",
+      "fix": "Enumera las propiedades que animas.",
+      "source": "anti-ai-slop"
+    },
+    {
+      "id": "AS2", "name": "Levantar la tarjeta en hover", "category": "Motion",
+      "severity": "low", "applies": "ambos", "weight": 1, "scope": "style",
+      "pattern": "hover[^{]*\\{[^}]*translateY\\(\\s*-[23]px", "flags": "i", "threshold": 2,
+      "why": "El micro-gesto por defecto de toda tarjeta generada.",
+      "fix": "Si el hover no comunica nada, quitalo.",
+      "source": "anti-ai-slop"
+    },
+    {
+      "id": "AS9", "name": "Monocultura de segundo orden", "category": "Color",
+      "severity": "high", "applies": "ambos", "weight": 3, "scope": "all",
+      "pattern": "Fraunces|Instrument Serif|Playfair Display|#(fdf6e3|faf3e0|f5ecd7|fef9f0)\\b|\\b(terracotta|terracota)\\b",
+      "flags": "i", "threshold": 2,
+      "why": "El kit al que converge el PRIMER ARREGLO: papel crema, serif display, acento terracota. Las salidas de emergencia tienen su propia media, y esta ya es reconocible.",
+      "fix": "Diverge en cuatro ejes a la vez: fondo, familia display, tono de acento y postura. Cambiar solo el color reproduce la monocultura.",
+      "source": "anti-ai-slop regla 9"
+    }
+  ]
+}

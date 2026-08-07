@@ -1,404 +1,234 @@
 #!/usr/bin/env node
-// slop-scan — auditor estático de patrones "AI slop" en diseño web y de producto.
-// Sin dependencias. Cuenta patrones nombrados por fuentes publicadas; no puntúa gusto.
-// Uso:  node slop-scan.mjs <ruta> [--brand "Nombre"] [--profile landing|producto|ambos]
-//                                 [--json] [--min-score N]
+// slop-scan — auditor estatico de patrones "AI slop" en diseno web y de producto.
+// Sin dependencias. Cuenta patrones nombrados por fuentes publicadas; no puntua gusto.
+//
+//   node slop-scan.mjs <ruta> [--brand "Marca"] [--brand-colors "#hex,#hex"]
+//                             [--profile landing|producto|ambos] [--genre <g>]
+//                             [--json] [--min-score N]
+//                             [--write-baseline] [--since-baseline] [--fail-on-new-drift]
+//                             [--log]
 
-import { readdirSync, readFileSync, statSync } from 'node:fs'
-import { join, extname, relative, resolve } from 'node:path'
+import { readFileSync } from 'node:fs'
+import { resolve, dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-/* ─────────────────────────── argumentos ─────────────────────────── */
+import { collect, esEstilo, esCodigo, all, esProsa, lineaDe } from './lib/util.mjs'
+import { recogerTokens, bloques } from './lib/color.mjs'
+import { programaticas } from './lib/checks.mjs'
+import { firmaMacro } from './lib/structure.mjs'
+import * as bl from './lib/baseline.mjs'
+
+const AQUI = dirname(fileURLToPath(import.meta.url))
+
+/* ── argumentos ── */
 
 const argv = process.argv.slice(2)
+const CON_VALOR = new Set(['--brand', '--brand-colors', '--profile', '--genre', '--min-score', '--rules'])
 const flag = n => { const i = argv.indexOf(n); return i >= 0 ? argv[i + 1] : undefined }
 const has = n => argv.includes(n)
 
-const ROOT = resolve(argv.find(a => !a.startsWith('--') &&
-  argv[argv.indexOf(a) - 1] !== '--brand' &&
-  argv[argv.indexOf(a) - 1] !== '--profile' &&
-  argv[argv.indexOf(a) - 1] !== '--min-score') || '.')
+const posicional = argv.find((a, i) => !a.startsWith('--') && !CON_VALOR.has(argv[i - 1]))
+const ROOT = resolve(posicional || '.')
 const BRAND = flag('--brand')
+const BRAND_COLORS = (flag('--brand-colors') || '').split(',').map(s => s.trim().toLowerCase()).filter(Boolean)
 const PROFILE = flag('--profile') || 'ambos'
+const GENRE = flag('--genre') || null
+const RULES_PATH = flag('--rules') || join(AQUI, '..', 'data', 'rules.json')
 const AS_JSON = has('--json')
 const MIN_SCORE = flag('--min-score') ? Number(flag('--min-score')) : null
+const WRITE_BASELINE = has('--write-baseline')
+const SINCE_BASELINE = has('--since-baseline')
+const FAIL_NEW = has('--fail-on-new-drift')
+const WRITE_LOG = has('--log')
 
-/* ─────────────────────────── recolección ─────────────────────────── */
-
-const EXT = new Set(['.css', '.scss', '.sass', '.less', '.html', '.htm',
-  '.jsx', '.tsx', '.js', '.ts', '.mjs', '.vue', '.svelte', '.astro'])
-const SKIP = new Set(['node_modules', '.git', 'dist', 'build', 'out', '.next',
-  'coverage', 'vendor', '.svelte-kit', '__snapshots__'])
-
-function collect(dir, acc = []) {
-  let entries
-  try { entries = readdirSync(dir) } catch { return acc }
-  for (const name of entries) {
-    if (SKIP.has(name)) continue
-    const p = join(dir, name)
-    let st
-    try { st = statSync(p) } catch { continue }
-    if (st.isDirectory()) collect(p, acc)
-    else if (EXT.has(extname(name)) && st.size < 4_000_000) {
-      let text
-      try { text = readFileSync(p, 'utf8') } catch { continue }
-      acc.push({ path: p, rel: relative(ROOT, p).replace(/\\/g, '/'), text, lines: text.split('\n') })
-    }
-  }
-  return acc
+if (FAIL_NEW && !SINCE_BASELINE) {
+  console.error('slop-scan: --fail-on-new-drift requiere --since-baseline')
+  process.exit(2)
 }
+
+/* ── contexto ── */
 
 const files = collect(ROOT)
-// Los archivos de marcado cuentan como fuente de estilos: HTML, Vue, Svelte y Astro
-// llevan CSS embebido en <style>, y omitirlos hace que las comprobaciones de estilo
-// pasen en vacío sobre proyectos perfectamente auditables.
-const styleFiles = files.filter(f => /\.(css|scss|sass|less|html?|vue|svelte|astro)$/.test(f.rel))
-const codeFiles = files.filter(f => /\.(jsx|tsx|js|ts|mjs|vue|svelte|astro|html?)$/.test(f.rel))
+const styleFiles = files.filter(esEstilo)
+const codeFiles = files.filter(esCodigo)
+const cssTexto = all(styleFiles)
+const tokens = recogerTokens(styleFiles)
+const blks = bloques(styleFiles)
+const ctx = { files, styleFiles, codeFiles, cssTexto, tokens, blks }
 
-/* ─────────────────────────── utilidades ─────────────────────────── */
+/* ── reglas declarativas ── */
 
-// Descarta lo que es código y no prosa dirigida a una persona. Sin esto, el detector
-// de copy duplicado señala expresiones JSX y la prueba del cambio de nombre se llena
-// de ruido.
-function esProsa(s) {
-  if (!s || !/\s/.test(s)) return false
-  if (!/[a-záéíóúñ]{3}/i.test(s)) return false
-  if (/[{}<>=;()[\]|]|=>|\$\{|::|\/\//.test(s)) return false
-  if (/^[\w./-]+$/.test(s)) return false
-  if (/^(https?:|data:|\.\/|\/)/.test(s)) return false
-  return true
-}
+let CATALOGO = { rules: [] }
+try { CATALOGO = JSON.parse(readFileSync(RULES_PATH, 'utf8')) }
+catch (e) { console.error(`slop-scan: no se pudo leer el catalogo de reglas (${RULES_PATH}): ${e.message}`); process.exit(2) }
 
-// Busca un patrón y devuelve las coincidencias con su ubicación.
-function find(pattern, pool = files, cap = 8) {
-  const out = []
-  let total = 0
+const marcaPermitida = linea => BRAND_COLORS.some(c => linea.toLowerCase().includes(c))
+
+function correrDeclarativa(regla) {
+  const pool = regla.scope === 'style' ? styleFiles : regla.scope === 'code' ? codeFiles : files
+  const re = new RegExp(regla.pattern, (regla.flags || '') + 'g')
+  const samples = []
+  let total = 0, exentas = 0
   for (const f of pool) {
     for (let i = 0; i < f.lines.length; i++) {
-      const m = f.lines[i].match(pattern)
-      if (m) {
-        total++
-        if (out.length < cap) out.push({ file: f.rel, line: i + 1, text: f.lines[i].trim().slice(0, 120) })
+      re.lastIndex = 0
+      const m = re.exec(f.lines[i])
+      if (!m) continue
+      if (marcaPermitida(f.lines[i])) { exentas++; continue }
+      total++
+      if (samples.length < 5) {
+        // Se muestra el fragmento que caso, no el prefijo de la linea: en lineas
+        // largas el prefijo esconde justo la evidencia.
+        const l = f.lines[i]
+        const ini = Math.max(0, m.index - 32)
+        const frag = (ini > 0 ? '…' : '') + l.slice(ini, m.index + m[0].length + 32).trim() + (m.index + m[0].length + 32 < l.length ? '…' : '')
+        samples.push({ file: f.rel, line: i + 1, text: frag.slice(0, 120), match: m[0].slice(0, 40) })
       }
     }
   }
-  return { total, samples: out }
-}
-
-const all = pool => pool.map(f => f.text).join('\n')
-
-/* ─────────────────────────── comprobaciones ─────────────────────────── */
-// kind: 'count' usa umbral; 'flag' es presencia/ausencia.
-
-const CHECKS = [
-
-  { id: 'A1', cat: 'Color', weight: 3, applies: 'ambos',
-    title: 'Gradiente morado→azul',
-    run() {
-      const tw = find(/\b(from|via|to)-(indigo|violet|purple|fuchsia)-\d{3}\b/, codeFiles)
-      const css = find(/(linear|radial)-gradient\([^)]*#(6|7|8)[0-9a-f]{2}(f|e|d)[0-9a-f]{2}/i, styleFiles)
-      const total = tw.total + css.total
-      return { failed: total > 0, detail: `${total} coincidencias`, samples: [...tw.samples, ...css.samples] }
-    } },
-
-  { id: 'A2', cat: 'Color', weight: 2, applies: 'landing',
-    title: 'Dark mode permanente por defecto',
-    run() {
-      const dark = /color-scheme:\s*dark\b/.test(all(styleFiles))
-      const hasLight = /prefers-color-scheme:\s*light|\[data-theme=["']light|\.light\b/.test(all(styleFiles))
-      return { failed: dark && !hasLight, detail: dark ? (hasLight ? 'oscuro con alternativa clara' : 'sólo oscuro, sin alternativa') : 'no declara esquema oscuro fijo' }
-    } },
-
-  { id: 'A3', cat: 'Color', weight: 2, applies: 'ambos',
-    title: 'Glassmorphism indiscriminado',
-    run() {
-      const r = find(/backdrop-filter\s*:/, styleFiles)
-      return { failed: r.total >= 4, detail: `${r.total} declaraciones`, samples: r.samples }
-    } },
-
-  { id: 'A4', cat: 'Color', weight: 2, applies: 'landing',
-    title: 'Resplandor de acento tras el hero',
-    run() {
-      const r = find(/radial-gradient\(\s*(circle|ellipse)/, styleFiles)
-      return { failed: r.total > 0, detail: `${r.total} coincidencias`, samples: r.samples }
-    } },
-
-  { id: 'A5', cat: 'Color', weight: 2, applies: 'ambos',
-    title: 'Neón sobre oscuro con bordes que brillan',
-    run() {
-      const r = find(/box-shadow:[^;]*(0\s+0\s+\d{2,}px)[^;]*(#[0-9a-f]{6}|rgba)/i, styleFiles)
-      return { failed: r.total >= 3, detail: `${r.total} sombras de resplandor`, samples: r.samples }
-    } },
-
-  { id: 'B1', cat: 'Tipografía', weight: 2, applies: 'ambos',
-    title: 'Familia por defecto de las herramientas de IA',
-    run() {
-      const m = all(styleFiles).match(/font-family:\s*["']?(Inter|Poppins|Geist|Space Grotesk|Roboto|Open Sans)\b/i)
-      return { failed: !!m, detail: m ? `principal: ${m[1]}` : 'familia no estándar de IA' }
-    } },
-
-  { id: 'B2', cat: 'Tipografía', weight: 1, applies: 'landing',
-    title: 'Sin pareja tipográfica',
-    run() {
-      const stacks = new Set([...all(styleFiles).matchAll(/font-family:\s*([^;]+);/g)]
-        .map(m => m[1].split(',')[0].trim().replace(/["']/g, '').toLowerCase())
-        .filter(s => s && !s.startsWith('var(') && s !== 'inherit'))
-      return { failed: stacks.size <= 1, detail: `${stacks.size} familia(s): ${[...stacks].join(', ') || '—'}` }
-    } },
-
-  { id: 'B4', cat: 'Tipografía', weight: 1, applies: 'ambos',
-    title: 'Etiquetas en mayúsculas por todas partes',
-    run() {
-      const r = find(/text-transform:\s*uppercase/, styleFiles)
-      return { failed: r.total >= 6, detail: `${r.total} declaraciones`, samples: r.samples }
-    } },
-
-  { id: 'C1', cat: 'Layout', weight: 3, applies: 'ambos',
-    title: 'Borde gris plano de 1px en tarjetas',
-    run() {
-      const r = find(/border(-\w+)?:\s*1px solid/, styleFiles)
-      const radius = find(/border-radius\s*:/, styleFiles).total || 1
-      const ratio = r.total / radius
-      return { failed: r.total >= 15 && ratio > 0.2,
-        detail: `${r.total} bordes planos frente a ${radius} radios (ratio ${ratio.toFixed(2)})`,
-        samples: r.samples }
-    } },
-
-  { id: 'C2', cat: 'Layout', weight: 2, applies: 'ambos',
-    title: 'Franja lateral de color de 3–4px',
-    run() {
-      const r = find(/border-left:\s*[34]px solid/, styleFiles)
-      return { failed: r.total > 0, detail: `${r.total} coincidencias`, samples: r.samples }
-    } },
-
-  { id: 'D1', cat: 'Imagen', weight: 3, applies: 'ambos',
-    title: 'Enlaces a bancos de imágenes',
-    run() {
-      const r = find(/(images\.)?(unsplash|pexels|pixabay)\.com/i, files)
-      return { failed: r.total > 0, detail: `${r.total} enlaces`, samples: r.samples }
-    } },
-
-  { id: 'D5', cat: 'Imagen', weight: 2, applies: 'ambos',
-    title: 'Emojis donde correspondería un icono',
-    run() {
-      const r = find(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u, codeFiles)
-      return { failed: r.total >= 5, detail: `${r.total} emojis en marcado`, samples: r.samples }
-    } },
-
-  { id: 'E1', cat: 'Copy', weight: 2, applies: 'ambos',
-    title: 'Abuso del em dash',
-    run() {
-      const r = find(/—/, codeFiles)
-      return { failed: r.total >= 12, detail: `${r.total} em dashes`, samples: r.samples }
-    } },
-
-  { id: 'E2', cat: 'Copy', weight: 1, applies: 'ambos',
-    title: 'Comillas curvas sin tocar',
-    run() {
-      const r = find(/[‘’“”]/, codeFiles)
-      return { failed: r.total >= 10, detail: `${r.total} comillas tipográficas`, samples: r.samples }
-    } },
-
-  { id: 'E4', cat: 'Copy', weight: 3, applies: 'ambos',
-    title: 'Copy duplicado literalmente',
-    run() {
-      const seen = new Map()
-      for (const f of codeFiles) {
-        for (let i = 0; i < f.lines.length; i++) {
-          for (const m of f.lines[i].matchAll(/>([^<>{}]{30,200})<|["'`]([^"'`\n]{30,200})["'`]/g)) {
-            const s = (m[1] || m[2] || '').trim()
-            if (!esProsa(s)) continue
-            if (!seen.has(s)) seen.set(s, [])
-            seen.get(s).push({ file: f.rel, line: i + 1, text: s.slice(0, 90) })
-          }
-        }
-      }
-      const dups = [...seen.entries()].filter(([, v]) => v.length >= 2)
-      return { failed: dups.length > 0,
-        detail: `${dups.length} cadena(s) repetida(s)`,
-        samples: dups.slice(0, 6).map(([s, v]) => ({ file: v[0].file, line: v[0].line, text: `×${v.length} — "${s.slice(0, 80)}"` })) }
-    } },
-
-  { id: 'E5', cat: 'Copy', weight: 2, applies: 'ambos',
-    title: 'Densidad de palabras vacías',
-    run() {
-      const r = find(/\b(seamless|innovador|innovative|leverage|potenciar|sinergia|synergy|end-to-end|revoluciona|delve into|experiencia única|all-in-one|todo en uno)\b/i, codeFiles)
-      return { failed: r.total >= 3, detail: `${r.total} apariciones`, samples: r.samples }
-    } },
-
-  { id: 'E6', cat: 'Copy', weight: 2, applies: 'ambos',
-    title: 'Nombres de relleno',
-    run() {
-      const r = find(/\b(John Smith|Jane Doe|Sarah Johnson|John Doe|Usuario Demo|[A-ZÁÉÍÓÚ][a-záéíóú]+ (Cliente|Usuario|Demo|Test|Admin|Ejemplo))\b/, codeFiles)
-      return { failed: r.total > 0, detail: `${r.total} nombres`, samples: r.samples }
-    } },
-
-  { id: 'E7', cat: 'Copy', weight: 3, applies: 'producto',
-    title: 'Restos de andamiaje visibles al usuario',
-    run() {
-      // `placeholder=` es un atributo legítimo de HTML: sólo cuenta como resto de
-      // andamiaje cuando aparece como palabra suelta en el texto.
-      const r = find(/\b(lorem ipsum|dummy|placeholder(?!\s*=)|\bMVP\b|4242[\s-]?4242|4111[\s-]?1111|5555[\s-]?5555|@example\.com|\.demo\b)/i, codeFiles)
-      return { failed: r.total > 0, detail: `${r.total} restos`, samples: r.samples }
-    } },
-
-  /* ── Bloque de producto: criterios que sí transfieren a una app ── */
-
-  { id: 'L1', cat: 'Localización', weight: 3, applies: 'producto',
-    title: 'Plural sin resolver junto a un contador',
-    run() {
-      // "{count} opciones" nunca dice "1 opción". Señal de plantilla que nadie miró.
-      const r = find(/\{[^}]{1,40}\}\s+[a-záéíóúñ]{3,}s\b/, codeFiles)
-      const conditional = /\?\s*["'`][^"'`]*["'`]\s*:\s*["'`]/.test(all(codeFiles))
-      return { failed: r.total > 0,
-        detail: `${r.total} contador(es) sin pluralizar${conditional ? '; hay condicionales en otras cadenas' : ''}`,
-        samples: r.samples }
-    } },
-
-  { id: 'L2', cat: 'Localización', weight: 2, applies: 'producto',
-    title: 'Formatos de fecha y moneda escritos a mano',
-    run() {
-      const cur = find(/["'`][^"'`]*(RD\$|US\$|€|\$)\s?\{?\d/, codeFiles)
-      const date = find(/toLocale(Date|Time)?String\(\s*\)/, codeFiles)
-      const total = cur.total + date.total
-      return { failed: total > 0,
-        detail: `${cur.total} importes concatenados, ${date.total} fechas sin locale`,
-        samples: [...cur.samples, ...date.samples] }
-    } },
-
-  { id: 'L3', cat: 'Localización', weight: 3, applies: 'producto',
-    title: 'Diacríticos repartidos de forma sistemática',
-    run() {
-      // Irregular = hábito humano. Corte limpio por archivo = proceso automático.
-      const ES = /\b(de|la|el|los|las|para|con|tu|servicio|usuario|nombre|precio)\b/i
-      const stats = []
-      for (const f of codeFiles) {
-        const prosa = [...f.text.matchAll(/["'`]([^"'`\n]{15,})["'`]|>([^<>{}\n]{15,})</g)]
-          .map(m => (m[1] || m[2] || '')).join(' ')
-        if (prosa.length < 200 || !ES.test(prosa)) continue
-        stats.push({ rel: f.rel, no: (f.text.match(/[^\x00-\x7F]/g) || []).length })
-      }
-      const ceros = stats.filter(s => s.no === 0)
-      const conAcentos = stats.filter(s => s.no >= 5)
-      const failed = ceros.length > 0 && conAcentos.length > 0
-      return { failed,
-        detail: failed
-          ? `${ceros.length} archivo(s) con prosa española y CERO acentos, frente a ${conAcentos.length} plenamente acentuado(s): el reparto es sistemático, no un hábito de teclado`
-          : `${stats.length} archivo(s) con prosa española; reparto sin bifurcación`,
-        samples: ceros.slice(0, 5).map(s => ({ file: s.rel, line: 1, text: '0 caracteres no ASCII' })) }
-    } },
-
-  { id: 'T1', cat: 'Accesibilidad', weight: 2, applies: 'producto',
-    title: 'Botones de solo icono sin etiqueta accesible',
-    run() {
-      const out = []
-      let total = 0
-      for (const f of codeFiles) {
-        for (const m of f.text.matchAll(/<button\b([^>]*)>([\s\S]{0,400}?)<\/button>/g)) {
-          const [, attrs, inner] = m
-          if (/aria-label|title=/.test(attrs)) continue
-          const texto = inner.replace(/<[^>]*>/g, '').replace(/\{[^}]*\}/g, '').trim()
-          const tieneIcono = /<svg|<[A-Z]\w+\s|Icon\b/.test(inner)
-          if (tieneIcono && texto.replace(/[^a-záéíóúñ]/gi, '').length < 2) {
-            total++
-            if (out.length < 5) {
-              const line = f.text.slice(0, m.index).split('\n').length
-              out.push({ file: f.rel, line, text: inner.trim().replace(/\s+/g, ' ').slice(0, 80) })
-            }
-          }
-        }
-      }
-      return { failed: total > 0, detail: `${total} botón(es) sin nombre accesible`, samples: out }
-    } },
-
-  { id: 'F2', cat: 'Motion', weight: 1, applies: 'ambos',
-    title: 'Sin movimiento intencionado',
-    run() {
-      const kf = find(/@keyframes/, styleFiles).total
-      const tr = find(/transition\s*:/, styleFiles).total
-      return { failed: kf === 0 && tr <= 2, detail: `${kf} keyframes, ${tr} transiciones` }
-    } },
-]
-
-/* ─────────────── prueba del cambio de nombre (G1) ─────────────── */
-
-function nameSwap() {
-  if (!BRAND) return null
-  const brand = BRAND.toLowerCase()
-  const candidates = []
-  for (const f of codeFiles) {
-    for (let i = 0; i < f.lines.length; i++) {
-      for (const m of f.lines[i].matchAll(/<h[12][^>]*>([^<]{18,160})<|["'`]([^"'`\n]{18,160})["'`]/g)) {
-        const s = (m[1] || m[2] || '').trim()
-        if (!esProsa(s)) continue
-        if (s.toLowerCase().includes(brand)) continue
-        if (!/\b(belleza|servicio|plataforma|experiencia|profesional|reserva|domicilio|solución|calidad|confianza|mejor|futuro|todo)\b/i.test(s)) continue
-        candidates.push({ file: f.rel, line: i + 1, text: s.slice(0, 110) })
-      }
-    }
+  const umbral = regla.threshold ?? 1
+  return {
+    failed: total >= umbral,
+    detail: `${total} coincidencia(s)${umbral > 1 ? ` (umbral ${umbral})` : ''}${exentas ? ` · ${exentas} exenta(s) por color de marca` : ''}`,
+    samples,
   }
-  const uniq = [...new Map(candidates.map(c => [c.text, c])).values()]
-  return { failed: uniq.length > 0, count: uniq.length, samples: uniq.slice(0, 10) }
 }
 
-/* ─────────────────────────── ejecución ─────────────────────────── */
+/* ── ejecucion ── */
 
-const active = CHECKS.filter(c => PROFILE === 'ambos' || c.applies === 'ambos' || c.applies === PROFILE)
-const results = active.map(c => {
+const declarativas = CATALOGO.rules.map(r => ({
+  id: r.id, cat: r.category, title: r.name, weight: r.weight ?? 2,
+  applies: r.applies || 'ambos', exempt: r.exempt || [], why: r.why, fix: r.fix, source: r.source,
+  origen: 'json', run: () => correrDeclarativa(r),
+}))
+
+const todas = [...declarativas, ...programaticas(ctx).map(c => ({ ...c, origen: 'js', title: c.title }))]
+
+const aplica = c => (PROFILE === 'ambos' || c.applies === 'ambos' || c.applies === PROFILE)
+const exenta = c => GENRE && (c.exempt || []).includes(GENRE)
+
+const activas = todas.filter(c => aplica(c) && !exenta(c))
+const exentasPorGenero = todas.filter(c => aplica(c) && exenta(c))
+
+const results = activas.map(c => {
   let r
   try { r = c.run() } catch (e) { r = { failed: false, detail: 'error: ' + e.message } }
   return { ...c, ...r }
 })
 
+/* ── prueba del cambio de nombre ── */
+
+function nameSwap() {
+  if (!BRAND) return null
+  const marca = BRAND.toLowerCase()
+  const cand = []
+  for (const f of codeFiles) {
+    for (const m of f.text.matchAll(/<h[12][^>]*>([^<]{18,160})<|["'`]([^"'`\n]{18,160})["'`]/g)) {
+      const s = (m[1] || m[2] || '').trim()
+      if (!esProsa(s) || s.toLowerCase().includes(marca)) continue
+      if (!/\b(servicio|plataforma|experiencia|profesional|reserva|solucion|calidad|confianza|mejor|futuro|todo|belleza|domicilio)\b/i.test(s)) continue
+      cand.push({ file: f.rel, line: lineaDe(f.text, m.index), text: s.slice(0, 110) })
+    }
+  }
+  const uniq = [...new Map(cand.map(c => [c.text, c])).values()]
+  return { failed: uniq.length > 0, count: uniq.length, samples: uniq.slice(0, 8) }
+}
 const swap = nameSwap()
+
+/* ── puntuacion ── */
+
 const maxW = results.reduce((a, r) => a + r.weight, 0) + (swap ? 3 : 0)
 const lostW = results.filter(r => r.failed).reduce((a, r) => a + r.weight, 0) + (swap?.failed ? 3 : 0)
 const score = maxW ? Math.round(100 * (1 - lostW / maxW)) : 100
-
 const band = score >= 85 ? 'Limpio'
   : score >= 70 ? 'Restos localizados'
-  : score >= 50 ? 'Se identificará'
+  : score >= 50 ? 'Se identificara'
   : 'Se identifica en diez segundos'
+
+/* ── baseline y registro ── */
+
+let baselineInfo = null
+if (WRITE_BASELINE) {
+  const n = bl.escribirBaseline(ROOT, results)
+  baselineInfo = { escrito: n }
+}
+const baseline = SINCE_BASELINE ? bl.leerBaseline(ROOT) : null
+const nuevos = SINCE_BASELINE ? bl.nuevosHallazgos(results, baseline) : null
+
+const firma = firmaMacro(codeFiles, tokens)
+const repite = WRITE_LOG ? bl.repiteMacroestructura(ROOT, firma) : null
+if (WRITE_LOG) bl.escribirLog(ROOT, firma, score, `slop-scan ${score}/100 · ${band}`)
+
+/* ── salida ── */
 
 if (AS_JSON) {
   console.log(JSON.stringify({
-    root: ROOT, profile: PROFILE, brand: BRAND || null, score, band,
-    filesScanned: files.length,
-    checks: results.map(({ id, cat, title, weight, failed, detail, samples }) =>
-      ({ id, cat, title, weight, failed, detail, samples: samples || [] })),
-    nameSwap: swap,
+    root: ROOT, profile: PROFILE, genre: GENRE, brand: BRAND || null,
+    score, band, filesScanned: files.length, tokens: tokens.size,
+    checks: results.map(({ id, cat, title, weight, failed, detail, samples, origen, source }) =>
+      ({ id, cat, title, weight, failed, detail, origen, source, samples: samples || [] })),
+    exemptedByGenre: exentasPorGenero.map(c => c.id),
+    nameSwap: swap, baseline: baselineInfo, newFindings: nuevos, macro: firma, repeatsPrevious: repite,
   }, null, 2))
 } else {
-  const failed = results.filter(r => r.failed)
-  const passed = results.filter(r => !r.failed)
+  const fallan = results.filter(r => r.failed)
+  const pasan = results.filter(r => !r.failed)
   console.log(`\n  slop-scan · ${ROOT}`)
-  console.log(`  perfil: ${PROFILE} · ${files.length} archivos · ${styleFiles.length} de estilos\n`)
-  console.log(`  PUNTUACIÓN  ${score}/100 — ${band}`)
-  console.log(`  ${failed.length} de ${results.length} comprobaciones automáticas fallan\n`)
+  console.log(`  perfil: ${PROFILE}${GENRE ? ` · genero: ${GENRE}` : ''} · ${files.length} archivos · ${tokens.size} tokens de CSS`)
+  console.log(`  ${declarativas.length} reglas declarativas + ${todas.length - declarativas.length} programaticas\n`)
+  console.log(`  PUNTUACION  ${score}/100 — ${band}`)
+  console.log(`  ${fallan.length} de ${results.length} comprobaciones fallan`)
+  if (exentasPorGenero.length) console.log(`  ${exentasPorGenero.length} exenta(s) por genero "${GENRE}": ${exentasPorGenero.map(c => c.id).join(', ')}`)
+  console.log('')
 
   if (swap) {
     console.log(`  ── Prueba del cambio de nombre (marca: "${BRAND}") ──`)
     if (swap.failed) {
-      console.log(`  ✗ ${swap.count} titular(es) que no mencionan la marca y funcionarían para un competidor:`)
+      console.log(`  x ${swap.count} titular(es) que funcionarian para un competidor:`)
       for (const s of swap.samples) console.log(`      ${s.file}:${s.line}  "${s.text}"`)
-    } else console.log('  ✓ sin titulares intercambiables detectados')
+    } else console.log('  ok  sin titulares intercambiables')
     console.log('')
   }
 
-  if (failed.length) {
+  if (repite) {
+    console.log('  ── Comparacion con la ejecucion anterior ──')
+    console.log(repite.igual
+      ? '  x  macroestructura IDENTICA a la anterior: el generador no esta divergiendo'
+      : '  ok macroestructura distinta de la anterior')
+    console.log('')
+  }
+
+  if (fallan.length) {
     console.log('  ── Fallan ──')
-    for (const r of failed) {
-      console.log(`  ✗ ${r.id} · ${r.title}  [peso ${r.weight}]`)
+    for (const r of fallan) {
+      console.log(`  x ${r.id} · ${r.title}  [peso ${r.weight}${r.source ? ` · ${r.source}` : ''}]`)
       console.log(`      ${r.detail}`)
-      for (const s of (r.samples || []).slice(0, 4)) console.log(`      ${s.file}:${s.line}  ${s.text}`)
+      if (r.nota) console.log(`      nota: ${r.nota}`)
+      for (const s of (r.samples || []).slice(0, 3)) console.log(`      ${s.file}:${s.line}  ${s.text}`)
     }
     console.log('')
   }
+
   console.log('  ── Pasan ──')
-  for (const r of passed) console.log(`  ✓ ${r.id} · ${r.title} — ${r.detail}`)
-  console.log('\n  Las comprobaciones que exigen ojo humano están en templates/revision-humana.md')
+  for (const r of pasan) console.log(`  ok ${r.id} · ${r.title} — ${r.detail}`)
+
+  if (baselineInfo) console.log(`\n  Baseline escrito: ${baselineInfo.escrito} hallazgo(s) tolerados en .slop/baseline.json`)
+  if (nuevos) {
+    console.log(`\n  ── Deriva nueva desde el baseline: ${nuevos.length} ──`)
+    for (const n of nuevos.slice(0, 10)) console.log(`      ${n.id} · ${n.file}:${n.line}  ${n.text}`)
+    if (!baseline) console.log('      (no hay baseline previo: todo cuenta como nuevo)')
+  }
+
+  console.log('\n  Las comprobaciones que exigen ojo humano estan en templates/revision-humana.md')
   console.log('  Antes de dar un veredicto, lee references/caveats.md\n')
 }
 
+/* ── codigos de salida ── */
+
+if (FAIL_NEW && nuevos && nuevos.length > 0) {
+  console.error(`slop-scan: ${nuevos.length} hallazgo(s) NUEVOS respecto al baseline`)
+  process.exit(1)
+}
 if (MIN_SCORE !== null && score < MIN_SCORE) {
   console.error(`slop-scan: ${score} por debajo del umbral ${MIN_SCORE}`)
   process.exit(1)

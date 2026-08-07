@@ -12,14 +12,18 @@ sola.
 señalar qué se lo dice, y quien la recibe no puede refutar una impresión. La discusión se
 queda en gustos y no cambia nada del producto.
 
-Este repositorio convierte esa impresión en **66 comprobaciones contrastables**, con la
-procedencia de cada una y —tan importante— **la salvedad de cuándo no aplican**.
+Este repositorio convierte esa impresión en comprobaciones contrastables, con la procedencia
+de cada una y —tan importante— **la salvedad de cuándo no aplican**.
 
-| Bloque | Comprobaciones | Automatizadas |
+| | Cuántas | Dónde |
 | --- | --- | --- |
-| Rúbrica general (`rubric.md`) | 39 | 19 |
-| Bloque de producto (`producto.md`) | 27 | 4 |
-| **Total** | **66** | **23** |
+| Reglas declarativas | 28 | `data/rules.json` |
+| Comprobaciones programáticas | 21 | `scripts/lib/` |
+| **Automatizadas** | **49** | |
+| Criterios de revisión humana | 66 | `references/rubric.md` + `references/producto.md` |
+
+Las programáticas son las que no caben en un patrón: ratios de densidad, distribuciones entre
+archivos, resolución de tokens de color y huellas estructurales.
 
 ## Uso rápido
 
@@ -42,11 +46,30 @@ Opciones:
 | Opción | Efecto |
 | --- | --- |
 | `--brand "Nombre"` | Activa la prueba del cambio de nombre |
+| `--brand-colors "#hex,#hex"` | Exenta los colores legítimos de tu marca |
 | `--profile landing\|producto\|ambos` | Filtra las comprobaciones que no aplican |
+| `--genre editorial\|atmospheric\|modern-minimal\|playful` | Exenta reglas por decisión estética declarada |
 | `--json` | Salida estructurada para CI |
 | `--min-score N` | Sale con código 1 si baja del umbral |
+| `--write-baseline` | Congela los hallazgos actuales como tolerados |
+| `--since-baseline --fail-on-new-drift` | Falla **sólo** ante deriva nueva |
+| `--log` | Guarda la macroestructura y avisa si el build repite la anterior |
+| `--rules <ruta>` | Catálogo de reglas alternativo |
 
 Sin dependencias. Sólo Node 18 o superior.
+
+### El trinquete, que es lo que hace esto adoptable
+
+Sobre una base de código existente, un gate que falla desde el primer día se desactiva el
+segundo. El trinquete resuelve eso:
+
+```bash
+node scripts/slop-scan.mjs ./src --write-baseline          # una vez
+node scripts/slop-scan.mjs ./src --since-baseline --fail-on-new-drift   # en CI
+```
+
+Tolera lo que ya había y falla sólo ante lo que se introduzca a partir de ahora. La identidad
+de cada hallazgo excluye el número de línea, así que mover código no lo convierte en nuevo.
 
 ## Qué hay dentro
 
@@ -59,7 +82,12 @@ Sin dependencias. Sólo Node 18 o superior.
 | `references/remediation.md` | Las 6 reglas correctivas y el orden de arreglo |
 | `references/adversarial.md` | Cómo montar un panel de modelos que no se engañe a sí mismo |
 | `references/sources.md` | Bibliografía anotada |
-| `scripts/slop-scan.mjs` | El escáner |
+| `data/rules.json` | Catálogo declarativo: 28 reglas con patrón, umbral, porqué y arreglo |
+| `scripts/slop-scan.mjs` | CLI y orquestación |
+| `scripts/lib/checks.mjs` | Las 21 comprobaciones que exigen ratios o distribuciones |
+| `scripts/lib/color.mjs` | OKLCH, resolución de tokens y puertas cromáticas |
+| `scripts/lib/structure.mjs` | Huellas estructurales: nav, footer, cromo falso |
+| `scripts/lib/baseline.mjs` | Trinquete y registro entre ejecuciones |
 | `templates/revision-humana.md` | Las comprobaciones que exigen mirar, en dos partes: general y producto |
 | `.github/workflows/slop-scan.yml` | Ejemplo de gate en integración continua |
 
@@ -77,9 +105,32 @@ probando falta de calidad, que suele ser la conversación útil.
 empresa dice tener. Se detecta buscando los conceptos del plan en el código, y es una
 búsqueda de treinta segundos.
 
+## Añadir una regla
+
+Si es expresable como patrón, no se toca código: se añade una entrada a `data/rules.json`.
+
+```json
+{
+  "id": "X1", "name": "Nombre corto", "category": "Color",
+  "severity": "medium", "applies": "ambos", "weight": 2, "scope": "style",
+  "pattern": "…", "flags": "i", "threshold": 3,
+  "exempt": ["modern-minimal"],
+  "why": "Por qué delata.",
+  "fix": "Qué hacer en su lugar.",
+  "source": "de dónde sale"
+}
+```
+
+`scope` es `style`, `code` o `all`. `threshold` es el número de coincidencias a partir del
+cual falla — para casi todo lo estilístico, **la señal es la densidad, no la presencia**.
+
 ## Limitaciones
 
 - Análisis estático. No renderiza, no mide contraste real ni prueba interacción.
+- **No implementa APCA.** Los umbrales en Lc de las fuentes exigen el algoritmo completo;
+  aquí se usan el ratio de WCAG 2 y los pre-checks baratos en OKLCH.
+- **Las puntuaciones no son comparables entre versiones.** Añadir comprobaciones cambia el
+  denominador. Para seguir la evolución de un proyecto, usa el trinquete, no el número.
 - Las fuentes están escritas sobre landing pages de marketing; `--profile producto` filtra lo
   que no transfiere, pero el juicio final es humano.
 - La rúbrica es consenso de práctica profesional, no investigación. No existe trabajo

@@ -38,12 +38,24 @@ node scripts/slop-scan.mjs <ruta> --brand "<nombre de marca>"
 Ejecuta las comprobaciones verificables por código:
 
 ```bash
-node scripts/slop-scan.mjs <ruta>              # informe en markdown
-node scripts/slop-scan.mjs <ruta> --json       # para CI
-node scripts/slop-scan.mjs <ruta> --min-score 70   # falla si baja del umbral
+node scripts/slop-scan.mjs <ruta>                                    # informe
+node scripts/slop-scan.mjs <ruta> --json                             # para CI
+node scripts/slop-scan.mjs <ruta> --min-score 70                     # umbral duro
+node scripts/slop-scan.mjs <ruta> --genre modern-minimal             # exenta por estética
+node scripts/slop-scan.mjs <ruta> --brand-colors "#5E6AD2"           # exenta la marca
 ```
 
-El escáner **no puntúa gusto**. Sólo cuenta patrones nombrados por las fuentes.
+El escáner **no puntúa gusto**. Sólo cuenta patrones nombrados por las fuentes: 28 reglas
+declarativas en `data/rules.json` más 21 comprobaciones programáticas que exigen ratios,
+distribuciones, resolución de tokens de color o análisis estructural.
+
+**Sobre código existente, usa el trinquete en vez del umbral.** Un gate que falla desde el
+primer día se desactiva el segundo:
+
+```bash
+node scripts/slop-scan.mjs <ruta> --write-baseline
+node scripts/slop-scan.mjs <ruta> --since-baseline --fail-on-new-drift
+```
 
 ### 3. Revisión humana
 
@@ -94,5 +106,7 @@ La hipótesis rival que debes hacerles batir siempre está en `references/advers
 | `references/remediation.md` | Las 6 reglas correctivas y el orden de arreglo |
 | `references/adversarial.md` | Cómo montar un panel que no se engañe a sí mismo |
 | `references/sources.md` | Bibliografía anotada con lo que aporta cada fuente |
-| `scripts/slop-scan.mjs` | Escáner estático, sin dependencias |
+| `data/rules.json` | Catálogo declarativo. Añadir una regla no exige tocar código |
+| `scripts/slop-scan.mjs` | CLI y orquestación |
+| `scripts/lib/` | Comprobaciones programáticas, color OKLCH, estructura y trinquete |
 | `templates/revision-humana.md` | Las comprobaciones que exigen ojo humano |
