@@ -307,8 +307,12 @@ if (PLAN) {
   for (const capa of planArmado.capas) {
     paso++
     console.log(`  ${paso} · ${capa.capa.toUpperCase()}   ${capa.items.length} hallazgo(s) · peso ${capa.peso}`)
+    if (capa.nota) console.log(`      ${capa.nota}`)
     for (const r of capa.items) {
-      const nv = r.nivel === 'alta' ? ' ★ ALTA' : r.nivel === 'dudosa' ? ' · dudosa' : ''
+      const nv = r.nivel === 'alta' ? ' ★ ALTA'
+        : r.nivel === 'dudosa' ? ' · dudosa'
+        : r.nivel === 'contrato' || r.nivel === 'calidad' ? ''
+        : ' · baja/sin medir'
       console.log(`\n      ${r.id} · ${r.title}   [${r.sello}]${nv}`)
       if (r.why) console.log(`      Por que delata: ${r.why}`)
       console.log(`      Que hacer:      ${r.fix || '(sin arreglo declarado — ver references/remediation.md)'}`)
@@ -318,10 +322,10 @@ if (PLAN) {
     console.log('')
   }
 
-  console.log('  El orden sale de peso x confianza de validacion / esfuerzo estimado.')
-  console.log('  La confianza viene de research/RESULTADOS.md; el esfuerzo es heuristico por categoria.')
-  console.log('  Para un brief de agente (contrato + pasos + verificar): node scripts/slop-fix.mjs <ruta>')
-  console.log('  Lo que exige ojo humano no esta aqui: templates/revision-humana.md\n')
+  console.log('  Orden del plan: 1) confianza ALTA  2) dudosa  3) sin prueba  4) contrato  5) calidad.')
+  console.log('  Dentro de cada bloque: contenido antes que CSS (esfuerzo por categoria).')
+  console.log('  Brief para agente: node scripts/slop-fix.mjs <ruta>')
+  console.log('  Lo que exige ojo humano: templates/revision-humana.md\n')
 
 } else if (AS_JSON) {
   console.log(JSON.stringify({

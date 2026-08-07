@@ -128,6 +128,8 @@ const brief = {
   score: scan.score,
   band: scan.band,
   generadosEn: new Date().toISOString(),
+  nucleo: scan.nucleo || null,
+  confianza_hallazgos: scan.confianza_hallazgos || null,
   contrato: contratoObj
     ? {
         origen: contratoObj.origen,
@@ -142,6 +144,7 @@ const brief = {
     : null,
   nameSwap: plan.nameSwap,
   capas: plan.capas,
+  orden: plan.orden || null,
   totalHallazgos: plan.totalHallazgos,
   resumen: scan.resumen,
   verificar,
@@ -151,11 +154,13 @@ const brief = {
 
 function REGLAS_AGENTE(c, design) {
   const r = [
+    'ORDEN: 1) hallazgos ★ ALTA  2) dudosa  3) sin medir  4) contrato  5) calidad. No empieces por CSS dudoso si hay ALTA de copy.',
+    'Un veredicto de «parece slop» solo con fallos ★ ALTA. Las dudosas son higiene, no prueba de IA.',
     'Contenido y datos antes que CSS. Ninguna correccion visual arregla un titular intercambiable.',
     'No inventes paleta, tipografia, escala ni duraciones. Si el sistema debe cambiar, edita DESIGN.md y tokens primero, luego el codigo.',
     'Cada cambio debe anclarse a un hallazgo del plan (id + archivo:linea). Prohibido "mejorar el look" sin referente.',
-    'Tras los cambios, ejecuta el comando de verificacion. No declares listo sin score de contrato 100 (si hay contrato) y sin regresar hallazgos de procedencia que tocaste.',
-    'Si un hallazgo es de tipo defecto (accesibilidad, calidad), arreglalo sin reetiquetarlo como "slop".',
+    'Tras los cambios, ejecuta el comando de verificacion. No declares listo sin score de contrato 100 (si hay contrato) y sin regresar hallazgos ALTA que tocaste.',
+    'Si un hallazgo es de tipo defecto/calidad, arreglalo sin reetiquetarlo como "slop".',
     'No toques lo que no falla. El trinquete y el plan miden deriva, no un rediseño completo.',
   ]
   if (c) {
@@ -179,13 +184,29 @@ function renderMarkdown(b) {
   L.push(`Generado: ${b.generadosEn}`)
   L.push(`Raiz: \`${b.root}\``)
   L.push(`Procedencia: **${b.score}/100** — ${b.band}`)
+  if (b.nucleo?.score != null) {
+    L.push(`Núcleo (solo confianza ALTA): **${b.nucleo.score}/100** · reglas \`${(b.nucleo.alta || []).join(', ')}\``)
+  }
   if (b.resumen?.contrato) {
     L.push(`Contrato: **${b.resumen.contrato.score}/100** (${b.resumen.contrato.fallan} fallos · ${b.resumen.contrato.origen})`)
   } else if (!b.contrato) {
     L.push('Contrato: *ninguno cargado*')
   }
   L.push(`Hallazgos en el plan: **${b.totalHallazgos}**`)
+  if (b.orden) L.push(`Orden: ${b.orden}`)
   L.push('')
+
+  if (b.confianza_hallazgos?.fallan) {
+    const f = b.confianza_hallazgos.fallan
+    L.push('## De qué fiarte')
+    L.push('')
+    L.push(`- **★ ALTA (haz primero):** ${(f.alta || []).map(x => x.id).join(', ') || '(ninguna)'}`)
+    L.push(`- **Dudosa (después):** ${(f.dudosa || []).map(x => x.id).join(', ') || '(ninguna)'}`)
+    const baja = [...(f.baja || []), ...(f.sin_medir || [])].map(x => x.id)
+    if (baja.length) L.push(`- **Baja / sin medir:** ${baja.join(', ')}`)
+    if (b.confianza_hallazgos.aviso) L.push(`- ⚠ ${b.confianza_hallazgos.aviso}`)
+    L.push('')
+  }
 
   L.push('## Reglas para el agente')
   L.push('')
@@ -238,10 +259,16 @@ function renderMarkdown(b) {
       n++
       L.push(`## ${n} · ${capa.capa}`)
       L.push('')
+      if (capa.nota) L.push(`> ${capa.nota}`)
+      if (capa.nota) L.push('')
       L.push(`${capa.items.length} hallazgo(s) · peso acumulado ${capa.peso}`)
       L.push('')
       for (const item of capa.items) {
-        L.push(`### ${item.id} · ${item.title}`)
+        const badge = item.nivel === 'alta' ? ' ★ ALTA'
+          : item.nivel === 'dudosa' ? ' · dudosa'
+          : item.nivel === 'baja' || item.nivel === 'sin_medir' ? ' · baja/sin medir'
+          : ''
+        L.push(`### ${item.id} · ${item.title}${badge}`)
         L.push('')
         L.push(`- Tipo: \`${item.tipo}\` · sello: ${item.sello}`)
         if (item.detail) L.push(`- Detalle: ${item.detail}`)

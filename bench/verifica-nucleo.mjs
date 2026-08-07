@@ -4,6 +4,7 @@
 //   node bench/verifica-nucleo.mjs
 
 import { nucleoInfo, nivelConfianza, resumenConfianza } from '../scripts/lib/nucleo.mjs'
+import { armarPlan } from '../scripts/lib/sello.mjs'
 
 console.log('\n  verifica-nucleo\n')
 let fallos = 0
@@ -43,6 +44,28 @@ if (!n.alta.length) {
   console.log('  x nucleo vacio')
   fallos++
 } else console.log(`  ok nucleo     ${n.alta.length} reglas ALTA · origen ${n.origen}`)
+
+// El plan debe poner ALTA antes que dudosa
+const plan = armarPlan({
+  results: [
+    { id: 'C4', title: 'escala', failed: true, weight: 3, cat: 'Layout', tipo: 'procedencia', validado: { separa: true, J_banda: 0.39 } },
+    { id: 'UX2', title: 'pastilla', failed: true, weight: 3, cat: 'Layout', tipo: 'procedencia', validado: { separa: true, J_banda: 0.45 } },
+    { id: 'E5', title: 'vacio', failed: true, weight: 1, cat: 'Copy', tipo: 'procedencia', validado: null },
+  ],
+})
+const nombres = plan.capas.map(c => c.capa)
+const iAlta = nombres.findIndex(c => /ALTA/i.test(c))
+const iDud = nombres.findIndex(c => /dudosa/i.test(c))
+const iRest = nombres.findIndex(c => /opcional|poca|nula/i.test(c))
+if (iAlta < 0 || iDud < 0 || iAlta > iDud) {
+  console.log('  x plan no ordena ALTA antes que dudosa:', nombres.join(' | '))
+  fallos++
+} else if (iRest >= 0 && iDud > iRest) {
+  console.log('  x plan: resto antes que dudosa')
+  fallos++
+} else {
+  console.log('  ok plan       orden ALTA → dudosa → resto')
+}
 
 console.log('')
 if (fallos) {

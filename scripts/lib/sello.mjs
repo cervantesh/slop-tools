@@ -89,28 +89,60 @@ function itemDe(r, extras = {}) {
 }
 
 export function armarPlan({ results, nameSwap, contrato, calidad }) {
-  const fallan = (results || []).filter(r => r.failed).sort((a, b) => prioridad(b) - prioridad(a))
-  const porCapa = new Map()
-  for (const r of fallan) {
-    const capa = CAPA[r.cat] || 'Otros'
-    if (!porCapa.has(capa)) porCapa.set(capa, [])
-    porCapa.get(capa).push(r)
-  }
-  const capas = [...porCapa.entries()]
-    .sort((a, b) => b[1].reduce((s, r) => s + prioridad(r), 0) - a[1].reduce((s, r) => s + prioridad(r), 0))
-    .map(([capa, items]) => ({
+  // El plan se ordena por CONFIANZA primero (no solo por categoría visual):
+  // 1) ALTA (holdout)  2) dudosa  3) baja/sin medir  4) contrato  5) calidad
+  const fallan = (results || []).filter(r => r.failed)
+  const items = fallan.map(r => itemDe(r)).sort((a, b) => b.prioridad - a.prioridad)
+
+  const esAlta = i => i.nivel === 'alta'
+  const esDudosa = i => i.nivel === 'dudosa'
+  const esResto = i => !esAlta(i) && !esDudosa(i)
+
+  const capas = []
+  const pushGrupo = (capa, lista, nota) => {
+    if (!lista.length) return
+    capas.push({
       capa,
-      peso: items.reduce((s, r) => s + r.weight, 0),
-      items: items.map(r => itemDe(r)),
-    }))
+      nota: nota || null,
+      peso: lista.reduce((s, r) => s + r.weight, 0),
+      items: lista,
+    })
+  }
+
+  pushGrupo(
+    'Primero · confianza ALTA',
+    items.filter(esAlta),
+    'Estas aguantan fuera de muestra. Arréglalas primero; son las que sí sostienen «parece slop».',
+  )
+  pushGrupo(
+    'Después · confianza dudosa',
+    items.filter(esDudosa),
+    'Se ven bien en muestra y se caen en holdout. Útiles como higiene, no como veredicto de IA.',
+  )
+  pushGrupo(
+    'Opcional · poca o nula medición',
+    items.filter(esResto),
+    'Sin prueba fuerte de separación. No construyas el informe solo con estas.',
+  )
+
+  // Dentro de cada grupo de procedencia, sub-ordenar por capa de trabajo
+  // (contenido antes que CSS) manteniendo el grupo de confianza.
+  for (const capa of capas) {
+    capa.items.sort((a, b) => {
+      const ea = ESFUERZO[a.cat] || 2, eb = ESFUERZO[b.cat] || 2
+      if (ea !== eb) return ea - eb
+      return b.prioridad - a.prioridad
+    })
+  }
 
   const contratoFallos = (contrato?.checks || []).filter(c => c.failed).map(c => itemDe(
     { ...c, tipo: 'contrato' },
-    { sello: 'contrato de diseño', confianza: 0.9, prioridad: c.weight },
+    { sello: 'contrato de diseño', confianza: 0.9, nivel: 'contrato', prioridad: c.weight },
   ))
   if (contratoFallos.length) {
     capas.push({
       capa: 'Contrato de diseño',
+      nota: 'Fidelidad a DESIGN.md / tokens — no es prueba de autoría.',
       peso: contratoFallos.reduce((s, r) => s + r.weight, 0),
       items: contratoFallos,
     })
@@ -118,11 +150,12 @@ export function armarPlan({ results, nameSwap, contrato, calidad }) {
 
   const calidadFallos = (calidad?.checks || []).filter(c => c.failed).map(c => itemDe(
     { ...c, tipo: 'calidad' },
-    { sello: 'calidad / a11y', confianza: 0.85, prioridad: c.weight },
+    { sello: 'calidad / a11y', confianza: 0.85, nivel: 'calidad', prioridad: c.weight },
   ))
   if (calidadFallos.length) {
     capas.push({
       capa: 'Calidad y producto',
+      nota: 'Higiene y a11y — arreglar sí; no confundir con «hecho por IA».',
       peso: calidadFallos.reduce((s, r) => s + r.weight, 0),
       items: calidadFallos,
     })
@@ -134,5 +167,6 @@ export function armarPlan({ results, nameSwap, contrato, calidad }) {
       : null,
     capas,
     totalHallazgos: fallan.length + contratoFallos.length + calidadFallos.length,
+    orden: 'confianza (ALTA → dudosa → resto) · luego esfuerzo de capa · luego peso',
   }
 }
