@@ -397,6 +397,14 @@
       "file": "Tw.jsx",
       "mode": "create",
       "content": "import { Sidebar } from \"./Sidebar\";\nimport { StatCard } from \"./StatCard\";\nimport { PieChart } from \"./PieChart\";\nexport const RecentActivity = () => null;\nexport const Panel = () => (\n  <div>\n    <Sidebar />\n    <StatCard />\n    <PieChart />\n    <RecentActivity />\n  </div>\n);"
+    },
+    {
+      "id": "m-C4",
+      "rule": "C4",
+      "desc": "Escala de espaciado dispersa: la escala de Tailwind usada a discrecion",
+      "file": "Dispersa.jsx",
+      "mode": "create",
+      "content": "export const Dispersa = () => (\n  <section>\n    <div className=\"p-1\">bloque 1</div>\n    <div className=\"p-2\">bloque 2</div>\n    <div className=\"p-3\">bloque 3</div>\n    <div className=\"p-5\">bloque 4</div>\n    <div className=\"p-7\">bloque 5</div>\n    <div className=\"p-9\">bloque 6</div>\n    <div className=\"p-10\">bloque 7</div>\n    <div className=\"p-11\">bloque 8</div>\n    <div className=\"p-12\">bloque 9</div>\n    <div className=\"p-14\">bloque 10</div>\n    <div className=\"p-16\">bloque 11</div>\n    <div className=\"p-20\">bloque 12</div>\n    <div className=\"p-24\">bloque 13</div>\n    <div className=\"gap-11\">bloque 14</div>\n    <div className=\"m-9\">bloque 15</div>\n  </section>\n);"
     }
   ]
 }

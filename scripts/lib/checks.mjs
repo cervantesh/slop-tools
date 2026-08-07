@@ -5,6 +5,7 @@
 import { find, all, esProsa, lineaDe, clasesUtilidad, findClases } from './util.mjs'
 import { neutrosPlanos, paresBajoContraste, botonInvisible, diversidadDeTono } from './color.mjs'
 import { navPorDefecto, footerPorDefecto, cromoFalso, kickerEnDosColumnas, esqueletoDashboard } from './structure.mjs'
+import { escalas } from './escala.mjs'
 
 // Arreglo y estado de validacion de cada comprobacion programatica. Van aparte
 // del cuerpo para que las funciones queden legibles; las cifras de `validado`
@@ -16,6 +17,14 @@ const META = {
   B2: { fix: 'Una sola familia bien usada es disciplina en producto; en marca, empareja.', validado: { J_banda: -0.06, separa: false } },
   C1: { fix: 'Separa con espacio primero, luego con un escalon de luminancia del 3-5%. El filete gris es el ultimo recurso.', validado: { J_banda: 0, separa: false, estado: 'no_medible' , revalidar: 'sustrato ampliado a clases de utilidad tras la medicion' } },
   C3: { fix: 'Que el radio y el padding senalen la funcion del elemento en vez de ser constantes.', validado: { J_banda: 0.05, separa: false } },
+  C4: {
+    fix: 'Declara una escala de espaciado y quedate en ella. Catorce valores distintos no es un sistema, es la escala de Tailwind usada a discrecion.',
+    validado: {
+      J_banda: 0.552, pos: 0.90, neg: 0.35, separa: true, insample: true,
+      n: { pos: 20, neg: 23 },
+      decision: 'J 0,55 con intervalos separados, la mas alta del catalogo. Pero el umbral se ajusto sobre la MISMA muestra que la valida: la cifra encogera fuera de muestra.',
+    },
+  },
   E4: { fix: 'Cinco descripciones distintas, o ninguna. Una repetida cinco veces es peor que el vacio.', validado: { J_banda: 0.04, separa: false } },
   L1: { fix: 'Resuelve el plural con un condicional o con Intl.PluralRules.', validado: { J_banda: 0.40, separa: false } },
   L3: { fix: 'Restaura los diacriticos en los archivos que salieron en ASCII plano.', validado: { J_banda: 0.01, separa: false, estado: 'no_medible' } },
@@ -33,10 +42,28 @@ const META = {
 }
 
 export function programaticas(ctx) {
-  const { styleFiles, codeFiles, tokens, blks, cssTexto } = ctx
+  const { files, styleFiles, codeFiles, tokens, blks, cssTexto } = ctx
   const clases = clasesUtilidad(codeFiles)
+  const textoTodo = all(files)
 
   return aplicarMeta([
+
+    // La inversa de C3, y la unica regla del catalogo derivada de la medicion
+    // en vez de la bibliografia. Las fuentes decian uniformidad; los datos
+    // dicen dispersion: en la banda controlada, lo generado usa 14+ valores
+    // distintos de espaciado el 90% de las veces frente al 35% de lo humano.
+    //
+    // Usa el extractor compartido de escala.mjs a proposito: el umbral se
+    // ajusto sobre las cifras que produce ese extractor y no transfiere a otro.
+    // research/verifica-escala.mjs comprueba que siguen coincidiendo.
+    { id: 'C4', tipo: 'procedencia', cat: 'Layout', weight: 3, applies: 'ambos',
+      title: 'Escala de espaciado dispersa',
+      run() {
+        const { espacios } = escalas(cssTexto, textoTodo)
+        const distintos = new Set(espacios).size
+        return { failed: distintos >= 14,
+          detail: `${distintos} valores distintos de espaciado sobre ${espacios.length} declaraciones (umbral 14)` }
+      } },
 
     { id: 'A2', tipo: 'procedencia', cat: 'Color', weight: 2, applies: 'landing', title: 'Dark mode permanente por defecto',
       exempt: ['atmospheric'],
@@ -105,7 +132,18 @@ export function programaticas(ctx) {
           samples: [...corto.samples, ...muestrasLargo, ...util.samples] }
       } },
 
-    { id: 'C3', tipo: 'procedencia', cat: 'Layout', weight: 2, applies: 'ambos', title: 'Radio y padding uniformes',
+    // RECLASIFICADA de procedencia a defecto.
+    //
+    // Codificaba la hipotesis de las fuentes —"la IA produce radios y
+    // espaciados uniformes"— y la medicion la refuto con separacion fuerte:
+    // AUC 0,277 en dominancia del radio, o sea que lo GENERADO es MENOS
+    // uniforme. C3 mide J = 0,05: no dice nada sobre procedencia.
+    //
+    // No se elimina porque la uniformidad si es un criterio de disciplina de
+    // sistema de diseno. Sigue reportandose, pero fuera de la puntuacion de
+    // procedencia. La regla que si discrimina es su inversa, C4.
+    // research/RESULTADOS.md §3.5
+    { id: 'C3', tipo: 'defecto', cat: 'Layout', weight: 2, applies: 'ambos', title: 'Radio y padding uniformes',
       run() {
         const dominancia = (re) => {
           const vals = [...cssTexto.matchAll(re)].map(m => m[1].trim())

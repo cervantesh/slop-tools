@@ -115,6 +115,9 @@ function sello(c) {
   // Decirlo importa mas que la cifra.
   if (v.revalidar) return { etiqueta: 'reimplementada, pendiente de medir', confianza: 0.4 }
   if (v.estado === 'no_medible') return { etiqueta: 'no medible', confianza: 0.3 }
+  // Umbral ajustado sobre la misma muestra que lo valida: la cifra encogera
+  // fuera de muestra. Se reporta, pero no se le da confianza plena.
+  if (v.insample) return { etiqueta: `J ${String(v.J_banda).replace('.', ',')} en muestra, sin validar fuera`, confianza: 0.7 }
   if (v.separa) return { etiqueta: `validado J ${String(v.J_banda).replace('.', ',')}`, confianza: 1 }
   return { etiqueta: `medido J ${String(v.J_banda).replace('.', ',')}, no separa`, confianza: 0.6 }
 }
