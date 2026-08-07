@@ -33,13 +33,22 @@ node scripts/slop-scan.mjs ./src --brand "TuMarca" --profile producto
 
 ```
   PUNTUACIÓN  32/100 — Se identifica en diez segundos
-  12 de 20 comprobaciones automáticas fallan
+  NUCLEO      71/100 — solo 8 reglas de confianza alta (holdout)
+
+  ── De qué fiarte (holdout) ──
+  Núcleo ALTA (8): CS3, D5, E7, L1, L2, P4, UX2, UX6
+  Fallan ALTA:    UX2, L2
+  Fallan DUDOSA:  C4, A1
+  → Puedes apoyar un veredicto de «parece slop» en las ALTA.
 
   ── Prueba del cambio de nombre (marca: "TuMarca") ──
   ✗ 16 titular(es) que funcionarían para un competidor
       components/ClientView.jsx:236  "Elige tu experiencia"
   ...
 ```
+
+No todas las reglas valen igual: **confianza alta** = aguantan fuera de muestra;
+**dudosa** = en la muestra se ven bien y en el holdout se caen.
 
 Opciones:
 

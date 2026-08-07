@@ -357,6 +357,14 @@ Va el último porque depende de P5 para poder demostrar que funciona.
 
 ---
 
+## P14 · Núcleo de confianza ALTA vs DUDOSA `[x]`
+
+> **Hecho.** La salida distingue reglas que aguantan holdout (`UX2`, `L2`, `L1`, `UX6`,
+> `D5`, `E7`, `CS3`, `P4`) de las dudosas. Score **NÚCLEO**, bloque «De qué fiarte», sellos
+> y plan ordenado por confianza. `data/nucleo-validado.json` + `scripts/lib/nucleo.mjs`.
+
+---
+
 ## Fuera de plan, anotado
 
 - Cinco archivos de `research/` entraron en un commit mío por `git add -A` sin que yo los

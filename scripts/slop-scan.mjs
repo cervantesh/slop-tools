@@ -29,6 +29,7 @@ import { firmaMacro } from './lib/structure.mjs'
 import { genericidad } from './lib/genericidad.mjs'
 import { resolverRutaContrato, cargarContrato, comprobarContrato } from './lib/contrato.mjs'
 import { sello, armarPlan } from './lib/sello.mjs'
+import { resumenConfianza, nucleoInfo } from './lib/nucleo.mjs'
 import { comprobarCalidad, comprobarDominio } from './lib/calidad.mjs'
 import { registrar, imprimirStats } from './lib/history.mjs'
 import * as bl from './lib/baseline.mjs'
@@ -261,6 +262,13 @@ if (WRITE_LOG) bl.escribirLog(ROOT, firma, score, `slop-scan ${score}/100 · ${b
 const planArmado = armarPlan({
   results, nameSwap: swap, contrato: informeContrato, calidad: informeCalidad,
 })
+const confHallazgos = resumenConfianza(results)
+// Puntuación solo con el núcleo de confianza alta (para no inflar con reglas dudosas).
+const nucleoIds = new Set(nucleoInfo().alta)
+const procAlta = procedencia.filter(r => nucleoIds.has(r.id))
+const maxNucleo = procAlta.reduce((a, r) => a + r.weight, 0)
+const lostNucleo = procAlta.filter(r => r.failed).reduce((a, r) => a + r.weight, 0)
+const scoreNucleo = maxNucleo ? Math.round(100 * (1 - lostNucleo / maxNucleo)) : null
 
 /* ── historial local (observabilidad) ── */
 if (!NO_HISTORY && !STATS) {
@@ -280,7 +288,12 @@ if (!NO_HISTORY && !STATS) {
 
 if (PLAN) {
   console.log(`\n  PLAN DE REMEDIACION · ${ROOT}`)
-  console.log(`  Puntuacion ${score}/100 — ${band} · ${planArmado.totalHallazgos} hallazgo(s)\n`)
+  console.log(`  Puntuacion ${score}/100 — ${band} · ${planArmado.totalHallazgos} hallazgo(s)`)
+  if (scoreNucleo != null) {
+    console.log(`  Nucleo validado (solo confianza alta): ${scoreNucleo}/100 · ${nucleoInfo().alta.join(', ')}`)
+  }
+  if (confHallazgos.aviso) console.log(`  ! ${confHallazgos.aviso}`)
+  console.log('')
 
   if (planArmado.nameSwap) {
     console.log('  ANTES DE NADA · prueba del cambio de nombre')
@@ -295,7 +308,8 @@ if (PLAN) {
     paso++
     console.log(`  ${paso} · ${capa.capa.toUpperCase()}   ${capa.items.length} hallazgo(s) · peso ${capa.peso}`)
     for (const r of capa.items) {
-      console.log(`\n      ${r.id} · ${r.title}   [${r.sello}]`)
+      const nv = r.nivel === 'alta' ? ' ★ ALTA' : r.nivel === 'dudosa' ? ' · dudosa' : ''
+      console.log(`\n      ${r.id} · ${r.title}   [${r.sello}]${nv}`)
       if (r.why) console.log(`      Por que delata: ${r.why}`)
       console.log(`      Que hacer:      ${r.fix || '(sin arreglo declarado — ver references/remediation.md)'}`)
       const d = (r.samples || []).slice(0, 3).map(s => `${s.file}:${s.line}`).join(', ')
@@ -319,11 +333,13 @@ if (PLAN) {
         id: r.id, tipo: r.tipo || 'procedencia', cat: r.cat, title: r.title, weight: r.weight,
         failed: r.failed, detail: r.detail, origen: r.origen, source: r.source,
         why: r.why || null, fix: r.fix || null, validado: r.validado || null,
-        sello: s.etiqueta, confianza: s.confianza,
+        sello: s.etiqueta, confianza: s.confianza, nivel: s.nivel, detalle_nivel: s.detalle_nivel,
         samples: r.samples || [],
       }
     }),
     plan: planArmado,
+    nucleo: { ...nucleoInfo(), score: scoreNucleo, fallan_alta: confHallazgos.fallan.alta.map(x => x.id) },
+    confianza_hallazgos: confHallazgos,
     resumen: {
       procedencia: { total: procedencia.length, fallan: procedencia.filter(r => r.failed).length },
       defecto: { total: defectos.length, fallan: defectos.filter(r => r.failed).length },
@@ -331,6 +347,7 @@ if (PLAN) {
         ? { total: informeContrato.total, fallan: informeContrato.fallan, score: informeContrato.score, origen: informeContrato.origen }
         : null,
       calidad: { total: informeCalidad.total, fallan: informeCalidad.fallan, score: informeCalidad.score },
+      nucleo: scoreNucleo != null ? { score: scoreNucleo, reglas: nucleoInfo().alta.length } : null,
     },
     contrato: informeContrato,
     calidad: informeCalidad,
@@ -346,6 +363,9 @@ if (PLAN) {
   console.log(`  perfil: ${PROFILE}${GENRE ? ` · genero: ${GENRE}` : ''} · ${files.length} archivos · ${tokens.size} tokens de CSS`)
   console.log(`  ${declarativas.length} reglas declarativas + ${todas.length - declarativas.length} programaticas\n`)
   console.log(`  PUNTUACION  ${score}/100 — ${band}`)
+  if (scoreNucleo != null) {
+    console.log(`  NUCLEO      ${scoreNucleo}/100 — solo ${nucleoInfo().alta.length} reglas de confianza alta (holdout)`)
+  }
   console.log(`  procedencia: ${procedencia.filter(r => r.failed).length} de ${procedencia.length} fallan  (forman la puntuacion)`)
   console.log(`  defecto:     ${defectos.filter(r => r.failed).length} de ${defectos.length} fallan  (calidad, NO puntuan)`)
   if (informeContrato) {
@@ -354,6 +374,23 @@ if (PLAN) {
   console.log(`  calidad:     ${informeCalidad.fallan} de ${informeCalidad.total} fallan  (higiene producto/a11y · ${informeCalidad.score}/100)`)
   if (exentasPorGenero.length) console.log(`  ${exentasPorGenero.length} exenta(s) por genero "${GENRE}": ${exentasPorGenero.map(c => c.id).join(', ')}`)
   console.log('')
+
+  // Bloque simple: de qué fiarte
+  {
+    const n = nucleoInfo()
+    const fa = confHallazgos.fallan.alta.map(x => x.id)
+    const fd = confHallazgos.fallan.dudosa.map(x => x.id)
+    const fb = [...confHallazgos.fallan.baja, ...confHallazgos.fallan.sin_medir].map(x => x.id)
+    console.log('  ── De qué fiarte (holdout) ──')
+    console.log(`  Núcleo ALTA (${n.alta.length}): ${n.alta.join(', ') || '—'}`)
+    console.log(`  Fallan ALTA:    ${fa.length ? fa.join(', ') : '(ninguna)'}`)
+    console.log(`  Fallan DUDOSA:  ${fd.length ? fd.join(', ') : '(ninguna)'}`)
+    if (fb.length) console.log(`  Fallan BAJA/sin medir: ${fb.join(', ')}`)
+    if (confHallazgos.aviso) console.log(`  ⚠ ${confHallazgos.aviso}`)
+    else if (fa.length) console.log('  → Puedes apoyar un veredicto de «parece slop» en las ALTA.')
+    else console.log('  → Sin fallos del núcleo: no digas «es IA» por el resto de reglas solas.')
+    console.log('')
+  }
 
   if (swap) {
     console.log(`  ── Prueba del cambio de nombre (marca: "${BRAND}") ──`)
@@ -411,13 +448,28 @@ if (PLAN) {
   }
 
   if (fallan.length) {
-    console.log('  ── Fallan ──')
-    for (const r of fallan) {
-      console.log(`  x ${r.id} · ${r.title}  [peso ${r.weight} · ${sello(r).etiqueta}]`)
+    const ordenNivel = { alta: 0, dudosa: 1, media: 1, baja: 2, sin_medir: 3 }
+    const fallanOrd = [...fallan].sort((a, b) => {
+      const sa = sello(a), sb = sello(b)
+      const na = ordenNivel[sa.nivel] ?? 4, nb = ordenNivel[sb.nivel] ?? 4
+      if (na !== nb) return na - nb
+      return (sb.confianza * b.weight) - (sa.confianza * a.weight)
+    })
+    console.log('  ── Fallan (confianza alta primero) ──')
+    for (const r of fallanOrd) {
+      const s = sello(r)
+      const badge = s.nivel === 'alta' ? '★ ALTA'
+        : s.nivel === 'dudosa' ? '· dudosa'
+        : s.nivel === 'baja' ? '· baja'
+        : s.nivel === 'sin_medir' ? '· sin medir'
+        : ''
+      console.log(`  x ${r.id} · ${r.title}  [peso ${r.weight} · ${s.etiqueta}]${badge ? '  ' + badge : ''}`)
       console.log(`      ${r.detail}`)
+      if (s.detalle_nivel && (s.nivel === 'alta' || s.nivel === 'dudosa')) {
+        console.log(`      confianza: ${s.detalle_nivel}`)
+      }
       if (r.nota) console.log(`      nota: ${r.nota}`)
-      for (const s of (r.samples || []).slice(0, 3)) console.log(`      ${s.file}:${s.line}  ${s.text}`)
-      // El arreglo estaba en el catalogo y no llegaba nunca a la salida.
+      for (const s2 of (r.samples || []).slice(0, 3)) console.log(`      ${s2.file}:${s2.line}  ${s2.text}`)
       if (r.fix) console.log(`      → ${r.fix}`)
     }
     console.log('')

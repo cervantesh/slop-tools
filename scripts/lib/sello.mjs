@@ -1,6 +1,8 @@
 // Estado epistemico de cada comprobacion: lo medido frente a lo opinado.
 // Usado por slop-scan (salida humana) y slop-fix (orden del plan).
 
+import { nivelConfianza } from './nucleo.mjs'
+
 export const ESFUERZO = {
   Copy: 1, Localizacion: 1, Imagen: 2, Calidad: 2,
   Color: 2, Tipografia: 2, Motion: 2, Accesibilidad: 2,
@@ -16,31 +18,51 @@ export const CAPA = {
 
 export function sello(c) {
   const v = c.validado
-  if (!v) return { etiqueta: 'sin medir', confianza: 0.4 }
-  if (v.revalidar) return { etiqueta: 'reimplementada, pendiente de medir', confianza: 0.4 }
-  if (v.estado === 'no_medible') return { etiqueta: 'no medible', confianza: 0.3 }
-  if (v.estado === 'premisas_falsada') {
+  const tier = (c.id && c.tipo !== 'defecto' && c.tipo !== 'calidad' && c.tipo !== 'contrato')
+    ? nivelConfianza(c.id, v)
+    : null
+
+  let base
+  if (!v) base = { etiqueta: 'sin medir', confianza: 0.4 }
+  else if (v.revalidar) base = { etiqueta: 'reimplementada, pendiente de medir', confianza: 0.4 }
+  else if (v.estado === 'no_medible') base = { etiqueta: 'no medible', confianza: 0.3 }
+  else if (v.estado === 'premisas_falsada') {
     const tasa = v.tasa_humano != null ? Math.round(v.tasa_humano * 100) : '?'
-    return { etiqueta: `premisas falsada (${tasa}% en humanos ES)`, confianza: 0.3 }
-  }
-  if (v.insample) {
-    return {
+    base = { etiqueta: `premisas falsada (${tasa}% en humanos ES)`, confianza: 0.3 }
+  } else if (v.insample) {
+    base = {
       etiqueta: `J ${String(v.J_banda).replace('.', ',')} en muestra, sin validar fuera`,
       confianza: 0.7,
     }
+  } else if (v.separa) {
+    base = { etiqueta: `validado J ${String(v.J_banda).replace('.', ',')}`, confianza: 1 }
+  } else {
+    base = {
+      etiqueta: `medido J ${String(v.J_banda).replace('.', ',')}, no separa`,
+      confianza: 0.6,
+    }
   }
-  if (v.separa) {
-    return { etiqueta: `validado J ${String(v.J_banda).replace('.', ',')}`, confianza: 1 }
+
+  if (tier) {
+    // El holdout manda sobre el optimismo del sello in-sample.
+    const confianza = tier.nivel === 'alta' ? Math.max(base.confianza, 0.95)
+      : tier.nivel === 'dudosa' ? Math.min(base.confianza, 0.55)
+      : tier.nivel === 'baja' ? Math.min(base.confianza, 0.4)
+      : base.confianza
+    return {
+      etiqueta: `${tier.etiqueta} · ${base.etiqueta}`,
+      confianza,
+      nivel: tier.nivel,
+      detalle_nivel: tier.detalle,
+    }
   }
-  return {
-    etiqueta: `medido J ${String(v.J_banda).replace('.', ',')}, no separa`,
-    confianza: 0.6,
-  }
+  return { ...base, nivel: null, detalle_nivel: null }
 }
 
-/** Prioridad de remediacion: peso × confianza ÷ esfuerzo. */
+/** Prioridad de remediacion: peso × confianza ÷ esfuerzo (confianza ya refleja holdout). */
 export function prioridad(r) {
-  return (r.weight * sello(r).confianza) / (ESFUERZO[r.cat] || 2)
+  const s = sello(r)
+  return (r.weight * s.confianza) / (ESFUERZO[r.cat] || 2)
 }
 
 /**
@@ -48,6 +70,7 @@ export function prioridad(r) {
  * @returns {{ capas: { capa, peso, items }[], nameSwap, contrato }}
  */
 function itemDe(r, extras = {}) {
+  const s = sello(r)
   return {
     id: r.id,
     title: r.title,
@@ -57,8 +80,9 @@ function itemDe(r, extras = {}) {
     why: r.why || null,
     fix: r.fix || null,
     detail: r.detail || null,
-    sello: extras.sello || sello(r).etiqueta,
-    confianza: extras.confianza ?? sello(r).confianza,
+    sello: extras.sello || s.etiqueta,
+    confianza: extras.confianza ?? s.confianza,
+    nivel: extras.nivel ?? s.nivel,
     prioridad: extras.prioridad ?? Number(prioridad(r).toFixed(3)),
     samples: (r.samples || []).slice(0, 5),
   }
