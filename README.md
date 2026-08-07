@@ -97,6 +97,39 @@ node scripts/slop-scan.mjs ./src --since-baseline --fail-on-new-drift   # en CI
 Tolera lo que ya había y falla sólo ante lo que se introduzca a partir de ahora. La identidad
 de cada hallazgo excluye el número de línea, así que mover código no lo convierte en nuevo.
 
+## La otra mitad: generar en vez de sólo detectar
+
+Detectar no es encaminar. `slop-init` genera un punto de partida comprometido —paleta,
+pareja tipográfica, escala, radios, movimiento— y el `DESIGN.md` que lo declara.
+
+```bash
+node scripts/slop-init.mjs ./sistema
+```
+
+```
+  semilla     1837
+  postura     técnica · esquema claro
+  tono        teal (186 grados)
+  tipografia  Literata / Karla
+  espaciado   4 · 8 · 16 · 24 · 40
+  radios      2 · 6 · 14
+  movimiento  140ms · cubic-bezier(.33,1,.68,1)
+```
+
+**El remedio no es un prompt mejor, es restricción declarada.** Un modelo sin dirección
+converge al promedio; con la paleta y la escala ya fijadas, no puede.
+
+Dos propiedades que **se comprueban en `npm test`**, no se prometen:
+
+- **Se autoaprueba** — 10 de 10 sistemas generados pasan este mismo escáner con 100/100. Una
+  herramienta que genera lo que ella misma marcaría no vale nada.
+- **Diverge** — seis tonos y seis tipografías distintas en diez invocaciones, cero pares
+  idénticos. Si generase siempre lo mismo habríamos creado la monocultura de tercer orden,
+  que es justo contra lo que avisa la regla `AS9`.
+
+Los repertorios excluyen las familias por defecto de las herramientas **y** el kit de segundo
+orden —papel crema, serif display, acento terracota— al que converge el primer arreglo.
+
 ## Qué hay dentro
 
 | Ruta | Contenido |

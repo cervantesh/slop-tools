@@ -1,16 +1,18 @@
 {
   "name": "slop-tools",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "description": "Base de conocimiento y auditor estatico para detectar si un diseno visual o web parece generado por IA. 58 comprobaciones automaticas, con validacion empirica sobre corpus etiquetado",
   "type": "module",
   "license": "MIT",
   "bin": {
-    "slop-scan": "scripts/slop-scan.mjs"
+    "slop-scan": "scripts/slop-scan.mjs",
+    "slop-init": "scripts/slop-init.mjs"
   },
   "scripts": {
     "scan": "node scripts/slop-scan.mjs",
     "bench": "node bench/slop-bench.mjs",
-    "test": "node bench/slop-bench.mjs && node bench/verifica-conteos.mjs && node research/verifica-escala.mjs && node research/verifica-rasgos.mjs"
+    "test": "node bench/slop-bench.mjs && node bench/verifica-conteos.mjs && node bench/verifica-init.mjs && node research/verifica-escala.mjs && node research/verifica-rasgos.mjs",
+    "init": "node scripts/slop-init.mjs"
   },
   "engines": {
     "node": ">=18"

@@ -231,7 +231,40 @@ Y recuperar las pérdidas: 24 repositorios saltados por tamaño, que son sobre t
 
 ---
 
-## P8 · `slop-init`, la mitad generativa `[ ]`
+## P8 · `slop-init`, la mitad generativa `[x]`
+
+> **Hecho.** `node scripts/slop-init.mjs <destino> [--seed N]` genera un punto de partida
+> comprometido: paleta de tres tonos en OKLCH con neutros de croma real, pareja tipográfica,
+> escala de cinco espaciados, jerarquía de tres radios, presupuesto de movimiento, y el
+> `DESIGN.md` que lo declara.
+>
+> Los repertorios excluyen a la vez las familias por defecto de las herramientas —Inter,
+> Poppins, Geist, Roboto, Open Sans— **y el kit de segundo orden que prohíbe `AS9`**: papel
+> crema con serif display y acento terracota. La banda 250–300° de OKLCH, donde vive el
+> índigo-violeta de `A1`, queda fuera del repertorio de tonos.
+>
+> **Las dos propiedades se comprueban, no se prometen.** `bench/verifica-init.mjs` está en
+> `npm test`:
+>
+> - **Autoaprobación** — 10 de 10 sistemas generados pasan el propio escáner con 100/100 de
+>   procedencia. Una herramienta que genera lo que ella misma marcaría no vale nada.
+> - **Divergencia** — seis tonos, seis display, cinco texto distintos en diez invocaciones, y
+>   cero pares idénticos. El mínimo esperado se acota a la cardinalidad real de cada eje: a un
+>   eje binario no se le puede exigir el 40% de N.
+>
+> **Y el verificador encontró dos fallos reales del generador antes de que nadie lo usara:**
+>
+> 1. **Diez invocaciones elegían el mismo tono.** Semillas contiguas en xorshift producen
+>    primeros valores correlacionados. Arreglado mezclando la semilla y descartando los
+>    primeros pasos. Sin el test, `slop-init` habría sido exactamente la monocultura que
+>    existe para evitar.
+> 2. **Los sistemas oscuros disparaban `A2`** por declarar `color-scheme: dark` sin
+>    alternativa. Ahora emiten su bloque `prefers-color-scheme: light`. No es esquivar la
+>    comprobación: es que la comprobación tenía razón.
+>
+> **Bonus de dogfooding:** auditarse a sí mismo destapó un falso positivo de `B2`. La regla
+> contaba familias sólo en `font-family`, así que un sistema basado en tokens —donde siempre
+> es `var(--texto)`— parecía no tener ninguna. Ahora también lee las custom properties.
 
 **El problema de fondo.** Las herramientas de las que copiamos son **generadoras** —hallmark
 tiene catorce arquetipos de navegación con rotación sin repetición— y nosotros extrajimos

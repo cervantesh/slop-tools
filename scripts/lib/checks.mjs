@@ -112,9 +112,15 @@ export function programaticas(ctx) {
     // sigue siendo un criterio de diseno valido, pero no puntua.
     { id: 'B2', tipo: 'defecto', cat: 'Tipografia', weight: 1, applies: 'landing', title: 'Sin pareja tipografica',
       run() {
-        const stacks = new Set([...cssTexto.matchAll(/font-family:\s*([^;]+);/g)]
-          .map(m => m[1].split(',')[0].trim().replace(/["']/g, '').toLowerCase())
-          .filter(s => s && !s.startsWith('var(') && s !== 'inherit'))
+        // Tambien las familias declaradas en custom properties. Sin esto, un
+        // sistema basado en tokens —donde `font-family` siempre es `var(--x)`—
+        // parece no tener ninguna familia y la regla dispara al reves. Lo
+        // descubrio slop-init auditandose a si mismo.
+        const primera = v => v.split(',')[0].trim().replace(/["']/g, '').toLowerCase()
+        const stacks = new Set([
+          ...[...cssTexto.matchAll(/font-family:\s*([^;}]+)[;}]/g)].map(m => primera(m[1])),
+          ...[...cssTexto.matchAll(/--[\w-]*(?:font|display|texto|type|serif|sans)[\w-]*\s*:\s*([^;}]+)[;}]/gi)].map(m => primera(m[1])),
+        ].filter(s => s && !s.startsWith('var(') && s !== 'inherit' && !/^\d/.test(s)))
         return { failed: stacks.size <= 1, detail: `${stacks.size} familia(s): ${[...stacks].join(', ') || '—'}` }
       } },
 
