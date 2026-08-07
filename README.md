@@ -107,6 +107,7 @@ de cada hallazgo excluye el número de línea, así que mover código no lo conv
 | `references/caveats.md` | **Léelo antes de dar un veredicto.** Cuándo la rúbrica se equivoca |
 | `references/remediation.md` | Las 6 reglas correctivas y el orden de arreglo |
 | `references/adversarial.md` | Cómo montar un panel de modelos que no se engañe a sí mismo |
+| `references/hallmark-extracto.md` | **hallmark, vaciado.** 58 gates clasificados, umbrales, géneros y arquetipos |
 | `references/sources.md` | Bibliografía anotada |
 | `data/rules.json` | Catálogo declarativo: 28 reglas con patrón, umbral, porqué y arreglo |
 | `scripts/slop-scan.mjs` | CLI y orquestación |

@@ -92,3 +92,17 @@ h2 { font-size: 1.5rem; }
   background: var(--tierra-suave);
   color: #5c3a26;
 }
+
+/* Toda animacion necesita alternativa de movimiento reducido.
+   Lo descubrio la propia herramienta: HM8 disparo sobre este fixture, que se
+   supone ejemplar, porque declaraba @keyframes sin este bloque. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

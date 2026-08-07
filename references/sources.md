@@ -85,6 +85,11 @@ salvo `--force`, y un bucle que itera hasta 90 o meseta o cinco rondas.
 ### hallmark — Nutlope, MIT
 <https://github.com/nutlope/hallmark>
 
+> **Extraído por completo — no hace falta volver a abrirlo.** Los 58 gates clasificados uno a
+> uno, los umbrales numéricos, la autocrítica de seis ejes, los cuatro géneros con sus
+> exenciones y el catálogo completo de arquetipos están en
+> [`hallmark-extracto.md`](hallmark-extracto.md), junto con el motivo de cada descarte.
+
 **No es un escáner: es Markdown.** Pero contiene los umbrales numéricos más portables del
 corpus: croma mínimo 0.005 en OKLCH para neutros, medida de prosa 45–75ch, máximo 3 familias
 tipográficas, escala de 4px, y el test de botón invisible —falla si el texto está dentro de

@@ -776,6 +776,82 @@
         "separa": false,
         "decision": "J -0.04: cero disparos en la clase generada. La estetica crema/serif/terracota no aparece en el corpus"
       }
+    },
+    {
+      "id": "HM2",
+      "name": "Transicion sobre propiedades de layout",
+      "category": "Motion",
+      "severity": "medium",
+      "applies": "ambos",
+      "weight": 1,
+      "scope": "style",
+      "pattern": "transition:[^;]*\\b(width|height|top|left|right|bottom|margin|padding)\\b",
+      "flags": "i",
+      "threshold": 1,
+      "why": "Animar geometria fuerza reflow en cada fotograma. Se anima transform y opacity, que van en el compositor.",
+      "fix": "Sustituye por transform: translate/scale y opacity.",
+      "source": "hallmark gate 14",
+      "validado": {
+        "estado": "no_medido",
+        "nota": "Extraida de hallmark tras la medicion. Es comprobacion de defecto, no de procedencia: su valor no depende de que discrimine."
+      }
+    },
+    {
+      "id": "HM3",
+      "name": "Easing con rebote en cambios de estado",
+      "category": "Motion",
+      "severity": "low",
+      "applies": "ambos",
+      "weight": 1,
+      "scope": "style",
+      "pattern": "cubic-bezier\\(\\s*[\\d.]+\\s*,\\s*1\\.[1-9]",
+      "flags": "i",
+      "threshold": 1,
+      "why": "El sobreimpulso se reserva a interacciones fisicas (arrastrar, soltar). En un boton o un modal se lee como juguete.",
+      "fix": "Curva sin rebote para cambios de estado de interfaz.",
+      "source": "hallmark gate 12",
+      "validado": {
+        "estado": "no_medido",
+        "nota": "Extraida de hallmark tras la medicion. Es comprobacion de defecto, no de procedencia: su valor no depende de que discrimine."
+      }
+    },
+    {
+      "id": "HM4",
+      "name": "Hover-scale uniforme en todo",
+      "category": "Motion",
+      "severity": "low",
+      "applies": "ambos",
+      "weight": 1,
+      "scope": "all",
+      "pattern": "hover\\\\?:scale-1[01][05]\\b",
+      "flags": "i",
+      "threshold": 3,
+      "why": "El mismo hover:scale-105 aplicado a elementos sin relacion entre si es el micro-gesto por defecto.",
+      "fix": "Que el hover diga algo distinto segun lo que sea el elemento, o quitalo.",
+      "source": "hallmark gate 11",
+      "validado": {
+        "estado": "no_medido",
+        "nota": "Extraida de hallmark tras la medicion. Es comprobacion de defecto, no de procedencia: su valor no depende de que discrimine."
+      }
+    },
+    {
+      "id": "HM5",
+      "name": "Metrica inventada",
+      "category": "Copy",
+      "severity": "high",
+      "applies": "landing",
+      "weight": 1,
+      "scope": "code",
+      "pattern": "\\b\\d+\\s*[x×]\\s*(faster|mas rapido|m\\u00e1s r\\u00e1pido)|\\btrusted by\\s*[\\d,.]+\\s*\\+?|\\b99[.,]9\\s*%|\\+\\s*\\d{1,3}\\s*%\\s*(de\\s*)?(conversion|conversi\\u00f3n|revenue|ingresos)",
+      "flags": "i",
+      "threshold": 1,
+      "why": "Cifra cuantitativa que nadie aporto y que rellena un hueco de prueba social. Si no tiene fuente, es inventada.",
+      "fix": "Sustituye por un guion y la etiqueta, o reconstruye la seccion sin el hueco de cifra.",
+      "source": "hallmark gate 46",
+      "validado": {
+        "estado": "no_medido",
+        "nota": "Extraida de hallmark tras la medicion. Es comprobacion de defecto, no de procedencia: su valor no depende de que discrimine."
+      }
     }
   ]
 }

@@ -291,6 +291,80 @@ export function programaticas(ctx) {
           detail: `${d.tonos} tokens cromaticos en ${d.familias} familia(s) de tono (cubos de 30 grados)` }
       } },
 
+    /* ── extraidas de hallmark tras la medicion ──
+       Todas con peso 1 y sin validar contra el corpus. Se anaden porque son
+       comprobaciones de DEFECTO —accesibilidad, rendimiento, legibilidad— cuyo
+       valor no depende de que discriminen procedencia. No suben la puntuacion
+       de deteccion; cierran huecos de calidad. */
+
+    { id: 'HM1', cat: 'Tipografia', weight: 1, applies: 'ambos', title: 'Titulares en italica',
+      run() {
+        const hits = []
+        for (const b of blks) {
+          if (!/(^|[\s,>+~])(h[1-6]|[.#][\w-]*(title|heading|display|hero)[\w-]*)\b/i.test(b.selector)) continue
+          if (!/font-style:\s*italic/i.test(b.cuerpo)) continue
+          hits.push({ file: b.file, line: lineaDe(b.texto, b.indice), text: b.selector.slice(0, 80) })
+        }
+        return { failed: hits.length > 0,
+          detail: `${hits.length} titular(es) en italica`,
+          samples: hits.slice(0, 4) }
+      } },
+
+    { id: 'HM7', cat: 'Tipografia', weight: 1, applies: 'ambos', title: 'Mas de tres familias tipograficas',
+      run() {
+        const fam = new Set([...cssTexto.matchAll(/font-family:\s*([^;}]+)/gi)]
+          .map(m => m[1].split(',')[0].trim().replace(/["']/g, '').toLowerCase())
+          .filter(s => s && !s.startsWith('var(') && s !== 'inherit' && s !== 'initial'))
+        return { failed: fam.size > 3,
+          detail: `${fam.size} familia(s): ${[...fam].slice(0, 6).join(', ')}` }
+      } },
+
+    { id: 'HM8', cat: 'Motion', weight: 1, applies: 'ambos', title: 'Animacion sin alternativa de movimiento reducido',
+      run() {
+        const anima = find(/@keyframes|animation\s*:/i, styleFiles).total
+        const respeta = /prefers-reduced-motion/i.test(cssTexto)
+        return { failed: anima > 0 && !respeta,
+          detail: anima ? `${anima} declaracion(es) de animacion, ${respeta ? 'con' : 'SIN'} bloque prefers-reduced-motion` : 'sin animacion' }
+      } },
+
+    // DESCARTADA · HM9 "sin overflow-x: clip en html y body" (hallmark gate 34).
+    //
+    // Se implemento y se retiro el mismo dia. Afirmaba un defecto a partir de la
+    // AUSENCIA DE UNA PROFILAXIS: el gate original exige que no haya scroll
+    // horizontal entre 320 y 1920px —cosa que solo se sabe renderizando— y
+    // prescribe overflow-x: clip como arreglo. Marcar la falta del arreglo hace
+    // disparar la regla en casi todo proyecto bien construido que sencillamente
+    // no desborda.
+    //
+    // Es el modo de fallo de E4, medido: disparar en el 100% de una clase y el
+    // 96% de la otra no es detectar, es ruido con peso.
+
+    { id: 'HM10', cat: 'Tipografia', weight: 1, applies: 'ambos', title: 'Medida de prosa fuera de 45-75ch',
+      run() {
+        const fuera = []
+        for (const m of cssTexto.matchAll(/max-width:\s*(\d+(?:\.\d+)?)ch/gi)) {
+          const v = parseFloat(m[1])
+          if (v < 45 || v > 75) fuera.push(`${v}ch`)
+        }
+        return { failed: fuera.length > 0,
+          detail: fuera.length ? `${fuera.length} medida(s) fuera de rango: ${[...new Set(fuera)].slice(0, 5).join(', ')}` : 'sin medidas en ch fuera de rango' }
+      } },
+
+    { id: 'HM12', cat: 'Tipografia', weight: 1, applies: 'ambos', title: 'Mayusculas de display con interlineado bajo 1.0',
+      run() {
+        // Las mayusculas no tienen descendentes: por debajo de 1.0 las cabezas
+        // de una linea chocan con la base de la anterior al partirse el titular.
+        const hits = []
+        for (const b of blks) {
+          if (!/text-transform:\s*uppercase/i.test(b.cuerpo)) continue
+          const m = b.cuerpo.match(/line-height:\s*(0?\.\d+)/i)
+          if (m && parseFloat(m[1]) < 1) {
+            hits.push({ file: b.file, line: lineaDe(b.texto, b.indice), text: `${b.selector.slice(0, 60)} — line-height ${m[1]}` })
+          }
+        }
+        return { failed: hits.length > 0, detail: `${hits.length} bloque(s) en mayusculas con interlineado < 1.0`, samples: hits.slice(0, 4) }
+      } },
+
     /* ── huellas estructurales ── */
 
     // El hairline puede venir del CSS o de la clase `border-b`.

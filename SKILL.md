@@ -111,6 +111,7 @@ La hipótesis rival que debes hacerles batir siempre está en `references/advers
 | `references/caveats.md` | Cuándo cada comprobación NO aplica |
 | `references/remediation.md` | Las 6 reglas correctivas y el orden de arreglo |
 | `references/adversarial.md` | Cómo montar un panel que no se engañe a sí mismo |
+| `references/hallmark-extracto.md` | **hallmark, vaciado.** 58 gates clasificados, umbrales, géneros y arquetipos |
 | `references/sources.md` | Bibliografía anotada con lo que aporta cada fuente |
 | `data/rules.json` | Catálogo declarativo. Añadir una regla no exige tocar código |
 | `scripts/slop-scan.mjs` | CLI y orquestación |
