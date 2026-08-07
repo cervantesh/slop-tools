@@ -91,6 +91,34 @@ Esto no es maquillaje y no debería decidirlo quien hace la auditoría.
 
 No cambia lo que se ve hoy. Cambia que la próxima iteración no vuelva a sedimentar encima.
 
+**Aquí sí conviene una herramienta externa, y no es ésta.** Para disciplina de escala, usa
+[`stylelint-plugin-rhythmguard`](https://github.com/PetriLahdelma/stylelint-plugin-rhythmguard):
+declara una escala (`rhythmic-4`, `product-material-8dp`…) y marca lo que se sale, con
+autofix al valor permitido más cercano.
+
+Por qué no está dentro de `slop-scan`: sus reglas **necesitan una escala declarada como
+configuración**, y este escáner audita proyectos que no conoce, sin configurar nada.
+
+Y por qué son cosas distintas, con números: nuestra propia medición dice que la uniformidad
+de escala **no discrimina** entre diseño generado y humano —`C3` mide J = 0,05, `C1` mide
+J = 0,00— y la métrica de genericidad encontró la hipótesis **invertida**: lo generado usa
+*más* valores distintos de radio, no menos. rhythmguard mide **disciplina de sistema de
+diseño**, que es real y valioso, pero es otra pregunta.
+
+Lo que sí discrimina no es tener escala uniforme, sino **escaparse de ella por los
+extremos**: `UX2` pastilla en todo (J 0,46) y `UX11` tamaño de titular arbitrario (J 0,22).
+
+> Adopción baja al momento de escribir esto: 578 descargas semanales, seis meses de vida y un
+> solo mantenedor. Úsalo en tu cadena de herramientas; no hagas que tu CI dependa de él sin
+> plan B.
+
+### Y si generas interfaz con un agente
+
+[`hallmark`](https://github.com/nutlope/hallmark) no es un escáner —es Markdown para el
+agente que diseña— así que no compite con esto: actúa **antes**, en el momento de generar.
+Instálalo junto a slop-tools, no en su lugar. Lo que de él era mecanizable ya está aquí:
+las puertas cromáticas, las huellas estructurales y el mecanismo de géneros.
+
 ## La comprobación final
 
 Vuelve a hacer la prueba del cambio de nombre. Si el titular sigue funcionando para un
