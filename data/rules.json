@@ -12,8 +12,8 @@
     "validacion": {
       "informe": "research/RESULTADOS.md",
       "medido": {
-        "pos": 26,
-        "neg_stack": 34,
+        "pos": 50,
+        "neg_stack": 62,
         "neg_classic": 11
       },
       "banda": {
@@ -21,11 +21,10 @@
           "min": 20,
           "max": 200
         },
-        "n_pos": 20,
-        "n_neg": 23
+        "n_pos": 34,
+        "n_neg": 32
       },
-      "nota": "El campo validado de cada regla trae su fila de la tabla. Ausencia de validado = regla no presente en la medicion.",
-      "ronda": 2
+      "nota": "El campo validado de cada regla trae su fila de la tabla. Ausencia de validado = regla no presente en la medicion."
     },
     "tipos": {
       "procedencia": "Su proposito es detectar generacion. Forma la puntuacion.",
@@ -51,14 +50,14 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.133,
-        "pos": 0.35,
-        "neg": 0.217,
+        "J_banda": 0.103,
+        "pos": 0.353,
+        "neg": 0.25,
         "separa": false,
-        "ronda": 2
+        "decision": "J 0.13 e intervalos solapados: el tell mas citado de la bibliografia rinde poco"
       },
       "tipo": "procedencia"
     },
@@ -82,15 +81,15 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.113,
-        "pos": 0.2,
-        "neg": 0.087,
+        "J_banda": 0.143,
+        "pos": 0.206,
+        "neg": 0.063,
         "separa": false,
-        "ronda": 2,
-        "nota": "Antes no medible; el sustrato ampliado a clases de utilidad le dio ocasion de disparar"
+        "estado": "no_medible",
+        "nota": "cero disparos en la banda; exige un hero con resplandor radial"
       },
       "sustrato": "CSS y clases de utilidad",
       "tipo": "procedencia"
@@ -112,15 +111,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.05,
-        "pos": 0.05,
+        "J_banda": 0.088,
+        "pos": 0.088,
         "neg": 0,
-        "separa": false,
-        "ronda": 2,
-        "nota": "Antes no medible; el sustrato ampliado a clases de utilidad le dio ocasion de disparar"
+        "separa": false
       },
       "sustrato": "CSS y clases de utilidad",
       "tipo": "procedencia"
@@ -142,14 +139,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": -0.043,
+        "J_banda": -0.031,
         "pos": 0,
-        "neg": 0.043,
-        "separa": false,
-        "ronda": 2
+        "neg": 0.031,
+        "separa": false
       },
       "tipo": "procedencia"
     },
@@ -170,14 +166,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.05,
-        "pos": 0.05,
+        "J_banda": 0.029,
+        "pos": 0.029,
         "neg": 0,
-        "separa": false,
-        "ronda": 2
+        "separa": false
       },
       "tipo": "procedencia"
     },
@@ -198,14 +193,14 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.026,
-        "pos": 0.2,
-        "neg": 0.174,
+        "J_banda": 0.02,
+        "pos": 0.176,
+        "neg": 0.156,
         "separa": false,
-        "ronda": 2
+        "decision": "J 0.02 en banda: enlazar bancos de imagenes es igual de comun en ambas clases"
       },
       "tipo": "procedencia"
     },
@@ -226,14 +221,14 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.407,
-        "pos": 0.45,
-        "neg": 0.043,
+        "J_banda": 0.263,
+        "pos": 0.294,
+        "neg": 0.031,
         "separa": true,
-        "ronda": 2
+        "decision": "J 0.26 en banda, intervalos separados. Precision alta y tasa negativa del 3%"
       },
       "tipo": "procedencia"
     },
@@ -254,14 +249,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.1,
-        "pos": 0.1,
+        "J_banda": 0.088,
+        "pos": 0.088,
         "neg": 0,
-        "separa": false,
-        "ronda": 2
+        "separa": false
       },
       "tipo": "procedencia"
     },
@@ -282,14 +276,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.05,
-        "pos": 0.05,
+        "J_banda": 0.029,
+        "pos": 0.029,
         "neg": 0,
-        "separa": false,
-        "ronda": 2
+        "separa": false
       },
       "tipo": "procedencia"
     },
@@ -310,14 +303,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.15,
-        "pos": 0.15,
+        "J_banda": 0.118,
+        "pos": 0.118,
         "neg": 0,
-        "separa": false,
-        "ronda": 2
+        "separa": false
       },
       "tipo": "procedencia"
     },
@@ -338,14 +330,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.17,
-        "pos": 0.3,
-        "neg": 0.13,
-        "separa": false,
-        "ronda": 2
+        "J_banda": 0.136,
+        "pos": 0.324,
+        "neg": 0.188,
+        "separa": false
       },
       "tipo": "procedencia"
     },
@@ -355,7 +346,7 @@
       "category": "Copy",
       "severity": "critical",
       "applies": "producto",
-      "weight": 3,
+      "weight": 2,
       "scope": "code",
       "pattern": "\\b(lorem ipsum|dummy|placeholder(?!\\s*=)|MVP|4242[\\s-]?4242|4111[\\s-]?1111|5555[\\s-]?5555|@example\\.com|\\.demo\\b)",
       "flags": "i",
@@ -366,14 +357,14 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.348,
-        "pos": 1,
-        "neg": 0.652,
-        "separa": true,
-        "ronda": 2
+        "J_banda": 0.254,
+        "pos": 0.941,
+        "neg": 0.688,
+        "separa": false,
+        "decision": "J 0.25 pero los intervalos vuelven a solaparse con n mayor: dispara en el 94% de lo generado y el 69% de lo humano"
       },
       "tipo": "procedencia"
     },
@@ -394,14 +385,14 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.415,
-        "pos": 0.85,
-        "neg": 0.435,
+        "J_banda": 0.447,
+        "pos": 0.853,
+        "neg": 0.406,
         "separa": true,
-        "ronda": 2
+        "decision": "J 0.45 en banda, intervalos separados, confirmada con n mayor"
       },
       "tipo": "procedencia"
     },
@@ -422,14 +413,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.352,
-        "pos": 0.7,
-        "neg": 0.348,
-        "separa": false,
-        "ronda": 2
+        "J_banda": 0.208,
+        "pos": 0.676,
+        "neg": 0.469,
+        "separa": false
       },
       "tipo": "procedencia"
     },
@@ -439,7 +429,7 @@
       "category": "Layout",
       "severity": "low",
       "applies": "ambos",
-      "weight": 2,
+      "weight": 3,
       "scope": "all",
       "pattern": "rounded-full\\b|border-radius:\\s*9999px",
       "flags": "i",
@@ -450,14 +440,14 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.459,
-        "pos": 0.85,
-        "neg": 0.391,
+        "J_banda": 0.449,
+        "pos": 0.824,
+        "neg": 0.375,
         "separa": true,
-        "ronda": 2
+        "decision": "J 0.45 en banda con intervalos separados y n mayor; sube de 2 a 3"
       },
       "tipo": "procedencia"
     },
@@ -478,14 +468,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.233,
-        "pos": 0.45,
-        "neg": 0.217,
-        "separa": false,
-        "ronda": 2
+        "J_banda": 0.162,
+        "pos": 0.412,
+        "neg": 0.25,
+        "separa": false
       },
       "tipo": "procedencia"
     },
@@ -506,14 +495,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": -0.043,
+        "J_banda": -0.063,
         "pos": 0,
-        "neg": 0.043,
-        "separa": false,
-        "ronda": 2
+        "neg": 0.063,
+        "separa": false
       },
       "tipo": "procedencia"
     },
@@ -534,14 +522,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": -0.043,
-        "pos": 0,
-        "neg": 0.043,
-        "separa": false,
-        "ronda": 2
+        "J_banda": -0.035,
+        "pos": 0.059,
+        "neg": 0.094,
+        "separa": false
       },
       "tipo": "defecto"
     },
@@ -551,7 +538,7 @@
       "category": "Calidad",
       "severity": "high",
       "applies": "producto",
-      "weight": 2,
+      "weight": 3,
       "scope": "code",
       "pattern": "console\\.(log|debug)\\s*\\(",
       "flags": "",
@@ -562,14 +549,14 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.376,
-        "pos": 0.55,
-        "neg": 0.174,
-        "separa": false,
-        "ronda": 2
+        "J_banda": 0.342,
+        "pos": 0.529,
+        "neg": 0.188,
+        "separa": true,
+        "decision": "J 0.34 en banda, intervalos separados. Igual que L1: la primera medicion no tenia potencia para verla"
       },
       "tipo": "procedencia"
     },
@@ -590,14 +577,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.263,
-        "pos": 0.35,
-        "neg": 0.087,
-        "separa": false,
-        "ronda": 2
+        "J_banda": 0.169,
+        "pos": 0.294,
+        "neg": 0.125,
+        "separa": false
       },
       "tipo": "procedencia"
     },
@@ -618,14 +604,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.1,
-        "pos": 0.1,
+        "J_banda": 0.059,
+        "pos": 0.059,
         "neg": 0,
-        "separa": false,
-        "ronda": 2
+        "separa": false
       },
       "tipo": "procedencia"
     },
@@ -646,14 +631,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.057,
-        "pos": 0.1,
-        "neg": 0.043,
-        "separa": false,
-        "ronda": 2
+        "J_banda": 0.028,
+        "pos": 0.059,
+        "neg": 0.031,
+        "separa": false
       },
       "tipo": "defecto"
     },
@@ -674,14 +658,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.176,
-        "pos": 0.35,
-        "neg": 0.174,
-        "separa": false,
-        "ronda": 2
+        "J_banda": 0.134,
+        "pos": 0.353,
+        "neg": 0.219,
+        "separa": false
       },
       "tipo": "procedencia"
     },
@@ -702,14 +685,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.22,
-        "pos": 0.35,
-        "neg": 0.13,
-        "separa": false,
-        "ronda": 2
+        "J_banda": 0.199,
+        "pos": 0.324,
+        "neg": 0.125,
+        "separa": false
       },
       "tipo": "procedencia"
     },
@@ -730,14 +712,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": -0.037,
-        "pos": 0.05,
-        "neg": 0.087,
-        "separa": false,
-        "ronda": 2
+        "J_banda": -0.004,
+        "pos": 0.059,
+        "neg": 0.063,
+        "separa": false
       },
       "tipo": "procedencia"
     },
@@ -758,14 +739,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.163,
-        "pos": 0.25,
-        "neg": 0.087,
-        "separa": false,
-        "ronda": 2
+        "J_banda": 0.083,
+        "pos": 0.176,
+        "neg": 0.094,
+        "separa": false
       },
       "tipo": "procedencia"
     },
@@ -786,15 +766,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.1,
-        "pos": 0.1,
-        "neg": 0,
-        "separa": false,
-        "ronda": 2,
-        "nota": "Antes no medible; el sustrato ampliado a clases de utilidad le dio ocasion de disparar"
+        "J_banda": 0.057,
+        "pos": 0.088,
+        "neg": 0.031,
+        "separa": false
       },
       "sustrato": "CSS y clases de utilidad",
       "tipo": "procedencia"
@@ -816,14 +794,14 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": -0.043,
-        "pos": 0,
-        "neg": 0.043,
+        "J_banda": -0.002,
+        "pos": 0.029,
+        "neg": 0.031,
         "separa": false,
-        "ronda": 2
+        "decision": "J -0.00: la estetica crema/serif/terracota no aparece en el corpus"
       },
       "tipo": "procedencia"
     },
@@ -844,14 +822,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.057,
-        "pos": 0.1,
-        "neg": 0.043,
-        "separa": false,
-        "ronda": 2
+        "J_banda": 0.028,
+        "pos": 0.059,
+        "neg": 0.031,
+        "separa": false
       },
       "tipo": "defecto"
     },
@@ -872,14 +849,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0,
-        "pos": 0,
+        "J_banda": 0.029,
+        "pos": 0.029,
         "neg": 0,
-        "separa": false,
-        "ronda": 2
+        "separa": false
       },
       "tipo": "defecto"
     },
@@ -900,15 +876,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
-        "J_banda": 0.25,
-        "pos": 0.25,
-        "neg": 0,
-        "separa": false,
-        "ronda": 2,
-        "decision": "J 0.25 en banda (25% frente a 0%). Medida por primera vez: es la mejor de las nueve extraidas de hallmark"
+        "J_banda": 0.233,
+        "pos": 0.265,
+        "neg": 0.031,
+        "separa": false
       },
       "tipo": "procedencia"
     },
@@ -929,14 +903,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 20,
-          "neg": 23
+          "pos": 34,
+          "neg": 32
         },
         "J_banda": 0,
         "pos": 0,
         "neg": 0,
-        "separa": false,
-        "ronda": 2
+        "separa": false
       },
       "tipo": "procedencia"
     }

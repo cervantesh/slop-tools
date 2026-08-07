@@ -365,3 +365,83 @@ Sigue en pie la distinción que abre `SKILL.md`: incluso una regla con J alta mi
 **detectabilidad**, no **procedencia**. `D5` con lift 18 dice «esto se parece mucho a lo que
 sale de un generador», no «esto lo generó una máquina». El benchmark no resuelve esa
 distinción — la cuantifica.
+
+---
+
+# Segunda medición — corpus ampliado
+
+Primera medición: 71 proyectos, banda pos=20 neg=23. **Ésta: 123 proyectos, banda pos=34
+neg=32.** El corpus pasó de 99 a 164 entradas declaradas.
+
+`n: pos=50 · neg_stack=62 · neg_classic=11`
+
+## Lo que cambia
+
+**Separan siete reglas, no cuatro.** Tres de ellas por motivos distintos, y los tres importan.
+
+| Regla | J banda | pos | neg | Lectura |
+| --- | --- | --- | --- | --- |
+| `UX2` pastilla en todo | 0,45 | 82% | 38% | confirmada con más n |
+| `L2` fechas y monedas a mano | 0,45 | 85% | 41% | confirmada |
+| **`C4` escala dispersa** | **0,39** | 82% | 44% | **el umbral se ajustó sobre el corpus anterior; fuera de esa muestra encoge de 0,55 a 0,39 y sigue separando** |
+| **`L1` plural sin resolver** | **0,36** | 71% | 34% | **estaba en el limbo: era falta de n, no falta de señal** |
+| **`UX6` console.log olvidado** | **0,34** | 53% | 19% | **igual que L1** |
+| `D5` emojis como iconos | 0,26 | 29% | 3% | confirmada |
+| **`A3` glassmorphism** | **0,24** | 24% | 0% | **daba cero disparos hasta añadir el sustrato de clases de utilidad** |
+
+### La predicción que se cumplió
+
+`C4` se ajustó en muestra y se marcó «sin validar fuera» precisamente porque su J iba a
+encoger. Encogió de **0,552 a 0,386** — y siguió separando. Es la primera vez que este
+repositorio hace una predicción cuantitativa sobre sí mismo y la comprueba.
+
+### El sustrato equivocado escondía un discriminador real
+
+`A3` figuraba como «no medible» con cero disparos en 71 proyectos. No era que el glassmorphism
+no apareciera: era que lo buscábamos en archivos CSS que en Tailwind no existen. Con el
+sustrato corregido dispara en el **24% de lo generado y el 0% de lo humano**, y separa.
+
+Esto obliga a leer con cuidado cualquier «no medible»: puede ser ausencia de señal o ausencia
+de oportunidad, y sólo se distinguen arreglando el mecanismo.
+
+### Dos preguntas abiertas que se cierran
+
+`C1` —el «indicador aislado más fiable» según la fuente— ya puede disparar (16% frente a 15%)
+y da **J = −0,01**. Con oportunidad real, no discrimina. La duda que dejamos escrita en
+`rubric.md` queda resuelta en contra de la fuente.
+
+`K3` igual: dispara en el 24% frente al 18%, **J = 0,02**.
+
+### Una regla pierde la significación
+
+`E7` restos de andamiaje baja a J 0,25 con los intervalos otra vez solapados: dispara en el
+**94% de lo generado y el 69% de lo humano**. Sigue siendo útil como señal de calidad, pero
+ya no separa. Peso 3 → 2.
+
+### Y otra apunta al revés
+
+`HM8` da **J = −0,17 con intervalos separados**: dispara más en diseño humano. Mismo perfil
+que `F2`, que se eliminó por esto. Peso a 1 mientras se diagnostica.
+
+## Lo que esta medición NO resolvió
+
+- **`L3` sigue sin evaluar.** Es específica del español y el corpus es casi todo inglés.
+  Mantiene peso 3 y la marca de no medible. Es la única regla del catálogo cuya utilidad
+  seguimos sin conocer.
+- **No hay conjunto reservado formal.** La comprobación de `C4` fuera de muestra funciona
+  porque el corpus creció con proyectos nuevos, no porque hubiera un holdout declarado de
+  antemano. Para los pesos ajustados hoy, ese control sigue pendiente.
+- **`neg_classic` sigue en n=11.** Se pierden los repositorios grandes al descargar.
+
+## Reproducir
+
+```bash
+node research/build-corpus.mjs --per 26
+node research/fetch-corpus.mjs
+node research/measure.mjs
+node research/apply-weights.mjs
+```
+
+La evidencia de cada comprobación programática se exporta a `data/validacion.json`, que
+`checks.mjs` carga en tiempo de ejecución. Ninguna cifra se copia a mano de una medición a un
+fichero fuente: así es como se desincronizan.

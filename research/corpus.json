@@ -131,12 +131,12 @@
       "generador": "curado",
       "procedencia": "creado 2015-04-24, anterior al corte 2022-11-30; autoria humana",
       "consulta": "curado a mano",
-      "sha": "01055a7a83bedb6a183f279670d1e2fac0eb51a6",
+      "sha": "5ade9944d67cb53bc0e7eab3b4edd986625e8c76",
       "rama": "master",
       "creado": "2015-04-24",
       "empujado": "2026-08-07",
-      "estrellas": 98985,
-      "kb": 274860,
+      "estrellas": 98991,
+      "kb": 274484,
       "stack": {
         "tailwind": false,
         "radix": false,
@@ -178,7 +178,7 @@
       "creado": "2017-03-13",
       "empujado": "2026-08-07",
       "estrellas": 9339,
-      "kb": 8115520,
+      "kb": 8116430,
       "stack": {
         "tailwind": false,
         "radix": false,
@@ -218,9 +218,9 @@
       "sha": "219571a7187651c79648de08c9a98a3b2f7f607a",
       "rama": "master",
       "creado": "2020-01-02",
-      "empujado": "2026-08-06",
-      "estrellas": 129082,
-      "kb": 102332,
+      "empujado": "2026-08-07",
+      "estrellas": 129093,
+      "kb": 102368,
       "stack": {
         "tailwind": false,
         "radix": false,
@@ -241,7 +241,7 @@
       "creado": "2017-03-13",
       "empujado": "2026-08-07",
       "estrellas": 9339,
-      "kb": 8115520,
+      "kb": 8116430,
       "stack": {
         "tailwind": false,
         "radix": false,
@@ -278,12 +278,12 @@
       "generador": "curado",
       "procedencia": "creado 2014-08-18, anterior al corte 2022-11-30; autoria humana",
       "consulta": "curado a mano",
-      "sha": "6688a786af00ebca2c0f14aa473ce865a48597a8",
+      "sha": "fc358886324a8bde9a720283526b97a0339a031d",
       "rama": "master",
       "creado": "2014-08-18",
-      "empujado": "2026-08-06",
+      "empujado": "2026-08-07",
       "estrellas": 98697,
-      "kb": 743093,
+      "kb": 743113,
       "stack": {
         "tailwind": false,
         "radix": false,
@@ -303,8 +303,8 @@
       "rama": "main",
       "creado": "2016-05-22",
       "empujado": "2026-08-07",
-      "estrellas": 40020,
-      "kb": 326488,
+      "estrellas": 40023,
+      "kb": 326964,
       "stack": {
         "tailwind": false,
         "radix": true,
@@ -362,11 +362,11 @@
       "generador": "curado",
       "procedencia": "creado 2020-11-28, anterior al corte 2022-11-30; autoria humana",
       "consulta": "curado a mano",
-      "sha": "83eb28707c3ae0a87f7479440278dae42cde19c2",
+      "sha": "790d298c43a07fefbd9ecf6dae0214ed6050aca7",
       "rama": "master",
       "creado": "2020-11-28",
       "empujado": "2026-08-07",
-      "estrellas": 41995,
+      "estrellas": 41997,
       "kb": 12182741,
       "stack": {
         "tailwind": true,
@@ -428,7 +428,7 @@
       "sha": "af6ffb66a5b1d20f6c2c898b334a1ebb53728ba2",
       "rama": "main",
       "creado": "2017-04-20",
-      "empujado": "2026-08-06",
+      "empujado": "2026-08-07",
       "estrellas": 6175,
       "kb": 278523,
       "stack": {
@@ -446,12 +446,12 @@
       "generador": "curado",
       "procedencia": "creado 2019-10-12, anterior al corte 2022-11-30; autoria humana",
       "consulta": "curado a mano",
-      "sha": "91a394fc83f22983b49ab53b9f5122c827d2efc2",
+      "sha": "6c0439ace812f134859a825e421f5f241cbf01b3",
       "rama": "master",
       "creado": "2019-10-12",
       "empujado": "2026-08-07",
-      "estrellas": 107644,
-      "kb": 2425776,
+      "estrellas": 107655,
+      "kb": 2425898,
       "stack": {
         "tailwind": true,
         "radix": false,
@@ -513,7 +513,7 @@
       "rama": "main",
       "creado": "2011-07-29",
       "empujado": "2026-08-06",
-      "estrellas": 174565,
+      "estrellas": 174567,
       "kb": 315870,
       "stack": {
         "tailwind": false,
@@ -575,7 +575,7 @@
       "sha": "45f4f3762c4780199a0e7af529e89f3551b53c26",
       "rama": "main",
       "creado": "2021-12-15",
-      "empujado": "2026-08-06",
+      "empujado": "2026-08-07",
       "estrellas": 500,
       "kb": 1121736,
       "stack": {
@@ -584,6 +584,48 @@
         "next": false,
         "vite": false,
         "react": false
+      }
+    },
+    {
+      "id": "adoxography__tailwind-scrollbar",
+      "repo": "adoxography/tailwind-scrollbar",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2020-09-01, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:JavaScript created:<2022-11-30 stars:>40 fork:false",
+      "sha": "920d03227103af01e250c47f3c8ffc21f3d7c823",
+      "rama": "main",
+      "creado": "2020-09-01",
+      "empujado": "2025-04-08",
+      "estrellas": 1207,
+      "kb": 1399,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "adrianhajdin__project_hoobank",
+      "repo": "adrianhajdin/project_hoobank",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2022-08-08, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:JavaScript created:<2022-11-30 stars:>40 fork:false",
+      "sha": "54887f678438f5196d692de2a42727c2332e8e38",
+      "rama": "main",
+      "creado": "2022-08-08",
+      "empujado": "2024-07-01",
+      "estrellas": 2618,
+      "kb": 2288,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": true
       }
     },
     {
@@ -599,6 +641,48 @@
       "empujado": "2023-03-05",
       "estrellas": 2160,
       "kb": 4603,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "basir__next-tailwind-amazona",
+      "repo": "basir/next-tailwind-amazona",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2022-04-25, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:JavaScript created:<2022-11-30 stars:>40 fork:false",
+      "sha": "24564929fa441f9ebeb10425c02f44face5d216f",
+      "rama": "main",
+      "creado": "2022-04-25",
+      "empujado": "2023-08-01",
+      "estrellas": 237,
+      "kb": 967,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": true,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
+      "id": "bradtraversy__simple-tailwind-starter",
+      "repo": "bradtraversy/simple-tailwind-starter",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2022-04-27, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind created:2020-01-01..2022-11-30 stars:>20 fork:false",
+      "sha": "38338c8dcf20c4049086e335b733da255fa48aa6",
+      "rama": "main",
+      "creado": "2022-04-27",
+      "empujado": "2025-03-09",
+      "estrellas": 198,
+      "kb": 17,
       "stack": {
         "tailwind": true,
         "radix": false,
@@ -723,12 +807,33 @@
       "rama": "main",
       "creado": "2020-09-01",
       "empujado": "2024-07-11",
-      "estrellas": 1491,
+      "estrellas": 1492,
       "kb": 6799,
       "stack": {
         "tailwind": true,
         "radix": false,
         "next": true,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
+      "id": "creativetimofficial__notus-react",
+      "repo": "creativetimofficial/notus-react",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2020-09-01, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:JavaScript created:<2022-11-30 stars:>40 fork:false",
+      "sha": "e5a3728ab2fdf93677ba717f00bbb8413bfafb39",
+      "rama": "main",
+      "creado": "2020-09-01",
+      "empujado": "2024-07-24",
+      "estrellas": 884,
+      "kb": 9046,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
         "vite": false,
         "react": true
       }
@@ -751,6 +856,27 @@
         "radix": false,
         "next": false,
         "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "cruip__laravel-tailwindcss-admin-dashboard-template",
+      "repo": "cruip/laravel-tailwindcss-admin-dashboard-template",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2022-07-20, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind created:2020-01-01..2022-11-30 stars:>20 fork:false",
+      "sha": "c14c670710e54db922ec2ae3b2b5356c202d9130",
+      "rama": "main",
+      "creado": "2022-07-20",
+      "empujado": "2025-03-02",
+      "estrellas": 441,
+      "kb": 598,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": true,
         "react": false
       }
     },
@@ -818,12 +944,33 @@
       }
     },
     {
+      "id": "Devzstudio__tailwind_to_css",
+      "repo": "Devzstudio/tailwind_to_css",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2021-09-20, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:TypeScript created:<2022-11-30 stars:>60 fork:false",
+      "sha": "1e59e532898b46b0c414b9ead81f8b4b56bf1016",
+      "rama": "main",
+      "creado": "2021-09-20",
+      "empujado": "2026-01-10",
+      "estrellas": 501,
+      "kb": 1389,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": true,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
       "id": "ecklf__tailwindcss-radix",
       "repo": "ecklf/tailwindcss-radix",
       "clase": "neg_stack",
       "generador": "humano-tailwind",
       "procedencia": "creado 2021-11-17, anterior al corte 2022-11-30; autoria humana",
-      "consulta": "tailwind language:TypeScript created:<2022-11-30 stars:>60 fork:false",
+      "consulta": "tailwindcss created:<2022-11-30 stars:>120 fork:false",
       "sha": "1060113fd79be34b96b6c528e06c1a95edd6fa3d",
       "rama": "main",
       "creado": "2021-11-17",
@@ -844,7 +991,7 @@
       "clase": "neg_stack",
       "generador": "humano-tailwind",
       "procedencia": "creado 2021-03-23, anterior al corte 2022-11-30; autoria humana",
-      "consulta": "tailwind language:TypeScript created:<2022-11-30 stars:>60 fork:false",
+      "consulta": "tailwindcss created:<2022-11-30 stars:>120 fork:false",
       "sha": "54d464d472775c63a1855d326fff692db92aa0b8",
       "rama": "v4",
       "creado": "2021-03-23",
@@ -860,12 +1007,54 @@
       }
     },
     {
+      "id": "hasinhayder__tailwind-cards",
+      "repo": "hasinhayder/tailwind-cards",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2021-03-11, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind created:2020-01-01..2022-11-30 stars:>20 fork:false",
+      "sha": "0306e1de3ca81c4867a100699d95331807e272ef",
+      "rama": "master",
+      "creado": "2021-03-11",
+      "empujado": "2024-06-09",
+      "estrellas": 592,
+      "kb": 459,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": false
+      }
+    },
+    {
+      "id": "iskurbanov__shopify-next.js-tailwind",
+      "repo": "iskurbanov/shopify-next.js-tailwind",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2021-08-25, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:JavaScript created:<2022-11-30 stars:>40 fork:false",
+      "sha": "aa2e8ac333385a947335e17f0b66490776d862b8",
+      "rama": "main",
+      "creado": "2021-08-25",
+      "empujado": "2022-11-03",
+      "estrellas": 407,
+      "kb": 1238,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": true,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
       "id": "jamiebuilds__tailwindcss-animate",
       "repo": "jamiebuilds/tailwindcss-animate",
       "clase": "neg_stack",
       "generador": "humano-tailwind",
       "procedencia": "creado 2022-02-16, anterior al corte 2022-11-30; autoria humana",
-      "consulta": "tailwind language:JavaScript created:<2022-11-30 stars:>40 fork:false",
+      "consulta": "tailwindcss created:<2022-11-30 stars:>120 fork:false",
       "sha": "ac0dd3a3c81681b78f1d8ea5e7478044213995e1",
       "rama": "main",
       "creado": "2022-02-16",
@@ -898,6 +1087,27 @@
         "radix": false,
         "next": false,
         "vite": false,
+        "react": true
+      }
+    },
+    {
+      "id": "joaopaulomoraes__reactjs-vite-tailwindcss-boilerplate",
+      "repo": "joaopaulomoraes/reactjs-vite-tailwindcss-boilerplate",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2021-07-15, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwindcss created:<2022-11-30 stars:>120 fork:false",
+      "sha": "495d24cca8dfe17ad2c94ced7d04be8e917bb885",
+      "rama": "main",
+      "creado": "2021-07-15",
+      "empujado": "2026-04-11",
+      "estrellas": 732,
+      "kb": 1796,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": true,
         "react": true
       }
     },
@@ -965,6 +1175,27 @@
       }
     },
     {
+      "id": "konstaui__konsta",
+      "repo": "konstaui/konsta",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2021-01-18, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:JavaScript created:<2022-11-30 stars:>40 fork:false",
+      "sha": "c73f757bb0e41e15f30e37eee40f5f96ae9b175a",
+      "rama": "master",
+      "creado": "2021-01-18",
+      "empujado": "2026-07-28",
+      "estrellas": 4216,
+      "kb": 2807,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": true
+      }
+    },
+    {
       "id": "lannodev__angular-tailwind",
       "repo": "lannodev/angular-tailwind",
       "clase": "neg_stack",
@@ -977,6 +1208,27 @@
       "empujado": "2026-06-23",
       "estrellas": 523,
       "kb": 14245,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "lazymozek__gulp-with-tailwindcss",
+      "repo": "lazymozek/gulp-with-tailwindcss",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2018-11-05, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:JavaScript created:<2022-11-30 stars:>40 fork:false",
+      "sha": "f0374bb8a821a9082b8dfa9278d6fcb9b3af89b7",
+      "rama": "main",
+      "creado": "2018-11-05",
+      "empujado": "2024-09-10",
+      "estrellas": 256,
+      "kb": 814,
       "stack": {
         "tailwind": true,
         "radix": false,
@@ -1028,6 +1280,69 @@
       }
     },
     {
+      "id": "moesaid__cleopatra",
+      "repo": "moesaid/cleopatra",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2020-02-14, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind created:2020-01-01..2022-11-30 stars:>20 fork:false",
+      "sha": "40c56983999a139741a441d279a8335ff159fad2",
+      "rama": "main",
+      "creado": "2020-02-14",
+      "empujado": "2026-02-24",
+      "estrellas": 1625,
+      "kb": 28008,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": false
+      }
+    },
+    {
+      "id": "muhammadsammy__tailwindcss-classnames",
+      "repo": "muhammadsammy/tailwindcss-classnames",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2020-01-24, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:TypeScript created:<2022-11-30 stars:>60 fork:false",
+      "sha": "c3a142313b9eed9748579dea7a7c25cb30c20590",
+      "rama": "master",
+      "creado": "2020-01-24",
+      "empujado": "2025-09-29",
+      "estrellas": 709,
+      "kb": 1876,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "Murked__vue-tailwind-admin",
+      "repo": "Murked/vue-tailwind-admin",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2020-02-14, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind created:2020-01-01..2022-11-30 stars:>20 fork:false",
+      "sha": "c7426988acc9a8475a2c6b7cf00132a788ef2ba3",
+      "rama": "master",
+      "creado": "2020-02-14",
+      "empujado": "2023-01-05",
+      "estrellas": 434,
+      "kb": 1437,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
       "id": "NativeScript__tailwind",
       "repo": "NativeScript/tailwind",
       "clase": "neg_stack",
@@ -1070,6 +1385,27 @@
       }
     },
     {
+      "id": "nuxt__ui",
+      "repo": "nuxt/ui",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2021-11-15, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:TypeScript created:<2022-11-30 stars:>60 fork:false",
+      "sha": "6add5fb7d8a1280dcbe2c4675e78d8f45f61e7fd",
+      "rama": "v4",
+      "creado": "2021-11-15",
+      "empujado": "2026-08-07",
+      "estrellas": 6819,
+      "kb": 115546,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
       "id": "onesine__react-tailwindcss-datepicker",
       "repo": "onesine/react-tailwindcss-datepicker",
       "clase": "neg_stack",
@@ -1088,6 +1424,153 @@
         "next": true,
         "vite": false,
         "react": true
+      }
+    },
+    {
+      "id": "pheralb__svgl",
+      "repo": "pheralb/svgl",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2022-01-16, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:TypeScript created:<2022-11-30 stars:>60 fork:false",
+      "sha": "a5a7fdef6454504902c33f571517e8302af3448c",
+      "rama": "main",
+      "creado": "2022-01-16",
+      "empujado": "2026-07-19",
+      "estrellas": 6224,
+      "kb": 14926,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": false
+      }
+    },
+    {
+      "id": "posva__vite-tailwind-starter",
+      "repo": "posva/vite-tailwind-starter",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2020-05-06, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind created:2020-01-01..2022-11-30 stars:>20 fork:false",
+      "sha": "d34947c1f465a016b6d64a98aaf8f43ed5722d4b",
+      "rama": "master",
+      "creado": "2020-05-06",
+      "empujado": "2026-08-03",
+      "estrellas": 458,
+      "kb": 1649,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": false
+      }
+    },
+    {
+      "id": "realstoman__nextjs-tailwindcss-portfolio",
+      "repo": "realstoman/nextjs-tailwindcss-portfolio",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2021-12-16, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:JavaScript created:<2022-11-30 stars:>40 fork:false",
+      "sha": "76082edd2fa6fc2381f42cada875570964aae086",
+      "rama": "main",
+      "creado": "2021-12-16",
+      "empujado": "2024-02-12",
+      "estrellas": 148,
+      "kb": 2845,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": true,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
+      "id": "realstoman__react-tailwindcss-portfolio",
+      "repo": "realstoman/react-tailwindcss-portfolio",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2021-11-20, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwindcss created:<2022-11-30 stars:>120 fork:false",
+      "sha": "4994be394863b2e261f283a7f95faba167779298",
+      "rama": "main",
+      "creado": "2021-11-20",
+      "empujado": "2024-04-29",
+      "estrellas": 286,
+      "kb": 3897,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
+      "id": "realstoman__vuejs-tailwindcss-portfolio",
+      "repo": "realstoman/vuejs-tailwindcss-portfolio",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2021-05-20, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind created:2020-01-01..2022-11-30 stars:>20 fork:false",
+      "sha": "206bbfe8138b03433a9a1b2eac37dd8935d02957",
+      "rama": "main",
+      "creado": "2021-05-20",
+      "empujado": "2024-01-05",
+      "estrellas": 310,
+      "kb": 7166,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "sandhikagalih__portfolio-tailwind-css",
+      "repo": "sandhikagalih/portfolio-tailwind-css",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2022-03-23, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind created:2020-01-01..2022-11-30 stars:>20 fork:false",
+      "sha": "97e37808230299b4879c9dbac27661d8c2053989",
+      "rama": "main",
+      "creado": "2022-03-23",
+      "empujado": "2024-06-05",
+      "estrellas": 253,
+      "kb": 645,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "slowfound__next-prisma-tailwind-ecommerce",
+      "repo": "slowfound/next-prisma-tailwind-ecommerce",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2022-06-08, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:TypeScript created:<2022-11-30 stars:>60 fork:false",
+      "sha": "3f21c757be67f1e4512bf17d013db3f9007068b5",
+      "rama": "main",
+      "creado": "2022-06-08",
+      "empujado": "2025-01-01",
+      "estrellas": 380,
+      "kb": 3842,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
       }
     },
     {
@@ -1133,6 +1616,27 @@
       }
     },
     {
+      "id": "tailwindlabs__headlessui",
+      "repo": "tailwindlabs/headlessui",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2020-09-16, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:TypeScript created:<2022-11-30 stars:>60 fork:false",
+      "sha": "eea57cf46fd6767ed1059012f7073b88eb159fba",
+      "rama": "main",
+      "creado": "2020-09-16",
+      "empujado": "2026-04-13",
+      "estrellas": 28702,
+      "kb": 7103,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
       "id": "tailwindlabs__prettier-plugin-tailwindcss",
       "repo": "tailwindlabs/prettier-plugin-tailwindcss",
       "clase": "neg_stack",
@@ -1145,6 +1649,27 @@
       "empujado": "2026-07-15",
       "estrellas": 7119,
       "kb": 1424,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "tailwindlabs__tailwindcss-container-queries",
+      "repo": "tailwindlabs/tailwindcss-container-queries",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2022-10-12, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:TypeScript created:<2022-11-30 stars:>60 fork:false",
+      "sha": "7a968b3b5d8718a1f90df7478c7b6ecb9b115319",
+      "rama": "main",
+      "creado": "2022-10-12",
+      "empujado": "2026-05-12",
+      "estrellas": 1435,
+      "kb": 102,
       "stack": {
         "tailwind": true,
         "radix": false,
@@ -1175,6 +1700,27 @@
       }
     },
     {
+      "id": "tailwindlabs__tailwindcss-line-clamp",
+      "repo": "tailwindlabs/tailwindcss-line-clamp",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2021-01-06, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:JavaScript created:<2022-11-30 stars:>40 fork:false",
+      "sha": "3d5079fb359c2de4173bff28412ad9e6ece8f23f",
+      "rama": "master",
+      "creado": "2021-01-06",
+      "empujado": "2026-05-12",
+      "estrellas": 1187,
+      "kb": 232,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
       "id": "tailwindlabs__tailwindcss-typography",
       "repo": "tailwindlabs/tailwindcss-typography",
       "clase": "neg_stack",
@@ -1193,6 +1739,69 @@
         "next": true,
         "vite": false,
         "react": true
+      }
+    },
+    {
+      "id": "taylorbryant__gatsby-starter-tailwind",
+      "repo": "taylorbryant/gatsby-starter-tailwind",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2018-03-25, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:JavaScript created:<2022-11-30 stars:>40 fork:false",
+      "sha": "3a108b4c565e8ca84c3ed5893ba61137c533ee6f",
+      "rama": "master",
+      "creado": "2018-03-25",
+      "empujado": "2023-04-27",
+      "estrellas": 488,
+      "kb": 8629,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
+      "id": "taylorbryant__next-starter-tailwind",
+      "repo": "taylorbryant/next-starter-tailwind",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2019-05-25, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:JavaScript created:<2022-11-30 stars:>40 fork:false",
+      "sha": "c7e715cd4db7e7be968374a07ce6171cc3307b89",
+      "rama": "master",
+      "creado": "2019-05-25",
+      "empujado": "2023-04-27",
+      "estrellas": 361,
+      "kb": 1361,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": true,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
+      "id": "themesberg__flowbite-react",
+      "repo": "themesberg/flowbite-react",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2022-02-28, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:TypeScript created:<2022-11-30 stars:>60 fork:false",
+      "sha": "85319bd067822f7aa9670688780aeb58cc187aa5",
+      "rama": "main",
+      "creado": "2022-02-28",
+      "empujado": "2026-06-27",
+      "estrellas": 2147,
+      "kb": 12682,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
       }
     },
     {
@@ -1280,6 +1889,27 @@
       }
     },
     {
+      "id": "Uninen__vite-ts-tailwind-starter",
+      "repo": "Uninen/vite-ts-tailwind-starter",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2020-09-15, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:TypeScript created:<2022-11-30 stars:>60 fork:false",
+      "sha": "4b2dcd4c56780bc72b14f2032999ca8685327e05",
+      "rama": "main",
+      "creado": "2020-09-15",
+      "empujado": "2026-08-06",
+      "estrellas": 474,
+      "kb": 2726,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": false
+      }
+    },
+    {
       "id": "vadimdemedes__tailwind-rn",
       "repo": "vadimdemedes/tailwind-rn",
       "clase": "neg_stack",
@@ -1322,6 +1952,69 @@
       }
     },
     {
+      "id": "vojislavd__TailwindCSS-Alpine.js-Template",
+      "repo": "vojislavd/TailwindCSS-Alpine.js-Template",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2021-10-11, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind created:2020-01-01..2022-11-30 stars:>20 fork:false",
+      "sha": "4d9e582d9d94a99026c7230cbbffc494b1852719",
+      "rama": "master",
+      "creado": "2021-10-11",
+      "empujado": "2026-08-03",
+      "estrellas": 173,
+      "kb": 2803,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": false
+      }
+    },
+    {
+      "id": "aifa-agi__aifa",
+      "repo": "aifa-agi/aifa",
+      "clase": "pos",
+      "generador": "v0",
+      "procedencia": "marcador de v0 presente en el repositorio",
+      "consulta": "\"v0.dev\" in:file filename:README.md",
+      "sha": "e4d0ea7263913892fb4e832ed35eb1b515538e66",
+      "rama": "main",
+      "creado": "2025-06-18",
+      "empujado": "2025-09-23",
+      "estrellas": 59,
+      "kb": 31327,
+      "stack": {
+        "tailwind": true,
+        "radix": true,
+        "next": true,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
+      "id": "aMorDineroX__modern-tontine-app-31",
+      "repo": "aMorDineroX/modern-tontine-app-31",
+      "clase": "pos",
+      "generador": "lovable",
+      "procedencia": "marcador de lovable presente en el repositorio",
+      "consulta": "lovable-tagger in:file filename:package.json",
+      "sha": "2760bfa8d15b026d46fb899d62ccd047d9aab7c3",
+      "rama": "main",
+      "creado": "2025-02-26",
+      "empujado": "2025-03-02",
+      "estrellas": 1,
+      "kb": 832,
+      "stack": {
+        "tailwind": true,
+        "radix": true,
+        "next": false,
+        "vite": true,
+        "react": true
+      }
+    },
+    {
       "id": "automata__aicodeguide",
       "repo": "automata/aicodeguide",
       "clase": "pos",
@@ -1340,6 +2033,69 @@
         "next": false,
         "vite": false,
         "react": false
+      }
+    },
+    {
+      "id": "avrabyt__YouTube-Tutorials",
+      "repo": "avrabyt/YouTube-Tutorials",
+      "clase": "pos",
+      "generador": "bolt",
+      "procedencia": "marcador de bolt presente en el repositorio",
+      "consulta": "\"bolt.new\" in:file filename:README.md",
+      "sha": "b2495e34765a6235c8cbaaf26b0b3212c547a6a1",
+      "rama": "main",
+      "creado": "2021-12-31",
+      "empujado": "2026-07-12",
+      "estrellas": 122,
+      "kb": 721,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "brolag__awesome-web3-ai",
+      "repo": "brolag/awesome-web3-ai",
+      "clase": "pos",
+      "generador": "v0",
+      "procedencia": "marcador de v0 presente en el repositorio",
+      "consulta": "\"v0.dev\" in:file filename:README.md",
+      "sha": "de6779c10b0d17057e0ae3c2f0531244cd35c60d",
+      "rama": "main",
+      "creado": "2024-09-03",
+      "empujado": "2024-09-03",
+      "estrellas": 12,
+      "kb": 10,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "buildship-ai__demo-generative-fullstack",
+      "repo": "buildship-ai/demo-generative-fullstack",
+      "clase": "pos",
+      "generador": "v0",
+      "procedencia": "marcador de v0 presente en el repositorio",
+      "consulta": "\"v0.dev\" in:file filename:README.md",
+      "sha": "cf63e7e2006ad4c6cd52de9d861a75140f5908e6",
+      "rama": "main",
+      "creado": "2024-05-08",
+      "empujado": "2024-05-23",
+      "estrellas": 7,
+      "kb": 73,
+      "stack": {
+        "tailwind": true,
+        "radix": true,
+        "next": true,
+        "vite": false,
+        "react": true
       }
     },
     {
@@ -1364,6 +2120,27 @@
       }
     },
     {
+      "id": "chen103226__awesome-one-person-company",
+      "repo": "chen103226/awesome-one-person-company",
+      "clase": "pos",
+      "generador": "v0",
+      "procedencia": "marcador de v0 presente en el repositorio",
+      "consulta": "\"v0.dev\" in:file filename:README.md",
+      "sha": "1e2887d6e456c9ae3c6dab1db8611bbc63d3f883",
+      "rama": "main",
+      "creado": "2026-01-05",
+      "empujado": "2026-01-13",
+      "estrellas": 273,
+      "kb": 1647,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
       "id": "criptogus__liquid-ai",
       "repo": "criptogus/liquid-ai",
       "clase": "pos",
@@ -1382,6 +2159,27 @@
         "next": false,
         "vite": true,
         "react": true
+      }
+    },
+    {
+      "id": "cssmagic__Awesome-AI",
+      "repo": "cssmagic/Awesome-AI",
+      "clase": "pos",
+      "generador": "bolt",
+      "procedencia": "marcador de bolt presente en el repositorio",
+      "consulta": "\"bolt.new\" in:file filename:README.md",
+      "sha": "88874c7a554c3df73d8561f76269a1022bf60069",
+      "rama": "master",
+      "creado": "2024-01-17",
+      "empujado": "2026-06-16",
+      "estrellas": 293,
+      "kb": 53,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
       }
     },
     {
@@ -1406,6 +2204,27 @@
       }
     },
     {
+      "id": "danielglejzner__rxjs-marble-diagram-visualizer",
+      "repo": "danielglejzner/rxjs-marble-diagram-visualizer",
+      "clase": "pos",
+      "generador": "bolt",
+      "procedencia": "marcador de bolt presente en el repositorio",
+      "consulta": "\"bolt.new\" in:file filename:README.md",
+      "sha": "4b71ea03da7fdbef514042bf42c219498ca6dc73",
+      "rama": "main",
+      "creado": "2025-02-22",
+      "empujado": "2025-03-02",
+      "estrellas": 22,
+      "kb": 275,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": true
+      }
+    },
+    {
       "id": "dubinc__dublet",
       "repo": "dubinc/dublet",
       "clase": "pos",
@@ -1422,6 +2241,27 @@
         "tailwind": true,
         "radix": true,
         "next": true,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
+      "id": "EliFuzz__awesome-system-prompts",
+      "repo": "EliFuzz/awesome-system-prompts",
+      "clase": "pos",
+      "generador": "bolt",
+      "procedencia": "marcador de bolt presente en el repositorio",
+      "consulta": "\"bolt.new\" in:file filename:README.md",
+      "sha": "186242765637f87e9bfdd4169c94bc2375ee8987",
+      "rama": "main",
+      "creado": "2025-10-03",
+      "empujado": "2026-03-06",
+      "estrellas": 249,
+      "kb": 19682,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
         "vite": false,
         "react": true
       }
@@ -1458,7 +2298,7 @@
       "rama": "main",
       "creado": "2025-03-12",
       "empujado": "2026-05-25",
-      "estrellas": 4743,
+      "estrellas": 4742,
       "kb": 22,
       "stack": {
         "tailwind": false,
@@ -1532,6 +2372,27 @@
       }
     },
     {
+      "id": "francisco-dev-ao__projectofinalah",
+      "repo": "francisco-dev-ao/projectofinalah",
+      "clase": "pos",
+      "generador": "lovable",
+      "procedencia": "marcador de lovable presente en el repositorio",
+      "consulta": "lovable-tagger in:file filename:package.json",
+      "sha": "5075c6b1e5eeff1baa5b858557f4b0349fa057d0",
+      "rama": "main",
+      "creado": "2025-06-03",
+      "empujado": "2025-07-17",
+      "estrellas": 0,
+      "kb": 18594,
+      "stack": {
+        "tailwind": true,
+        "radix": true,
+        "next": false,
+        "vite": true,
+        "react": true
+      }
+    },
+    {
       "id": "fZpHr__42insight",
       "repo": "fZpHr/42insight",
       "clase": "pos",
@@ -1574,6 +2435,69 @@
       }
     },
     {
+      "id": "hackice20__boltly",
+      "repo": "hackice20/boltly",
+      "clase": "pos",
+      "generador": "bolt",
+      "procedencia": "marcador de bolt presente en el repositorio",
+      "consulta": "\"bolt.new\" in:file filename:README.md",
+      "sha": "084209fd6a046a4558926d8d5cf2105d5854a939",
+      "rama": "main",
+      "creado": "2025-01-18",
+      "empujado": "2026-03-13",
+      "estrellas": 29,
+      "kb": 1026,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "ifokeev__awesome-copilots",
+      "repo": "ifokeev/awesome-copilots",
+      "clase": "pos",
+      "generador": "bolt",
+      "procedencia": "marcador de bolt presente en el repositorio",
+      "consulta": "\"bolt.new\" in:file filename:README.md",
+      "sha": "0e6cb62ef4ff2b3a41cc84fca039f3228d856b2d",
+      "rama": "main",
+      "creado": "2024-11-23",
+      "empujado": "2025-05-28",
+      "estrellas": 210,
+      "kb": 16,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "InfiniteAICreations__awesome-llm-projects",
+      "repo": "InfiniteAICreations/awesome-llm-projects",
+      "clase": "pos",
+      "generador": "v0",
+      "procedencia": "marcador de v0 presente en el repositorio",
+      "consulta": "\"v0.dev\" in:file filename:README.md",
+      "sha": "84663aa89a072ac2836477686ace861590408943",
+      "rama": "main",
+      "creado": "2024-03-07",
+      "empujado": "2025-02-11",
+      "estrellas": 76,
+      "kb": 2141,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
       "id": "ishandutta2007__Open-Laudable",
       "repo": "ishandutta2007/Open-Laudable",
       "clase": "pos",
@@ -1605,7 +2529,7 @@
       "rama": "main",
       "creado": "2023-08-03",
       "empujado": "2026-07-11",
-      "estrellas": 3907,
+      "estrellas": 3908,
       "kb": 804,
       "stack": {
         "tailwind": false,
@@ -1613,6 +2537,69 @@
         "next": false,
         "vite": false,
         "react": false
+      }
+    },
+    {
+      "id": "janwilmake__forgithub",
+      "repo": "janwilmake/forgithub",
+      "clase": "pos",
+      "generador": "bolt",
+      "procedencia": "marcador de bolt presente en el repositorio",
+      "consulta": "\"bolt.new\" in:file filename:README.md",
+      "sha": "70918b7c8b01f2837428f02abe69396253f8f4e8",
+      "rama": "main",
+      "creado": "2025-01-12",
+      "empujado": "2025-04-28",
+      "estrellas": 133,
+      "kb": 562,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "JatinxKumar__Campus-Connect-Hub",
+      "repo": "JatinxKumar/Campus-Connect-Hub",
+      "clase": "pos",
+      "generador": "lovable",
+      "procedencia": "marcador de lovable presente en el repositorio",
+      "consulta": "lovable-tagger in:file filename:package.json",
+      "sha": "328a8b5a35d7458da28fc99a62ebec718cef71fb",
+      "rama": "main",
+      "creado": "2026-04-27",
+      "empujado": "2026-06-27",
+      "estrellas": 0,
+      "kb": 7345,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "jerhadf__token-counter",
+      "repo": "jerhadf/token-counter",
+      "clase": "pos",
+      "generador": "v0",
+      "procedencia": "marcador de v0 presente en el repositorio",
+      "consulta": "\"v0.dev\" in:file filename:README.md",
+      "sha": "502ed5bd85bd1deda2cd3700ea30d72a4f7e5810",
+      "rama": "main",
+      "creado": "2024-11-07",
+      "empujado": "2024-11-07",
+      "estrellas": 9,
+      "kb": 280,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": true,
+        "vite": false,
+        "react": true
       }
     },
     {
@@ -1633,6 +2620,90 @@
         "radix": true,
         "next": false,
         "vite": true,
+        "react": true
+      }
+    },
+    {
+      "id": "leogopal__bolt.local.llm",
+      "repo": "leogopal/bolt.local.llm",
+      "clase": "pos",
+      "generador": "bolt",
+      "procedencia": "marcador de bolt presente en el repositorio",
+      "consulta": "\"bolt.new\" in:file filename:README.md",
+      "sha": "2031ecc273a74096558a435265416597571536ae",
+      "rama": "main",
+      "creado": "2024-11-16",
+      "empujado": "2024-11-23",
+      "estrellas": 39,
+      "kb": 1082,
+      "stack": {
+        "tailwind": false,
+        "radix": true,
+        "next": false,
+        "vite": true,
+        "react": true
+      }
+    },
+    {
+      "id": "Lman177__ivory-scroll-studio",
+      "repo": "Lman177/ivory-scroll-studio",
+      "clase": "pos",
+      "generador": "lovable",
+      "procedencia": "marcador de lovable presente en el repositorio",
+      "consulta": "lovable-tagger in:file filename:package.json",
+      "sha": "7fd2726a60a2133c2f542edcc9742a4bf18355c2",
+      "rama": "main",
+      "creado": "2025-08-11",
+      "empujado": "2025-08-27",
+      "estrellas": 0,
+      "kb": 46649,
+      "stack": {
+        "tailwind": true,
+        "radix": true,
+        "next": true,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
+      "id": "mamertofabian__bolt-to-github",
+      "repo": "mamertofabian/bolt-to-github",
+      "clase": "pos",
+      "generador": "bolt",
+      "procedencia": "marcador de bolt presente en el repositorio",
+      "consulta": "\"bolt.new\" in:file filename:README.md",
+      "sha": "410fca807c235683d475c7e3bc95d9cec5244022",
+      "rama": "main",
+      "creado": "2024-11-21",
+      "empujado": "2026-08-01",
+      "estrellas": 71,
+      "kb": 8029,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": false
+      }
+    },
+    {
+      "id": "mckaywrigley__takeoff-notes-app-complete",
+      "repo": "mckaywrigley/takeoff-notes-app-complete",
+      "clase": "pos",
+      "generador": "v0",
+      "procedencia": "marcador de v0 presente en el repositorio",
+      "consulta": "\"v0.dev\" in:file filename:README.md",
+      "sha": "7bd583bf1e2cd1f2870d9e41c704ba994d55066b",
+      "rama": "main",
+      "creado": "2024-09-24",
+      "empujado": "2024-09-24",
+      "estrellas": 18,
+      "kb": 130,
+      "stack": {
+        "tailwind": true,
+        "radix": true,
+        "next": true,
+        "vite": false,
         "react": true
       }
     },
@@ -1763,6 +2834,48 @@
       }
     },
     {
+      "id": "NassimEH__WeListenMusic",
+      "repo": "NassimEH/WeListenMusic",
+      "clase": "pos",
+      "generador": "lovable",
+      "procedencia": "marcador de lovable presente en el repositorio",
+      "consulta": "lovable-tagger in:file filename:package.json",
+      "sha": "cf0df1b94c31691df17f7e93f5e693ad8fb4b594",
+      "rama": "main",
+      "creado": "2025-03-08",
+      "empujado": "2025-07-26",
+      "estrellas": 0,
+      "kb": 897,
+      "stack": {
+        "tailwind": true,
+        "radix": true,
+        "next": false,
+        "vite": true,
+        "react": true
+      }
+    },
+    {
+      "id": "nekohy__ctfile-downloader-panel",
+      "repo": "nekohy/ctfile-downloader-panel",
+      "clase": "pos",
+      "generador": "v0",
+      "procedencia": "marcador de v0 presente en el repositorio",
+      "consulta": "\"v0.dev\" in:file filename:README.md",
+      "sha": "63f6f33eae7b3dbfae7a72325796230b8103d27b",
+      "rama": "main",
+      "creado": "2025-05-02",
+      "empujado": "2025-07-26",
+      "estrellas": 12,
+      "kb": 126,
+      "stack": {
+        "tailwind": true,
+        "radix": true,
+        "next": true,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
       "id": "neo4jrb__neo4j-core",
       "repo": "neo4jrb/neo4j-core",
       "clase": "pos",
@@ -1784,6 +2897,48 @@
       }
     },
     {
+      "id": "NicheUX-DesignStudio__thevaki-balakrishnan-portfolio",
+      "repo": "NicheUX-DesignStudio/thevaki-balakrishnan-portfolio",
+      "clase": "pos",
+      "generador": "lovable",
+      "procedencia": "marcador de lovable presente en el repositorio",
+      "consulta": "lovable-tagger in:file filename:package.json",
+      "sha": "df75731667e5152e49f786af97d1fa2fd025260d",
+      "rama": "main",
+      "creado": "2026-03-02",
+      "empujado": "2026-07-21",
+      "estrellas": 0,
+      "kb": 90193,
+      "stack": {
+        "tailwind": true,
+        "radix": true,
+        "next": false,
+        "vite": true,
+        "react": true
+      }
+    },
+    {
+      "id": "nobdysfulz__pulse-intelligence",
+      "repo": "nobdysfulz/pulse-intelligence",
+      "clase": "pos",
+      "generador": "lovable",
+      "procedencia": "marcador de lovable presente en el repositorio",
+      "consulta": "lovable-tagger in:file filename:package.json",
+      "sha": "8350ae19b3fb5c0f6a72727b9e0066d4bf8a7919",
+      "rama": "main",
+      "creado": "2025-11-06",
+      "empujado": "2025-11-20",
+      "estrellas": 0,
+      "kb": 88278,
+      "stack": {
+        "tailwind": true,
+        "radix": true,
+        "next": true,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
       "id": "OpenCoworkAI__open-codesign",
       "repo": "OpenCoworkAI/open-codesign",
       "clase": "pos",
@@ -1794,7 +2949,7 @@
       "rama": "main",
       "creado": "2026-04-18",
       "empujado": "2026-08-04",
-      "estrellas": 7670,
+      "estrellas": 7671,
       "kb": 66210,
       "stack": {
         "tailwind": false,
@@ -1844,6 +2999,27 @@
         "next": false,
         "vite": true,
         "react": true
+      }
+    },
+    {
+      "id": "PramodDutta__qaskills",
+      "repo": "PramodDutta/qaskills",
+      "clase": "pos",
+      "generador": "bolt",
+      "procedencia": "marcador de bolt presente en el repositorio",
+      "consulta": "\"bolt.new\" in:file filename:README.md",
+      "sha": "beb2ed76b63fc215138f65e675883b9f3c77e7f9",
+      "rama": "main",
+      "creado": "2026-02-11",
+      "empujado": "2026-08-07",
+      "estrellas": 197,
+      "kb": 31227,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": true,
+        "vite": false,
+        "react": false
       }
     },
     {
@@ -1948,6 +3124,90 @@
         "radix": true,
         "next": true,
         "vite": false,
+        "react": true
+      }
+    },
+    {
+      "id": "Sanober007__OprationalTracker1",
+      "repo": "Sanober007/OprationalTracker1",
+      "clase": "pos",
+      "generador": "lovable",
+      "procedencia": "marcador de lovable presente en el repositorio",
+      "consulta": "lovable-tagger in:file filename:package.json",
+      "sha": "3395753df4eb7a4d248a6c23406a890cd561c1f3",
+      "rama": "main",
+      "creado": "2025-06-13",
+      "empujado": "2025-06-13",
+      "estrellas": 0,
+      "kb": 61085,
+      "stack": {
+        "tailwind": true,
+        "radix": true,
+        "next": false,
+        "vite": true,
+        "react": true
+      }
+    },
+    {
+      "id": "Scottcjn__awesome-agents",
+      "repo": "Scottcjn/awesome-agents",
+      "clase": "pos",
+      "generador": "bolt",
+      "procedencia": "marcador de bolt presente en el repositorio",
+      "consulta": "\"bolt.new\" in:file filename:README.md",
+      "sha": "d1d9bc196ea2ddc3d036a6776dc6906967f65f6f",
+      "rama": "main",
+      "creado": "2026-02-21",
+      "empujado": "2026-08-06",
+      "estrellas": 97,
+      "kb": 26,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "selcukcihan__aws-serverless-intro",
+      "repo": "selcukcihan/aws-serverless-intro",
+      "clase": "pos",
+      "generador": "bolt",
+      "procedencia": "marcador de bolt presente en el repositorio",
+      "consulta": "\"bolt.new\" in:file filename:README.md",
+      "sha": "52a1b855cc45b70eb011abae8c60ca158e594feb",
+      "rama": "main",
+      "creado": "2025-04-10",
+      "empujado": "2026-04-28",
+      "estrellas": 23,
+      "kb": 483,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "SFARPak__AliFullStack",
+      "repo": "SFARPak/AliFullStack",
+      "clase": "pos",
+      "generador": "v0",
+      "procedencia": "marcador de v0 presente en el repositorio",
+      "consulta": "\"v0.dev\" in:file filename:README.md",
+      "sha": "53d3bbc7f92b7b2710d887f1eb750a0450958aad",
+      "rama": "v0.1.0",
+      "creado": "2025-09-21",
+      "empujado": "2026-07-25",
+      "estrellas": 71,
+      "kb": 39425,
+      "stack": {
+        "tailwind": true,
+        "radix": true,
+        "next": false,
+        "vite": true,
         "react": true
       }
     },
@@ -2078,6 +3338,27 @@
       }
     },
     {
+      "id": "tomydel45-glitch__raicesbahiablanca",
+      "repo": "tomydel45-glitch/raicesbahiablanca",
+      "clase": "pos",
+      "generador": "lovable",
+      "procedencia": "marcador de lovable presente en el repositorio",
+      "consulta": "lovable-tagger in:file filename:package.json",
+      "sha": "08348cef613f767f4e888c785b81b459ee45fb0e",
+      "rama": "main",
+      "creado": "2026-02-14",
+      "empujado": "2026-04-22",
+      "estrellas": 0,
+      "kb": 89973,
+      "stack": {
+        "tailwind": true,
+        "radix": true,
+        "next": true,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
       "id": "tylerprogramming__ai",
       "repo": "tylerprogramming/ai",
       "clase": "pos",
@@ -2141,6 +3422,69 @@
       }
     },
     {
+      "id": "vpavlenko__web-2024-template",
+      "repo": "vpavlenko/web-2024-template",
+      "clase": "pos",
+      "generador": "v0",
+      "procedencia": "marcador de v0 presente en el repositorio",
+      "consulta": "\"v0.dev\" in:file filename:README.md",
+      "sha": "456f9914de2fbad9e2f303df15e7b519da2d82c3",
+      "rama": "main",
+      "creado": "2024-09-29",
+      "empujado": "2024-12-09",
+      "estrellas": 97,
+      "kb": 666,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": true
+      }
+    },
+    {
+      "id": "Walbrkt__HackBerlin_Solar",
+      "repo": "Walbrkt/HackBerlin_Solar",
+      "clase": "pos",
+      "generador": "lovable",
+      "procedencia": "marcador de lovable presente en el repositorio",
+      "consulta": "lovable-tagger in:file filename:package.json",
+      "sha": "5deef2d7c820e4f118cda1499179c008797ce380",
+      "rama": "main",
+      "creado": "2026-04-25",
+      "empujado": "2026-04-26",
+      "estrellas": 0,
+      "kb": 59510,
+      "stack": {
+        "tailwind": true,
+        "radix": true,
+        "next": false,
+        "vite": true,
+        "react": true
+      }
+    },
+    {
+      "id": "xquad-io__x1",
+      "repo": "xquad-io/x1",
+      "clase": "pos",
+      "generador": "v0",
+      "procedencia": "marcador de v0 presente en el repositorio",
+      "consulta": "\"v0.dev\" in:file filename:README.md",
+      "sha": "3c41d4e5fb1e1edb8e1bbcd89660f7eb37926ca4",
+      "rama": "master",
+      "creado": "2023-11-05",
+      "empujado": "2024-01-03",
+      "estrellas": 34,
+      "kb": 9673,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": true
+      }
+    },
+    {
       "id": "yashgondalia__lingofun-academy-diya",
       "repo": "yashgondalia/lingofun-academy-diya",
       "clase": "pos",
@@ -2153,6 +3497,27 @@
       "empujado": "2025-08-05",
       "estrellas": 0,
       "kb": 9023,
+      "stack": {
+        "tailwind": true,
+        "radix": true,
+        "next": false,
+        "vite": true,
+        "react": true
+      }
+    },
+    {
+      "id": "yenom4__Kairos-website",
+      "repo": "yenom4/Kairos-website",
+      "clase": "pos",
+      "generador": "lovable",
+      "procedencia": "marcador de lovable presente en el repositorio",
+      "consulta": "lovable-tagger in:file filename:package.json",
+      "sha": "6e4053e26491c68eb988bcfc28e3a9c7c453ce03",
+      "rama": "main",
+      "creado": "2025-06-04",
+      "empujado": "2025-06-27",
+      "estrellas": 0,
+      "kb": 11876,
       "stack": {
         "tailwind": true,
         "radix": true,

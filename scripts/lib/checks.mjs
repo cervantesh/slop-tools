@@ -6,17 +6,30 @@ import { find, all, esProsa, lineaDe, clasesUtilidad, findClases } from './util.
 import { neutrosPlanos, paresBajoContraste, botonInvisible, diversidadDeTono } from './color.mjs'
 import { navPorDefecto, footerPorDefecto, cromoFalso, kickerEnDosColumnas, esqueletoDashboard } from './structure.mjs'
 import { escalas } from './escala.mjs'
+import { readFileSync as _leer } from 'node:fs'
+import { dirname as _dir, join as _join } from 'node:path'
+import { fileURLToPath as _url } from 'node:url'
+
+// Evidencia empirica de cada comprobacion, generada por
+// research/apply-weights.mjs desde research/medicion.json. Se carga en vez de
+// copiarse a mano: copiar cifras de una medicion a un fichero fuente es como se
+// desincronizan.
+let VALIDACION = {}
+try {
+  const ruta = _join(_dir(_url(import.meta.url)), '..', '..', 'data', 'validacion.json')
+  VALIDACION = JSON.parse(_leer(ruta, 'utf8')).reglas || {}
+} catch { VALIDACION = {} }
 
 // Arreglo y estado de validacion de cada comprobacion programatica. Van aparte
 // del cuerpo para que las funciones queden legibles; las cifras de `validado`
 // salen de research/RESULTADOS.md, misma medicion que las declarativas.
 const META = {
-  A2: { fix: 'Ofrece alternativa clara o justifica el oscuro en el contrato de marca.', validado: { J_banda: 0.06, separa: false } },
-  A3: { fix: 'Reserva el desenfoque para lo que de verdad flota sobre contenido.', validado: { J_banda: 0, separa: false, estado: 'no_medible' , revalidar: 'sustrato ampliado a clases de utilidad tras la medicion' } },
-  B1: { fix: 'Empareja una display con una de texto. Inter como unica familia es el default de las herramientas.', validado: { J_banda: 0.06, separa: false } },
-  B2: { fix: 'Una sola familia bien usada es disciplina en producto; en marca, empareja.', validado: { J_banda: -0.06, separa: false } },
-  C1: { fix: 'Separa con espacio primero, luego con un escalon de luminancia del 3-5%. El filete gris es el ultimo recurso.', validado: { J_banda: 0, separa: false, estado: 'no_medible' , revalidar: 'sustrato ampliado a clases de utilidad tras la medicion' } },
-  C3: { fix: 'Que el radio y el padding senalen la funcion del elemento en vez de ser constantes.', validado: { J_banda: 0.05, separa: false } },
+  A2: { fix: 'Ofrece alternativa clara o justifica el oscuro en el contrato de marca.' },
+  A3: { fix: 'Reserva el desenfoque para lo que de verdad flota sobre contenido.' },
+  B1: { fix: 'Empareja una display con una de texto. Inter como unica familia es el default de las herramientas.' },
+  B2: { fix: 'Una sola familia bien usada es disciplina en producto; en marca, empareja.' },
+  C1: { fix: 'Separa con espacio primero, luego con un escalon de luminancia del 3-5%. El filete gris es el ultimo recurso.' },
+  C3: { fix: 'Que el radio y el padding senalen la funcion del elemento en vez de ser constantes.' },
   C4: {
     fix: 'Declara una escala de espaciado y quedate en ella. Catorce valores distintos no es un sistema, es la escala de Tailwind usada a discrecion.',
     validado: {
@@ -25,20 +38,20 @@ const META = {
       decision: 'J 0,55 con intervalos separados, la mas alta del catalogo. Pero el umbral se ajusto sobre la MISMA muestra que la valida: la cifra encogera fuera de muestra.',
     },
   },
-  E4: { fix: 'Cinco descripciones distintas, o ninguna. Una repetida cinco veces es peor que el vacio.', validado: { J_banda: 0.04, separa: false } },
-  L1: { fix: 'Resuelve el plural con un condicional o con Intl.PluralRules.', validado: { J_banda: 0.40, separa: false } },
-  L3: { fix: 'Restaura los diacriticos en los archivos que salieron en ASCII plano.', validado: { J_banda: 0.01, separa: false, estado: 'no_medible' } },
-  T1: { fix: 'Anade aria-label a todo boton que solo lleve icono.', validado: { J_banda: -0.07, separa: false } },
-  T2: { fix: 'Que el texto del enlace diga a donde lleva, fuera de su contexto.', validado: { J_banda: 0.01, separa: false } },
-  K1: { fix: 'Da a los neutros un croma minimo de 0.005: un gris con temperatura ancla la paleta.', validado: { J_banda: 0.01, separa: false } },
-  K2: { fix: 'Sube el contraste a 4.5:1 en texto de lectura.', validado: { J_banda: 0.01, separa: false } },
-  K3: { fix: 'Separa el texto del relleno al menos 5% en luminosidad.', validado: { J_banda: 0, separa: false, estado: 'no_medible' , revalidar: 'sustrato ampliado a clases de utilidad tras la medicion' } },
-  K4: { fix: 'Acota a un dominante, un neutro y un acento. Los semanticos van aparte.', validado: { J_banda: -0.04, separa: false } },
-  S1: { fix: 'Rompe el arquetipo: la navegacion no tiene por que ser wordmark-enlaces-boton.', validado: { J_banda: 0, separa: false, estado: 'no_medible' , revalidar: 'sustrato ampliado a clases de utilidad tras la medicion' } },
-  S2: { fix: 'Agrupa el pie por lo que la gente busca, no por Product/Company/Resources/Legal.', validado: { J_banda: 0, separa: false, estado: 'no_medible' , revalidar: 'sustrato ampliado a clases de utilidad tras la medicion' } },
-  S3: { fix: 'Captura real en vez de cromo de navegador dibujado a mano.', validado: { J_banda: 0.01, separa: false } },
-  S4: { fix: 'Kicker y titular en una sola columna.', validado: { J_banda: 0, separa: false, estado: 'no_medible' , revalidar: 'sustrato ampliado a clases de utilidad tras la medicion' } },
-  S5: { fix: 'Ordena el panel por la decision que toma quien lo usa, no por el esqueleto canonico.', validado: { J_banda: 0, separa: false, estado: 'no_medible' , revalidar: 'sustrato ampliado a clases de utilidad tras la medicion' } },
+  E4: { fix: 'Cinco descripciones distintas, o ninguna. Una repetida cinco veces es peor que el vacio.' },
+  L1: { fix: 'Resuelve el plural con un condicional o con Intl.PluralRules.' },
+  L3: { fix: 'Restaura los diacriticos en los archivos que salieron en ASCII plano.' },
+  T1: { fix: 'Anade aria-label a todo boton que solo lleve icono.' },
+  T2: { fix: 'Que el texto del enlace diga a donde lleva, fuera de su contexto.' },
+  K1: { fix: 'Da a los neutros un croma minimo de 0.005: un gris con temperatura ancla la paleta.' },
+  K2: { fix: 'Sube el contraste a 4.5:1 en texto de lectura.' },
+  K3: { fix: 'Separa el texto del relleno al menos 5% en luminosidad.' },
+  K4: { fix: 'Acota a un dominante, un neutro y un acento. Los semanticos van aparte.' },
+  S1: { fix: 'Rompe el arquetipo: la navegacion no tiene por que ser wordmark-enlaces-boton.' },
+  S2: { fix: 'Agrupa el pie por lo que la gente busca, no por Product/Company/Resources/Legal.' },
+  S3: { fix: 'Captura real en vez de cromo de navegador dibujado a mano.' },
+  S4: { fix: 'Kicker y titular en una sola columna.' },
+  S5: { fix: 'Ordena el panel por la decision que toma quien lo usa, no por el esqueleto canonico.' },
 }
 
 export function programaticas(ctx) {
@@ -74,7 +87,7 @@ export function programaticas(ctx) {
           detail: dark ? (luz ? 'oscuro con alternativa clara' : 'solo oscuro, sin alternativa') : 'no fija esquema oscuro' }
       } },
 
-    { id: 'A3', tipo: 'procedencia', cat: 'Color', weight: 2, applies: 'ambos', title: 'Glassmorphism indiscriminado',
+    { id: 'A3', tipo: 'procedencia', cat: 'Color', weight: 3, applies: 'ambos', title: 'Glassmorphism indiscriminado',
       run() {
         const css = find(/backdrop-filter\s*:/i, styleFiles)
         const util = findClases(/\bbackdrop-blur(-\w+)?\b/i, codeFiles)
@@ -461,5 +474,7 @@ export function programaticas(ctx) {
 
 // Une cada comprobacion con su arreglo y su estado de validacion.
 function aplicarMeta(lista) {
-  return lista.map(c => ({ ...c, ...(META[c.id] || {}) }))
+  // `validado` va al final a proposito: la evidencia medida gana siempre sobre
+  // cualquier cifra que haya quedado escrita a mano en META.
+  return lista.map(c => ({ ...c, ...(META[c.id] || {}), validado: VALIDACION[c.id] || null }))
 }
