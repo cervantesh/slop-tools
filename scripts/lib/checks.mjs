@@ -244,7 +244,16 @@ export function programaticas(ctx) {
     // es especifica del espanol y el corpus de validacion es casi todo ingles, asi
     // que nunca tuvo oportunidad de disparar. Bajarle el peso por eso seria
     // confundir "no medido" con "no funciona".
-    { id: 'L3', tipo: 'procedencia', cat: 'Localizacion', weight: 3, applies: 'producto', title: 'Diacriticos repartidos de forma sistematica',
+    // PESO BAJADO DE 3 A 1. La premisa de la regla era que el ASCII irregular
+    // es habito humano y el corte limpio por archivo es proceso automatico.
+    // Medida sobre 19 proyectos humanos en espanol ANTERIORES a ChatGPT —por
+    // tanto imposibles de generar— dispara en el 26%, IC95 [12-49].
+    //
+    // El corte limpio por archivo ocurre tambien en codigo humano, y no poco.
+    // Sin clase positiva en espanol no hay J, pero una tasa del 26% sobre la
+    // poblacion que la regla existe para juzgar ya la descalifica como peso 3.
+    // research/l3-espanol.mjs
+    { id: 'L3', tipo: 'procedencia', cat: 'Localizacion', weight: 1, applies: 'producto', title: 'Diacriticos repartidos de forma sistematica',
       run() {
         const ES = /\b(de|la|el|los|las|para|con|tu|servicio|usuario|nombre|precio)\b/i
         const stats = []

@@ -1,0 +1,422 @@
+{
+  "_meta": {
+    "umbral": "densidad >= 0.03 y >= 12 marcas"
+  },
+  "espanoles": [
+    {
+      "id": "alejooroncoy__movies-pa",
+      "clase": "neg_stack",
+      "palabras": 78,
+      "hits": 12,
+      "densidad": 0.15384615384615385
+    },
+    {
+      "id": "benito281__registro-login-js",
+      "clase": "neg_stack",
+      "palabras": 283,
+      "hits": 43,
+      "densidad": 0.1519434628975265
+    },
+    {
+      "id": "Healthy-Dev__healthy-front",
+      "clase": "neg_stack",
+      "palabras": 462,
+      "hits": 67,
+      "densidad": 0.14502164502164502
+    },
+    {
+      "id": "JuandaGarcia__menu-digital",
+      "clase": "neg_stack",
+      "palabras": 357,
+      "hits": 41,
+      "densidad": 0.11484593837535013
+    },
+    {
+      "id": "xAgustin93__twitter-golang-react-client",
+      "clase": "neg_stack",
+      "palabras": 257,
+      "hits": 28,
+      "densidad": 0.10894941634241245
+    },
+    {
+      "id": "kevbrygil__task-timer-app",
+      "clase": "neg_stack",
+      "palabras": 380,
+      "hits": 36,
+      "densidad": 0.09473684210526316
+    },
+    {
+      "id": "damiansire__web-vaccine-tracker",
+      "clase": "neg_stack",
+      "palabras": 1515,
+      "hits": 131,
+      "densidad": 0.08646864686468647
+    },
+    {
+      "id": "jfriassilva__Proyecto-CRUD",
+      "clase": "neg_stack",
+      "palabras": 830,
+      "hits": 61,
+      "densidad": 0.07349397590361446
+    },
+    {
+      "id": "FlopaMendez__HidroGrow-codo-a-codo",
+      "clase": "neg_stack",
+      "palabras": 276,
+      "hits": 17,
+      "densidad": 0.06159420289855073
+    },
+    {
+      "id": "joshuacba08__bakery-app",
+      "clase": "neg_stack",
+      "palabras": 392,
+      "hits": 23,
+      "densidad": 0.058673469387755105
+    },
+    {
+      "id": "JoelHernandez343__crypto-project",
+      "clase": "neg_stack",
+      "palabras": 1008,
+      "hits": 53,
+      "densidad": 0.05257936507936508
+    },
+    {
+      "id": "fakumax__Pizzeria_App",
+      "clase": "neg_stack",
+      "palabras": 723,
+      "hits": 37,
+      "densidad": 0.051175656984785614
+    },
+    {
+      "id": "oscaramos__caratulas-ucsp",
+      "clase": "neg_stack",
+      "palabras": 4223,
+      "hits": 208,
+      "densidad": 0.04925408477385745
+    },
+    {
+      "id": "3FE3LE__treinta-page",
+      "clase": "neg_stack",
+      "palabras": 435,
+      "hits": 20,
+      "densidad": 0.04597701149425287
+    },
+    {
+      "id": "dileofrancoj__punchit-react-2da-edicion",
+      "clase": "neg_stack",
+      "palabras": 422,
+      "hits": 18,
+      "densidad": 0.04265402843601896
+    },
+    {
+      "id": "nodejsbrazil__cursonodebr01",
+      "clase": "neg_stack",
+      "palabras": 810,
+      "hits": 31,
+      "densidad": 0.03827160493827161
+    },
+    {
+      "id": "eliasdorigoni__coderhouse-desafio-ecommerce",
+      "clase": "neg_stack",
+      "palabras": 879,
+      "hits": 32,
+      "densidad": 0.03640500568828214
+    },
+    {
+      "id": "kurokuro15__secret-chat-with-twilio",
+      "clase": "neg_stack",
+      "palabras": 978,
+      "hits": 35,
+      "densidad": 0.03578732106339468
+    },
+    {
+      "id": "musartedev__dibujarte-css",
+      "clase": "neg_stack",
+      "palabras": 765,
+      "hits": 27,
+      "densidad": 0.03529411764705882
+    }
+  ],
+  "todos": [
+    {
+      "id": "alejooroncoy__movies-pa",
+      "clase": "neg_stack",
+      "palabras": 78,
+      "hits": 12,
+      "densidad": 0.15384615384615385
+    },
+    {
+      "id": "benito281__registro-login-js",
+      "clase": "neg_stack",
+      "palabras": 283,
+      "hits": 43,
+      "densidad": 0.1519434628975265
+    },
+    {
+      "id": "Healthy-Dev__healthy-front",
+      "clase": "neg_stack",
+      "palabras": 462,
+      "hits": 67,
+      "densidad": 0.14502164502164502
+    },
+    {
+      "id": "JuandaGarcia__menu-digital",
+      "clase": "neg_stack",
+      "palabras": 357,
+      "hits": 41,
+      "densidad": 0.11484593837535013
+    },
+    {
+      "id": "xAgustin93__twitter-golang-react-client",
+      "clase": "neg_stack",
+      "palabras": 257,
+      "hits": 28,
+      "densidad": 0.10894941634241245
+    },
+    {
+      "id": "kevbrygil__task-timer-app",
+      "clase": "neg_stack",
+      "palabras": 380,
+      "hits": 36,
+      "densidad": 0.09473684210526316
+    },
+    {
+      "id": "damiansire__web-vaccine-tracker",
+      "clase": "neg_stack",
+      "palabras": 1515,
+      "hits": 131,
+      "densidad": 0.08646864686468647
+    },
+    {
+      "id": "Xeroth-20__cheemsify",
+      "clase": "neg_stack",
+      "palabras": 84,
+      "hits": 7,
+      "densidad": 0.08333333333333333
+    },
+    {
+      "id": "jfriassilva__Proyecto-CRUD",
+      "clase": "neg_stack",
+      "palabras": 830,
+      "hits": 61,
+      "densidad": 0.07349397590361446
+    },
+    {
+      "id": "FlopaMendez__HidroGrow-codo-a-codo",
+      "clase": "neg_stack",
+      "palabras": 276,
+      "hits": 17,
+      "densidad": 0.06159420289855073
+    },
+    {
+      "id": "joshuacba08__bakery-app",
+      "clase": "neg_stack",
+      "palabras": 392,
+      "hits": 23,
+      "densidad": 0.058673469387755105
+    },
+    {
+      "id": "brunoemferreira__CRUDReactNativeSQLite",
+      "clase": "neg_stack",
+      "palabras": 174,
+      "hits": 10,
+      "densidad": 0.05747126436781609
+    },
+    {
+      "id": "JoelHernandez343__crypto-project",
+      "clase": "neg_stack",
+      "palabras": 1008,
+      "hits": 53,
+      "densidad": 0.05257936507936508
+    },
+    {
+      "id": "fakumax__Pizzeria_App",
+      "clase": "neg_stack",
+      "palabras": 723,
+      "hits": 37,
+      "densidad": 0.051175656984785614
+    },
+    {
+      "id": "oscaramos__caratulas-ucsp",
+      "clase": "neg_stack",
+      "palabras": 4223,
+      "hits": 208,
+      "densidad": 0.04925408477385745
+    },
+    {
+      "id": "3FE3LE__treinta-page",
+      "clase": "neg_stack",
+      "palabras": 435,
+      "hits": 20,
+      "densidad": 0.04597701149425287
+    },
+    {
+      "id": "dileofrancoj__punchit-react-2da-edicion",
+      "clase": "neg_stack",
+      "palabras": 422,
+      "hits": 18,
+      "densidad": 0.04265402843601896
+    },
+    {
+      "id": "nodejsbrazil__cursonodebr01",
+      "clase": "neg_stack",
+      "palabras": 810,
+      "hits": 31,
+      "densidad": 0.03827160493827161
+    },
+    {
+      "id": "eliasdorigoni__coderhouse-desafio-ecommerce",
+      "clase": "neg_stack",
+      "palabras": 879,
+      "hits": 32,
+      "densidad": 0.03640500568828214
+    },
+    {
+      "id": "kurokuro15__secret-chat-with-twilio",
+      "clase": "neg_stack",
+      "palabras": 978,
+      "hits": 35,
+      "densidad": 0.03578732106339468
+    },
+    {
+      "id": "musartedev__dibujarte-css",
+      "clase": "neg_stack",
+      "palabras": 765,
+      "hits": 27,
+      "densidad": 0.03529411764705882
+    },
+    {
+      "id": "Fhernd__JavaScript-Curso",
+      "clase": "neg_stack",
+      "palabras": 234,
+      "hits": 8,
+      "densidad": 0.03418803418803419
+    },
+    {
+      "id": "beduExpert__C1-React-MASIVO-2020-2021",
+      "clase": "neg_stack",
+      "palabras": 772,
+      "hits": 22,
+      "densidad": 0.02849740932642487
+    },
+    {
+      "id": "EscuelaIt__react-2020",
+      "clase": "neg_stack",
+      "palabras": 632,
+      "hits": 18,
+      "densidad": 0.028481012658227847
+    },
+    {
+      "id": "dileofrancoj__punchit-react",
+      "clase": "neg_stack",
+      "palabras": 328,
+      "hits": 9,
+      "densidad": 0.027439024390243903
+    },
+    {
+      "id": "jamj2000__tiendafrontend",
+      "clase": "neg_stack",
+      "palabras": 73,
+      "hits": 2,
+      "densidad": 0.0273972602739726
+    },
+    {
+      "id": "ignaciojsoler__alkemy-skillup",
+      "clase": "neg_stack",
+      "palabras": 586,
+      "hits": 16,
+      "densidad": 0.027303754266211604
+    },
+    {
+      "id": "rodriolivares__UpTask_MERN_frontend",
+      "clase": "neg_stack",
+      "palabras": 1291,
+      "hits": 33,
+      "densidad": 0.025561580170410533
+    },
+    {
+      "id": "GustavoBlaze__fastfeet",
+      "clase": "neg_stack",
+      "palabras": 612,
+      "hits": 15,
+      "densidad": 0.024509803921568627
+    },
+    {
+      "id": "pato-1441__bornozBank",
+      "clase": "neg_stack",
+      "palabras": 1551,
+      "hits": 33,
+      "densidad": 0.02127659574468085
+    },
+    {
+      "id": "CarlosZiegler__fullstack-start-template",
+      "clase": "pos",
+      "palabras": 7799,
+      "hits": 164,
+      "densidad": 0.02102833696627773
+    },
+    {
+      "id": "Lautar0T__GetMeGaming",
+      "clase": "neg_stack",
+      "palabras": 576,
+      "hits": 12,
+      "densidad": 0.020833333333333332
+    },
+    {
+      "id": "simaraconceicao__javascript-ii-gama-xp",
+      "clase": "neg_stack",
+      "palabras": 104,
+      "hits": 2,
+      "densidad": 0.019230769230769232
+    },
+    {
+      "id": "nataliamateo__project-promo-i-module-3-team-3-morning",
+      "clase": "neg_stack",
+      "palabras": 886,
+      "hits": 17,
+      "densidad": 0.019187358916478554
+    },
+    {
+      "id": "xaca__reto_fullstack",
+      "clase": "neg_stack",
+      "palabras": 847,
+      "hits": 15,
+      "densidad": 0.01770956316410862
+    },
+    {
+      "id": "romelx23__votation-frontend",
+      "clase": "neg_stack",
+      "palabras": 3639,
+      "hits": 64,
+      "densidad": 0.017587249244297883
+    },
+    {
+      "id": "natilavega__todo-app",
+      "clase": "neg_stack",
+      "palabras": 234,
+      "hits": 4,
+      "densidad": 0.017094017094017096
+    },
+    {
+      "id": "sigdeletras__react_maps",
+      "clase": "neg_stack",
+      "palabras": 425,
+      "hits": 7,
+      "densidad": 0.01647058823529412
+    },
+    {
+      "id": "julianmartinez-dev__sportsJS",
+      "clase": "neg_stack",
+      "palabras": 1584,
+      "hits": 25,
+      "densidad": 0.015782828282828284
+    },
+    {
+      "id": "mtov__esmforum",
+      "clase": "neg_stack",
+      "palabras": 135,
+      "hits": 2,
+      "densidad": 0.014814814814814815
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "porClase": {
+    "neg_stack": {
+      "n": 19,
+      "k": 5
+    }
+  },
+  "filas": [
+    {
+      "id": "alejooroncoy__movies-pa",
+      "clase": "neg_stack",
+      "densidad": 0.15384615384615385,
+      "dispara": false,
+      "detalle": "1 archivo(s) con prosa espanola; sin bifurcacion"
+    },
+    {
+      "id": "benito281__registro-login-js",
+      "clase": "neg_stack",
+      "densidad": 0.1519434628975265,
+      "dispara": false,
+      "detalle": "3 archivo(s) con prosa espanola; sin bifurcacion"
+    },
+    {
+      "id": "Healthy-Dev__healthy-front",
+      "clase": "neg_stack",
+      "densidad": 0.14502164502164502,
+      "dispara": true,
+      "detalle": "2 archivo(s) con prosa espanola y CERO acentos frente a 2 plenamente acentuado(s): reparto sistematico, no habito de teclado"
+    },
+    {
+      "id": "JuandaGarcia__menu-digital",
+      "clase": "neg_stack",
+      "densidad": 0.11484593837535013,
+      "dispara": false,
+      "detalle": "6 archivo(s) con prosa espanola; sin bifurcacion"
+    },
+    {
+      "id": "xAgustin93__twitter-golang-react-client",
+      "clase": "neg_stack",
+      "densidad": 0.10894941634241245,
+      "dispara": false,
+      "detalle": "5 archivo(s) con prosa espanola; sin bifurcacion"
+    },
+    {
+      "id": "kevbrygil__task-timer-app",
+      "clase": "neg_stack",
+      "densidad": 0.09473684210526316,
+      "dispara": true,
+      "detalle": "1 archivo(s) con prosa espanola y CERO acentos frente a 3 plenamente acentuado(s): reparto sistematico, no habito de teclado"
+    },
+    {
+      "id": "damiansire__web-vaccine-tracker",
+      "clase": "neg_stack",
+      "densidad": 0.08646864686468647,
+      "dispara": false,
+      "detalle": "22 archivo(s) con prosa espanola; sin bifurcacion"
+    },
+    {
+      "id": "jfriassilva__Proyecto-CRUD",
+      "clase": "neg_stack",
+      "densidad": 0.07349397590361446,
+      "dispara": false,
+      "detalle": "8 archivo(s) con prosa espanola; sin bifurcacion"
+    },
+    {
+      "id": "FlopaMendez__HidroGrow-codo-a-codo",
+      "clase": "neg_stack",
+      "densidad": 0.06159420289855073,
+      "dispara": false,
+      "detalle": "4 archivo(s) con prosa espanola; sin bifurcacion"
+    },
+    {
+      "id": "joshuacba08__bakery-app",
+      "clase": "neg_stack",
+      "densidad": 0.058673469387755105,
+      "dispara": false,
+      "detalle": "8 archivo(s) con prosa espanola; sin bifurcacion"
+    },
+    {
+      "id": "JoelHernandez343__crypto-project",
+      "clase": "neg_stack",
+      "densidad": 0.05257936507936508,
+      "dispara": true,
+      "detalle": "2 archivo(s) con prosa espanola y CERO acentos frente a 4 plenamente acentuado(s): reparto sistematico, no habito de teclado"
+    },
+    {
+      "id": "fakumax__Pizzeria_App",
+      "clase": "neg_stack",
+      "densidad": 0.051175656984785614,
+      "dispara": false,
+      "detalle": "8 archivo(s) con prosa espanola; sin bifurcacion"
+    },
+    {
+      "id": "oscaramos__caratulas-ucsp",
+      "clase": "neg_stack",
+      "densidad": 0.04925408477385745,
+      "dispara": false,
+      "detalle": "4 archivo(s) con prosa espanola; sin bifurcacion"
+    },
+    {
+      "id": "3FE3LE__treinta-page",
+      "clase": "neg_stack",
+      "densidad": 0.04597701149425287,
+      "dispara": false,
+      "detalle": "4 archivo(s) con prosa espanola; sin bifurcacion"
+    },
+    {
+      "id": "dileofrancoj__punchit-react-2da-edicion",
+      "clase": "neg_stack",
+      "densidad": 0.04265402843601896,
+      "dispara": false,
+      "detalle": "0 archivo(s) con prosa espanola; sin bifurcacion"
+    },
+    {
+      "id": "nodejsbrazil__cursonodebr01",
+      "clase": "neg_stack",
+      "densidad": 0.03827160493827161,
+      "dispara": false,
+      "detalle": "0 archivo(s) con prosa espanola; sin bifurcacion"
+    },
+    {
+      "id": "eliasdorigoni__coderhouse-desafio-ecommerce",
+      "clase": "neg_stack",
+      "densidad": 0.03640500568828214,
+      "dispara": true,
+      "detalle": "2 archivo(s) con prosa espanola y CERO acentos frente a 1 plenamente acentuado(s): reparto sistematico, no habito de teclado"
+    },
+    {
+      "id": "kurokuro15__secret-chat-with-twilio",
+      "clase": "neg_stack",
+      "densidad": 0.03578732106339468,
+      "dispara": true,
+      "detalle": "1 archivo(s) con prosa espanola y CERO acentos frente a 2 plenamente acentuado(s): reparto sistematico, no habito de teclado"
+    },
+    {
+      "id": "musartedev__dibujarte-css",
+      "clase": "neg_stack",
+      "densidad": 0.03529411764705882,
+      "dispara": false,
+      "detalle": "6 archivo(s) con prosa espanola; sin bifurcacion"
+    }
+  ]
+}

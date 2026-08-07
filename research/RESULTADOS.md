@@ -507,3 +507,62 @@ corpus mayor, y esa sigue siendo la inversión con más retorno de todo el proye
 partición sí da desde hoy es un **techo honesto a lo que podemos afirmar**.
 
 Reproducir: `node research/holdout.mjs`
+
+---
+
+# `L3` en español — la regla propia que no sobrevive
+
+`L3` era la única comprobación del catálogo sin medición, y la única inventada aquí. Su
+premisa: **el ASCII irregular es hábito humano; el corte limpio por archivo es proceso
+automático.**
+
+## Construir el corpus que faltaba
+
+El corpus general no servía: `research/idioma.mjs` encontró **cero proyectos en español entre
+120**. No era que no la hubiéramos medido — es que ese corpus no podía.
+
+`research/corpus-es.mjs` añadió 125 candidatos y tras descargar quedaron **19 proyectos
+humanos en español**, todos anteriores al corte de 2022-11-30.
+
+**Y cero generados.** El marcador de generador y la interfaz en español no coexisten en
+GitHub público: lo que sale de Lovable, v0 y Bolt y llega a un repositorio está en inglés.
+Sin clase positiva no hay J, y ese hueco no se cierra buscando más.
+
+## Lo que sí se pudo medir, y lo que dice
+
+Sobre la población que la regla existe para juzgar:
+
+| Clase | Dispara | Tasa | IC95 |
+| --- | --- | --- | --- |
+| Humano, español, pre-ChatGPT | 5 / 19 | **26%** | 12–49% |
+
+Cinco proyectos escritos por personas **antes de que existiera ChatGPT** presentan
+exactamente el patrón que la regla considera prueba de proceso automático: unos archivos con
+prosa española y cero acentos, otros plenamente acentuados.
+
+**La premisa está falsada sobre su propia población.** El corte limpio por archivo ocurre
+también en código humano, y no poco: uno de cada cuatro.
+
+`L3` baja de peso **3 a 1**.
+
+## La consecuencia que hay que decir en voz alta
+
+Este repositorio nació de una auditoría en la que `L3` se usó como **árbitro**. Tres modelos
+discreparon sobre si los diacríticos perdidos delataban máquina; se midió la distribución, se
+encontró el corte limpio por archivo y se concluyó que había «un proceso sistemático».
+
+Esa conclusión era más fuerte de lo que la evidencia permitía. El corte limpio distingue
+*proceso* de *hábito irregular* —eso sigue en pie— pero **no distingue proceso automático de
+proceso humano**: un equipo que escribe los datos en un archivo y la interfaz en otro produce
+la misma huella.
+
+La afirmación defendible se queda en: *hubo dos orígenes de texto distintos*. Quién o qué
+estaba en cada uno, esta regla no lo dice.
+
+## Qué haría falta
+
+Una clase positiva en español exige generar los artefactos uno mismo con las herramientas, lo
+que introduce su propio sesgo —serían nuestros prompts, no una muestra del mundo— o encontrar
+una fuente de proyectos generados fuera de GitHub. Ninguna de las dos es una tarde de trabajo.
+
+Reproducir: `node research/corpus-es.mjs && node research/fetch-corpus.mjs && node research/idioma.mjs && node research/l3-espanol.mjs`
