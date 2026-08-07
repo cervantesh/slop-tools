@@ -103,6 +103,24 @@ archivos de estilo, y un proyecto Tailwind humano no tiene CSS propio: medía au
 > estar midiendo el stack en vez del origen.** Si la clase negativa usa otra tecnología que la
 > positiva, cualquier diferencia técnica se lee como diferencia de autoría.
 
+## El techo de lo que podemos afirmar
+
+Los intervalos de confianza que acompañan a cada regla miden **el error de muestreo de una
+tasa**. No miden que hayamos elegido qué reglas mirar *después* de ver los datos, que es la
+fuente de optimismo más grande de todo el proceso.
+
+La partición en conjunto reservado lo pone en números: **de 21 reglas con J > 0,15, sólo 8
+conservan al menos la mitad de su fuerza en proyectos que no participaron en ninguna decisión
+de peso.**
+
+Las que aguantan con margen —`UX2`, `L2`, `L1`, `UX6`, `D5`, `CS3`— son, hoy, lo único
+defendible dentro y fuera de la muestra. Todo lo demás merece la coletilla «medido, pendiente
+de confirmar».
+
+> Ojo con leerlo al revés: la reserva tiene pos=9 y neg=7. Con esa n, una regla puede moverse
+> medio punto por azar, y **no es una refutación de trece reglas**. Es una advertencia sobre
+> la confianza agregada, no un veredicto regla a regla.
+
 ## Las puntuaciones no son comparables entre versiones
 
 Añadir comprobaciones cambia el denominador. Un proyecto que sacaba 32 puede sacar 53 sin

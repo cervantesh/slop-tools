@@ -445,3 +445,65 @@ node research/apply-weights.mjs
 La evidencia de cada comprobación programática se exporta a `data/validacion.json`, que
 `checks.mjs` carga en tiempo de ejecución. Ninguna cifra se copia a mano de una medición a un
 fichero fuente: así es como se desincronizan.
+
+---
+
+# Conjunto reservado — cuánto sobrevive fuera de donde decidimos
+
+Los pesos del catálogo se ajustaron mirando la tabla completa. Una regla puede parecer buena
+porque acertó justo en esos proyectos. `research/holdout.mjs` parte la banda en **70% ajuste
+y 30% reserva** con un hash determinista del identificador del repositorio, y recalcula J en
+cada mitad. **La reserva no participó en ninguna decisión de peso.**
+
+`ajuste pos=25 neg=25 · reserva pos=9 neg=7`
+
+## El resultado
+
+**De 21 reglas con J > 0,15 en ajuste, sólo 8 conservan al menos la mitad en reserva.**
+
+| Regla | J ajuste | J reserva | Aguanta |
+| --- | --- | --- | --- |
+| `UX2` pastilla en todo | 0,44 | 0,46 | sí |
+| `L2` fechas y monedas a mano | 0,44 | 0,49 | sí |
+| **`C4` escala dispersa** | **0,44** | **0,17** | **no** |
+| `L1` plural sin resolver | 0,40 | 0,27 | sí |
+| `UX6` console.log | 0,32 | 0,41 | sí |
+| `UX3` duración 300ms | 0,32 | **−0,38** | no |
+| `UX1` rejilla de tres | 0,32 | **−0,16** | no |
+| `D5` emojis como iconos | 0,28 | 0,22 | sí |
+| `E7` restos de andamiaje | 0,28 | 0,14 | sí |
+| **`A3` glassmorphism** | **0,28** | **0,11** | **no** |
+| `CS3` tipos silenciados | 0,24 | 0,41 | sí |
+| `A1` gradiente morado-azul | 0,20 | **−0,21** | no |
+
+## Cómo hay que leer esto
+
+**No es una refutación de trece reglas.** La reserva tiene **pos=9, neg=7**: con esa muestra
+la J de una regla puede moverse medio punto por azar. `UX3` pasando de +0,32 a −0,38 no
+significa que detecte diseño humano; significa que con siete negativos no se puede decir nada
+de `UX3`.
+
+**Sí es una advertencia sobre nuestra propia confianza.** El patrón agregado —ocho de
+veintiuna— indica que las decisiones de peso llevan más optimismo dentro de muestra del que
+sugerían los intervalos de Wilson. Los intervalos miden el error de muestreo de una tasa; no
+miden que hayamos elegido qué reglas mirar después de ver los datos.
+
+**Dos casos que conviene mirar de frente:**
+
+- **`C4` cae de 0,44 a 0,17.** Sobrevivió a la ampliación del corpus —de 0,552 a 0,386— y no
+  sobrevive a la partición. Es la regla que este repositorio derivó de sus propios datos, y
+  es justo la que más riesgo de sobreajuste tenía. Mantiene el peso 3 porque la caída puede
+  ser ruido con n=16, pero queda marcada.
+- **`A3` cae de 0,28 a 0,11.** Fue el hallazgo de P2 —el sustrato equivocado escondía un
+  discriminador— y en reserva se queda a la mitad.
+
+Las cuatro que aguantan con margen —`UX2`, `L2`, `L1`, `UX6`— más `D5` y `CS3` son, hoy, lo
+único que este repositorio puede defender con evidencia dentro y fuera de la muestra.
+
+## Lo que esto no arregla
+
+La reserva es demasiado pequeña para adjudicar reglas individuales. Para eso hace falta un
+corpus mayor, y esa sigue siendo la inversión con más retorno de todo el proyecto. Lo que la
+partición sí da desde hoy es un **techo honesto a lo que podemos afirmar**.
+
+Reproducir: `node research/holdout.mjs`

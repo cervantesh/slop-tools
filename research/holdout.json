@@ -1,0 +1,480 @@
+{
+  "n": {
+    "ajuste": {
+      "pos": 25,
+      "neg": 25
+    },
+    "reserva": {
+      "pos": 9,
+      "neg": 7
+    }
+  },
+  "banda": {
+    "min": 20,
+    "max": 200
+  },
+  "filas": [
+    {
+      "id": "UX2",
+      "titulo": "Pastilla redondeada en todo",
+      "J_ajuste": 0.44000000000000006,
+      "J_reserva": 0.4603174603174603,
+      "caida": -0.020317460317460234
+    },
+    {
+      "id": "C4",
+      "titulo": "Escala de espaciado dispersa",
+      "J_ajuste": 0.44000000000000006,
+      "J_reserva": 0.17460317460317454,
+      "caida": 0.2653968253968255
+    },
+    {
+      "id": "L2",
+      "titulo": "Fechas y monedas escritas a mano",
+      "J_ajuste": 0.44,
+      "J_reserva": 0.4920634920634921,
+      "caida": -0.05206349206349209
+    },
+    {
+      "id": "L1",
+      "titulo": "Plural sin resolver junto a un contador",
+      "J_ajuste": 0.4,
+      "J_reserva": 0.2698412698412699,
+      "caida": 0.13015873015873014
+    },
+    {
+      "id": "UX6",
+      "titulo": "console.log olvidado",
+      "J_ajuste": 0.32,
+      "J_reserva": 0.41269841269841273,
+      "caida": -0.09269841269841272
+    },
+    {
+      "id": "HM4",
+      "titulo": "Hover-scale uniforme en todo",
+      "J_ajuste": 0.32,
+      "J_reserva": -0.031746031746031744,
+      "caida": 0.35174603174603175
+    },
+    {
+      "id": "UX3",
+      "titulo": "Duracion 300ms por defecto",
+      "J_ajuste": 0.32,
+      "J_reserva": -0.380952380952381,
+      "caida": 0.700952380952381
+    },
+    {
+      "id": "UX1",
+      "titulo": "Rejilla de tres tarjetas iguales",
+      "J_ajuste": 0.31999999999999995,
+      "J_reserva": -0.15873015873015872,
+      "caida": 0.4787301587301587
+    },
+    {
+      "id": "D5",
+      "titulo": "Emojis donde correspondia un icono",
+      "J_ajuste": 0.28,
+      "J_reserva": 0.2222222222222222,
+      "caida": 0.05777777777777782
+    },
+    {
+      "id": "E7",
+      "titulo": "Restos de andamiaje visibles al usuario",
+      "J_ajuste": 0.28,
+      "J_reserva": 0.1428571428571429,
+      "caida": 0.13714285714285712
+    },
+    {
+      "id": "A3",
+      "titulo": "Glassmorphism indiscriminado",
+      "J_ajuste": 0.28,
+      "J_reserva": 0.1111111111111111,
+      "caida": 0.16888888888888892
+    },
+    {
+      "id": "UX11",
+      "titulo": "Tamano de titular arbitrario",
+      "J_ajuste": 0.28,
+      "J_reserva": -0.031746031746031744,
+      "caida": 0.31174603174603177
+    },
+    {
+      "id": "CS3",
+      "titulo": "Tipos silenciados",
+      "J_ajuste": 0.24,
+      "J_reserva": 0.41269841269841273,
+      "caida": -0.17269841269841274
+    },
+    {
+      "id": "UX7",
+      "titulo": "Estilos en linea",
+      "J_ajuste": 0.24,
+      "J_reserva": -0.031746031746031744,
+      "caida": 0.27174603174603174
+    },
+    {
+      "id": "A1",
+      "titulo": "Gradiente morado-azul",
+      "J_ajuste": 0.2,
+      "J_reserva": -0.20634920634920634,
+      "caida": 0.40634920634920635
+    },
+    {
+      "id": "A2",
+      "titulo": "Dark mode permanente por defecto",
+      "J_ajuste": 0.19999999999999998,
+      "J_reserva": 0,
+      "caida": 0.19999999999999998
+    },
+    {
+      "id": "A4",
+      "titulo": "Resplandor de acento tras el hero",
+      "J_ajuste": 0.19999999999999998,
+      "J_reserva": -0.031746031746031744,
+      "caida": 0.23174603174603173
+    },
+    {
+      "id": "E6",
+      "titulo": "Nombres de relleno",
+      "J_ajuste": 0.19999999999999998,
+      "J_reserva": -0.06349206349206349,
+      "caida": 0.26349206349206344
+    },
+    {
+      "id": "UX10",
+      "titulo": "Texto con gradiente arcoiris",
+      "J_ajuste": 0.19999999999999998,
+      "J_reserva": -0.09523809523809523,
+      "caida": 0.2952380952380952
+    },
+    {
+      "id": "P4",
+      "titulo": "Emoji como vineta de lista",
+      "J_ajuste": 0.16,
+      "J_reserva": 0.2222222222222222,
+      "caida": -0.06222222222222221
+    },
+    {
+      "id": "E5",
+      "titulo": "Densidad de palabras vacias",
+      "J_ajuste": 0.16,
+      "J_reserva": 0,
+      "caida": 0.16
+    },
+    {
+      "id": "AS1",
+      "titulo": "transition: all",
+      "J_ajuste": 0.12000000000000001,
+      "J_reserva": -0.031746031746031744,
+      "caida": 0.15174603174603174
+    },
+    {
+      "id": "S1",
+      "titulo": "Nav por defecto",
+      "J_ajuste": 0.12,
+      "J_reserva": 0.2222222222222222,
+      "caida": -0.10222222222222221
+    },
+    {
+      "id": "E1",
+      "titulo": "Abuso del em dash",
+      "J_ajuste": 0.12,
+      "J_reserva": 0,
+      "caida": 0.12
+    },
+    {
+      "id": "A5",
+      "titulo": "Neon sobre oscuro con bordes que brillan",
+      "J_ajuste": 0.12,
+      "J_reserva": 0,
+      "caida": 0.12
+    },
+    {
+      "id": "B1",
+      "titulo": "Familia por defecto de las herramientas de IA",
+      "J_ajuste": 0.12,
+      "J_reserva": 0,
+      "caida": 0.12
+    },
+    {
+      "id": "S5",
+      "titulo": "Esqueleto de dashboard por defecto",
+      "J_ajuste": 0.08,
+      "J_reserva": 0,
+      "caida": 0.08
+    },
+    {
+      "id": "AS2",
+      "titulo": "Levantar la tarjeta en hover",
+      "J_ajuste": 0.08,
+      "J_reserva": -0.031746031746031744,
+      "caida": 0.11174603174603175
+    },
+    {
+      "id": "K1",
+      "titulo": "Neutros de croma cero",
+      "J_ajuste": 0.07999999999999999,
+      "J_reserva": 0,
+      "caida": 0.07999999999999999
+    },
+    {
+      "id": "K3",
+      "titulo": "Texto de boton indistinguible del relleno",
+      "J_ajuste": 0.07999999999999999,
+      "J_reserva": -0.20634920634920634,
+      "caida": 0.28634920634920635
+    },
+    {
+      "id": "E4",
+      "titulo": "Copy duplicado literalmente",
+      "J_ajuste": 0.07999999999999996,
+      "J_reserva": 0.1428571428571429,
+      "caida": -0.06285714285714294
+    },
+    {
+      "id": "D1",
+      "titulo": "Enlaces a bancos de imagenes",
+      "J_ajuste": 0.04000000000000001,
+      "J_reserva": -0.031746031746031744,
+      "caida": 0.07174603174603175
+    },
+    {
+      "id": "C1",
+      "titulo": "Borde gris plano de 1px",
+      "J_ajuste": 0.04000000000000001,
+      "J_reserva": -0.20634920634920634,
+      "caida": 0.24634920634920635
+    },
+    {
+      "id": "UX8",
+      "titulo": "Defaults de shadcn sin tocar",
+      "J_ajuste": 0.04,
+      "J_reserva": 0.1111111111111111,
+      "caida": -0.0711111111111111
+    },
+    {
+      "id": "E2",
+      "titulo": "Comillas curvas sin tocar",
+      "J_ajuste": 0.04,
+      "J_reserva": 0,
+      "caida": 0.04
+    },
+    {
+      "id": "S2",
+      "titulo": "Footer de cuatro columnas canonicas",
+      "J_ajuste": 0.04,
+      "J_reserva": 0,
+      "caida": 0.04
+    },
+    {
+      "id": "S4",
+      "titulo": "Kicker y titular en varias columnas",
+      "J_ajuste": 0.04,
+      "J_reserva": 0,
+      "caida": 0.04
+    },
+    {
+      "id": "HM3",
+      "titulo": "Easing con rebote en cambios de estado",
+      "J_ajuste": 0.04,
+      "J_reserva": 0,
+      "caida": 0.04
+    },
+    {
+      "id": "C3",
+      "titulo": "Radio y padding uniformes",
+      "J_ajuste": 0.04,
+      "J_reserva": 0,
+      "caida": 0.04
+    },
+    {
+      "id": "P5",
+      "titulo": "Negrita como prefijo de vineta",
+      "J_ajuste": 0.04,
+      "J_reserva": 0,
+      "caida": 0.04
+    },
+    {
+      "id": "K2",
+      "titulo": "Pares texto/fondo por debajo de 4.5:1",
+      "J_ajuste": 0.04,
+      "J_reserva": 0,
+      "caida": 0.04
+    },
+    {
+      "id": "S3",
+      "titulo": "Cromo falso dibujado a mano",
+      "J_ajuste": 0.04,
+      "J_reserva": 0,
+      "caida": 0.04
+    },
+    {
+      "id": "UX12",
+      "titulo": "Pila de avatares superpuestos",
+      "J_ajuste": 0.04,
+      "J_reserva": -0.1746031746031746,
+      "caida": 0.2146031746031746
+    },
+    {
+      "id": "C2",
+      "titulo": "Franja lateral de color de 3-4px",
+      "J_ajuste": 0,
+      "J_reserva": 0.1111111111111111,
+      "caida": -0.1111111111111111
+    },
+    {
+      "id": "P3",
+      "titulo": "Atribucion vaga",
+      "J_ajuste": 0,
+      "J_reserva": 0.1111111111111111,
+      "caida": -0.1111111111111111
+    },
+    {
+      "id": "HM2",
+      "titulo": "Transicion sobre propiedades de layout",
+      "J_ajuste": 0,
+      "J_reserva": 0.1111111111111111,
+      "caida": -0.1111111111111111
+    },
+    {
+      "id": "HM5",
+      "titulo": "Metrica inventada",
+      "J_ajuste": 0,
+      "J_reserva": 0,
+      "caida": 0
+    },
+    {
+      "id": "P1",
+      "titulo": "Paralelismo negativo",
+      "J_ajuste": 0,
+      "J_reserva": 0,
+      "caida": 0
+    },
+    {
+      "id": "P2",
+      "titulo": "Verbos de relleno en vez de ser o tener",
+      "J_ajuste": 0,
+      "J_reserva": 0,
+      "caida": 0
+    },
+    {
+      "id": "HM12",
+      "titulo": "Mayusculas de display con interlineado bajo 1.0",
+      "J_ajuste": 0,
+      "J_reserva": 0,
+      "caida": 0
+    },
+    {
+      "id": "HM1",
+      "titulo": "Titulares en italica",
+      "J_ajuste": 0,
+      "J_reserva": 0,
+      "caida": 0
+    },
+    {
+      "id": "CS1",
+      "titulo": "Comentarios narrativos",
+      "J_ajuste": 0,
+      "J_reserva": 0,
+      "caida": 0
+    },
+    {
+      "id": "L3",
+      "titulo": "Diacriticos repartidos de forma sistematica",
+      "J_ajuste": 0,
+      "J_reserva": 0,
+      "caida": 0
+    },
+    {
+      "id": "AS9",
+      "titulo": "Monocultura de segundo orden",
+      "J_ajuste": 0,
+      "J_reserva": 0,
+      "caida": 0
+    },
+    {
+      "id": "K4",
+      "titulo": "Paleta sin foco: demasiadas familias de tono",
+      "J_ajuste": 0,
+      "J_reserva": 0,
+      "caida": 0
+    },
+    {
+      "id": "UX5",
+      "titulo": "z-index arbitrario 9999",
+      "J_ajuste": 0,
+      "J_reserva": -0.14285714285714285,
+      "caida": 0.14285714285714285
+    },
+    {
+      "id": "T1",
+      "titulo": "Botones de solo icono sin nombre accesible",
+      "J_ajuste": 0,
+      "J_reserva": -0.31746031746031744,
+      "caida": 0.31746031746031744
+    },
+    {
+      "id": "UX9",
+      "titulo": "TODO o FIXME en el arbol",
+      "J_ajuste": -0.04,
+      "J_reserva": 0.2222222222222222,
+      "caida": -0.2622222222222222
+    },
+    {
+      "id": "B4",
+      "titulo": "Etiquetas en mayusculas por todas partes",
+      "J_ajuste": -0.04,
+      "J_reserva": 0,
+      "caida": -0.04
+    },
+    {
+      "id": "HM10",
+      "titulo": "Medida de prosa fuera de 45-75ch",
+      "J_ajuste": -0.04,
+      "J_reserva": 0,
+      "caida": -0.04
+    },
+    {
+      "id": "T2",
+      "titulo": "Enlaces y botones con texto vacio",
+      "J_ajuste": -0.04,
+      "J_reserva": -0.14285714285714285,
+      "caida": 0.10285714285714284
+    },
+    {
+      "id": "HM8",
+      "titulo": "Animacion sin alternativa de movimiento reducido",
+      "J_ajuste": -0.040000000000000036,
+      "J_reserva": -0.5714285714285714,
+      "caida": 0.5314285714285714
+    },
+    {
+      "id": "CS2",
+      "titulo": "Excepciones tragadas",
+      "J_ajuste": -0.07999999999999999,
+      "J_reserva": -0.14285714285714285,
+      "caida": 0.06285714285714286
+    },
+    {
+      "id": "UX4",
+      "titulo": "Curva de Material como unica",
+      "J_ajuste": -0.08,
+      "J_reserva": 0,
+      "caida": -0.08
+    },
+    {
+      "id": "HM7",
+      "titulo": "Mas de tres familias tipograficas",
+      "J_ajuste": -0.08,
+      "J_reserva": -0.2857142857142857,
+      "caida": 0.20571428571428568
+    },
+    {
+      "id": "B2",
+      "titulo": "Sin pareja tipografica",
+      "J_ajuste": -0.12,
+      "J_reserva": 0.31746031746031744,
+      "caida": -0.43746031746031744
+    }
+  ]
+}

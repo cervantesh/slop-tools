@@ -64,6 +64,18 @@
       "separa": true,
       "decision": "J 0.34 en banda, intervalos separados. Igual que L1: la primera medicion no tenia potencia para verla"
     },
+    "CS3": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 34,
+        "neg": 32
+      },
+      "J_banda": 0.281,
+      "pos": 0.5,
+      "neg": 0.219,
+      "separa": false,
+      "decision": "J 0.28 en banda (50% frente a 22%), la mas alta de las nuevas. Intervalos solapados, pero sube de 1 a 2"
+    },
     "D5": {
       "corpus": "research/corpus.json",
       "n": {
@@ -132,6 +144,18 @@
       "pos": 0.324,
       "neg": 0.125,
       "separa": false
+    },
+    "P4": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 34,
+        "neg": 32
+      },
+      "J_banda": 0.176,
+      "pos": 0.176,
+      "neg": 0,
+      "separa": false,
+      "decision": "J 0.18 en banda con 0% de falsos positivos: dispara en el 18% de lo generado y en ninguno humano"
     },
     "UX7": {
       "corpus": "research/corpus.json",
@@ -378,6 +402,18 @@
       "neg": 0,
       "separa": false
     },
+    "P3": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 34,
+        "neg": 32
+      },
+      "J_banda": 0.029,
+      "pos": 0.029,
+      "neg": 0,
+      "separa": false,
+      "decision": "J 0.03 en banda"
+    },
     "HM3": {
       "corpus": "research/corpus.json",
       "n": {
@@ -390,6 +426,17 @@
       "separa": false
     },
     "C3": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 34,
+        "neg": 32
+      },
+      "J_banda": 0.029,
+      "pos": 0.029,
+      "neg": 0,
+      "separa": false
+    },
+    "P5": {
       "corpus": "research/corpus.json",
       "n": {
         "pos": 34,
@@ -479,6 +526,30 @@
       "neg": 0,
       "separa": false
     },
+    "P1": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 34,
+        "neg": 32
+      },
+      "J_banda": 0,
+      "pos": 0,
+      "neg": 0,
+      "separa": false,
+      "decision": "J 0.00 en banda: la prosa de marketing casi no existe en repositorios de codigo"
+    },
+    "P2": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 34,
+        "neg": 32
+      },
+      "J_banda": 0,
+      "pos": 0,
+      "neg": 0,
+      "separa": false,
+      "decision": "J 0.00 en banda, mismo motivo que P1"
+    },
     "HM12": {
       "corpus": "research/corpus.json",
       "n": {
@@ -502,6 +573,18 @@
       "separa": false,
       "estado": "no_medible",
       "nota": "cero disparos en 123 proyectos"
+    },
+    "CS1": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 34,
+        "neg": 32
+      },
+      "J_banda": 0,
+      "pos": 0,
+      "neg": 0,
+      "separa": false,
+      "decision": "J 0.00 y dispara mas en humano fuera de banda. El comentario narrativo no aparece en el codigo publicado"
     },
     "L3": {
       "corpus": "research/corpus.json",
@@ -568,9 +651,9 @@
         "pos": 34,
         "neg": 32
       },
-      "J_banda": -0.018,
-      "pos": 0.794,
-      "neg": 0.813,
+      "J_banda": -0.015,
+      "pos": 0.735,
+      "neg": 0.75,
       "separa": false
     },
     "B4": {
@@ -639,6 +722,18 @@
       "neg": 0.281,
       "separa": false,
       "decision": "J -0.08: dispara mas en diseno humano"
+    },
+    "CS2": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 34,
+        "neg": 32
+      },
+      "J_banda": -0.096,
+      "pos": 0.029,
+      "neg": 0.125,
+      "separa": false,
+      "decision": "J -0.10: el catch vacio es MAS comun en codigo humano. Se reclasifica a defecto"
     },
     "HM7": {
       "corpus": "research/corpus.json",

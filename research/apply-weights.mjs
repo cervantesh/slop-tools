@@ -45,6 +45,21 @@ const DECISIONES = {
 
   // C1 cierra su pregunta abierta.
   C1: [1, 'Con el sustrato de clases ya dispara (16% frente a 15%) y da J -0.01. La fuente lo llamaba el indicador aislado mas fiable; medido con oportunidad real, no lo es'],
+
+  // TERCERA MEDICION — las ocho reglas de prosa y codigo entraron sin medir.
+  CS3: [2, 'J 0.28 en banda (50% frente a 22%), la mas alta de las nuevas. Intervalos solapados, pero sube de 1 a 2'],
+  P4: [2, 'J 0.18 en banda con 0% de falsos positivos: dispara en el 18% de lo generado y en ninguno humano'],
+  P1: [1, 'J 0.00 en banda: la prosa de marketing casi no existe en repositorios de codigo'],
+  P2: [1, 'J 0.00 en banda, mismo motivo que P1'],
+  P3: [1, 'J 0.03 en banda'],
+  CS1: [1, 'J 0.00 y dispara mas en humano fuera de banda. El comentario narrativo no aparece en el codigo publicado'],
+  CS2: [1, 'J -0.10: el catch vacio es MAS comun en codigo humano. Se reclasifica a defecto'],
+}
+
+// Comprobaciones que miden calidad, no procedencia. Salen de la puntuacion.
+const A_DEFECTO = {
+  CS2: 'J -0.10: dispara mas en diseno humano. Un catch vacio es un defecto real, pero no dice quien escribio el codigo',
+  CS3: 'silenciar el comprobador de tipos es deuda tecnica; que correlacione con generacion no lo convierte en prueba de autoria',
 }
 
 // Reglas sin oportunidad de disparar en este corpus. No se eliminan: eliminar
@@ -79,6 +94,10 @@ for (const [id, [, motivo]] of Object.entries(DECISIONES)) {
 if (!DRY) {
   writeFileSync(join(AQUI, '..', 'data', 'validacion.json'),
     JSON.stringify({ _meta: { origen: 'research/medicion.json', generado_por: 'research/apply-weights.mjs' }, reglas: validacionExterna }, null, 2) + '\n', 'utf8')
+}
+
+for (const r of catalogo.rules) {
+  if (A_DEFECTO[r.id]) { r.tipo = 'defecto'; r.motivo_defecto = A_DEFECTO[r.id] }
 }
 
 let cambiados = 0, marcados = 0

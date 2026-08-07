@@ -919,14 +919,26 @@
       "category": "Copy",
       "severity": "medium",
       "applies": "ambos",
-      "weight": 2,
+      "weight": 1,
       "scope": "code",
       "pattern": "\\bno (?:s[oó]lo|solamente)\\b[^.!?]{3,60}\\bsino (?:tambi[eé]n|que)\\b|\\bnot just\\b[^.!?]{3,60}\\bbut (?:also)?\\b|\\bit'?s not\\b[^.!?]{3,40}\\bit'?s\\b",
       "flags": "i",
       "threshold": 2,
       "why": "La construccion \"no solo X, sino tambien Y\" simula corregir una idea equivocada que nadie tenia. Es el tic sintactico mas citado del registro generado.",
       "fix": "Afirma directamente lo que quieres decir. Si Y es lo importante, empieza por Y.",
-      "source": "Wikipedia: Signs of AI writing"
+      "source": "Wikipedia: Signs of AI writing",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 34,
+          "neg": 32
+        },
+        "J_banda": 0,
+        "pos": 0,
+        "neg": 0,
+        "separa": false,
+        "decision": "J 0.00 en banda: la prosa de marketing casi no existe en repositorios de codigo"
+      }
     },
     {
       "id": "P2",
@@ -941,7 +953,19 @@
       "threshold": 3,
       "why": "Evitar \"es\" y \"tiene\" produce prosa inflada: \"se erige como una solucion\" en vez de \"es una solucion\".",
       "fix": "Usa el verbo simple. Si la frase pierde fuerza al simplificarla, es que no decia nada.",
-      "source": "Wikipedia: Signs of AI writing"
+      "source": "Wikipedia: Signs of AI writing",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 34,
+          "neg": 32
+        },
+        "J_banda": 0,
+        "pos": 0,
+        "neg": 0,
+        "separa": false,
+        "decision": "J 0.00 en banda, mismo motivo que P1"
+      }
     },
     {
       "id": "P3",
@@ -949,14 +973,26 @@
       "category": "Copy",
       "severity": "medium",
       "applies": "landing",
-      "weight": 2,
+      "weight": 1,
       "scope": "code",
       "pattern": "\\b(los expertos (coinciden|afirman|recomiendan)|estudios (demuestran|indican|sugieren)|se estima que|segun (los )?(expertos|informes del sector)|industry reports|experts (argue|agree)|studies show|observers have noted)\\b",
       "flags": "i",
       "threshold": 1,
       "why": "Autoridad sin fuente. Si el dato existe, tiene un nombre y una fecha; si no, es relleno.",
       "fix": "Cita la fuente concreta o borra la afirmacion.",
-      "source": "Wikipedia: Signs of AI writing"
+      "source": "Wikipedia: Signs of AI writing",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 34,
+          "neg": 32
+        },
+        "J_banda": 0.029,
+        "pos": 0.029,
+        "neg": 0,
+        "separa": false,
+        "decision": "J 0.03 en banda"
+      }
     },
     {
       "id": "P4",
@@ -971,7 +1007,19 @@
       "threshold": 3,
       "why": "El emoji al principio de cada punto sustituye a la jerarquia tipografica. Es el patron de lista generada por excelencia.",
       "fix": "Un set de iconos real, o ninguno. La vineta ya marca que es una lista.",
-      "source": "textlint-rule-preset-ai-writing · no-ai-list-formatting"
+      "source": "textlint-rule-preset-ai-writing · no-ai-list-formatting",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 34,
+          "neg": 32
+        },
+        "J_banda": 0.176,
+        "pos": 0.176,
+        "neg": 0,
+        "separa": false,
+        "decision": "J 0.18 en banda con 0% de falsos positivos: dispara en el 18% de lo generado y en ninguno humano"
+      }
     },
     {
       "id": "P5",
@@ -986,7 +1034,18 @@
       "threshold": 3,
       "why": "Cada punto abierto por un termino en negrita y dos puntos: formato mecanico de resumen, no de interfaz.",
       "fix": "Si el termino merece destacarse, dale su propio elemento; si no, quita la negrita.",
-      "source": "textlint-rule-preset-ai-writing · no-ai-emphasis-patterns"
+      "source": "textlint-rule-preset-ai-writing · no-ai-emphasis-patterns",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 34,
+          "neg": 32
+        },
+        "J_banda": 0.029,
+        "pos": 0.029,
+        "neg": 0,
+        "separa": false
+      }
     },
     {
       "id": "CS1",
@@ -994,14 +1053,26 @@
       "category": "Calidad",
       "severity": "medium",
       "applies": "ambos",
-      "weight": 2,
+      "weight": 1,
       "scope": "code",
       "pattern": "//\\s*(Now (we|let'?s)|First,? we|Next,? we|Then we|Finally,? we|We (then|now|also)|This (function|component|method) (is used to|will|does)|Ahora (vamos a|creamos)|Primero,? |Luego,? |Aqui (creamos|definimos))",
       "flags": "i",
       "threshold": 3,
       "why": "El comentario que narra lo que la linea siguiente ya dice — \"Now we map over the items\" — es el tic de comentario mas reconocible de un agente de codigo. Un humano comenta el porque, no el que.",
       "fix": "Borra el comentario o sustituyelo por el motivo de la decision, que es lo que el codigo no puede decir.",
-      "source": "detectores de slop en codigo generado"
+      "source": "detectores de slop en codigo generado",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 34,
+          "neg": 32
+        },
+        "J_banda": 0,
+        "pos": 0,
+        "neg": 0,
+        "separa": false,
+        "decision": "J 0.00 y dispara mas en humano fuera de banda. El comentario narrativo no aparece en el codigo publicado"
+      }
     },
     {
       "id": "CS2",
@@ -1009,14 +1080,28 @@
       "category": "Calidad",
       "severity": "high",
       "applies": "producto",
-      "weight": 2,
+      "weight": 1,
       "scope": "code",
       "pattern": "catch\\s*(\\([^)]*\\))?\\s*\\{\\s*\\}|catch\\s*(\\([^)]*\\))?\\s*\\{\\s*(//[^\\n]*)?\\s*\\}",
       "flags": "",
       "threshold": 1,
       "why": "Un catch vacio convierte un fallo en silencio. Aparece cuando el codigo se genera para que compile, no para que funcione.",
       "fix": "Registra el error o propagalo. Si de verdad es ignorable, di por que en una linea.",
-      "source": "detectores de slop en codigo generado"
+      "source": "detectores de slop en codigo generado",
+      "tipo": "defecto",
+      "motivo_defecto": "J -0.10: dispara mas en diseno humano. Un catch vacio es un defecto real, pero no dice quien escribio el codigo",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 34,
+          "neg": 32
+        },
+        "J_banda": -0.096,
+        "pos": 0.029,
+        "neg": 0.125,
+        "separa": false,
+        "decision": "J -0.10: el catch vacio es MAS comun en codigo humano. Se reclasifica a defecto"
+      }
     },
     {
       "id": "CS3",
@@ -1024,14 +1109,28 @@
       "category": "Calidad",
       "severity": "medium",
       "applies": "producto",
-      "weight": 1,
+      "weight": 2,
       "scope": "code",
       "pattern": "\\bas any\\b|@ts-ignore|@ts-nocheck|:\\s*any\\b",
       "flags": "",
       "threshold": 5,
       "why": "Silenciar el comprobador de tipos en vez de resolver el tipo: sale barato al generar y caro al mantener.",
       "fix": "Da el tipo real, o `unknown` con una comprobacion explicita.",
-      "source": "detectores de slop en codigo generado"
+      "source": "detectores de slop en codigo generado",
+      "tipo": "defecto",
+      "motivo_defecto": "silenciar el comprobador de tipos es deuda tecnica; que correlacione con generacion no lo convierte en prueba de autoria",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 34,
+          "neg": 32
+        },
+        "J_banda": 0.281,
+        "pos": 0.5,
+        "neg": 0.219,
+        "separa": false,
+        "decision": "J 0.28 en banda (50% frente a 22%), la mas alta de las nuevas. Intervalos solapados, pero sube de 1 a 2"
+      }
     }
   ]
 }
