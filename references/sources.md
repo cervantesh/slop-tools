@@ -60,6 +60,39 @@ Redirige a un muro de registro de Medium. Del extracto accesible: la tesis de qu
 generado es **ultra-convencional**, con jerarquía visual y elementos funcionales muy
 predecibles.
 
+## Bloque de producto
+
+Fuentes de `producto.md`. Ninguna trata de detección de IA: son disciplinas maduras de
+evaluación de producto que cubren exactamente el hueco que dejan las rúbricas de landing.
+
+### QAwerk — *Mobile App Localization Testing: iOS & Android Checklist*
+<https://qawerk.com/blog/mobile-app-localization-testing/>
+
+La checklist de LQA más completa de las consultadas. Aporta: resolución de marcadores de
+posición y pluralización, formateadores de plataforma para fecha y moneda, expansión de
+texto sobre línea base de 375px, escala tipográfica al 200%, independencia entre región e
+idioma, y validación en contexto de pantalla frente a hoja de cálculo.
+
+### SimpleLocalize — *Design that speaks every language*
+<https://simplelocalize.io/blog/posts/ui-localization-best-practices/>
+
+Complementa con el lado de diseño: sin contenedores de ancho fijo, botones que crecen sin
+truncar, texto que no se solapa con iconos, y soporte tipográfico real de los diacríticos.
+De aquí sale también la advertencia sobre variantes regionales del español.
+
+### TechVinta — *Marketplace Trust & Safety Playbook: 6 Pillars*
+<https://techvinta.com/blog/marketplace-trust-and-safety-playbook>
+
+Los seis pilares —identidad, publicaciones, reseñas, comunicación, pagos y disputas— con
+elementos concretos por pilar. Escrito desde infraestructura; en `producto.md` está
+reinterpretado como comprobaciones de **lo que la interfaz comunica**, que es lo que
+determina si el usuario confía.
+
+### Guías de UX writing y content design, 2026
+Consenso recogido de varias fuentes secundarias. Los criterios de microcopy —verbos en los
+botones, errores que dicen qué pasó y qué hacer, vacíos que explican qué aparecerá— son
+patrimonio común de la disciplina y no de un autor concreto.
+
 ## Aportaciones propias, sin fuente externa
 
 Marcadas como tales en la rúbrica:

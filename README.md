@@ -49,6 +49,7 @@ Sin dependencias. Sólo Node 18 o superior.
 | --- | --- |
 | `SKILL.md` | Punto de entrada como skill: procedimiento y cómo entregar el veredicto |
 | `references/rubric.md` | Las 28 comprobaciones, con fuente, peso y aplicabilidad |
+| `references/producto.md` | Criterios que sí transfieren a una app: localización, microcopy, estados, dominio y confianza |
 | `references/caveats.md` | **Léelo antes de dar un veredicto.** Cuándo la rúbrica se equivoca |
 | `references/remediation.md` | Las 6 reglas correctivas y el orden de arreglo |
 | `references/adversarial.md` | Cómo montar un panel de modelos que no se engañe a sí mismo |

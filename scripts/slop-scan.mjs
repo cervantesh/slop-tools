@@ -241,6 +241,75 @@ const CHECKS = [
       return { failed: r.total > 0, detail: `${r.total} restos`, samples: r.samples }
     } },
 
+  /* ── Bloque de producto: criterios que sí transfieren a una app ── */
+
+  { id: 'L1', cat: 'Localización', weight: 3, applies: 'producto',
+    title: 'Plural sin resolver junto a un contador',
+    run() {
+      // "{count} opciones" nunca dice "1 opción". Señal de plantilla que nadie miró.
+      const r = find(/\{[^}]{1,40}\}\s+[a-záéíóúñ]{3,}s\b/, codeFiles)
+      const conditional = /\?\s*["'`][^"'`]*["'`]\s*:\s*["'`]/.test(all(codeFiles))
+      return { failed: r.total > 0,
+        detail: `${r.total} contador(es) sin pluralizar${conditional ? '; hay condicionales en otras cadenas' : ''}`,
+        samples: r.samples }
+    } },
+
+  { id: 'L2', cat: 'Localización', weight: 2, applies: 'producto',
+    title: 'Formatos de fecha y moneda escritos a mano',
+    run() {
+      const cur = find(/["'`][^"'`]*(RD\$|US\$|€|\$)\s?\{?\d/, codeFiles)
+      const date = find(/toLocale(Date|Time)?String\(\s*\)/, codeFiles)
+      const total = cur.total + date.total
+      return { failed: total > 0,
+        detail: `${cur.total} importes concatenados, ${date.total} fechas sin locale`,
+        samples: [...cur.samples, ...date.samples] }
+    } },
+
+  { id: 'L3', cat: 'Localización', weight: 3, applies: 'producto',
+    title: 'Diacríticos repartidos de forma sistemática',
+    run() {
+      // Irregular = hábito humano. Corte limpio por archivo = proceso automático.
+      const ES = /\b(de|la|el|los|las|para|con|tu|servicio|usuario|nombre|precio)\b/i
+      const stats = []
+      for (const f of codeFiles) {
+        const prosa = [...f.text.matchAll(/["'`]([^"'`\n]{15,})["'`]|>([^<>{}\n]{15,})</g)]
+          .map(m => (m[1] || m[2] || '')).join(' ')
+        if (prosa.length < 200 || !ES.test(prosa)) continue
+        stats.push({ rel: f.rel, no: (f.text.match(/[^\x00-\x7F]/g) || []).length })
+      }
+      const ceros = stats.filter(s => s.no === 0)
+      const conAcentos = stats.filter(s => s.no >= 5)
+      const failed = ceros.length > 0 && conAcentos.length > 0
+      return { failed,
+        detail: failed
+          ? `${ceros.length} archivo(s) con prosa española y CERO acentos, frente a ${conAcentos.length} plenamente acentuado(s): el reparto es sistemático, no un hábito de teclado`
+          : `${stats.length} archivo(s) con prosa española; reparto sin bifurcación`,
+        samples: ceros.slice(0, 5).map(s => ({ file: s.rel, line: 1, text: '0 caracteres no ASCII' })) }
+    } },
+
+  { id: 'T1', cat: 'Accesibilidad', weight: 2, applies: 'producto',
+    title: 'Botones de solo icono sin etiqueta accesible',
+    run() {
+      const out = []
+      let total = 0
+      for (const f of codeFiles) {
+        for (const m of f.text.matchAll(/<button\b([^>]*)>([\s\S]{0,400}?)<\/button>/g)) {
+          const [, attrs, inner] = m
+          if (/aria-label|title=/.test(attrs)) continue
+          const texto = inner.replace(/<[^>]*>/g, '').replace(/\{[^}]*\}/g, '').trim()
+          const tieneIcono = /<svg|<[A-Z]\w+\s|Icon\b/.test(inner)
+          if (tieneIcono && texto.replace(/[^a-záéíóúñ]/gi, '').length < 2) {
+            total++
+            if (out.length < 5) {
+              const line = f.text.slice(0, m.index).split('\n').length
+              out.push({ file: f.rel, line, text: inner.trim().replace(/\s+/g, ' ').slice(0, 80) })
+            }
+          }
+        }
+      }
+      return { failed: total > 0, detail: `${total} botón(es) sin nombre accesible`, samples: out }
+    } },
+
   { id: 'F2', cat: 'Motion', weight: 1, applies: 'ambos',
     title: 'Sin movimiento intencionado',
     run() {

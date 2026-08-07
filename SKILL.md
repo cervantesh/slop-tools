@@ -50,7 +50,13 @@ El escáner **no puntúa gusto**. Sólo cuenta patrones nombrados por las fuente
 Lo que no es automatizable está en `templates/revision-humana.md`. Son nueve
 comprobaciones y caben en una página.
 
-### 4. Aplica las salvedades antes de dar un veredicto
+### 4. Si es una app, usa el bloque de producto
+
+`references/producto.md`. Las rúbricas publicadas miran webs de marketing y dejan un hueco:
+una aplicación no se delata por el hero, se delata por el idioma, el microcopy, los estados
+que no son el camino feliz, y por no modelar el negocio que dice servir.
+
+### 5. Aplica las salvedades antes de dar un veredicto
 
 **Léelas siempre**: `references/caveats.md`. Las rúbricas publicadas están escritas sobre
 *landing pages de marketing*, no sobre producto. Varias comprobaciones no transfieren a una
@@ -83,6 +89,7 @@ La hipótesis rival que debes hacerles batir siempre está en `references/advers
 | Ruta | Contenido |
 | --- | --- |
 | `references/rubric.md` | Las 28 comprobaciones, con fuente, aplicabilidad y si son automatizables |
+| `references/producto.md` | **Para apps.** Localización, microcopy, estados, fidelidad al dominio y confianza |
 | `references/caveats.md` | Cuándo cada comprobación NO aplica |
 | `references/remediation.md` | Las 6 reglas correctivas y el orden de arreglo |
 | `references/adversarial.md` | Cómo montar un panel que no se engañe a sí mismo |
