@@ -1,4 +1,10 @@
 node_modules/
+
+# El corpus no se comitea: se reconstruye desde los SHA fijados de corpus.json
+research/.corpus/
+research/.corpus-estado.json
+research/medicion.json
+.slop/
 *.log
 .DS_Store
 Thumbs.db

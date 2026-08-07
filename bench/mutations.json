@@ -1,0 +1,124 @@
+{
+  "_meta": {
+    "descripcion": "Cada mutacion inyecta un patron de slop conocido sobre el proyecto limpio de referencia. Si la regla objetivo no dispara, es un fallo de recall. Si disparan muchas otras, es diafonia.",
+    "modos": "append (anade al final del archivo), create (archivo nuevo), overwrite (sustituye el archivo entero)"
+  },
+  "mutations": [
+    { "id": "m-A1", "rule": "A1", "desc": "Gradiente indigo-violeta", "file": "styles.css", "mode": "append",
+      "content": ".hero { background: linear-gradient(135deg, #6366f1, #8b5cf6); }" },
+
+    { "id": "m-A3", "rule": "A3", "desc": "Glassmorphism en cuatro superficies", "file": "styles.css", "mode": "append",
+      "content": ".g1{backdrop-filter:blur(12px)}\n.g2{backdrop-filter:blur(14px)}\n.g3{backdrop-filter:blur(16px)}\n.g4{backdrop-filter:blur(18px)}" },
+
+    { "id": "m-A4", "rule": "A4", "desc": "Resplandor radial tras el hero", "file": "styles.css", "mode": "append",
+      "content": ".hero{background:radial-gradient(circle at 70% 10%, rgba(99,102,241,.18), transparent 30rem)}" },
+
+    { "id": "m-A5", "rule": "A5", "desc": "Bordes que brillan", "file": "styles.css", "mode": "append",
+      "content": ".n1{box-shadow:0 0 24px #6366f1}\n.n2{box-shadow:0 0 32px #8b5cf6}\n.n3{box-shadow:0 0 40px rgba(99,102,241,.6)}" },
+
+    { "id": "m-B1", "rule": "B1", "desc": "Inter como familia principal", "file": "styles.css", "mode": "append",
+      "content": ".t{font-family: Inter, system-ui, sans-serif}" },
+
+    { "id": "m-B4", "rule": "B4", "desc": "Etiquetas en mayusculas por todas partes", "file": "styles.css", "mode": "append",
+      "content": ".u1,.u2,.u3,.u4,.u5,.u6{text-transform:uppercase}\n.u7{text-transform:uppercase}\n.u8{text-transform:uppercase}\n.u9{text-transform:uppercase}\n.ua{text-transform:uppercase}\n.ub{text-transform:uppercase}\n.uc{text-transform:uppercase}" },
+
+    { "id": "m-C1-short", "rule": "C1", "desc": "Bordes grises planos, forma shorthand", "file": "styles.css", "mode": "append",
+      "content": ".b01{border:1px solid #ddd}\n.b02{border:1px solid #ddd}\n.b03{border:1px solid #ddd}\n.b04{border:1px solid #ddd}\n.b05{border:1px solid #ddd}\n.b06{border:1px solid #ddd}\n.b07{border:1px solid #ddd}\n.b08{border:1px solid #ddd}\n.b09{border:1px solid #ddd}\n.b10{border:1px solid #ddd}\n.b11{border:1px solid #ddd}\n.b12{border:1px solid #ddd}\n.b13{border:1px solid #ddd}\n.b14{border:1px solid #ddd}\n.b15{border:1px solid #ddd}\n.b16{border:1px solid #ddd}\n.b17{border:1px solid #ddd}\n.b18{border:1px solid #ddd}" },
+
+    { "id": "m-C1-minif", "rule": "C1", "desc": "Los mismos bordes minificados en UNA linea: prueba de que se cuentan coincidencias y no lineas", "file": "styles.css", "mode": "append",
+      "content": ".m1{border:1px solid #ddd}.m2{border:1px solid #ddd}.m3{border:1px solid #ddd}.m4{border:1px solid #ddd}.m5{border:1px solid #ddd}.m6{border:1px solid #ddd}.m7{border:1px solid #ddd}.m8{border:1px solid #ddd}.m9{border:1px solid #ddd}.ma{border:1px solid #ddd}.mb{border:1px solid #ddd}.mc{border:1px solid #ddd}.md{border:1px solid #ddd}.me{border:1px solid #ddd}.mf{border:1px solid #ddd}.mg{border:1px solid #ddd}" },
+
+    { "id": "m-C1-long", "rule": "C1", "desc": "Los mismos bordes en forma longhand: prueba de regresion de la fuga de shorthand", "file": "styles.css", "mode": "append",
+      "content": ".l01{border-width:1px;border-style:solid;border-color:#ddd}\n.l02{border-width:1px;border-style:solid;border-color:#ddd}\n.l03{border-width:1px;border-style:solid;border-color:#ddd}\n.l04{border-width:1px;border-style:solid;border-color:#ddd}\n.l05{border-width:1px;border-style:solid;border-color:#ddd}\n.l06{border-width:1px;border-style:solid;border-color:#ddd}\n.l07{border-width:1px;border-style:solid;border-color:#ddd}\n.l08{border-width:1px;border-style:solid;border-color:#ddd}\n.l09{border-width:1px;border-style:solid;border-color:#ddd}\n.l10{border-width:1px;border-style:solid;border-color:#ddd}\n.l11{border-width:1px;border-style:solid;border-color:#ddd}\n.l12{border-width:1px;border-style:solid;border-color:#ddd}\n.l13{border-width:1px;border-style:solid;border-color:#ddd}\n.l14{border-width:1px;border-style:solid;border-color:#ddd}\n.l15{border-width:1px;border-style:solid;border-color:#ddd}\n.l16{border-width:1px;border-style:solid;border-color:#ddd}" },
+
+    { "id": "m-C2", "rule": "C2", "desc": "Franja lateral de color", "file": "styles.css", "mode": "append",
+      "content": ".nota{border-left:3px solid #6366f1;padding-left:12px}" },
+
+    { "id": "m-C3", "rule": "C3", "desc": "Radio uniforme en todo", "file": "styles.css", "mode": "append",
+      "content": ".r01{border-radius:16px}\n.r02{border-radius:16px}\n.r03{border-radius:16px}\n.r04{border-radius:16px}\n.r05{border-radius:16px}\n.r06{border-radius:16px}\n.r07{border-radius:16px}\n.r08{border-radius:16px}\n.r09{border-radius:16px}\n.r10{border-radius:16px}\n.r11{border-radius:16px}\n.r12{border-radius:16px}\n.r13{border-radius:16px}\n.r14{border-radius:16px}" },
+
+    { "id": "m-D1", "rule": "D1", "desc": "Enlace a banco de imagenes", "file": "App.jsx", "mode": "append",
+      "content": "export const portada = \"https://images.unsplash.com/photo-1522337660859-02fbefca4702\";" },
+
+    { "id": "m-D5", "rule": "D5", "desc": "Emojis donde correspondia un icono", "file": "App.jsx", "mode": "append",
+      "content": "export const menu = [\"🚀 Empezar\", \"💡 Ideas\", \"✨ Novedades\", \"🔥 Popular\", \"🎉 Logros\", \"⭐ Destacado\"];" },
+
+    { "id": "m-E1", "rule": "E1", "desc": "Densidad anomala de em dash", "file": "App.jsx", "mode": "append",
+      "content": "export const notas = [\"a — b\", \"c — d\", \"e — f\", \"g — h\", \"i — j\", \"k — l\", \"m — n\", \"o — p\", \"q — r\", \"s — t\", \"u — v\", \"w — x\", \"y — z\"];" },
+
+    { "id": "m-E2", "rule": "E2", "desc": "Comillas curvas sin tocar", "file": "App.jsx", "mode": "append",
+      "content": "export const citas = [\"“uno”\", \"“dos”\", \"“tres”\", \"“cuatro”\", \"“cinco”\", \"“seis”\"];" },
+
+    { "id": "m-E4", "rule": "E4", "desc": "Copy duplicado literalmente", "file": "App.jsx", "mode": "append",
+      "content": "export const a = \"Atencion personalizada en la comodidad de tu espacio\";\nexport const b = \"Atencion personalizada en la comodidad de tu espacio\";" },
+
+    { "id": "m-E5", "rule": "E5", "desc": "Palabras vacias", "file": "App.jsx", "mode": "append",
+      "content": "export const eslogan = \"Una experiencia seamless e innovadora para potenciar tu negocio todo en uno\";" },
+
+    { "id": "m-E6", "rule": "E6", "desc": "Nombre de relleno", "file": "App.jsx", "mode": "append",
+      "content": "export const usuario = { nombre: \"Carlos Usuario\", rol: \"admin\" };" },
+
+    { "id": "m-E7", "rule": "E7", "desc": "Resto de andamiaje visible", "file": "App.jsx", "mode": "append",
+      "content": "export const aviso = \"Cupones dummy para la demo\";" },
+
+    { "id": "m-L1", "rule": "L1", "desc": "Contador sin pluralizar", "file": "App.jsx", "mode": "append",
+      "content": "export const Contador = ({ n }) => <small>{n} plazas</small>;" },
+
+    { "id": "m-L2", "rule": "L2", "desc": "Moneda concatenada a mano", "file": "App.jsx", "mode": "append",
+      "content": "export const precio = \"RD$ 4,800 por taller\";" },
+
+    { "id": "m-L3", "rule": "L3", "desc": "Archivo con prosa espanola y cero acentos junto a otros acentuados", "file": "Datos.js", "mode": "create",
+      "content": "// Catalogo de servicios para el taller de encuadernacion\nexport const servicios = [\n  { nombre: \"Encuadernacion japonesa\", descripcion: \"Un taller para aprender a coser el cuaderno a mano con la tecnica tradicional\" },\n  { nombre: \"Tipografia de plomo\", descripcion: \"La prensa manual y el ajuste de la rama para imprimir en papel de algodon\" },\n  { nombre: \"Grabado en linoleo\", descripcion: \"El corte de la plancha y la tinta para sacar una tirada corta de estampas\" }\n];" },
+
+    { "id": "m-T1", "rule": "T1", "desc": "Boton de solo icono sin nombre accesible", "file": "App.jsx", "mode": "append",
+      "content": "export const Cerrar = () => <button><svg viewBox=\"0 0 24 24\"><path d=\"M6 6l12 12\" /></svg></button>;" },
+
+    { "id": "m-T2", "rule": "T2", "desc": "Enlace con texto vacio", "file": "App.jsx", "mode": "append",
+      "content": "export const Mas = () => <a href=\"/blog\">Leer mas</a>;" },
+
+    { "id": "m-K1", "rule": "K1", "desc": "Neutros de croma cero", "file": "styles.css", "mode": "append",
+      "content": ":root{--color-gris-1:#808080;--color-gris-2:#cccccc;--surface-gris-3:#333333;--border-gris-4:#e5e5e5}" },
+
+    { "id": "m-K2", "rule": "K2", "desc": "Par texto/fondo por debajo de 4.5:1", "file": "styles.css", "mode": "append",
+      "content": ".flojo{color:#9a9a9a;background-color:#ffffff}" },
+
+    { "id": "m-K3", "rule": "K3", "desc": "Texto de boton indistinguible del relleno", "file": "styles.css", "mode": "append",
+      "content": ".btn-fantasma{color:#111111;background-color:#141414}" },
+
+    { "id": "m-S1", "rule": "S1", "desc": "Marcado del nav por defecto (solo companera: S1 exige ademas el hairline en CSS)", "soloCompanera": true, "file": "Nav.jsx", "mode": "create",
+      "content": "export const Nav = () => (\n  <nav>\n    <span>Marca</span>\n    <a href=\"/a\">Producto</a>\n    <a href=\"/b\">Precios</a>\n    <a href=\"/c\">Blog</a>\n    <a href=\"/d\">Contacto</a>\n    <button>Empezar</button>\n  </nav>\n);" },
+
+    { "id": "m-S1-css", "rule": "S1", "desc": "Hairline que acompana al nav por defecto", "file": "styles.css", "mode": "append",
+      "content": "nav{border-bottom:1px solid #e5e5e5;background:#fff}", "conMutacion": "m-S1" },
+
+    { "id": "m-S2", "rule": "S2", "desc": "Footer de cuatro columnas canonicas", "file": "Footer.jsx", "mode": "create",
+      "content": "export const Footer = () => (\n  <footer>\n    <div><h4>Product</h4><a href=\"/1\">Uno</a></div>\n    <div><h4>Company</h4><a href=\"/2\">Dos</a></div>\n    <div><h4>Resources</h4><a href=\"/3\">Tres</a></div>\n    <div><h4>Legal</h4><a href=\"/4\">Cuatro</a></div>\n  </footer>\n);" },
+
+    { "id": "m-S3", "rule": "S3", "desc": "Cromo de navegador dibujado a mano", "file": "Chrome.jsx", "mode": "create",
+      "content": "export const Mock = () => (\n  <div className=\"window-chrome\">\n    <div className=\"traffic-lights\" />\n    <div className=\"url-pill\">midominio.com</div>\n  </div>\n);" },
+
+    { "id": "m-UX2", "rule": "UX2", "desc": "Pastilla redondeada en todo", "file": "styles.css", "mode": "append",
+      "content": ".p1{border-radius:9999px}\n.p2{border-radius:9999px}\n.p3{border-radius:9999px}\n.p4{border-radius:9999px}\n.p5{border-radius:9999px}\n.p6{border-radius:9999px}\n.p7{border-radius:9999px}\n.p8{border-radius:9999px}\n.p9{border-radius:9999px}" },
+
+    { "id": "m-UX3", "rule": "UX3", "desc": "Duracion 300ms por defecto", "file": "styles.css", "mode": "append",
+      "content": ".d1{transition:opacity 300ms ease}\n.d2{transition:color 300ms ease}\n.d3{transition:transform 300ms ease}\n.d4{transition:background 300ms ease}" },
+
+    { "id": "m-UX5", "rule": "UX5", "desc": "z-index arbitrario", "file": "styles.css", "mode": "append",
+      "content": ".modal{z-index:9999}" },
+
+    { "id": "m-UX6", "rule": "UX6", "desc": "console.log olvidado", "file": "App.jsx", "mode": "append",
+      "content": "console.log(\"uno\");\nconsole.log(\"dos\");\nconsole.log(\"tres\");\nconsole.log(\"cuatro\");" },
+
+    { "id": "m-UX10", "rule": "UX10", "desc": "Titular con gradiente", "file": "styles.css", "mode": "append",
+      "content": ".titular{background-clip:text;-webkit-background-clip:text;color:transparent}" },
+
+    { "id": "m-AS1", "rule": "AS1", "desc": "transition: all", "file": "styles.css", "mode": "append",
+      "content": ".todo{transition:all .15s ease}" },
+
+    { "id": "m-AS2", "rule": "AS2", "desc": "Levantar la tarjeta en hover", "file": "styles.css", "mode": "append",
+      "content": ".c1:hover{transform:translateY(-3px)}\n.c2:hover{transform:translateY(-2px)}\n.c3:hover{transform:translateY(-3px)}" },
+
+    { "id": "m-AS9", "rule": "AS9", "desc": "Monocultura de segundo orden: crema, Fraunces, terracota", "file": "styles.css", "mode": "append",
+      "content": ":root{--papel:#fdf6e3}\n.display{font-family:\"Fraunces\",serif}\n.acento{color:var(--terracotta,#b5651d)}" }
+  ]
+}

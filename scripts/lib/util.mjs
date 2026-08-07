@@ -30,17 +30,19 @@ export function collect(root, dir = root, acc = []) {
 export const esEstilo = f => /\.(css|scss|sass|less|html?|vue|svelte|astro)$/.test(f.rel)
 export const esCodigo = f => /\.(jsx|tsx|js|ts|mjs|vue|svelte|astro|html?)$/.test(f.rel)
 
+// Cuenta COINCIDENCIAS, no lineas. La distincion importa: cinco emojis en una
+// sola linea son cinco, y un CSS minificado mete cien declaraciones en una. Si
+// se cuentan lineas, cualquier umbral de densidad se evade agrupando selectores.
 export function find(pattern, pool, cap = 6) {
   const out = []
   let total = 0
-  const re = pattern.global ? pattern : new RegExp(pattern.source, pattern.flags + 'g')
+  const re = new RegExp(pattern.source, pattern.flags.includes('g') ? pattern.flags : pattern.flags + 'g')
   for (const f of pool) {
     for (let i = 0; i < f.lines.length; i++) {
-      re.lastIndex = 0
-      if (re.test(f.lines[i])) {
-        total++
-        if (out.length < cap) out.push({ file: f.rel, line: i + 1, text: f.lines[i].trim().slice(0, 120) })
-      }
+      const hits = [...f.lines[i].matchAll(re)]
+      if (!hits.length) continue
+      total += hits.length
+      if (out.length < cap) out.push({ file: f.rel, line: i + 1, text: f.lines[i].trim().slice(0, 120) })
     }
   }
   return { total, samples: out }

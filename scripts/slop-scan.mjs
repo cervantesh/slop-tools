@@ -71,11 +71,13 @@ function correrDeclarativa(regla) {
   let total = 0, exentas = 0
   for (const f of pool) {
     for (let i = 0; i < f.lines.length; i++) {
-      re.lastIndex = 0
-      const m = re.exec(f.lines[i])
-      if (!m) continue
-      if (marcaPermitida(f.lines[i])) { exentas++; continue }
-      total++
+      // Todas las coincidencias de la linea, no solo la primera: los umbrales de
+      // densidad se evaden agrupando selectores o minificando.
+      const hits = [...f.lines[i].matchAll(re)]
+      if (!hits.length) continue
+      if (marcaPermitida(f.lines[i])) { exentas += hits.length; continue }
+      total += hits.length
+      const m = hits[0]
       if (samples.length < 5) {
         // Se muestra el fragmento que caso, no el prefijo de la linea: en lineas
         // largas el prefijo esconde justo la evidencia.

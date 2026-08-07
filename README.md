@@ -105,6 +105,55 @@ probando falta de calidad, que suele ser la conversación útil.
 empresa dice tener. Se detecta buscando los conceptos del plan en el código, y es una
 búsqueda de treinta segundos.
 
+## ¿Las reglas detectan de verdad?
+
+Es la pregunta que ninguna herramienta del campo responde. Todo el corpus del que salen estas
+reglas es autodescriptivo: cada proyecto publica su lista y ninguno publica una tasa de
+acierto. Una regla así está demostrada como **existente**, no como **discriminativa**.
+
+```bash
+npm run bench
+```
+
+La suite parte de un proyecto limpio de referencia, le inyecta 38 patrones de slop conocidos
+—uno por mecanismo— y comprueba que la regla objetivo dispara.
+
+```
+  LINEA BASE (proyecto limpio)   puntuacion 100/100
+  Reglas que disparan sin slop:  ninguna
+
+  RECALL  38/38 mutaciones detectadas (100%)
+  Diafonia media: 0.1 reglas colaterales por mutacion
+```
+
+Mide tres cosas:
+
+- **Línea base** — qué dispara sobre diseño limpio. Debe ser cero; si no, son falsos positivos.
+- **Recall** — si el patrón está presente, ¿lo caza la regla?
+- **Diafonía** — cuántas *otras* reglas se activan de rebote. Alta significa reglas que se
+  solapan y por tanto puntúan dos veces lo mismo.
+
+### Lo que encontró en su primera ejecución
+
+Nueve defectos reales del escáner, incluidos dos de fondo:
+
+- **Se contaban líneas, no coincidencias.** Cinco emojis en una línea contaban como uno, y
+  cualquier umbral de densidad se evadía agrupando selectores o minificando el CSS. Llevaba
+  ahí desde la primera versión.
+- **La regla de plural disparaba sobre su propio arreglo.** La implementación correcta
+  —un ternario que devuelve `${n} plazas` en la rama del plural— contiene literalmente el
+  patrón que la regla busca.
+
+Ninguno de los dos se veía leyendo el código. Aparecieron al medir.
+
+### Lo que esto todavía NO es
+
+Recall sobre mutaciones sintéticas no es discriminación sobre diseño real. Falta el paso
+siguiente: un corpus etiquetado —repos con CSS anterior a 2021, que no puede ser generado, y
+salidas conocidas de herramientas generativas— para medir el **lift** de cada regla y
+re-derivar los pesos de ahí en vez de de la insistencia de un artículo de agencia. Está
+anotado como trabajo pendiente en `references/sources.md`.
+
 ## Añadir una regla
 
 Si es expresable como patrón, no se toca código: se añade una entrada a `data/rules.json`.

@@ -8,7 +8,9 @@
     "slop-scan": "scripts/slop-scan.mjs"
   },
   "scripts": {
-    "scan": "node scripts/slop-scan.mjs"
+    "scan": "node scripts/slop-scan.mjs",
+    "bench": "node bench/slop-bench.mjs",
+    "test": "node bench/slop-bench.mjs"
   },
   "engines": {
     "node": ">=18"

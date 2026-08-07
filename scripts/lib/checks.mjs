@@ -77,8 +77,10 @@ export function programaticas(ctx) {
           const top = Object.entries(cuenta).sort((a, b) => b[1] - a[1])[0]
           return { total: vals.length, distintos: Object.keys(cuenta).length, top: top[0], ratio: top[1] / vals.length }
         }
-        const r = dominancia(/border-radius:\s*([^;]+);/gi)
-        const p = dominancia(/(?:^|[;{])\s*padding:\s*([^;]+);/gi)
+        // El terminador puede ser ; o }: la ultima declaracion de un bloque
+        // suele ir sin punto y coma, y minificada siempre.
+        const r = dominancia(/border-radius:\s*([^;}]+)[;}]/gi)
+        const p = dominancia(/(?:^|[;{])\s*padding:\s*([^;}]+)[;}]/gi)
         const uniforme = [r, p].filter(x => x && x.ratio > 0.6)
         return { failed: uniforme.length > 0,
           detail: [r && `radios: ${r.distintos} distintos, dominante "${r.top}" al ${(r.ratio * 100) | 0}%`,
@@ -113,10 +115,25 @@ export function programaticas(ctx) {
 
     /* ── localizacion ── */
 
+    // Ojo con el falso positivo que descubrio la suite de mutacion: la
+    // implementacion CORRECTA del plural —un ternario que devuelve
+    // `${n} plazas` en la rama del plural— contiene literalmente el patron.
+    // Solo cuenta si en esa linea no hay condicional ni ayudante de plural.
     { id: 'L1', cat: 'Localizacion', weight: 3, applies: 'producto', title: 'Plural sin resolver junto a un contador',
       run() {
-        const r = find(/\{[^}]{1,40}\}\s+[a-zaeiouñáéíóú]{3,}s\b/i, codeFiles)
-        return { failed: r.total > 0, detail: `${r.total} contador(es) sin pluralizar`, samples: r.samples }
+        const PATRON = /\{[^}]{1,40}\}\s+[a-záéíóúñ]{3,}s\b/i
+        const RESUELVE = /\?|===\s*1|==\s*1|\bplural|\bcount\s*===|\bIntl\.PluralRules/
+        const out = []
+        let total = 0
+        for (const f of codeFiles) {
+          for (let i = 0; i < f.lines.length; i++) {
+            const hits = [...f.lines[i].matchAll(new RegExp(PATRON.source, 'gi'))]
+            if (!hits.length || RESUELVE.test(f.lines[i])) continue
+            total += hits.length
+            if (out.length < 5) out.push({ file: f.rel, line: i + 1, text: f.lines[i].trim().slice(0, 110) })
+          }
+        }
+        return { failed: total > 0, detail: `${total} contador(es) sin pluralizar`, samples: out }
       } },
 
     { id: 'L3', cat: 'Localizacion', weight: 3, applies: 'producto', title: 'Diacriticos repartidos de forma sistematica',

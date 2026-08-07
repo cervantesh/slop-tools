@@ -1,0 +1,94 @@
+/* Proyecto de referencia deliberadamente limpio.
+   Sirve de dos cosas: linea base de falsos positivos (aqui NO deberia disparar
+   casi nada) y sustrato sobre el que se inyectan las mutaciones. */
+
+:root {
+  /* Neutros con croma minimo, no grises planos */
+  --lienzo: #fbfaf7;
+  --superficie: #ffffff;
+  --tinta: #1c1a17;
+  --apagado: #6b665e;
+  --filete: #e0dcd4;
+
+  /* Un dominante, un acento, nada mas */
+  --tierra: #8c5a3c;
+  --tierra-suave: #f2e5dc;
+
+  /* Escala de espaciado declarada */
+  --e-1: 4px;
+  --e-2: 8px;
+  --e-3: 16px;
+  --e-4: 24px;
+  --e-5: 40px;
+}
+
+body {
+  margin: 0;
+  color: var(--tinta);
+  background: var(--lienzo);
+  font-family: "Public Sans", system-ui, sans-serif;
+  line-height: 1.55;
+}
+
+h1, h2 {
+  font-family: "Newsreader", Georgia, serif;
+  letter-spacing: -0.015em;
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3.25rem); }
+h2 { font-size: 1.5rem; }
+
+.medida { max-width: 62ch; }
+
+.tarjeta {
+  padding: var(--e-4);
+  border-radius: 6px;
+  background: var(--superficie);
+  color: var(--tinta);
+}
+
+.tarjeta-destacada {
+  padding: var(--e-5);
+  border-radius: 14px;
+  background: var(--tierra-suave);
+  color: var(--tinta);
+}
+
+.accion {
+  padding: var(--e-2) var(--e-3);
+  border: 0;
+  border-radius: 4px;
+  background: var(--tierra);
+  color: #ffffff;
+  font-weight: 600;
+  transition: background 120ms ease, transform 120ms ease;
+}
+
+.accion:hover { background: #74472e; }
+
+.accion-secundaria {
+  padding: var(--e-2) var(--e-3);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--tierra);
+  transition: color 120ms ease;
+}
+
+.barra {
+  display: flex;
+  gap: var(--e-3);
+  padding: var(--e-3) 0;
+}
+
+@keyframes entrada {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.aviso {
+  animation: entrada 160ms ease both;
+  padding: var(--e-3);
+  border-radius: 6px;
+  background: var(--tierra-suave);
+  color: #5c3a26;
+}
