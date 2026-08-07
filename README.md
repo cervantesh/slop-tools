@@ -148,11 +148,16 @@ el comando de verificación. El procedimiento del agente está en
 ### Gate de proceso (CI)
 
 ```bash
-node scripts/slop-gate.mjs ./src --profile producto --brand "TuMarca" \
-  --min-score 70 --require-contrato --since-baseline --fail-on-new-drift
+# Proceso enforceado de punta a punta (apply-safe → scan → visual → brief)
+node scripts/slop-gate.mjs ./src --strict --profile producto --brand "TuMarca"
+
+# Legacy: solo deriva nueva
+node scripts/slop-gate.mjs ./src --profile producto --min-score 70 \
+  --since-baseline --fail-on-new-drift
 ```
 
 Escribe `.slop/last-gate.json` y `.slop/REMEDIAR.md`. Exit 0 solo si todas las puertas pasan.
+Tabla de madurez: `references/MADUREZ.md`.
 
 ### Observabilidad y render
 

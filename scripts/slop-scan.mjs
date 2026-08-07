@@ -78,7 +78,7 @@ if (contratoFlagIdx >= 0) {
 }
 
 if (STATS) {
-  imprimirStats(ROOT)
+  imprimirStats(ROOT, { json: AS_JSON })
   process.exit(0)
 }
 

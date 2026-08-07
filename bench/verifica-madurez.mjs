@@ -39,38 +39,42 @@ try {
     fallos++
   } else console.log('  ok init        tailwind.theme.mjs + html lang')
 
-  // 2 · calidad en JSON
+  // 2 · calidad en JSON (eje denso ≥ 12 checks)
   const scan = JSON.parse(correr(SCAN, [dir, '--json', '--profile', 'landing', '--contrato', '--no-history']))
   if (!scan.calidad || typeof scan.calidad.score !== 'number') {
     console.log('  x scan.calidad ausente')
     fallos++
+  } else if (scan.calidad.total < 12) {
+    console.log(`  x calidad solo ${scan.calidad.total} ejes (min 12)`)
+    fallos++
   } else console.log(`  ok calidad     score ${scan.calidad.score}/100 · ejes ${scan.calidad.total}`)
 
-  // 3 · stats
+  // 3 · stats con tendencia
   correr(SCAN, [dir, '--json', '--profile', 'landing', '--contrato'])
   const statsOut = correr(SCAN, [dir, '--stats'])
-  if (!/eventos|historial|score/i.test(statsOut)) {
-    console.log('  x --stats sin resumen')
+  if (!/eventos|score|tendencia|recientes/i.test(statsOut)) {
+    console.log('  x --stats incompleto')
     fallos++
-  } else console.log('  ok stats       --stats resume historial')
+  } else console.log('  ok stats       historial + tendencia')
 
-  // 4 · gate pass en sistema limpio
+  // 4 · gate strict en sistema limpio (proceso enforceado de verdad)
   let gateCode = 0
   try {
-    correr(GATE, [dir, '--profile', 'landing', '--min-score', '50', '--require-contrato'])
+    correr(GATE, [dir, '--profile', 'landing', '--strict'])
   } catch (e) {
     gateCode = e.status ?? 1
+    console.log(e.stdout?.slice(-800) || e.message)
   }
   if (gateCode !== 0) {
-    console.log(`  x gate limpio exit ${gateCode}`)
+    console.log(`  x gate --strict limpio exit ${gateCode}`)
     if (existsSync(join(dir, '.slop', 'last-gate.json'))) {
-      console.log('     ', readFileSync(join(dir, '.slop', 'last-gate.json'), 'utf8').slice(0, 200))
+      console.log(readFileSync(join(dir, '.slop', 'last-gate.json'), 'utf8').slice(0, 400))
     }
     fallos++
   } else if (!existsSync(join(dir, '.slop', 'last-gate.json'))) {
     console.log('  x gate sin last-gate.json')
     fallos++
-  } else console.log('  ok gate        PASS + last-gate.json + brief')
+  } else console.log('  ok gate        --strict PASS + last-gate.json + brief + visual')
 
   // 5 · gate fail con mutación
   writeFileSync(join(dir, 'malo.css'), '.x{padding:13px;font-family:Inter;transition:all 300ms;color:#ff00aa}', 'utf8')
@@ -99,15 +103,19 @@ try {
     fallos++
   } else console.log('  ok apply-safe  parches triviales aplicados')
 
-  // 7 · visual skip sin playwright
+  // 7 · visual SIEMPRE produce motor document (no skip vacío)
   const vis = JSON.parse(correr(VISUAL, [dir, '--json']))
-  if (!vis.skipped && !vis.ok) {
-    // si tiene playwright y falla a11y, igual ok que corrió
-    console.log('  ok visual      ejecuto browser o skip')
-  } else if (vis.skipped) {
-    console.log('  ok visual      SKIPPED sin playwright (limite declarado)')
+  if (!vis.document || vis.document.nDocumentos < 1) {
+    console.log('  x visual sin documentos HTML analizados')
+    fallos++
+  } else if (vis.skipped && !vis.document) {
+    console.log('  x visual solo skip — no es nivel 4')
+    fallos++
+  } else if (!vis.ok && vis.document.fallan > 0) {
+    console.log('  x visual document FAIL en sistema limpio:', vis.document.fallan)
+    fallos++
   } else {
-    console.log('  ok visual      report ok')
+    console.log(`  ok visual      engine=${vis.engine} docs=${vis.document.nDocumentos} PASS`)
   }
 
   // 8 · dominio

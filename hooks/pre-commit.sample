@@ -1,0 +1,8 @@
+#!/bin/sh
+# Copia a .git/hooks/pre-commit y chmod +x
+# Enforcea el proceso slop en cada commit (modo strict sobre el árbol).
+
+ROOT=$(git rev-parse --show-toplevel)
+node "$ROOT/scripts/slop-gate.mjs" "$ROOT" --strict --profile producto 2>/dev/null \
+  || node "$ROOT/node_modules/slop-tools/scripts/slop-gate.mjs" "$ROOT" --strict --profile producto
+

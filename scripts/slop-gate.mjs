@@ -13,7 +13,11 @@
 //     [--require-contrato] [--contrato ruta]
 //     [--since-baseline] [--fail-on-new-drift]
 //     [--require-calidad 60] [--dominio file]
-//     [--no-brief]
+//     [--no-brief] [--apply-safe] [--strict] [--visual]
+//
+//   --strict     = require-contrato + min-score 70 + require-calidad 70 + apply-safe + visual document
+//   --apply-safe aplica parches triviales ANTES del scan de veredicto
+//   --visual     corre slop-visual --fail (motor document siempre)
 
 import { mkdirSync, writeFileSync, existsSync, readFileSync } from 'node:fs'
 import { resolve, dirname, join } from 'node:path'
@@ -24,6 +28,7 @@ import { resolverRutaContrato } from './lib/contrato.mjs'
 const AQUI = dirname(fileURLToPath(import.meta.url))
 const SCAN = join(AQUI, 'slop-scan.mjs')
 const FIX = join(AQUI, 'slop-fix.mjs')
+const VISUAL = join(AQUI, 'slop-visual.mjs')
 
 const argv = process.argv.slice(2)
 const CON_VALOR = new Set([
@@ -35,17 +40,22 @@ const has = n => argv.includes(n)
 
 const posicional = argv.find((a, i) => !a.startsWith('--') && !CON_VALOR.has(argv[i - 1]))
 const ROOT = resolve(posicional || '.')
+const STRICT = has('--strict')
 const PROFILE = flag('--profile') || 'producto'
 const BRAND = flag('--brand')
 const BRAND_COLORS = flag('--brand-colors')
 const GENRE = flag('--genre')
-const MIN_SCORE = flag('--min-score') != null ? Number(flag('--min-score')) : 70
-const REQUIRE_CONTRATO = has('--require-contrato')
-const REQUIRE_CALIDAD = flag('--require-calidad') != null ? Number(flag('--require-calidad')) : null
+const MIN_SCORE = flag('--min-score') != null ? Number(flag('--min-score')) : (STRICT ? 70 : 70)
+const REQUIRE_CONTRATO = has('--require-contrato') || STRICT
+const REQUIRE_CALIDAD = flag('--require-calidad') != null
+  ? Number(flag('--require-calidad'))
+  : (STRICT ? 70 : null)
 const DOMINIO = flag('--dominio')
 const NO_BRIEF = has('--no-brief')
 const SINCE = has('--since-baseline')
 const FAIL_NEW = has('--fail-on-new-drift')
+const APPLY_SAFE = has('--apply-safe') || STRICT
+const RUN_VISUAL = has('--visual') || STRICT
 
 const contratoIdx = argv.indexOf('--contrato')
 let CONTRATO_ARG = null
@@ -64,7 +74,25 @@ function puerta(id, ok, detalle) {
   console.log(`  ${ok ? 'ok' : 'x '} ${id.padEnd(22)} ${detalle}`)
 }
 
-console.log(`\n  slop-gate · ${ROOT}\n`)
+console.log(`\n  slop-gate · ${ROOT}${STRICT ? ' · STRICT' : ''}\n`)
+
+// Puerta -1 · apply-safe antes del veredicto
+if (APPLY_SAFE) {
+  try {
+    const fixArgs = [FIX, ROOT, '--profile', PROFILE, '--apply-safe', '--json']
+    if (BRAND) fixArgs.push('--brand', BRAND)
+    if (CONTRATO_ARG != null) {
+      fixArgs.push('--contrato')
+      if (CONTRATO_ARG !== true) fixArgs.push(String(CONTRATO_ARG))
+    }
+    try {
+      execFileSync(process.execPath, fixArgs, { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 })
+    } catch { /* exit 1 si quedan hallazgos */ }
+    puerta('apply-safe', true, 'parches triviales intentados')
+  } catch (e) {
+    puerta('apply-safe', false, e.message)
+  }
+}
 
 // Puerta 0 · contrato requerido
 if (REQUIRE_CONTRATO) {
@@ -128,6 +156,29 @@ if (REQUIRE_CALIDAD != null) {
 
 if (scan.dominio) {
   puerta('dominio', !scan.dominio.failed, scan.dominio.detail)
+}
+
+// Puerta visual (document engine siempre)
+if (RUN_VISUAL) {
+  try {
+    execFileSync(process.execPath, [VISUAL, ROOT, '--fail', '--json'], {
+      encoding: 'utf8', maxBuffer: 16 * 1024 * 1024,
+    })
+    puerta('visual', true, 'document/playwright PASS')
+  } catch (e) {
+    let ok = false, detalle = 'FAIL'
+    try {
+      const j = JSON.parse(e.stdout || '{}')
+      // sin html: document nDocumentos 0 — no bloquear en pure JS projects
+      if (j.document?.nDocumentos === 0) {
+        ok = true
+        detalle = 'sin HTML — visual no aplica'
+      } else {
+        detalle = `fallan document=${j.document?.fallan ?? '?'} engine=${j.engine}`
+      }
+    } catch { detalle = e.message }
+    puerta('visual', ok, detalle)
+  }
 }
 
 // Puerta brief

@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.2.1 — 2026-08-07
+
+### P13.1 — de “casi 4” a 4 real
+
+- **visual:** motor `document` siempre (HTML a11y/estructura); Playwright solo suma screenshot.
+- **gate --strict:** apply-safe → scan → visual → brief (proceso enforceado).
+- **calidad Q1–Q14:** medida, labels, pareja tipográfica, rejilla 4, loading, main/skip.
+- **stats:** sparkline, Δ vs anterior, alerta de regresión, `--stats --json`.
+- **apply-safe:** también re-mapea padding/margin a la escala del contrato.
+- `references/MADUREZ.md` + `hooks/pre-commit.sample`.
+
 ## 1.2.0 — 2026-08-07
 
 ### Madurez funcional (capacidades ≥ 4 en el núcleo)

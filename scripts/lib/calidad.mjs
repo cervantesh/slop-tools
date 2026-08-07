@@ -133,16 +133,6 @@ export function comprobarCalidad(ctx) {
       }
     }
     checks.push({
-      id: 'Q8', tipo: 'calidad', cat: 'Copy', weight: 1, title: 'Error opaco sin acción',
-      // id Q8 reserved - use Q7
-      failed: false,
-      detail: 'placeholder',
-      fix: '',
-      samples: [],
-    })
-    // fix id
-    checks.pop()
-    checks.push({
       id: 'Q7', tipo: 'calidad', cat: 'Copy', weight: 1, title: 'Error opaco sin acción',
       failed: n >= 3,
       detail: `${n} mensaje(s) de error genérico`,
@@ -175,6 +165,114 @@ export function comprobarCalidad(ctx) {
     })
   }
 
+  // Q9 · Medida de prosa (line-length) — legibilidad
+  {
+    const ch = [...cssTexto.matchAll(/max-width\s*:\s*([\d.]+)\s*ch/gi)].map(m => parseFloat(m[1]))
+    const px = [...cssTexto.matchAll(/max-width\s*:\s*([\d.]+)\s*px/gi)].map(m => parseFloat(m[1]))
+    const okCh = ch.some(v => v >= 45 && v <= 90)
+    const okPx = px.some(v => v >= 280 && v <= 720)
+    const hayProsa = /<p\b|prose|article|medida/i.test(todo)
+    checks.push({
+      id: 'Q9', tipo: 'calidad', cat: 'Tipografia', weight: 2, title: 'Sin medida de lectura acotada',
+      failed: hayProsa && !okCh && !okPx,
+      detail: !hayProsa ? 'sin bloques de prosa detectados' : okCh || okPx ? `medida presente (${okCh ? ch.join('ch ') + 'ch' : px.join('px ') + 'px'})` : 'prosa sin max-width en ch/px razonable',
+      fix: 'Acota el ancho de lectura (~45–75ch o ~65ch). Ej: max-width: 66ch.',
+      samples: [],
+    })
+  }
+
+  // Q10 · Inputs de formulario sin label (producto)
+  {
+    const samples = []
+    let n = 0
+    for (const f of codeFiles) {
+      if (!/<form\b|<input\b|<Input\b/i.test(f.text)) continue
+      for (const m of f.text.matchAll(/<(?:input|Input)\b([^>]*)\/?>/gi)) {
+        const a = m[1] || ''
+        if (/type\s*=\s*["']hidden["']/i.test(a)) continue
+        if (/aria-label|aria-labelledby|title=/i.test(a)) continue
+        const id = (a.match(/\bid\s*=\s*["']([^"']+)/i) || [])[1]
+        if (id && new RegExp(`for=["']${id}["']`, 'i').test(f.text)) continue
+        n++
+        if (samples.length < 5) samples.push({ file: f.rel, line: lineaDe(f.text, m.index), text: m[0].slice(0, 80) })
+      }
+    }
+    checks.push({
+      id: 'Q10', tipo: 'calidad', cat: 'Accesibilidad', weight: 3, title: 'Inputs sin label accesible',
+      failed: n >= 2,
+      detail: `${n} input(s) sin label/aria-label`,
+      fix: 'Asocia <label for> o aria-label a cada control de formulario.',
+      samples,
+    })
+  }
+
+  // Q11 · Pareja tipográfica (display + texto) cuando hay varias font-family
+  {
+    const fams = new Set()
+    for (const m of todo.matchAll(/font-family\s*:\s*([^;}{]+)/gi)) {
+      const first = m[1].split(',')[0].replace(/["']/g, '').trim().toLowerCase()
+      if (first && !first.startsWith('var(') && first !== 'inherit') fams.add(first)
+    }
+    // var(--display) + var(--texto) cuenta como pareja
+    const vars = /var\(--display\)/i.test(todo) && /var\(--texto\)/i.test(todo)
+    checks.push({
+      id: 'Q11', tipo: 'calidad', cat: 'Tipografia', weight: 2, title: 'Tipografía sin pareja display/texto',
+      failed: fams.size === 1 && !vars && fams.size > 0,
+      detail: vars ? 'pareja por tokens --display/--texto' : `${fams.size} familia(s) literal(es)`,
+      fix: 'Declara display + texto (o tokens --display/--texto). Una sola familia genérica aplana la jerarquía.',
+      samples: [],
+    })
+    // adjust: fail if 0 fonts and has UI? skip. fail if only one literal family without vars when UI text heavy
+    const last = checks[checks.length - 1]
+    last.failed = !vars && fams.size === 1 && /h1|heading|display/i.test(todo)
+  }
+
+  // Q12 · Escala de espaciado disciplinada (múltiplos de 4) en literales
+  {
+    const lits = []
+    for (const m of cssTexto.matchAll(/(?:padding|margin|gap)(?:-\w+)?\s*:\s*([^;}{]+)/gi)) {
+      for (const t of m[1].split(/\s+/)) {
+        const v = t.match(/^([\d.]+)px$/i)
+        if (v) lits.push(parseFloat(v[1]))
+      }
+    }
+    const fuera = [...new Set(lits.filter(v => v > 0 && v % 4 !== 0))]
+    checks.push({
+      id: 'Q12', tipo: 'calidad', cat: 'Layout', weight: 2, title: 'Espaciado literal fuera de rejilla de 4',
+      failed: fuera.length >= 3,
+      detail: lits.length < 3 ? 'pocos literales de espaciado' : fuera.length ? `fuera de ×4: ${fuera.slice(0, 8).join('px, ')}px` : 'literales alineados a 4px',
+      fix: 'Usa múltiplos de 4 (o la escala del contrato vía var(--e-*)).',
+      samples: [],
+    })
+  }
+
+  // Q13 · Loading sin texto alternativo / aria-busy
+  {
+    const load = /spinner|loading|skeleton|cargando/i.test(codigo)
+    const a11y = /aria-busy|aria-live|role=["']status["']|sr-only.*load/i.test(codigo)
+    checks.push({
+      id: 'Q13', tipo: 'calidad', cat: 'Accesibilidad', weight: 1, title: 'Estado de carga sin anuncio accesible',
+      failed: load && !a11y,
+      detail: !load ? 'sin loading detectado' : a11y ? 'carga con aria/live' : 'loading/skeleton sin aria-busy/live',
+      fix: 'Marca el contenedor con aria-busy o role="status" mientras carga.',
+      samples: [],
+    })
+  }
+
+  // Q14 · Skip link o main (navegación por teclado en apps)
+  {
+    const skip = /skip to|saltar al|href=["']#main/i.test(todo)
+    const main = /<main\b|role=["']main["']/i.test(todo)
+    const app = /router|nav|sidebar|dashboard/i.test(todo)
+    checks.push({
+      id: 'Q14', tipo: 'calidad', cat: 'Accesibilidad', weight: 1, title: 'App sin main/skip-link',
+      failed: app && !main && !skip,
+      detail: !app ? 'no parece shell de app' : main || skip ? 'main o skip presentes' : 'shell de app sin <main> ni skip link',
+      fix: 'Envuelve el contenido en <main> y/o ofrece “Saltar al contenido”.',
+      samples: [],
+    })
+  }
+
   const fallan = checks.filter(c => c.failed)
   const maxW = checks.reduce((a, c) => a + c.weight, 0)
   const lost = fallan.reduce((a, c) => a + c.weight, 0)
@@ -185,7 +283,7 @@ export function comprobarCalidad(ctx) {
     total: checks.length,
     fallan: fallan.length,
     checks,
-    nota: 'Higiene estática de producto/a11y/sistema — no mide belleza ni UX completa. Sin render.',
+    nota: 'Higiene de producto, a11y y disciplina de sistema (estático). No mide belleza subjetiva ni UX de negocio completa.',
   }
 }
 

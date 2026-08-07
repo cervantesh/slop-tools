@@ -65,15 +65,41 @@ export function resumenHistorial(root) {
   }
 }
 
-export function imprimirStats(root) {
+function sparkline(vals) {
+  if (!vals.length) return ''
+  const chars = '▁▂▃▄▅▆▇█'
+  const min = Math.min(...vals), max = Math.max(...vals)
+  const span = max - min || 1
+  return vals.map(v => chars[Math.min(7, Math.floor(((v - min) / span) * 7))]).join('')
+}
+
+export function imprimirStats(root, { json = false } = {}) {
   const r = resumenHistorial(root)
+  const ev = leerHistorial(root)
+  const scores = ev.map(e => e.score).filter(n => typeof n === 'number')
+  const prev = scores.length >= 2 ? scores[scores.length - 2] : null
+  const delta = prev != null && r.score.ultimo != null ? r.score.ultimo - prev : null
+  const alerta = delta != null && delta <= -5
+    ? `ALERTA: score bajó ${delta} pts respecto a la corrida anterior`
+    : null
+  r.sparkline = sparkline(scores.slice(-24))
+  r.deltaAnterior = delta
+  r.alerta = alerta
+
+  if (json) {
+    console.log(JSON.stringify(r, null, 2))
+    return r
+  }
+
   console.log(`\n  slop-stats · ${root}\n`)
   if (!r.n) {
     console.log(`  ${r.mensaje}\n`)
     return r
   }
   console.log(`  eventos   ${r.n}  (${r.desde?.slice(0, 10)} → ${r.hasta?.slice(0, 10)})`)
-  console.log(`  score     último ${r.score.ultimo} · media ${r.score.media} · min ${r.score.min} · max ${r.score.max} · Δ ${r.score.deltaPrimeroUltimo >= 0 ? '+' : ''}${r.score.deltaPrimeroUltimo}`)
+  console.log(`  score     último ${r.score.ultimo} · media ${r.score.media} · min ${r.score.min} · max ${r.score.max} · Δ total ${r.score.deltaPrimeroUltimo >= 0 ? '+' : ''}${r.score.deltaPrimeroUltimo}`)
+  if (delta != null) console.log(`  vs prev   ${delta >= 0 ? '+' : ''}${delta}${alerta ? '  ⚠ ' + alerta : ''}`)
+  if (r.sparkline) console.log(`  tendencia ${r.sparkline}  (últimas ${Math.min(24, scores.length)})`)
   if (r.contrato.media != null || r.contrato.ultimo != null) {
     console.log(`  contrato  último ${r.contrato.ultimo ?? '—'} · media ${r.contrato.media ?? '—'}`)
   }

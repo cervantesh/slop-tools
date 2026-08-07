@@ -328,8 +328,9 @@ Va el último porque depende de P5 para poder demostrar que funciona.
 
 ## P13 · Madurez ≥ 4 en capacidades bajas `[x]`
 
-> **Hecho.** Sube observabilidad, enforcement, packaging, producto/a11y, calidad, render
-> opt-in, init y contrato.
+> **Hecho (y corregido en P13.1).** La primera pasada dejó “casi 4” (visual que solo
+> skipeaba, calidad de 8 checks, gate sin strict). Ahora cada capacidad baja tiene
+> evidencia de nivel 4 en `references/MADUREZ.md`.
 >
 > | Capacidad | Antes | Ahora |
 > | --- | --- | --- |

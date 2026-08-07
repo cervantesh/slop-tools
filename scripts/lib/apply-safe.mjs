@@ -20,26 +20,42 @@ export function applySafe(root, files, contrato) {
   const cambiados = []
   let total = 0
   const dur = contrato?.duracion != null ? `${contrato.duracion}ms` : 'var(--duracion)'
+  const escala = (contrato?.espacios || []).map(Number).filter(n => !Number.isNaN(n))
+  const nearest = v => {
+    if (!escala.length) return null
+    let best = escala[0], d = Math.abs(v - best)
+    for (const e of escala) {
+      const dd = Math.abs(v - e)
+      if (dd < d) { best = e; d = dd }
+    }
+    return best
+  }
 
   for (const f of files) {
     if (!/\.(css|scss|jsx?|tsx?|html|vue|svelte)$/i.test(f.rel)) continue
     // No reescribir el manifiesto del contrato
-    if (f.rel === 'tokens.css' || f.rel.endsWith('tailwind.theme.mjs')) continue
+    if (f.rel === 'tokens.css' || f.rel.endsWith('tailwind.theme.mjs') || f.rel === 'DESIGN.md') continue
     let text = f.text
     const before = text
-    text = text.replace(PROHIBIDAS, (m, q, name) => {
-      const esDisplay = /serif|display|Newsreader|Literata|Playfair/i.test(text.slice(Math.max(0, text.indexOf(m) - 40), text.indexOf(m)))
-      return `${q || ''}var(--${esDisplay ? 'display' : 'texto'})${q || ''}`
-    })
-    // Simplificar: siempre texto para families prohibidas en font-family
-    text = text.replace(/font-family\s*:\s*[^;]*\b(Inter|Poppins|Geist|Roboto|Open Sans)\b[^;]*/gi,
+    text = text.replace(/font-family\s*:\s*[^;]*\b(Inter|Poppins|Geist(?:\s+Sans)?|Roboto|Open Sans)\b[^;]*/gi,
       'font-family: var(--texto)')
+    text = text.replace(PROHIBIDAS, () => 'var(--texto)')
     text = text.replace(/\b300\s*ms\b/gi, dur)
     text = text.replace(/transition\s*:\s*all\b/gi, 'transition: background, transform, opacity')
+    // Espaciados literales → valor de escala más cercano (solo si hay contrato)
+    if (escala.length) {
+      text = text.replace(
+        /((?:padding|margin|gap)(?:-(?:top|right|bottom|left|inline|block))?)\s*:\s*([\d.]+)px/gi,
+        (m, prop, num) => {
+          const v = parseFloat(num)
+          if (escala.includes(v) || v === 0) return m
+          const n = nearest(v)
+          return n == null ? m : `${prop}: ${n}px`
+        },
+      )
+    }
     if (text !== before) {
-      const n = [...before].length // rough
       writeFileSync(join(root, f.rel), text, 'utf8')
-      // count approximate replacements
       const diffs = countDiffs(before, text)
       cambiados.push({ file: f.rel, n: diffs })
       total += diffs

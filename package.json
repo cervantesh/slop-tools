@@ -1,6 +1,6 @@
 {
   "name": "slop-tools",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Auditor estatico de AI slop + contrato de diseno + gate de proceso. Validacion empirica, plan de remediacion y brief para agentes.",
   "type": "module",
   "license": "MIT",
