@@ -587,17 +587,18 @@
       "decision": "J 0.00 y dispara mas en humano fuera de banda. El comentario narrativo no aparece en el codigo publicado"
     },
     "L3": {
-      "corpus": "research/corpus.json",
+      "corpus": "research/l3-espanol.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "humanos_es": 19,
+        "generados_es": 0
       },
-      "J_banda": -0.002,
-      "pos": 0.029,
-      "neg": 0.031,
-      "separa": false,
-      "estado": "no_medible",
-      "nota": "especifica del espanol y el corpus es casi todo ingles: sigue sin evaluar"
+      "tasa_humano": 0.26,
+      "ic95": [
+        0.12,
+        0.49
+      ],
+      "estado": "premisas_falsada",
+      "decision": "Dispara en 5/19 (26%, IC95 12-49) de proyectos humanos en espanol anteriores a ChatGPT. La premisa (corte limpio por archivo = proceso automatico) queda falsada sobre su propia poblacion: uno de cada cuatro humanos deja la misma huella. Sin clase positiva no hay J. Peso 3->1 en checks.mjs."
     },
     "AS9": {
       "corpus": "research/corpus.json",

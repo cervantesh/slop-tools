@@ -121,6 +121,19 @@ de confirmar».
 > medio punto por azar, y **no es una refutación de trece reglas**. Es una advertencia sobre
 > la confianza agregada, no un veredicto regla a regla.
 
+## La regla propia que no sobrevive
+
+`L3` —diacríticos repartidos de forma sistemática— era la única comprobación inventada aquí
+y la última sin medición. Su premisa: el ASCII irregular es hábito humano; el corte limpio
+por archivo es proceso automático.
+
+Sobre **19 proyectos humanos en español anteriores a ChatGPT** dispara en el **26%**
+(IC95 12–49). Cinco equipos de personas dejan la misma huella que la regla atribuye a un
+proceso automático. Sin clase positiva en español no hay J; la tasa ya descalifica el peso 3.
+
+Lo defendible: *hubo dos orígenes de texto*. No *quién* escribió cada uno. Peso 1.
+Detalle en `research/RESULTADOS.md` §L3.
+
 ## Las puntuaciones no son comparables entre versiones
 
 Añadir comprobaciones cambia el denominador. Un proyecto que sacaba 32 puede sacar 53 sin

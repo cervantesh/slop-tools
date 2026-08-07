@@ -1,15 +1,13 @@
 #!/usr/bin/env node
 // Mide `L3` sobre los proyectos en espanol del corpus.
 //
-// SITUACION. `L3` —diacriticos repartidos de forma sistematica entre archivos—
-// es la unica regla del catalogo sin medicion, porque exige proyectos en
-// espanol. Tras ampliar el corpus hay 19 humanos en espanol y CERO generados:
-// el marcador de generador y la interfaz en espanol no coexisten en GitHub
-// publico. No se puede calcular J.
+// RESULTADO. 19 humanos ES pre-ChatGPT, 0 generados (marcador de generador e
+// interfaz ES no coexisten en GitHub publico). Dispara en 5/19 = 26%, IC95
+// 12-49. Premisa falsada; peso 3 -> 1. Sin clase positiva no hay J.
+// Evidencia en data/validacion.json (estado premisas_falsada).
 //
-// LO QUE SI SE PUEDE. Medir su tasa sobre codigo humano en espanol, que es la
-// poblacion donde la regla podria hacer dano. Una regla con tasa alta ahi es
-// ruidosa aunque nunca sepamos su recall.
+// LO QUE MIDE. Tasa sobre codigo humano en espanol — la poblacion donde la
+// regla podria hacer dano. Una tasa alta ahi es ruido aunque no haya recall.
 //
 //   node research/l3-espanol.mjs
 

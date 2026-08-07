@@ -116,6 +116,12 @@ function sello(c) {
   // Decirlo importa mas que la cifra.
   if (v.revalidar) return { etiqueta: 'reimplementada, pendiente de medir', confianza: 0.4 }
   if (v.estado === 'no_medible') return { etiqueta: 'no medible', confianza: 0.3 }
+  // Premisa falsada sobre su poblacion (hoy solo L3 en espanol): no hay J, pero
+  // si hay tasa de falsos positivos en humanos. Baja confianza a proposito.
+  if (v.estado === 'premisas_falsada') {
+    const tasa = v.tasa_humano != null ? Math.round(v.tasa_humano * 100) : '?'
+    return { etiqueta: `premisas falsada (${tasa}% en humanos ES)`, confianza: 0.3 }
+  }
   // Umbral ajustado sobre la misma muestra que lo valida: la cifra encogera
   // fuera de muestra. Se reporta, pero no se le da confianza plena.
   if (v.insample) return { etiqueta: `J ${String(v.J_banda).replace('.', ',')} en muestra, sin validar fuera`, confianza: 0.7 }

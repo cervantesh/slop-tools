@@ -67,7 +67,20 @@ const A_DEFECTO = {
 const NO_MEDIBLES = {
   A4: 'cero disparos en la banda; exige un hero con resplandor radial',
   HM1: 'cero disparos en 123 proyectos',
-  L3: 'especifica del espanol y el corpus es casi todo ingles: sigue sin evaluar',
+}
+
+// Mediciones que no salen de la banda inglesa de medicion.json. Se estampan
+// tal cual en validacion.json para que el escanner no siga diciendo "sin
+// evaluar" cuando ya hay cifra. research/l3-espanol.mjs
+const MEDICIONES_ESPECIALES = {
+  L3: {
+    corpus: 'research/l3-espanol.json',
+    n: { humanos_es: 19, generados_es: 0 },
+    tasa_humano: 0.26,
+    ic95: [0.12, 0.49],
+    estado: 'premisas_falsada',
+    decision: 'Dispara en 5/19 (26%, IC95 12-49) de proyectos humanos en espanol anteriores a ChatGPT. La premisa (corte limpio por archivo = proceso automatico) queda falsada sobre su propia poblacion: uno de cada cuatro humanos deja la misma huella. Sin clase positiva no hay J. Peso 3->1 en checks.mjs.',
+  },
 }
 
 // Las comprobaciones programaticas viven en codigo, no en el catalogo. Su
@@ -87,6 +100,11 @@ for (const f of medicion.filas) {
 }
 for (const [id, nota] of Object.entries(NO_MEDIBLES)) {
   if (validacionExterna[id]) { validacionExterna[id].estado = 'no_medible'; validacionExterna[id].nota = nota }
+}
+for (const [id, evidencia] of Object.entries(MEDICIONES_ESPECIALES)) {
+  // Sustituyen la fila inglesa (casi cero disparos) por la medicion que si aplica.
+  // No se fusionan: las tasas de la banda general no describen esta regla.
+  validacionExterna[id] = { ...evidencia }
 }
 for (const [id, [, motivo]] of Object.entries(DECISIONES)) {
   if (validacionExterna[id]) validacionExterna[id].decision = motivo

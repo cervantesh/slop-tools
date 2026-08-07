@@ -1,9 +1,10 @@
 #!/usr/bin/env node
-// Amplia el corpus con proyectos de interfaz en ESPANOL, para poder evaluar
-// `L3` — la unica regla del catalogo que sigue sin medicion.
+// Amplia el corpus con proyectos de interfaz en ESPANOL. Construyo el sustrato
+// que midio `L3` (research/l3-espanol.mjs): 19 humanos pre-ChatGPT, 0 generados.
+// Premisa falsada; peso 1. Ver research/RESULTADOS.md §L3.
 //
 // El corpus general no sirve: research/idioma.mjs encontro cero proyectos en
-// espanol entre 120. No es que no la hayamos medido; es que ese corpus no puede.
+// espanol entre 120. No es que no se pudiera medir; es que ese corpus no puede.
 //
 // ESTRATEGIA. La etiqueta de clase se mantiene igual que en el corpus general
 // —marcador de generador para `pos`, fecha anterior al corte para `neg_stack`—

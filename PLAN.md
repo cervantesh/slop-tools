@@ -191,8 +191,8 @@ separación y intervalo.
 > - La evidencia de las programáticas se exporta a `data/validacion.json` y se carga en
 >   ejecución: deja de copiarse a mano.
 >
-> **Residuo declarado:** `L3` sigue sin evaluar (corpus en inglés), no hay conjunto reservado
-> formal, y `neg_classic` sigue en n=11.
+> **Residuo declarado (cerrado después):** `L3` se midió en P10; el conjunto reservado es
+> P9. Sigue abierto: `neg_classic` en n=11.
 
 ## P7 · Los verticales sin cubrir `[x]`
 
@@ -212,19 +212,13 @@ separación y intervalo.
 > **`anti-ui-slop` de skills.rest sigue inaccesible** tras un segundo intento. No hay mirror,
 > paquete ni caché. Queda como la única fuente citada que nunca se pudo abrir.
 
-Tres carencias declaradas en RESULTADOS §5, por orden de rendimiento:
+Tres carencias declaradas entonces (cerradas en P9/P10 salvo el sesgo de tamaño):
 
-1. **Corpus en español.** `L3` —diacríticos sistemáticos— conserva peso 3 y está **sin
-   evaluar** porque el corpus es casi todo inglés. Es nuestra regla más específica y no
-   sabemos si vale.
-2. **Más n para las seis reglas en el limbo.** `L1` (J 0,40), `UX6` (0,38), `UX1` (0,35),
-   `UX7` (0,26), `UX3` (0,23), `UX11` (0,22) tienen J alta y no alcanzan significación con
-   pos=20. No es que no discriminen: es que con 43 proyectos no se ve.
-3. **Corpus de validación aparte.** Los pesos se ajustaron mirando estos 43 proyectos. Sin un
-   conjunto reservado, no sabemos cuánto de la mejora es sobreajuste.
+1. **Corpus en español** → P10: 19 humanos ES; `L3` premisa falsada, peso 1.
+2. **Más n en el limbo** → P6 amplió la banda; varias salieron de limbo.
+3. **Conjunto reservado** → P9: 8 de 21 aguantan fuera de muestra.
 
-Y recuperar las pérdidas: 24 repositorios saltados por tamaño, que son sobre todo
-`neg_classic`, lo que sesga la clase negativa hacia proyectos pequeños.
+Sigue abierto recuperar repositorios grandes de `neg_classic` (n=11).
 
 ---
 
@@ -285,9 +279,34 @@ Va el último porque depende de P5 para poder demostrar que funciona.
 
 ---
 
+## P9 · Conjunto reservado `[x]`
+
+> **Hecho.** `research/holdout.mjs` parte la banda en 70% ajuste / 30% reserva con hash
+> determinista del repositorio. De 21 reglas con J > 0,15 en ajuste, **8 conservan al menos
+> la mitad en reserva**. `C4` cae de 0,44 a 0,17; `A3` de 0,28 a 0,11. Lo defendible dentro y
+> fuera: `UX2`, `L2`, `L1`, `UX6`, `D5`, `CS3`. Escrito en `caveats.md` como techo de lo que
+> podemos afirmar. La reserva es pequeña (pos=9, neg=7): advertencia agregada, no veredicto
+> regla a regla.
+
+## P10 · `L3` en español `[x]`
+
+> **Hecho.** El corpus general tenía cero proyectos en español. `research/corpus-es.mjs`
+> añadió candidatos; quedaron **19 humanos pre-ChatGPT** y **cero generados** (el marcador
+> de generador y la interfaz en español no coexisten en GitHub público).
+>
+> `L3` dispara en **5/19 (26%, IC95 12–49)** de código humano. Premisa falsada. Peso 3 → 1.
+> Evidencia en `data/validacion.json` (`estado: premisas_falsada`); el escáner la etiqueta
+> como tal. Sin clase positiva no hay J; cerrar ese hueco exige generar artefactos propios o
+> una fuente fuera de GitHub.
+
+---
+
 ## Fuera de plan, anotado
 
 - Cinco archivos de `research/` entraron en un commit mío por `git add -A` sin que yo los
   hubiera leído. Están revisados a posteriori y son coherentes, pero queda dicho.
 - La distinción de `SKILL.md` sigue en pie y ningún punto de este plan la resuelve: incluso
   `D5` con lift 18 mide **detectabilidad**, no **procedencia**.
+- Tras P10 quedaba desincronía clásica (validacion, producto, rubric, RESULTADOS §«no
+  resolvió»): se cerró en el mismo ciclo para no repetir el fallo que P4 automatizó en
+  conteos.

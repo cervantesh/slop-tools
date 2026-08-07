@@ -163,7 +163,7 @@ Ocho de las trece reglas con el peso máximo no separan las clases:
 | `C1` bordes planos de 1px | 0,00 | La fuente lo llamaba «el indicador aislado más fiable». No dispara en la banda. |
 | `K3` botón invisible | 0,00 | No medible (§3.2). |
 | `AS9` monocultura de segundo orden | −0,04 | Cero disparos en generado. La estética crema/Fraunces/terracota no aparece en el corpus. |
-| `L3` diacríticos | 0,01 | **No medible**: la regla es específica del español y el corpus es casi todo inglés. No refutada. |
+| `L3` diacríticos | 0,01 | En *esta* medición (corpus EN): no medible. Después se midió en ES: 26% en humanos, peso 1 — §L3 abajo. |
 | `A1` gradiente morado-azul | 0,13 | Ver abajo. |
 
 ### 3.4 · El indicio más citado de la literatura rinde poco
@@ -225,7 +225,8 @@ Declarados sin adornos, porque condicionan todo lo anterior.
 - **`neg_classic` con n=11** no sostiene ninguna conclusión propia. Se reporta como contexto.
 - **Sesgo de plataforma.** La clase positiva son proyectos generados **y publicados en
   GitHub**, que no son una muestra aleatoria de lo que estas herramientas producen.
-- **Un solo idioma.** El corpus es casi todo inglés, lo que deja `L3` sin evaluar.
+- **Un solo idioma.** El corpus de *esta* medición es casi todo inglés; `L3` se midió
+  después en un corpus ES aparte (§L3).
 - **Autoría humana ≠ buen diseño.** La clase negativa está etiquetada por fecha, no por
   calidad. Contiene proyectos humanos mediocres, y debe ser así.
 - **Una sola ejecución.** Sin repetición ni corpus de validación aparte. Los umbrales que se
@@ -260,8 +261,8 @@ Cada uno cita su fila. Aplicados en el PR que acompaña a este informe.
 | `B2` | 1 → 0 | J −0,06 · dispara en 85% y 91% |
 | `T1` | 2 → 1 | J −0,07 |
 
-`L3` **mantiene peso 3**: no es que no discrimine, es que este corpus no puede evaluarla.
-Queda marcada como no validada.
+`L3` se dejó en peso 3 *en este PR* por no medible en inglés. Tras el corpus ES (§L3)
+bajó a peso 1: premisa falsada (26% en humanos pre-ChatGPT).
 
 ### Eliminar
 
@@ -425,12 +426,13 @@ que `F2`, que se eliminó por esto. Peso a 1 mientras se diagnostica.
 
 ## Lo que esta medición NO resolvió
 
-- **`L3` sigue sin evaluar.** Es específica del español y el corpus es casi todo inglés.
-  Mantiene peso 3 y la marca de no medible. Es la única regla del catálogo cuya utilidad
-  seguimos sin conocer.
-- **No hay conjunto reservado formal.** La comprobación de `C4` fuera de muestra funciona
-  porque el corpus creció con proyectos nuevos, no porque hubiera un holdout declarado de
-  antemano. Para los pesos ajustados hoy, ese control sigue pendiente.
+> Actualizado tras el holdout y la medición de `L3` en español (secciones más abajo).
+
+- **`L3` ya no está «sin evaluar».** Se midió sobre 19 humanos en español: dispara en el
+  26%. Premisa falsada; peso 3 → 1. Sigue sin clase positiva, así que no hay J.
+- **El conjunto reservado ya existe** (`research/holdout.mjs`). De 21 reglas con J > 0,15
+  en ajuste, 8 aguantan la mitad en reserva. La reserva es pequeña (pos=9, neg=7): techo
+  honesto, no veredicto regla a regla.
 - **`neg_classic` sigue en n=11.** Se pierden los repositorios grandes al descargar.
 
 ## Reproducir

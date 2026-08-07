@@ -22,7 +22,7 @@ Es el bloque con más señal para cualquier producto que no esté en inglés.
 | --- | --- | --- |
 | L1 | Los marcadores de posición resuelven y **pluralizan**: `{count} opciones` nunca dice «1 opción» | **Auto** |
 | L2 | Fechas, monedas y números salen de formateadores de plataforma, no de concatenación | **Auto** |
-| L3 | Distribución de diacríticos: irregular es hábito humano, corte limpio por archivo es proceso | **Auto** |
+| L3 | Distribución de diacríticos entre archivos (peso 1: la premisa de autoría no aguanta) | **Auto** |
 | L4 | Las cadenas se validaron **en su contexto de pantalla**, no en una hoja de cálculo | Humano |
 | L5 | Revisión por hablante nativo **de la variante regional correcta** antes de publicar | Humano |
 | L6 | Los formularios aceptan diacríticos sin fallar la validación | Humano |
@@ -38,16 +38,17 @@ idioma sea el mismo**. Un hablante nativo de la variante equivocada no detecta e
 
 ### Sobre L3
 
-Es la comprobación que distingue *hábito* de *proceso*, y la única de este documento sin
-fuente externa. Un texto sin acentos no prueba nada por sí solo: teclados sin distribución
-local y la costumbre de escribir datos en ASCII son endémicos.
+Es la única comprobación de este documento sin fuente externa, y la única inventada aquí.
+Un texto sin acentos no prueba nada por sí solo: teclados sin distribución local y la
+costumbre de escribir datos en ASCII son endémicos.
 
-Lo que discrimina es la **distribución**. Acentos irregulares dentro del mismo archivo son
-hábito humano. Cero caracteres no ASCII en unos archivos con prosa española y plena
-acentuación en otros es un corte limpio, y los cortes limpios los hacen procesos.
+La hipótesis original era más fuerte: **distribución limpia por archivo = proceso
+automático**. Medida sobre 19 proyectos humanos en español anteriores a ChatGPT, dispara en
+el **26%** (IC95 12–49). Uno de cada cuatro equipos humanos deja exactamente esa huella —
+datos en un archivo, interfaz en otro—.
 
-Aun así prueba **proceso, no autor**. Podría ser un paso de codificación o una herramienta
-intermedia.
+Lo defendible se queda en: *hubo dos orígenes de texto distintos*. No dice quién o qué
+estaba en cada uno. Peso 1. Detalle en `research/RESULTADOS.md` §L3.
 
 ---
 

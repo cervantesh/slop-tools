@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 // Detecta que proyectos del corpus tienen interfaz en espanol.
 //
-// POR QUE. `L3` —diacriticos repartidos de forma sistematica— es la unica regla
-// del catalogo que sigue sin evaluar, porque el corpus es casi todo ingles y la
-// regla es especifica del espanol. Antes de salir a buscar repositorios nuevos,
-// conviene saber cuantos hay ya.
+// POR QUE. `L3` es especifica del espanol; el corpus general es casi todo ingles.
+// Este script inventaria cuantos proyectos ya tienen prosa ES antes de ampliar
+// (corpus-es.mjs) y medir (l3-espanol.mjs). Resultado vigente: 19 humanos,
+// premisas falsada, peso 1 — research/RESULTADOS.md §L3.
 //
 //   node research/idioma.mjs
 

@@ -154,7 +154,7 @@ identificadores esté completo en un solo sitio.
 | --- | --- | --- | --- | --- | --- |
 | L1 | Plural sin resolver junto a un contador: «1 opciones» | Auto | producto | 3 | QAwerk |
 | L2 | Fechas y monedas concatenadas en vez de formateadas | Auto | producto | 2 | QAwerk |
-| L3 | Diacríticos repartidos de forma sistemática entre archivos | Auto | producto | 3 | propia |
+| L3 | Diacríticos repartidos de forma sistemática entre archivos | Auto | producto | 1 | propia · premisas falsada |
 | T1 | Botones de solo icono sin nombre accesible | Auto | producto | 2 | LQA / a11y |
 
 Las otras comprobaciones de `producto.md` —revisión por hablante nativo de la variante
