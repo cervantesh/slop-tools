@@ -50,6 +50,8 @@ Opciones:
 | `--profile landing\|producto\|ambos` | Filtra las comprobaciones que no aplican |
 | `--genre editorial\|atmospheric\|modern-minimal\|playful` | Exenta reglas por decisión estética declarada |
 | `--plan` | Plan de remediación ordenado, con el arreglo de cada hallazgo |
+| `--contrato [ruta]` | Lint del sistema de diseño (`DESIGN.md` / tokens / `.slop-init.json`) |
+| `--fail-on-contrato` | Sale 1 si el contrato se rompe (CI) |
 | `--json` | Salida estructurada para CI |
 | `--min-score N` | Sale con código 1 si baja del umbral |
 | `--write-baseline` | Congela los hallazgos actuales como tolerados |
@@ -118,6 +120,16 @@ node scripts/slop-init.mjs ./sistema
 
 **El remedio no es un prompt mejor, es restricción declarada.** Un modelo sin dirección
 converge al promedio; con la paleta y la escala ya fijadas, no puede.
+
+Para **exigir** ese contrato sobre el código (no solo generarlo):
+
+```bash
+node scripts/slop-scan.mjs ./sistema --profile landing --contrato
+node scripts/slop-scan.mjs ./src --contrato ./sistema --fail-on-contrato
+```
+
+Comprueba escala, radios, tipografía, paleta y movimiento. Es un eje aparte: limpio de slop
+≠ fiel al sistema.
 
 Dos propiedades que **se comprueban en `npm test`**, no se prometen:
 

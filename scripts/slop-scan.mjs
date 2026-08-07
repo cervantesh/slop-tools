@@ -7,6 +7,11 @@
 //                             [--json] [--min-score N]
 //                             [--write-baseline] [--since-baseline] [--fail-on-new-drift]
 //                             [--log]
+//                             [--contrato [ruta]] [--fail-on-contrato]
+//
+//   --contrato   lint del sistema de diseño (DESIGN.md / tokens.css / .slop-init.json).
+//                Sin valor: busca contrato en la raíz escaneada. Con ruta: usa ese dir.
+//   --fail-on-contrato  sale 1 si el contrato tiene fallos (para CI).
 
 import { readFileSync } from 'node:fs'
 import { resolve, dirname, join } from 'node:path'
@@ -17,6 +22,7 @@ import { recogerTokens, bloques } from './lib/color.mjs'
 import { programaticas } from './lib/checks.mjs'
 import { firmaMacro } from './lib/structure.mjs'
 import { genericidad } from './lib/genericidad.mjs'
+import { resolverRutaContrato, cargarContrato, comprobarContrato } from './lib/contrato.mjs'
 import * as bl from './lib/baseline.mjs'
 
 const AQUI = dirname(fileURLToPath(import.meta.url))
@@ -24,7 +30,7 @@ const AQUI = dirname(fileURLToPath(import.meta.url))
 /* ── argumentos ── */
 
 const argv = process.argv.slice(2)
-const CON_VALOR = new Set(['--brand', '--brand-colors', '--profile', '--genre', '--min-score', '--rules'])
+const CON_VALOR = new Set(['--brand', '--brand-colors', '--profile', '--genre', '--min-score', '--rules', '--contrato'])
 const flag = n => { const i = argv.indexOf(n); return i >= 0 ? argv[i + 1] : undefined }
 const has = n => argv.includes(n)
 
@@ -42,6 +48,17 @@ const WRITE_BASELINE = has('--write-baseline')
 const SINCE_BASELINE = has('--since-baseline')
 const FAIL_NEW = has('--fail-on-new-drift')
 const WRITE_LOG = has('--log')
+const FAIL_CONTRATO = has('--fail-on-contrato')
+// --contrato sin valor (o con valor que es otro flag) = auto en ROOT
+const contratoFlagIdx = argv.indexOf('--contrato')
+let CONTRATO_ARG = null
+if (contratoFlagIdx >= 0) {
+  const next = argv[contratoFlagIdx + 1]
+  CONTRATO_ARG = (next && !next.startsWith('--')) ? next : true
+} else if (FAIL_CONTRATO) {
+  // Fallar en CI implica activar el lint del contrato.
+  CONTRATO_ARG = true
+}
 
 if (FAIL_NEW && !SINCE_BASELINE) {
   console.error('slop-scan: --fail-on-new-drift requiere --since-baseline')
@@ -180,6 +197,23 @@ const swap = nameSwap()
 // Descriptivo, nunca puntuable. Ver scripts/lib/genericidad.mjs.
 const gen = genericidad(files)
 
+/* ── contrato de diseño (lint del sistema; no puntúa procedencia) ── */
+
+let informeContrato = null
+if (CONTRATO_ARG != null) {
+  const dirC = resolverRutaContrato(ROOT, CONTRATO_ARG)
+  if (!dirC) {
+    console.error('slop-scan: --contrato: no se encontró DESIGN.md, tokens.css ni .slop-init.json')
+    process.exit(2)
+  }
+  const contrato = cargarContrato(dirC)
+  if (!contrato) {
+    console.error(`slop-scan: --contrato: no se pudo cargar el contrato en ${dirC}`)
+    process.exit(2)
+  }
+  informeContrato = comprobarContrato(contrato, files)
+}
+
 /* ── puntuacion ── */
 
 // La puntuacion la forman SOLO las reglas de procedencia. Las de defecto
@@ -259,6 +293,18 @@ if (PLAN) {
     console.log('')
   }
 
+  if (informeContrato?.fallan) {
+    paso++
+    console.log(`  ${paso} · CONTRATO DE DISEÑO   ${informeContrato.fallan} hallazgo(s) · score ${informeContrato.score}/100`)
+    for (const r of informeContrato.checks.filter(c => c.failed)) {
+      console.log(`\n      ${r.id} · ${r.title}`)
+      console.log(`      Que hacer:      ${r.fix}`)
+      const d = (r.samples || []).slice(0, 3).map(s => `${s.file}:${s.line}`).join(', ')
+      if (d) console.log(`      Donde:          ${d}`)
+    }
+    console.log('')
+  }
+
   console.log('  El orden sale de peso x confianza de validacion / esfuerzo estimado.')
   console.log('  La confianza viene de research/RESULTADOS.md; el esfuerzo es heuristico por categoria.')
   console.log('  Lo que exige ojo humano no esta aqui: templates/revision-humana.md\n')
@@ -272,7 +318,11 @@ if (PLAN) {
     resumen: {
       procedencia: { total: procedencia.length, fallan: procedencia.filter(r => r.failed).length },
       defecto: { total: defectos.length, fallan: defectos.filter(r => r.failed).length },
+      contrato: informeContrato
+        ? { total: informeContrato.total, fallan: informeContrato.fallan, score: informeContrato.score, origen: informeContrato.origen }
+        : null,
     },
+    contrato: informeContrato,
     exemptedByGenre: exentasPorGenero.map(c => c.id),
     nameSwap: swap, genericidad: gen, baseline: baselineInfo, newFindings: nuevos, macro: firma, repeatsPrevious: repite,
   }, null, 2))
@@ -285,6 +335,9 @@ if (PLAN) {
   console.log(`  PUNTUACION  ${score}/100 — ${band}`)
   console.log(`  procedencia: ${procedencia.filter(r => r.failed).length} de ${procedencia.length} fallan  (forman la puntuacion)`)
   console.log(`  defecto:     ${defectos.filter(r => r.failed).length} de ${defectos.length} fallan  (calidad, NO puntuan)`)
+  if (informeContrato) {
+    console.log(`  contrato:    ${informeContrato.fallan} de ${informeContrato.total} fallan  (sistema de diseño · ${informeContrato.score}/100 · ${informeContrato.origen})`)
+  }
   if (exentasPorGenero.length) console.log(`  ${exentasPorGenero.length} exenta(s) por genero "${GENRE}": ${exentasPorGenero.map(c => c.id).join(', ')}`)
   console.log('')
 
@@ -312,6 +365,21 @@ if (PLAN) {
     console.log(`  ${gen.lectura}`)
     console.log(`  AUC ${gen.auc.toFixed(3)} IC95 [${gen.ic95[0].toFixed(3)} · ${gen.ic95[1].toFixed(3)}] — el limite inferior roza el azar,`)
     console.log('  por eso este numero se reporta y no se puntua.')
+    console.log('')
+  }
+
+  if (informeContrato) {
+    const r = informeContrato.resumen
+    console.log('  ── Contrato de diseño (lint del sistema, NO puntua procedencia) ──')
+    console.log(`  origen ${informeContrato.origen} · score ${informeContrato.score}/100 · ${informeContrato.fallan}/${informeContrato.total} fallan`)
+    if (r.display) console.log(`  pareja  ${r.display} / ${r.texto} · escala ${r.espacios.join('·')} · radios ${r.radios.join('·')}${r.duracion != null ? ` · ${r.duracion}ms` : ''}`)
+    for (const c of informeContrato.checks) {
+      console.log(`  ${c.failed ? 'x' : 'ok'} ${c.id} · ${c.title} — ${c.detail}`)
+      if (c.failed) {
+        for (const s of (c.samples || []).slice(0, 3)) console.log(`      ${s.file}:${s.line}  ${s.text}`)
+        if (c.fix) console.log(`      → ${c.fix}`)
+      }
+    }
     console.log('')
   }
 
@@ -346,6 +414,10 @@ if (PLAN) {
 
 if (FAIL_NEW && nuevos && nuevos.length > 0) {
   console.error(`slop-scan: ${nuevos.length} hallazgo(s) NUEVOS respecto al baseline`)
+  process.exit(1)
+}
+if (FAIL_CONTRATO && informeContrato && informeContrato.fallan > 0) {
+  console.error(`slop-scan: ${informeContrato.fallan} hallazgo(s) de contrato de diseño`)
   process.exit(1)
 }
 if (MIN_SCORE !== null && score < MIN_SCORE) {

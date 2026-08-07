@@ -11,7 +11,7 @@
   "scripts": {
     "scan": "node scripts/slop-scan.mjs",
     "bench": "node bench/slop-bench.mjs",
-    "test": "node bench/slop-bench.mjs && node bench/verifica-conteos.mjs && node bench/verifica-init.mjs && node research/verifica-escala.mjs && node research/verifica-rasgos.mjs",
+    "test": "node bench/slop-bench.mjs && node bench/verifica-conteos.mjs && node bench/verifica-init.mjs && node bench/verifica-contrato.mjs && node research/verifica-escala.mjs && node research/verifica-rasgos.mjs",
     "init": "node scripts/slop-init.mjs"
   },
   "engines": {

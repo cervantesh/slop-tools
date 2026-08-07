@@ -285,9 +285,17 @@ ultimo recurso, no el primero.
 
 ## Como comprobar que esto se respeta
 
+Anti-slop (parece plantilla?) y **contrato** (respeta *este* sistema?):
+
 \`\`\`bash
-node scripts/slop-scan.mjs . --profile landing
+node scripts/slop-scan.mjs . --profile landing --contrato
+node scripts/slop-scan.mjs . --profile landing --contrato --fail-on-contrato
 \`\`\`
+
+\`--contrato\` lee \`.slop-init.json\` (o \`tokens.css\` / este archivo) y comprueba
+escala, radios, tipografia, paleta y movimiento. No mezcla esa nota con la de
+procedencia: un proyecto puede estar limpio de slop y aun asi traicionar su
+propio contrato.
 `
 
 const demo = `<main class="medida">
@@ -344,5 +352,5 @@ if (AS_JSON) {
     console.log('  AVISO: mismas decisiones que la invocacion anterior en este destino.')
     console.log('  Un generador que no diverge reproduce la monocultura que intenta evitar.\n')
   }
-  console.log(`  Comprobar:  node scripts/slop-scan.mjs ${DESTINO} --profile landing\n`)
+  console.log(`  Comprobar:  node scripts/slop-scan.mjs ${DESTINO} --profile landing --contrato\n`)
 }

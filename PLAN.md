@@ -301,6 +301,31 @@ Va el último porque depende de P5 para poder demostrar que funciona.
 
 ---
 
+## P11 · Lint del contrato de diseño `[x]`
+
+> **Hecho.** `slop-init` ya generaba el contrato; faltaba **hacerlo exigible**.
+>
+> `node scripts/slop-scan.mjs <ruta> --contrato` carga `.slop-init.json` (o `tokens.css` /
+> `DESIGN.md`) y comprueba cinco ejes que **no puntúan procedencia**:
+>
+> | ID | Qué |
+> | --- | --- |
+> | DS1 | Espaciado literal/TW fuera de la escala |
+> | DS2 | Radios fuera de la jerarquía |
+> | DS3 | Familias prohibidas o ajenas a la pareja |
+> | DS4 | Hex literales fuera de la paleta |
+> | DS5 | Duraciones ≠ presupuesto de movimiento |
+>
+> `--fail-on-contrato` sale 1 para CI. La salida muestra un tercer eje junto a procedencia y
+> defecto. `bench/verifica-contrato.mjs` en `npm test`: autoaprobación del sistema generado,
+> mutación que dispara las cinco, fallback sin JSON, y el exit code.
+>
+> Detalle deliberado: el extractor de `escala.mjs` no se reutiliza tal cual — `px()` lee el
+> índice de `var(--e-4)` como 4px y castigaría a quien *sí* usa tokens. El contrato solo
+> mira literales y utilidades resueltas.
+
+---
+
 ## Fuera de plan, anotado
 
 - Cinco archivos de `research/` entraron en un commit mío por `git add -A` sin que yo los

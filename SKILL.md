@@ -44,12 +44,19 @@ node scripts/slop-scan.mjs <ruta> --min-score 70                     # umbral du
 node scripts/slop-scan.mjs <ruta> --genre modern-minimal             # exenta por estética
 node scripts/slop-scan.mjs <ruta> --brand-colors "#5E6AD2"           # exenta la marca
 node scripts/slop-scan.mjs <ruta> --plan                             # que hacer y en que orden
+node scripts/slop-scan.mjs <ruta> --contrato                         # respeta DESIGN.md / tokens?
+node scripts/slop-scan.mjs <ruta> --contrato --fail-on-contrato      # gate de sistema en CI
 ```
 
 **Para entregar un veredicto usa `--plan`, no la puntuación.** Ordena por peso × confianza de
 validación ÷ esfuerzo, y cada hallazgo lleva su sello: `validado J 0,41` descansa en medición
 sobre corpus etiquetado; `no medible` es una regla que no tuvo ocasión de disparar. Decirlo
 en la entrega es la diferencia entre un peritaje y una lista de opiniones.
+
+Si el proyecto tiene (o debería tener) un sistema declarado con `slop-init`, añade
+**`--contrato`**: comprueba escala, radios, tipografía, paleta y movimiento contra
+`.slop-init.json` / `tokens.css` / `DESIGN.md`. Ese eje **no** se mezcla con la puntuación de
+procedencia — un UI puede no parecer IA y aun así traicionar su propio contrato.
 
 El escáner **no puntúa gusto**. Sólo cuenta patrones nombrados por las fuentes: 40 reglas
 declarativas en `data/rules.json` más 26 comprobaciones programáticas que exigen ratios,
