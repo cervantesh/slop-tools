@@ -2,7 +2,7 @@
 // resolucion de tokens o estado entre archivos, y por tanto no caben en un
 // patron declarativo.
 
-import { find, all, esProsa, lineaDe } from './util.mjs'
+import { find, all, esProsa, lineaDe, clasesUtilidad, findClases } from './util.mjs'
 import { neutrosPlanos, paresBajoContraste, botonInvisible, diversidadDeTono } from './color.mjs'
 import { navPorDefecto, footerPorDefecto, cromoFalso, kickerEnDosColumnas, esqueletoDashboard } from './structure.mjs'
 
@@ -11,10 +11,10 @@ import { navPorDefecto, footerPorDefecto, cromoFalso, kickerEnDosColumnas, esque
 // salen de research/RESULTADOS.md, misma medicion que las declarativas.
 const META = {
   A2: { fix: 'Ofrece alternativa clara o justifica el oscuro en el contrato de marca.', validado: { J_banda: 0.06, separa: false } },
-  A3: { fix: 'Reserva el desenfoque para lo que de verdad flota sobre contenido.', validado: { J_banda: 0, separa: false, estado: 'no_medible' } },
+  A3: { fix: 'Reserva el desenfoque para lo que de verdad flota sobre contenido.', validado: { J_banda: 0, separa: false, estado: 'no_medible' , revalidar: 'sustrato ampliado a clases de utilidad tras la medicion' } },
   B1: { fix: 'Empareja una display con una de texto. Inter como unica familia es el default de las herramientas.', validado: { J_banda: 0.06, separa: false } },
   B2: { fix: 'Una sola familia bien usada es disciplina en producto; en marca, empareja.', validado: { J_banda: -0.06, separa: false } },
-  C1: { fix: 'Separa con espacio primero, luego con un escalon de luminancia del 3-5%. El filete gris es el ultimo recurso.', validado: { J_banda: 0, separa: false, estado: 'no_medible' } },
+  C1: { fix: 'Separa con espacio primero, luego con un escalon de luminancia del 3-5%. El filete gris es el ultimo recurso.', validado: { J_banda: 0, separa: false, estado: 'no_medible' , revalidar: 'sustrato ampliado a clases de utilidad tras la medicion' } },
   C3: { fix: 'Que el radio y el padding senalen la funcion del elemento en vez de ser constantes.', validado: { J_banda: 0.05, separa: false } },
   E4: { fix: 'Cinco descripciones distintas, o ninguna. Una repetida cinco veces es peor que el vacio.', validado: { J_banda: 0.04, separa: false } },
   L1: { fix: 'Resuelve el plural con un condicional o con Intl.PluralRules.', validado: { J_banda: 0.40, separa: false } },
@@ -23,17 +23,18 @@ const META = {
   T2: { fix: 'Que el texto del enlace diga a donde lleva, fuera de su contexto.', validado: { J_banda: 0.01, separa: false } },
   K1: { fix: 'Da a los neutros un croma minimo de 0.005: un gris con temperatura ancla la paleta.', validado: { J_banda: 0.01, separa: false } },
   K2: { fix: 'Sube el contraste a 4.5:1 en texto de lectura.', validado: { J_banda: 0.01, separa: false } },
-  K3: { fix: 'Separa el texto del relleno al menos 5% en luminosidad.', validado: { J_banda: 0, separa: false, estado: 'no_medible' } },
+  K3: { fix: 'Separa el texto del relleno al menos 5% en luminosidad.', validado: { J_banda: 0, separa: false, estado: 'no_medible' , revalidar: 'sustrato ampliado a clases de utilidad tras la medicion' } },
   K4: { fix: 'Acota a un dominante, un neutro y un acento. Los semanticos van aparte.', validado: { J_banda: -0.04, separa: false } },
-  S1: { fix: 'Rompe el arquetipo: la navegacion no tiene por que ser wordmark-enlaces-boton.', validado: { J_banda: 0, separa: false, estado: 'no_medible' } },
-  S2: { fix: 'Agrupa el pie por lo que la gente busca, no por Product/Company/Resources/Legal.', validado: { J_banda: 0, separa: false, estado: 'no_medible' } },
+  S1: { fix: 'Rompe el arquetipo: la navegacion no tiene por que ser wordmark-enlaces-boton.', validado: { J_banda: 0, separa: false, estado: 'no_medible' , revalidar: 'sustrato ampliado a clases de utilidad tras la medicion' } },
+  S2: { fix: 'Agrupa el pie por lo que la gente busca, no por Product/Company/Resources/Legal.', validado: { J_banda: 0, separa: false, estado: 'no_medible' , revalidar: 'sustrato ampliado a clases de utilidad tras la medicion' } },
   S3: { fix: 'Captura real en vez de cromo de navegador dibujado a mano.', validado: { J_banda: 0.01, separa: false } },
-  S4: { fix: 'Kicker y titular en una sola columna.', validado: { J_banda: 0, separa: false, estado: 'no_medible' } },
-  S5: { fix: 'Ordena el panel por la decision que toma quien lo usa, no por el esqueleto canonico.', validado: { J_banda: 0, separa: false, estado: 'no_medible' } },
+  S4: { fix: 'Kicker y titular en una sola columna.', validado: { J_banda: 0, separa: false, estado: 'no_medible' , revalidar: 'sustrato ampliado a clases de utilidad tras la medicion' } },
+  S5: { fix: 'Ordena el panel por la decision que toma quien lo usa, no por el esqueleto canonico.', validado: { J_banda: 0, separa: false, estado: 'no_medible' , revalidar: 'sustrato ampliado a clases de utilidad tras la medicion' } },
 }
 
 export function programaticas(ctx) {
   const { styleFiles, codeFiles, tokens, blks, cssTexto } = ctx
+  const clases = clasesUtilidad(codeFiles)
 
   return aplicarMeta([
 
@@ -48,10 +49,12 @@ export function programaticas(ctx) {
 
     { id: 'A3', cat: 'Color', weight: 2, applies: 'ambos', title: 'Glassmorphism indiscriminado',
       run() {
-        const r = find(/backdrop-filter\s*:/i, styleFiles)
+        const css = find(/backdrop-filter\s*:/i, styleFiles)
+        const util = findClases(/\bbackdrop-blur(-\w+)?\b/i, codeFiles)
+        const r = { total: css.total + util.total, samples: [...css.samples, ...util.samples] }
         const archivos = new Set(r.samples.map(s => s.file)).size
         return { failed: r.total >= 4,
-          detail: `${r.total} declaraciones en ${archivos}+ archivo(s)`,
+          detail: `${r.total} (${css.total} en CSS + ${util.total} en clases) en ${archivos}+ archivo(s)`,
           nota: archivos > 1 && r.total / Math.max(archivos, 1) < 2
             ? 'las coincidencias se reparten entre archivos: puede ser un token repetido, no densidad'
             : null,
@@ -91,12 +94,15 @@ export function programaticas(ctx) {
             if (muestrasLargo.length < 3) muestrasLargo.push({ file: b.file, line: lineaDe(b.texto, b.indice), text: b.selector })
           }
         }
-        const total = corto.total + largo
-        const radios = find(/border-radius\s*:/i, styleFiles).total || 1
+        // Tercera forma, la dominante en Tailwind: `border border-gray-200`.
+        const util = findClases(/\bborder(-[trbl])?\b(?=[^"']*\bborder-(gray|slate|zinc|neutral|stone)-\d{2,3}\b)/i, codeFiles)
+        const total = corto.total + largo + util.total
+        const radios = find(/border-radius\s*:/i, styleFiles).total
+          + findClases(/\brounded(-\w+)?\b/i, codeFiles).total || 1
         const ratio = total / radios
         return { failed: total >= 15 && ratio > 0.2,
-          detail: `${total} bordes planos (${corto.total} shorthand + ${largo} longhand) frente a ${radios} radios · ratio ${ratio.toFixed(2)}`,
-          samples: [...corto.samples, ...muestrasLargo] }
+          detail: `${total} bordes planos (${corto.total} shorthand + ${largo} longhand + ${util.total} en clases) frente a ${radios} radios · ratio ${ratio.toFixed(2)}`,
+          samples: [...corto.samples, ...muestrasLargo, ...util.samples] }
       } },
 
     { id: 'C3', cat: 'Layout', weight: 2, applies: 'ambos', title: 'Radio y padding uniformes',
@@ -265,12 +271,17 @@ export function programaticas(ctx) {
           samples: hits.slice(0, 5).map(h => ({ file: h.file, line: 1, text: `${h.selector} — ${h.ratio}:1` })) }
       } },
 
+    // Cero disparos en 71 proyectos porque exigia `color` y `background` en la
+    // misma regla CSS. En Tailwind el par vive en la cadena de clases:
+    // `bg-slate-900 text-slate-900`. Se anade ese sustrato.
     { id: 'K3', cat: 'Color', weight: 3, applies: 'ambos', title: 'Texto de boton indistinguible del relleno',
       run() {
         const hits = botonInvisible(blks, tokens)
-        return { failed: hits.length > 0,
-          detail: `${hits.length} boton(es) con texto dentro de 5% L y 0.05 C del fondo`,
-          samples: hits.slice(0, 5).map(h => ({ file: h.file, line: 1, text: `${h.selector} — dL=${h.dL} dC=${h.dC}` })) }
+        const util = findClases(/\bbg-(black|white)\b(?=[^"']*\btext-\1\b)|\bbg-(\w+)-(\d{2,3})\b(?=[^"']*\btext-\2-\3\b)/i, codeFiles)
+        const total = hits.length + util.total
+        return { failed: total > 0,
+          detail: `${total} caso(s): ${hits.length} en CSS + ${util.total} en clases (mismo color de fondo y de texto)`,
+          samples: [...hits.slice(0, 3).map(h => ({ file: h.file, line: 1, text: `${h.selector} — dL=${h.dL} dC=${h.dC}` })), ...util.samples] }
       } },
 
     { id: 'K4', cat: 'Color', weight: 1, applies: 'ambos', title: 'Paleta sin foco: demasiadas familias de tono',
@@ -282,18 +293,34 @@ export function programaticas(ctx) {
 
     /* ── huellas estructurales ── */
 
+    // El hairline puede venir del CSS o de la clase `border-b`.
     { id: 'S1', cat: 'Estructura', weight: 2, applies: 'landing', title: 'Nav por defecto',
       run() {
-        const { hits, hairline } = navPorDefecto(codeFiles, cssTexto)
+        const { hits } = navPorDefecto(codeFiles, cssTexto)
+        const hairline = /border-bottom:\s*1px\s+solid/i.test(cssTexto)
+          || findClases(/\bborder-b\b/i, codeFiles).total > 0
         return { failed: hits.length > 0 && hairline,
-          detail: hits.length ? `${hits.length} nav con 3-6 enlaces + boton${hairline ? ' y hairline de 1px' : ' (sin hairline)'}` : 'sin nav canonico',
+          detail: hits.length ? `${hits.length} nav con 3-6 enlaces + boton${hairline ? ' y hairline' : ' (sin hairline)'}` : 'sin nav canonico',
           samples: hits.slice(0, 4) }
       } },
 
+    // Cero disparos: exigia <footer> con encabezados en h3-h6, y un arbol de
+    // componentes no lo expone al regex — las columnas suelen salir de un
+    // .map() sobre datos. Se ancla en las cuatro etiquetas canonicas juntas,
+    // que es la forma del contenido y no su marcado.
     { id: 'S2', cat: 'Estructura', weight: 2, applies: 'landing', title: 'Footer de cuatro columnas canonicas',
       run() {
         const hits = footerPorDefecto(codeFiles)
-        return { failed: hits.length > 0, detail: `${hits.length} footer(s) con columnas Product/Company/Resources/Legal`, samples: hits.slice(0, 3) }
+        const CANON = [/\bproducto?\b/i, /\b(company|empresa|compa)/i, /\b(resources|recursos)\b/i, /\blegal\b/i]
+        const porContenido = []
+        for (const f of codeFiles) {
+          const cuantas = CANON.filter(re => re.test(f.text)).length
+          if (cuantas === 4) porContenido.push({ file: f.rel, line: 1, text: 'las cuatro etiquetas canonicas en el mismo archivo' })
+        }
+        const total = hits.length + porContenido.length
+        return { failed: total > 0,
+          detail: `${total} footer(s) canonico(s): ${hits.length} por marcado + ${porContenido.length} por contenido`,
+          samples: [...hits.slice(0, 2), ...porContenido.slice(0, 2)] }
       } },
 
     { id: 'S3', cat: 'Estructura', weight: 2, applies: 'ambos', title: 'Cromo falso dibujado a mano',
@@ -304,7 +331,9 @@ export function programaticas(ctx) {
 
     { id: 'S4', cat: 'Estructura', weight: 1, applies: 'landing', title: 'Kicker y titular en varias columnas',
       run() {
-        const { hits, gridMulti } = kickerEnDosColumnas(codeFiles, cssTexto)
+        const { hits } = kickerEnDosColumnas(codeFiles, cssTexto)
+        const gridMulti = /grid-template-columns:\s*(?:repeat\(\s*[2-9]|[^;]*\b(?:1fr|auto)\b[^;]*\b(?:1fr|auto)\b)/i.test(cssTexto)
+          || findClases(/\b(md:|lg:)?grid-cols-[2-9]\b/i, codeFiles).total > 0
         return { failed: hits.length > 0 && gridMulti,
           detail: hits.length ? `${hits.length} wrapper(s) con kicker + titular${gridMulti ? ' y rejilla multicolumna presente' : ''}` : 'sin coincidencias',
           samples: hits.slice(0, 4) }

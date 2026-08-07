@@ -111,6 +111,9 @@ const declarativas = CATALOGO.rules.map(r => ({
 function sello(c) {
   const v = c.validado
   if (!v) return { etiqueta: 'sin medir', confianza: 0.4 }
+  // Una regla reimplementada arrastra una cifra que ya no le corresponde.
+  // Decirlo importa mas que la cifra.
+  if (v.revalidar) return { etiqueta: 'reimplementada, pendiente de medir', confianza: 0.4 }
   if (v.estado === 'no_medible') return { etiqueta: 'no medible', confianza: 0.3 }
   if (v.separa) return { etiqueta: `validado J ${String(v.J_banda).replace('.', ',')}`, confianza: 1 }
   return { etiqueta: `medido J ${String(v.J_banda).replace('.', ',')}, no separa`, confianza: 0.6 }

@@ -62,8 +62,8 @@
       "severity": "medium",
       "applies": "landing",
       "weight": 2,
-      "scope": "style",
-      "pattern": "radial-gradient\\(\\s*(circle|ellipse)",
+      "scope": "all",
+      "pattern": "radial-gradient\\(\\s*(circle|ellipse)|bg-\\[radial-gradient",
       "flags": "i",
       "threshold": 1,
       "exempt": [
@@ -83,8 +83,10 @@
         "neg": 0,
         "separa": false,
         "estado": "no_medible",
-        "nota": "cero disparos en la banda; exige un hero con resplandor radial"
-      }
+        "nota": "cero disparos en la banda; exige un hero con resplandor radial",
+        "revalidar": "patron ampliado tras la medicion: la cifra es anterior al cambio"
+      },
+      "sustrato": "CSS y clases de utilidad"
     },
     {
       "id": "A5",
@@ -93,8 +95,8 @@
       "severity": "medium",
       "applies": "ambos",
       "weight": 2,
-      "scope": "style",
-      "pattern": "box-shadow:[^;]*0\\s+0\\s+\\d{2,}px[^;]*(#[0-9a-f]{6}|rgba)",
+      "scope": "all",
+      "pattern": "box-shadow:[^;]*0\\s+0\\s+\\d{2,}px[^;]*(#[0-9a-f]{6}|rgba)|shadow-\\[0_0_\\d{2,}px|\\bshadow-(indigo|violet|purple|cyan|fuchsia)-\\d{3}\\/\\d{2}",
       "flags": "i",
       "threshold": 3,
       "why": "Resplandor de color como sustituto de jerarquia.",
@@ -111,8 +113,10 @@
         "neg": 0,
         "separa": false,
         "estado": "no_medible",
-        "nota": "cero disparos en 71 proyectos"
-      }
+        "nota": "cero disparos en 71 proyectos",
+        "revalidar": "patron ampliado tras la medicion: la cifra es anterior al cambio"
+      },
+      "sustrato": "CSS y clases de utilidad"
     },
     {
       "id": "B4",
@@ -723,8 +727,8 @@
       "severity": "low",
       "applies": "ambos",
       "weight": 1,
-      "scope": "style",
-      "pattern": "hover[^{]*\\{[^}]*translateY\\(\\s*-[23]px",
+      "scope": "all",
+      "pattern": "hover[^{]*\\{[^}]*translateY\\(\\s*-[23]px|hover:-translate-y-[123]\\b",
       "flags": "i",
       "threshold": 2,
       "why": "El micro-gesto por defecto de toda tarjeta generada.",
@@ -741,8 +745,10 @@
         "neg": 0,
         "separa": false,
         "estado": "no_medible",
-        "nota": "cero disparos en 71 proyectos; el hover vive en clases de utilidad, no en CSS"
-      }
+        "nota": "cero disparos en 71 proyectos; el hover vive en clases de utilidad, no en CSS",
+        "revalidar": "patron ampliado tras la medicion: la cifra es anterior al cambio"
+      },
+      "sustrato": "CSS y clases de utilidad"
     },
     {
       "id": "AS9",

@@ -32,7 +32,29 @@ herramienta en herramienta.
 
 ---
 
-## P2 · Las reglas que no pueden disparar `[ ]`
+## P2 · Las reglas que no pueden disparar `[x]`
+
+> **Hecho, y el diagnóstico resultó ser uno solo para las diez.** No era que los patrones
+> fueran malos: era que **todas las comprobaciones de estilo miraban únicamente archivos
+> CSS**, y en un proyecto Tailwind no hay CSS. Medido sobre el corpus: `ant-design` tiene 1
+> archivo CSS y 1.985 de JSX.
+>
+> Se añadió un segundo sustrato —las cadenas de clases de utilidad— y las diez reglas se
+> reimplementaron sobre ambos: `A3` (`backdrop-blur`), `A4` (`bg-[radial-gradient`), `A5`
+> (`shadow-[0_0_`), `AS2` (`hover:-translate-y-`), `C1` (`border border-gray-200`, la forma
+> dominante), `K3` (`bg-slate-900 text-slate-900`), `S1` (`border-b`), `S4` (`grid-cols-2`).
+> `S2` y `S5`, que buscaban marcado que un árbol de componentes no expone, pasan a anclarse
+> en la forma del contenido: las cuatro etiquetas canónicas juntas, y nombres de componente
+> además de nombres de clase.
+>
+> Ninguna se retiró: todas tenían patrón correcto y sustrato equivocado.
+>
+> Diez mutaciones nuevas en forma Tailwind. La suite pasa de 38 a **48/48** con la línea base
+> intacta.
+>
+> **Consecuencia que hay que respetar:** sus cifras de `RESULTADOS.md` son anteriores al
+> cambio y ya no les corresponden. Quedan marcadas `revalidar`, y la salida las muestra como
+> *reimplementada, pendiente de medir* en vez de exhibir un número obsoleto. Entran en P6.
 
 **El problema.** Diez reglas dan cero disparos en 71 proyectos: `A3`, `A5`, `AS2`, `K3`,
 `S2`, `S5` nunca, y `A4`, `C1`, `S1`, `S4` sólo fuera de la banda. Están marcadas

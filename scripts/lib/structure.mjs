@@ -81,12 +81,15 @@ export function kickerEnDosColumnas(codeFiles, cssTexto) {
 
 // Esqueleto de dashboard por defecto, la variante mejor especificada de
 // anti-ai-slop: sidebar oscuro, fila de 4 KPI, dos columnas, donut, tabla.
+// Ampliado tras dar cero disparos en 71 proyectos: buscaba nombres de clase
+// propios y en Tailwind no existen. Se apoya tambien en nombres de componente
+// y de datos, que es donde vive la estructura en un arbol de React.
 export function esqueletoDashboard(codeFiles) {
   const señales = {
-    sidebar: /class(Name)?=["'][^"']*\b(sidebar|side-nav|drawer)\b/i,
-    kpis: /class(Name)?=["'][^"']*\b(kpi|stat-card|metric-card|stats-row)\b/i,
-    donut: /\b(donut|doughnut|pie-?chart)\b/i,
-    actividad: /\b(recent-?activity|actividad-?reciente|activity-?feed)\b/i,
+    sidebar: /class(Name)?=["'][^"']*\b(sidebar|side-nav|drawer)\b|<Sidebar\b|\bSidebar\s*[=({]/i,
+    kpis: /class(Name)?=["'][^"']*\b(kpi|stat-card|metric-card|stats-row)\b|<(StatCard|MetricCard|KpiCard)\b|\b(kpis|metrics|stats)\s*[:=]\s*\[/i,
+    donut: /\b(donut|doughnut|pie-?chart|PieChart|DoughnutChart)\b/i,
+    actividad: /\b(recent-?activity|actividad-?reciente|activity-?feed|RecentActivity)\b/i,
   }
   const presentes = []
   const texto = codeFiles.map(f => f.text).join('\n')

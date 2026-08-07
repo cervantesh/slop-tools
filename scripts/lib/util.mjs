@@ -50,6 +50,42 @@ export function find(pattern, pool, cap = 6) {
 
 export const all = pool => pool.map(f => f.text).join('\n')
 
+// Segundo sustrato: las clases de utilidad.
+//
+// Sin esto, cualquier comprobacion de estilo mira solo los archivos CSS — y en
+// un proyecto Tailwind real no hay CSS. Medido sobre el corpus: ant-design
+// tiene 1 archivo CSS y 1.985 de JSX. Diez reglas daban cero disparos en 71
+// proyectos por esta razon, no porque el patron no estuviera presente.
+// Ver research/RESULTADOS.md §3.2.
+export function clasesUtilidad(codeFiles) {
+  const trozos = []
+  for (const f of codeFiles) {
+    for (const m of f.text.matchAll(/class(?:Name)?\s*=\s*(?:["'`]([^"'`]{0,600})["'`]|\{`([^`]{0,600})`\})/g)) {
+      trozos.push(m[1] || m[2] || '')
+    }
+  }
+  return trozos.join(' ')
+}
+
+// Como `find`, pero sobre las clases de utilidad y con ubicacion aproximada.
+export function findClases(pattern, codeFiles, cap = 6) {
+  const re = new RegExp(pattern.source, pattern.flags.includes('g') ? pattern.flags : pattern.flags + 'g')
+  const out = []
+  let total = 0
+  for (const f of codeFiles) {
+    for (let i = 0; i < f.lines.length; i++) {
+      const clases = [...f.lines[i].matchAll(/class(?:Name)?\s*=\s*(?:["'`]([^"'`]{0,600})["'`]|\{`([^`]{0,600})`\})/g)]
+        .map(m => m[1] || m[2] || '').join(' ')
+      if (!clases) continue
+      const hits = [...clases.matchAll(re)]
+      if (!hits.length) continue
+      total += hits.length
+      if (out.length < cap) out.push({ file: f.rel, line: i + 1, text: hits.slice(0, 3).map(h => h[0]).join(' ') })
+    }
+  }
+  return { total, samples: out }
+}
+
 // Descarta lo que es código y no prosa dirigida a una persona.
 export function esProsa(s) {
   if (!s || !/\s/.test(s)) return false
