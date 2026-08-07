@@ -16,6 +16,7 @@ import { collect, esEstilo, esCodigo, all, esProsa, lineaDe } from './lib/util.m
 import { recogerTokens, bloques } from './lib/color.mjs'
 import { programaticas } from './lib/checks.mjs'
 import { firmaMacro } from './lib/structure.mjs'
+import { genericidad } from './lib/genericidad.mjs'
 import * as bl from './lib/baseline.mjs'
 
 const AQUI = dirname(fileURLToPath(import.meta.url))
@@ -170,6 +171,9 @@ function nameSwap() {
 }
 const swap = nameSwap()
 
+// Descriptivo, nunca puntuable. Ver scripts/lib/genericidad.mjs.
+const gen = genericidad(files)
+
 /* ── puntuacion ── */
 
 // La puntuacion la forman SOLO las reglas de procedencia. Las de defecto
@@ -264,7 +268,7 @@ if (PLAN) {
       defecto: { total: defectos.length, fallan: defectos.filter(r => r.failed).length },
     },
     exemptedByGenre: exentasPorGenero.map(c => c.id),
-    nameSwap: swap, baseline: baselineInfo, newFindings: nuevos, macro: firma, repeatsPrevious: repite,
+    nameSwap: swap, genericidad: gen, baseline: baselineInfo, newFindings: nuevos, macro: firma, repeatsPrevious: repite,
   }, null, 2))
 } else {
   const fallan = results.filter(r => r.failed)
@@ -289,9 +293,19 @@ if (PLAN) {
 
   if (repite) {
     console.log('  ── Comparacion con la ejecucion anterior ──')
+
     console.log(repite.igual
       ? '  x  macroestructura IDENTICA a la anterior: el generador no esta divergiendo'
       : '  ok macroestructura distinta de la anterior')
+    console.log('')
+  }
+
+  if (gen) {
+    console.log('  ── Genericidad (descriptivo, NO puntua) ──')
+    console.log(`  G = ${gen.G.toFixed(2)}${gen.percentil !== null ? ` · percentil ${gen.percentil} del corpus` : ''}`)
+    console.log(`  ${gen.lectura}`)
+    console.log(`  AUC ${gen.auc.toFixed(3)} IC95 [${gen.ic95[0].toFixed(3)} · ${gen.ic95[1].toFixed(3)}] — el limite inferior roza el azar,`)
+    console.log('  por eso este numero se reporta y no se puntua.')
     console.log('')
   }
 
