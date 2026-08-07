@@ -206,6 +206,29 @@ en la puntuación. El registro honesto, con lo que sí dejó —que el construct
 no transfiere del render al código— está en
 [`references/genericidad.md`](references/genericidad.md).
 
+## Genericidad: cuánto se parece al promedio
+
+El escáner reporta un número que ninguna regla puede dar: **la distancia al centroide de lo
+generado**, sobre un vector de once rasgos visuales —entropía de tono, croma, colores únicos,
+diversidad de radios, espaciados y tamaños, familias, limpieza de escala—.
+
+```
+  ── Genericidad (descriptivo, NO puntua) ──
+  G = 0.76 · percentil 85 del corpus
+  AUC 0.665 IC95 [0.501 · 0.830] — el limite inferior roza el azar,
+  por eso este numero se reporta y no se puntua.
+```
+
+**No entra en la puntuación, y es a propósito.** Medida sobre el corpus etiquetado da AUC
+0,665 con el límite inferior del intervalo en 0,501: separa, pero por un margen que un solo
+proyecto podría borrar. Darle peso sería concederle una autoridad que no ha ganado.
+
+Sirve para dos cosas donde sí es válida: como descriptivo en un informe —con su intervalo a
+la vista— y para **comparar salidas entre sí**, que no exige separación absoluta.
+
+> Fuera de la banda de 20–200 archivos el número no es comparable, y el escáner lo dice: los
+> rasgos que más pesan son conteos de valores distintos, y crecen con el tamaño del proyecto.
+
 ## Añadir una regla
 
 Si es expresable como patrón, no se toca código: se añade una entrada a `data/rules.json`.

@@ -137,7 +137,34 @@ eran anteriores a la eliminación de `F2` y al recuento de reglas.
 
 ---
 
-## P5 · Integrar la métrica de genericidad `[ ]`
+## P5 · Integrar la métrica de genericidad `[x]`
+
+> **Hecho, y la decisión importante fue no darle peso.**
+>
+> La métrica responde al hueco que la investigación dejó abierto —«¿existe algo que mida que
+> esto se parece al promedio?»— y es la operacionalización directa: distancia al centroide de
+> lo generado menos distancia al humano, sobre un vector de once rasgos z-normalizado.
+>
+> **Medida, da AUC 0,665 con IC95 [0,501 · 0,830].** El límite inferior roza el azar: separa,
+> pero por un margen que un solo proyecto podría borrar. El plan exigía «el mismo listón que
+> el resto», y con ese listón **no entra como comprobación puntuable**. Se reporta como
+> descriptivo, con su intervalo a la vista y la frase de por qué no puntúa.
+>
+> Comportamiento sensato en los dos extremos: stylo sale en percentil 85, el proyecto limpio
+> de referencia en el 9.
+>
+> **Dos piezas de infraestructura que deja:**
+>
+> - `data/genericidad-modelo.json` — normalización, centroides y distribución del corpus, para
+>   que el escáner no tenga que llevar 71 proyectos encima. Se regenera con
+>   `research/exporta-modelo.mjs`.
+> - `scripts/lib/rasgos.mjs` — el extractor de los once campos como definición única, con
+>   `research/verifica-rasgos.mjs` comprobando que sigue coincidiendo con las cifras del
+>   corpus: 10 proyectos × 11 campos, cero discrepancias. Mismo patrón que `escala.mjs`.
+>
+> **Y queda lista la pieza que P8 necesitaba.** Comparar salidas entre sí no exige separación
+> absoluta, así que la métrica sirve para lo que no servía la puntuación: medir si `slop-init`
+> genera siempre lo mismo.
 
 `research/genericity.mjs` y `genericidad.json` existen y están medidos, pero **no están
 conectados al escáner**. Es la respuesta al hueco que la investigación dejó abierto —
