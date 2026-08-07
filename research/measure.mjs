@@ -109,13 +109,77 @@ const filas = IDS.map(id => {
   }
 }).sort((a, b) => b.J - a.J)
 
+/* ── control del confundido de TAMANO ──
+   Es el confundido dominante y no es opcional: mas archivos = mas superficie
+   donde algo casa. En la primera pasada neg_stack promediaba 47 archivos con
+   6,3 reglas disparando y pos 123 con 11,7. Sin estratificar, buena parte de
+   la J medida seria solo diferencia de tamano.
+
+   Se estratifica por numero de archivos y se recalcula J dentro de cada
+   estrato. Solo se considera informativo el estrato donde ambas clases tienen
+   al menos 6 proyectos. */
+
+const ESTRATOS = [
+  { nombre: 'pequeno', min: 0, max: 60 },
+  { nombre: 'medio', min: 60, max: 200 },
+  { nombre: 'grande', min: 200, max: Infinity },
+]
+const enEstrato = (p, e) => p.archivos >= e.min && p.archivos < e.max
+
+const estratificado = ESTRATOS.map(e => {
+  const pos = POS.filter(p => enEstrato(p, e))
+  const neg = NEG_S.filter(p => enEstrato(p, e))
+  const informativo = pos.length >= 6 && neg.length >= 6
+  const porRegla = {}
+  if (informativo) {
+    for (const id of IDS) {
+      const tp = pos.filter(p => p.dispara[id]).length / pos.length
+      const fp = neg.filter(p => p.dispara[id]).length / neg.length
+      porRegla[id] = { pos: tp, neg: fp, J: tp - fp }
+    }
+  }
+  return { estrato: e.nombre, rango: `${e.min}-${e.max === Infinity ? 'inf' : e.max}`, n_pos: pos.length, n_neg: neg.length, informativo, porRegla }
+})
+
+/* Banda comun de solapamiento. Los tercios dejan estratos demasiado finos
+   (pos=6). Se recorta a la banda donde ambas distribuciones de tamano coexisten
+   y se recalcula J ahi: es una sola comparacion con mas muestra que cualquiera
+   de los estratos. */
+const BANDA = { min: 20, max: 200 }
+const enBanda = p => p.archivos >= BANDA.min && p.archivos < BANDA.max
+const POS_B = POS.filter(enBanda), NEG_B = NEG_S.filter(enBanda)
+
+for (const f of filas) {
+  const tp = POS_B.length ? POS_B.filter(p => p.dispara[f.id]).length / POS_B.length : null
+  const fp = NEG_B.length ? NEG_B.filter(p => p.dispara[f.id]).length / NEG_B.length : null
+  f.pos_banda = tp
+  f.neg_banda = fp
+  f.J_banda = (tp === null || fp === null) ? null : tp - fp
+  // Cuanto de la J bruta se evapora al igualar tamano.
+  f.caida_por_tamano = f.J_banda === null ? null : f.J - f.J_banda
+  f.solapan_banda = (tp === null || fp === null) ? true : (() => {
+    const a = wilson(POS_B.filter(p => p.dispara[f.id]).length, POS_B.length)
+    const b = wilson(NEG_B.filter(p => p.dispara[f.id]).length, NEG_B.length)
+    return !(a[0] > b[1] || b[0] > a[1])
+  })()
+}
+filas.sort((a, b) => (b.J_banda ?? -9) - (a.J_banda ?? -9))
+
 const salida = {
   _meta: {
     generado: 'research/measure.mjs',
     n: { pos: POS.length, neg_stack: NEG_S.length, neg_classic: NEG_C.length },
     medida_principal: 'J de Youden (TPR - FPR) sobre pos vs neg_stack',
-    nota_confundido: 'efectoStack = J(pos vs neg_classic) - J(pos vs neg_stack). Positivo grande = la regla esta midiendo stack/epoca, no procedencia.',
+    nota_confundido_stack: 'efectoStack = J(pos vs neg_classic) - J(pos vs neg_stack). Positivo grande = la regla mide stack/epoca.',
+    nota_confundido_tamano: 'J_estratificado se calcula dentro del estrato de tamano informativo. Si J bruta es alta y J_estratificado ~0, la regla mide tamano de la base de codigo.',
+    tamano_medio: {
+      pos: POS.reduce((a, p) => a + p.archivos, 0) / (POS.length || 1),
+      neg_stack: NEG_S.reduce((a, p) => a + p.archivos, 0) / (NEG_S.length || 1),
+      neg_classic: NEG_C.reduce((a, p) => a + p.archivos, 0) / (NEG_C.length || 1),
+    },
   },
+  banda_comun: { rango: BANDA, n_pos: POS_B.length, n_neg: NEG_B.length },
+  estratificado,
   filas,
   proyectos: porProyecto.map(({ titulos, pesos, ...r }) => r),
 }
@@ -126,11 +190,18 @@ writeFileSync(SALIDA, JSON.stringify(salida, null, 2), 'utf8')
 const pct = x => (x * 100).toFixed(0).padStart(3) + '%'
 const num = (x, d = 2) => (x === Infinity ? '  inf' : x.toFixed(d).padStart(5))
 
-console.log(`\n  n: pos=${POS.length}  neg_stack=${NEG_S.length}  neg_classic=${NEG_C.length}\n`)
-console.log('  ID     peso  pos   neg_s  neg_c    J    lift   prec  efecto_stack  sep?')
-console.log('  ' + '-'.repeat(76))
+console.log(`\n  n: pos=${POS.length}  neg_stack=${NEG_S.length}  neg_classic=${NEG_C.length}`)
+console.log(`  archivos de media: pos=${(salida._meta.tamano_medio.pos).toFixed(0)}  neg_stack=${(salida._meta.tamano_medio.neg_stack).toFixed(0)}  neg_classic=${(salida._meta.tamano_medio.neg_classic).toFixed(0)}`)
+for (const s of estratificado) console.log(`  estrato ${s.estrato} (${s.rango} archivos): pos=${s.n_pos} neg=${s.n_neg}${s.informativo ? '  <- informativo' : ''}`)
+console.log('')
+console.log(`  banda comun ${BANDA.min}-${BANDA.max} archivos: pos=${POS_B.length} neg=${NEG_B.length}\n`)
+console.log('  ID     peso  pos   neg_s    J     posB  negB   J_banda  caida  sepB?')
+console.log('  ' + '-'.repeat(80))
 for (const f of filas) {
-  console.log(`  ${f.id.padEnd(6)} ${String(f.peso ?? '-').padStart(3)}  ${pct(f.pos)}  ${pct(f.neg_stack)}  ${pct(f.neg_classic)}  ${num(f.J)}  ${num(f.lift, 1)}  ${f.precision === null ? '   —' : pct(f.precision)}   ${num(f.efectoStack)}      ${f.solapan ? 'no' : 'SI'}`)
+  const jb = f.J_banda === null ? '   —' : num(f.J_banda)
+  const cd = f.caida_por_tamano === null ? '   —' : num(f.caida_por_tamano)
+  console.log(`  ${f.id.padEnd(6)} ${String(f.peso ?? '-').padStart(3)}  ${pct(f.pos)}  ${pct(f.neg_stack)}  ${num(f.J)}   ${pct(f.pos_banda ?? 0)}  ${pct(f.neg_banda ?? 0)}   ${jb}  ${cd}    ${f.solapan_banda ? 'no' : 'SI'}`)
 }
 console.log(`\n  "sep?" = los intervalos de Wilson al 95% NO se solapan.`)
+console.log(`  "J_tam" = J recalculada dentro del estrato de tamano informativo.`)
 console.log(`  Guardado en ${SALIDA}\n`)

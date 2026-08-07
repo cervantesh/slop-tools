@@ -34,6 +34,24 @@
         "gen": "humano-tailwind",
         "tipo": "repositories",
         "q": "tailwind language:TypeScript created:<2022-11-30 stars:>60 fork:false"
+      },
+      {
+        "clase": "neg_stack",
+        "gen": "humano-tailwind",
+        "tipo": "repositories",
+        "q": "tailwind language:JavaScript created:<2022-11-30 stars:>40 fork:false"
+      },
+      {
+        "clase": "neg_stack",
+        "gen": "humano-tailwind",
+        "tipo": "repositories",
+        "q": "tailwind created:2020-01-01..2022-11-30 stars:>20 fork:false"
+      },
+      {
+        "clase": "neg_stack",
+        "gen": "humano-tailwind",
+        "tipo": "code",
+        "q": "tailwindcss in:file filename:package.json"
       }
     ],
     "curados": [
@@ -51,7 +69,16 @@
       "palantir/blueprint",
       "segmentio/evergreen",
       "Semantic-Org/Semantic-UI",
-      "IBM/carbon-components"
+      "IBM/carbon-components",
+      "tailwindlabs/tailwindcss.com",
+      "saadeghi/daisyui",
+      "themesberg/flowbite",
+      "excalidraw/excalidraw",
+      "outline/outline",
+      "calcom/cal.com",
+      "withastro/astro.build",
+      "vercel/commerce",
+      "supabase/supabase"
     ]
   },
   "entradas": [
@@ -77,6 +104,237 @@
       }
     },
     {
+      "id": "alphagov__govuk-frontend",
+      "repo": "alphagov/govuk-frontend",
+      "clase": "neg_classic",
+      "generador": "curado",
+      "procedencia": "creado 2016-09-14, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "curado a mano",
+      "sha": "96339366a864f4937de36ee85af7abe99b613274",
+      "rama": "main",
+      "creado": "2016-09-14",
+      "empujado": "2026-08-06",
+      "estrellas": 1435,
+      "kb": 180364,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "ant-design__ant-design",
+      "repo": "ant-design/ant-design",
+      "clase": "neg_classic",
+      "generador": "curado",
+      "procedencia": "creado 2015-04-24, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "curado a mano",
+      "sha": "01055a7a83bedb6a183f279670d1e2fac0eb51a6",
+      "rama": "master",
+      "creado": "2015-04-24",
+      "empujado": "2026-08-07",
+      "estrellas": 98985,
+      "kb": 274860,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": true
+      }
+    },
+    {
+      "id": "calcom__cal.com",
+      "repo": "calcom/cal.com",
+      "clase": "neg_classic",
+      "generador": "curado",
+      "procedencia": "creado 2021-03-22, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "curado a mano",
+      "sha": "b2c28a23ab5b53f2e3729657d23cccb50f64e18a",
+      "rama": "main",
+      "creado": "2021-03-22",
+      "empujado": "2026-08-05",
+      "estrellas": 47304,
+      "kb": 1145917,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "carbon-design-system__carbon",
+      "repo": "carbon-design-system/carbon",
+      "clase": "neg_classic",
+      "generador": "curado",
+      "procedencia": "creado 2017-03-13, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "curado a mano",
+      "sha": "c448cfae8c6149b708d00e2e43ef92e197003871",
+      "rama": "main",
+      "creado": "2017-03-13",
+      "empujado": "2026-08-07",
+      "estrellas": 9339,
+      "kb": 8115520,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
+      "id": "elastic__eui",
+      "repo": "elastic/eui",
+      "clase": "neg_classic",
+      "generador": "curado",
+      "procedencia": "creado 2017-10-18, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "curado a mano",
+      "sha": "d6bffda7ca94c5534a627b6d0d3b1a5266a2a4ad",
+      "rama": "main",
+      "creado": "2017-10-18",
+      "empujado": "2026-08-07",
+      "estrellas": 6341,
+      "kb": 1380448,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "excalidraw__excalidraw",
+      "repo": "excalidraw/excalidraw",
+      "clase": "neg_classic",
+      "generador": "curado",
+      "procedencia": "creado 2020-01-02, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "curado a mano",
+      "sha": "219571a7187651c79648de08c9a98a3b2f7f607a",
+      "rama": "master",
+      "creado": "2020-01-02",
+      "empujado": "2026-08-06",
+      "estrellas": 129082,
+      "kb": 102332,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": false
+      }
+    },
+    {
+      "id": "IBM__carbon-components",
+      "repo": "IBM/carbon-components",
+      "clase": "neg_classic",
+      "generador": "curado",
+      "procedencia": "creado 2017-03-13, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "curado a mano",
+      "sha": "c448cfae8c6149b708d00e2e43ef92e197003871",
+      "rama": "main",
+      "creado": "2017-03-13",
+      "empujado": "2026-08-07",
+      "estrellas": 9339,
+      "kb": 8115520,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
+      "id": "microsoft__fluentui",
+      "repo": "microsoft/fluentui",
+      "clase": "neg_classic",
+      "generador": "curado",
+      "procedencia": "creado 2016-06-06, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "curado a mano",
+      "sha": "eeaab4c87045c1839ec9d66e52e6a16c0328d027",
+      "rama": "master",
+      "creado": "2016-06-06",
+      "empujado": "2026-08-06",
+      "estrellas": 20193,
+      "kb": 846035,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": true
+      }
+    },
+    {
+      "id": "mui__material-ui",
+      "repo": "mui/material-ui",
+      "clase": "neg_classic",
+      "generador": "curado",
+      "procedencia": "creado 2014-08-18, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "curado a mano",
+      "sha": "6688a786af00ebca2c0f14aa473ce865a48597a8",
+      "rama": "master",
+      "creado": "2014-08-18",
+      "empujado": "2026-08-06",
+      "estrellas": 98697,
+      "kb": 743093,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": true
+      }
+    },
+    {
+      "id": "outline__outline",
+      "repo": "outline/outline",
+      "clase": "neg_classic",
+      "generador": "curado",
+      "procedencia": "creado 2016-05-22, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "curado a mano",
+      "sha": "10aa8e1f10b5091c7f466f15824999bd89b890e9",
+      "rama": "main",
+      "creado": "2016-05-22",
+      "empujado": "2026-08-07",
+      "estrellas": 40020,
+      "kb": 326488,
+      "stack": {
+        "tailwind": false,
+        "radix": true,
+        "next": false,
+        "vite": true,
+        "react": true
+      }
+    },
+    {
+      "id": "palantir__blueprint",
+      "repo": "palantir/blueprint",
+      "clase": "neg_classic",
+      "generador": "curado",
+      "procedencia": "creado 2016-10-25, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "curado a mano",
+      "sha": "933c7de6151665168ffc051045da67ecc1fb39af",
+      "rama": "develop",
+      "creado": "2016-10-25",
+      "empujado": "2026-08-06",
+      "estrellas": 21978,
+      "kb": 402759,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": true
+      }
+    },
+    {
       "id": "primer__css",
       "repo": "primer/css",
       "clase": "neg_classic",
@@ -98,6 +356,48 @@
       }
     },
     {
+      "id": "saadeghi__daisyui",
+      "repo": "saadeghi/daisyui",
+      "clase": "neg_classic",
+      "generador": "curado",
+      "procedencia": "creado 2020-11-28, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "curado a mano",
+      "sha": "83eb28707c3ae0a87f7479440278dae42cde19c2",
+      "rama": "master",
+      "creado": "2020-11-28",
+      "empujado": "2026-08-07",
+      "estrellas": 41995,
+      "kb": 12182741,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "segmentio__evergreen",
+      "repo": "segmentio/evergreen",
+      "clase": "neg_classic",
+      "generador": "curado",
+      "procedencia": "creado 2017-07-30, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "curado a mano",
+      "sha": "9b774aee2d794f6cf2f73a054bd33066ca5898a9",
+      "rama": "master",
+      "creado": "2017-07-30",
+      "empujado": "2026-06-25",
+      "estrellas": 12424,
+      "kb": 231649,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
       "id": "Semantic-Org__Semantic-UI",
       "repo": "Semantic-Org/Semantic-UI",
       "clase": "neg_classic",
@@ -112,6 +412,174 @@
       "kb": 113201,
       "stack": {
         "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "Shopify__polaris",
+      "repo": "Shopify/polaris",
+      "clase": "neg_classic",
+      "generador": "curado",
+      "procedencia": "creado 2017-04-20, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "curado a mano",
+      "sha": "af6ffb66a5b1d20f6c2c898b334a1ebb53728ba2",
+      "rama": "main",
+      "creado": "2017-04-20",
+      "empujado": "2026-08-06",
+      "estrellas": 6175,
+      "kb": 278523,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "supabase__supabase",
+      "repo": "supabase/supabase",
+      "clase": "neg_classic",
+      "generador": "curado",
+      "procedencia": "creado 2019-10-12, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "curado a mano",
+      "sha": "91a394fc83f22983b49ab53b9f5122c827d2efc2",
+      "rama": "master",
+      "creado": "2019-10-12",
+      "empujado": "2026-08-07",
+      "estrellas": 107644,
+      "kb": 2425776,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "tailwindlabs__tailwindcss.com",
+      "repo": "tailwindlabs/tailwindcss.com",
+      "clase": "neg_classic",
+      "generador": "curado",
+      "procedencia": "creado 2018-02-23, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "curado a mano",
+      "sha": "6393f18203c68e29c4ca5b398873e6b89bb4930b",
+      "rama": "main",
+      "creado": "2018-02-23",
+      "empujado": "2026-07-28",
+      "estrellas": 140,
+      "kb": 964500,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": true,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
+      "id": "themesberg__flowbite",
+      "repo": "themesberg/flowbite",
+      "clase": "neg_classic",
+      "generador": "curado",
+      "procedencia": "creado 2021-07-28, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "curado a mano",
+      "sha": "232ebdb33a9e37b31b293b9988d89b862ee121e5",
+      "rama": "main",
+      "creado": "2021-07-28",
+      "empujado": "2026-06-27",
+      "estrellas": 9317,
+      "kb": 23210,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "twbs__bootstrap",
+      "repo": "twbs/bootstrap",
+      "clase": "neg_classic",
+      "generador": "curado",
+      "procedencia": "creado 2011-07-29, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "curado a mano",
+      "sha": "6177d5f8497f2c08f9874f5221fd17ce5acd2ad7",
+      "rama": "main",
+      "creado": "2011-07-29",
+      "empujado": "2026-08-06",
+      "estrellas": 174565,
+      "kb": 315870,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "uswds__uswds",
+      "repo": "uswds/uswds",
+      "clase": "neg_classic",
+      "generador": "curado",
+      "procedencia": "creado 2015-05-20, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "curado a mano",
+      "sha": "4cf0b7dc7d7a7db0824bb03a1c6e178ff7cfaa0a",
+      "rama": "develop",
+      "creado": "2015-05-20",
+      "empujado": "2026-08-07",
+      "estrellas": 7141,
+      "kb": 181227,
+      "stack": {
+        "tailwind": false,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": false
+      }
+    },
+    {
+      "id": "vercel__commerce",
+      "repo": "vercel/commerce",
+      "clase": "neg_classic",
+      "generador": "curado",
+      "procedencia": "creado 2020-10-26, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "curado a mano",
+      "sha": "3761e52e60df9c6a316e067dbfd7032e494d3634",
+      "rama": "main",
+      "creado": "2020-10-26",
+      "empujado": "2026-06-10",
+      "estrellas": 14194,
+      "kb": 11109,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": true,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
+      "id": "withastro__astro.build",
+      "repo": "withastro/astro.build",
+      "clase": "neg_classic",
+      "generador": "curado",
+      "procedencia": "creado 2021-12-15, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "curado a mano",
+      "sha": "45f4f3762c4780199a0e7af529e89f3551b53c26",
+      "rama": "main",
+      "creado": "2021-12-15",
+      "empujado": "2026-08-06",
+      "estrellas": 500,
+      "kb": 1121736,
+      "stack": {
+        "tailwind": true,
         "radix": false,
         "next": false,
         "vite": false,
@@ -140,6 +608,174 @@
       }
     },
     {
+      "id": "bradtraversy__tailwind-landing-page",
+      "repo": "bradtraversy/tailwind-landing-page",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2022-04-03, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind created:2020-01-01..2022-11-30 stars:>20 fork:false",
+      "sha": "249d73eaa143aa213a5d56de2b2a941f68b20a7a",
+      "rama": "main",
+      "creado": "2022-04-03",
+      "empujado": "2023-05-17",
+      "estrellas": 536,
+      "kb": 259,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "cdonohue__benefit",
+      "repo": "cdonohue/benefit",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2019-03-13, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwindcss in:file filename:package.json",
+      "sha": "3c3300c4a1c5150b2a77a2cc157c202665522d4d",
+      "rama": "master",
+      "creado": "2019-03-13",
+      "empujado": "2023-01-04",
+      "estrellas": 51,
+      "kb": 5435,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
+      "id": "creativetimofficial__argon-dashboard-tailwind",
+      "repo": "creativetimofficial/argon-dashboard-tailwind",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2022-07-29, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind created:2020-01-01..2022-11-30 stars:>20 fork:false",
+      "sha": "cd3d5fd770049a432701f6b3c8c8c1940445b691",
+      "rama": "main",
+      "creado": "2022-07-29",
+      "empujado": "2024-07-24",
+      "estrellas": 122,
+      "kb": 26902,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "creativetimofficial__material-tailwind-dashboard-react",
+      "repo": "creativetimofficial/material-tailwind-dashboard-react",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2021-04-13, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:JavaScript created:<2022-11-30 stars:>40 fork:false",
+      "sha": "721f312c444ee7caa300963a042915c6bdcc883b",
+      "rama": "main",
+      "creado": "2021-04-13",
+      "empujado": "2024-07-15",
+      "estrellas": 452,
+      "kb": 5575,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": true
+      }
+    },
+    {
+      "id": "creativetimofficial__material-tailwind-kit-react",
+      "repo": "creativetimofficial/material-tailwind-kit-react",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2021-04-13, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:JavaScript created:<2022-11-30 stars:>40 fork:false",
+      "sha": "ced26a63621bfc90f0f6687a3e81107b87f5cbea",
+      "rama": "main",
+      "creado": "2021-04-13",
+      "empujado": "2024-07-25",
+      "estrellas": 102,
+      "kb": 5668,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": true
+      }
+    },
+    {
+      "id": "creativetimofficial__notus-nextjs",
+      "repo": "creativetimofficial/notus-nextjs",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2020-09-01, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:JavaScript created:<2022-11-30 stars:>40 fork:false",
+      "sha": "83af9355cf3373c31d5f5f3845e65185d327186d",
+      "rama": "main",
+      "creado": "2020-09-01",
+      "empujado": "2024-07-11",
+      "estrellas": 1491,
+      "kb": 6799,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": true,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
+      "id": "creativetimofficial__soft-ui-dashboard-tailwind",
+      "repo": "creativetimofficial/soft-ui-dashboard-tailwind",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2022-04-12, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind created:2020-01-01..2022-11-30 stars:>20 fork:false",
+      "sha": "d07d592c7d8054c803bae23353a7e8b2293df40f",
+      "rama": "main",
+      "creado": "2022-04-12",
+      "empujado": "2024-07-15",
+      "estrellas": 365,
+      "kb": 7906,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "cruip__tailwind-dashboard-template",
+      "repo": "cruip/tailwind-dashboard-template",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2021-04-20, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:JavaScript created:<2022-11-30 stars:>40 fork:false",
+      "sha": "173f64183e3f5488e8e22d3a3f6a8de75bf63d7a",
+      "rama": "main",
+      "creado": "2021-04-20",
+      "empujado": "2025-03-02",
+      "estrellas": 2819,
+      "kb": 616,
+      "stack": {
+        "tailwind": true,
+        "radix": true,
+        "next": false,
+        "vite": true,
+        "react": true
+      }
+    },
+    {
       "id": "cruip__tailwind-landing-page-template",
       "repo": "cruip/tailwind-landing-page-template",
       "clase": "neg_stack",
@@ -152,6 +788,27 @@
       "empujado": "2025-12-12",
       "estrellas": 4482,
       "kb": 3724,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": true,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
+      "id": "developedbyed__react-portofolio-with-tailwind",
+      "repo": "developedbyed/react-portofolio-with-tailwind",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2022-09-28, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:JavaScript created:<2022-11-30 stars:>40 fork:false",
+      "sha": "a200234727f43bbe0132a853ccf0c70af609753d",
+      "rama": "main",
+      "creado": "2022-09-28",
+      "empujado": "2023-10-11",
+      "estrellas": 537,
+      "kb": 9545,
       "stack": {
         "tailwind": true,
         "radix": false,
@@ -187,13 +844,34 @@
       "clase": "neg_stack",
       "generador": "humano-tailwind",
       "procedencia": "creado 2021-03-23, anterior al corte 2022-11-30; autoria humana",
-      "consulta": "tailwindcss created:<2022-11-30 stars:>120 fork:false",
+      "consulta": "tailwind language:TypeScript created:<2022-11-30 stars:>60 fork:false",
       "sha": "54d464d472775c63a1855d326fff692db92aa0b8",
       "rama": "v4",
       "creado": "2021-03-23",
       "empujado": "2026-07-17",
       "estrellas": 2069,
       "kb": 2654,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "jamiebuilds__tailwindcss-animate",
+      "repo": "jamiebuilds/tailwindcss-animate",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2022-02-16, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:JavaScript created:<2022-11-30 stars:>40 fork:false",
+      "sha": "ac0dd3a3c81681b78f1d8ea5e7478044213995e1",
+      "rama": "main",
+      "creado": "2022-02-16",
+      "empujado": "2024-07-28",
+      "estrellas": 3025,
+      "kb": 215,
       "stack": {
         "tailwind": true,
         "radix": false,
@@ -224,23 +902,23 @@
       }
     },
     {
-      "id": "joaopaulomoraes__reactjs-vite-tailwindcss-boilerplate",
-      "repo": "joaopaulomoraes/reactjs-vite-tailwindcss-boilerplate",
+      "id": "jupyter-book__jupyterlab-myst",
+      "repo": "jupyter-book/jupyterlab-myst",
       "clase": "neg_stack",
       "generador": "humano-tailwind",
-      "procedencia": "creado 2021-07-15, anterior al corte 2022-11-30; autoria humana",
-      "consulta": "tailwind language:TypeScript created:<2022-11-30 stars:>60 fork:false",
-      "sha": "495d24cca8dfe17ad2c94ced7d04be8e917bb885",
+      "procedencia": "creado 2021-05-20, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwindcss in:file filename:package.json",
+      "sha": "402964a9b28d9dd7b617a125a22372d37359a5a2",
       "rama": "main",
-      "creado": "2021-07-15",
-      "empujado": "2026-04-11",
-      "estrellas": 732,
-      "kb": 1796,
+      "creado": "2021-05-20",
+      "empujado": "2026-06-20",
+      "estrellas": 193,
+      "kb": 12654,
       "stack": {
         "tailwind": true,
         "radix": false,
         "next": false,
-        "vite": true,
+        "vite": false,
         "react": true
       }
     },
@@ -266,6 +944,27 @@
       }
     },
     {
+      "id": "justboil__admin-one-vue-tailwind",
+      "repo": "justboil/admin-one-vue-tailwind",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2021-06-14, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind created:2020-01-01..2022-11-30 stars:>20 fork:false",
+      "sha": "8a1c411b62c2fd01b7bd81feed7f4e36c46047e7",
+      "rama": "master",
+      "creado": "2021-06-14",
+      "empujado": "2025-11-27",
+      "estrellas": 2461,
+      "kb": 21119,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": false
+      }
+    },
+    {
       "id": "lannodev__angular-tailwind",
       "repo": "lannodev/angular-tailwind",
       "clase": "neg_stack",
@@ -283,6 +982,27 @@
         "radix": false,
         "next": false,
         "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "LinkedInLearning__tailwindcss3-esst-2468006",
+      "repo": "LinkedInLearning/tailwindcss3-esst-2468006",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2022-02-14, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind created:2020-01-01..2022-11-30 stars:>20 fork:false",
+      "sha": "80f3f97756cc670bf51f517818e9791ca9c93346",
+      "rama": "main",
+      "creado": "2022-02-14",
+      "empujado": "2022-11-07",
+      "estrellas": 26,
+      "kb": 56,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": true,
         "react": false
       }
     },
@@ -308,6 +1028,27 @@
       }
     },
     {
+      "id": "NativeScript__tailwind",
+      "repo": "NativeScript/tailwind",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2018-06-14, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:JavaScript created:<2022-11-30 stars:>40 fork:false",
+      "sha": "38c88ae7e6f08153e5402d4c76715d5f48b04fd4",
+      "rama": "main",
+      "creado": "2018-06-14",
+      "empujado": "2026-07-25",
+      "estrellas": 162,
+      "kb": 902,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
       "id": "nuxt-modules__tailwindcss",
       "repo": "nuxt-modules/tailwindcss",
       "clase": "neg_stack",
@@ -320,27 +1061,6 @@
       "empujado": "2026-08-06",
       "estrellas": 1867,
       "kb": 9366,
-      "stack": {
-        "tailwind": true,
-        "radix": false,
-        "next": false,
-        "vite": false,
-        "react": false
-      }
-    },
-    {
-      "id": "nuxt__ui",
-      "repo": "nuxt/ui",
-      "clase": "neg_stack",
-      "generador": "humano-tailwind",
-      "procedencia": "creado 2021-11-15, anterior al corte 2022-11-30; autoria humana",
-      "consulta": "tailwind language:TypeScript created:<2022-11-30 stars:>60 fork:false",
-      "sha": "6add5fb7d8a1280dcbe2c4675e78d8f45f61e7fd",
-      "rama": "v4",
-      "creado": "2021-11-15",
-      "empujado": "2026-08-07",
-      "estrellas": 6818,
-      "kb": 115546,
       "stack": {
         "tailwind": true,
         "radix": false,
@@ -371,18 +1091,39 @@
       }
     },
     {
-      "id": "tailwindlabs__headlessui",
-      "repo": "tailwindlabs/headlessui",
+      "id": "subugoe__olahd_user_frontend",
+      "repo": "subugoe/olahd_user_frontend",
       "clase": "neg_stack",
       "generador": "humano-tailwind",
-      "procedencia": "creado 2020-09-16, anterior al corte 2022-11-30; autoria humana",
-      "consulta": "tailwind language:TypeScript created:<2022-11-30 stars:>60 fork:false",
-      "sha": "eea57cf46fd6767ed1059012f7073b88eb159fba",
+      "procedencia": "creado 2021-12-17, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwindcss in:file filename:package.json",
+      "sha": "7852d26940cadcfaaccacf91a2aa137f4daac03e",
       "rama": "main",
-      "creado": "2020-09-16",
-      "empujado": "2026-04-13",
-      "estrellas": 28701,
-      "kb": 7103,
+      "creado": "2021-12-17",
+      "empujado": "2026-05-29",
+      "estrellas": 6,
+      "kb": 5868,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": true,
+        "react": false
+      }
+    },
+    {
+      "id": "TailGrids__play-tailwind",
+      "repo": "TailGrids/play-tailwind",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2021-10-14, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind created:2020-01-01..2022-11-30 stars:>20 fork:false",
+      "sha": "05f872b026622e026c75f656d7fa537494e6f379",
+      "rama": "main",
+      "creado": "2021-10-14",
+      "empujado": "2025-03-04",
+      "estrellas": 1149,
+      "kb": 13478,
       "stack": {
         "tailwind": true,
         "radix": false,
@@ -455,6 +1196,27 @@
       }
     },
     {
+      "id": "themesberg__tailwind-dashboard-windster",
+      "repo": "themesberg/tailwind-dashboard-windster",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2021-11-15, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind created:2020-01-01..2022-11-30 stars:>20 fork:false",
+      "sha": "9be2ab853454f35f3c0c010c2b66220762adf7ec",
+      "rama": "main",
+      "creado": "2021-11-15",
+      "empujado": "2023-01-16",
+      "estrellas": 943,
+      "kb": 5136,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
       "id": "theodorusclarence__ts-nextjs-tailwind-starter",
       "repo": "theodorusclarence/ts-nextjs-tailwind-starter",
       "clase": "neg_stack",
@@ -497,6 +1259,48 @@
       }
     },
     {
+      "id": "TrellisCommerce__shopify-tailwind-starter-base",
+      "repo": "TrellisCommerce/shopify-tailwind-starter-base",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2022-04-08, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind created:2020-01-01..2022-11-30 stars:>20 fork:false",
+      "sha": "d8f8af26a851eccb83c448c5a77a8bebdbfb8b23",
+      "rama": "main",
+      "creado": "2022-04-08",
+      "empujado": "2026-08-06",
+      "estrellas": 386,
+      "kb": 25904,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": false
+      }
+    },
+    {
+      "id": "vadimdemedes__tailwind-rn",
+      "repo": "vadimdemedes/tailwind-rn",
+      "clase": "neg_stack",
+      "generador": "humano-tailwind",
+      "procedencia": "creado 2020-03-08, anterior al corte 2022-11-30; autoria humana",
+      "consulta": "tailwind language:JavaScript created:<2022-11-30 stars:>40 fork:false",
+      "sha": "8e74787db5561fa23cf38bef633f69c6cb176c74",
+      "rama": "master",
+      "creado": "2020-03-08",
+      "empujado": "2025-04-14",
+      "estrellas": 4270,
+      "kb": 1546,
+      "stack": {
+        "tailwind": true,
+        "radix": false,
+        "next": false,
+        "vite": false,
+        "react": true
+      }
+    },
+    {
       "id": "vercel__nextjs-postgres-nextauth-tailwindcss-template",
       "repo": "vercel/nextjs-postgres-nextauth-tailwindcss-template",
       "clase": "neg_stack",
@@ -530,27 +1334,6 @@
       "empujado": "2026-03-23",
       "estrellas": 2675,
       "kb": 109,
-      "stack": {
-        "tailwind": false,
-        "radix": false,
-        "next": false,
-        "vite": false,
-        "react": false
-      }
-    },
-    {
-      "id": "avrabyt__YouTube-Tutorials",
-      "repo": "avrabyt/YouTube-Tutorials",
-      "clase": "pos",
-      "generador": "bolt",
-      "procedencia": "marcador de bolt presente en el repositorio",
-      "consulta": "\"bolt.new\" in:file filename:README.md",
-      "sha": "b2495e34765a6235c8cbaaf26b0b3212c547a6a1",
-      "rama": "main",
-      "creado": "2021-12-31",
-      "empujado": "2026-07-12",
-      "estrellas": 122,
-      "kb": 721,
       "stack": {
         "tailwind": false,
         "radix": false,
@@ -791,27 +1574,6 @@
       }
     },
     {
-      "id": "ifokeev__awesome-copilots",
-      "repo": "ifokeev/awesome-copilots",
-      "clase": "pos",
-      "generador": "bolt",
-      "procedencia": "marcador de bolt presente en el repositorio",
-      "consulta": "\"bolt.new\" in:file filename:README.md",
-      "sha": "0e6cb62ef4ff2b3a41cc84fca039f3228d856b2d",
-      "rama": "main",
-      "creado": "2024-11-23",
-      "empujado": "2025-05-28",
-      "estrellas": 210,
-      "kb": 16,
-      "stack": {
-        "tailwind": false,
-        "radix": false,
-        "next": false,
-        "vite": false,
-        "react": false
-      }
-    },
-    {
       "id": "ishandutta2007__Open-Laudable",
       "repo": "ishandutta2007/Open-Laudable",
       "clase": "pos",
@@ -871,27 +1633,6 @@
         "radix": true,
         "next": false,
         "vite": true,
-        "react": true
-      }
-    },
-    {
-      "id": "mckaywrigley__takeoff-notes-app-complete",
-      "repo": "mckaywrigley/takeoff-notes-app-complete",
-      "clase": "pos",
-      "generador": "v0",
-      "procedencia": "marcador de v0 presente en el repositorio",
-      "consulta": "\"v0.dev\" in:file filename:README.md",
-      "sha": "7bd583bf1e2cd1f2870d9e41c704ba994d55066b",
-      "rama": "main",
-      "creado": "2024-09-24",
-      "empujado": "2024-09-24",
-      "estrellas": 18,
-      "kb": 130,
-      "stack": {
-        "tailwind": true,
-        "radix": true,
-        "next": true,
-        "vite": false,
         "react": true
       }
     },
@@ -1211,27 +1952,6 @@
       }
     },
     {
-      "id": "Sanober007__OprationalTracker1",
-      "repo": "Sanober007/OprationalTracker1",
-      "clase": "pos",
-      "generador": "lovable",
-      "procedencia": "marcador de lovable presente en el repositorio",
-      "consulta": "lovable-tagger in:file filename:package.json",
-      "sha": "3395753df4eb7a4d248a6c23406a890cd561c1f3",
-      "rama": "main",
-      "creado": "2025-06-13",
-      "empujado": "2025-06-13",
-      "estrellas": 0,
-      "kb": 61085,
-      "stack": {
-        "tailwind": true,
-        "radix": true,
-        "next": false,
-        "vite": true,
-        "react": true
-      }
-    },
-    {
       "id": "Shivansh-Dutt__Team-380",
       "repo": "Shivansh-Dutt/Team-380",
       "clase": "pos",
@@ -1358,27 +2078,6 @@
       }
     },
     {
-      "id": "tomydel45-glitch__raicesbahiablanca",
-      "repo": "tomydel45-glitch/raicesbahiablanca",
-      "clase": "pos",
-      "generador": "lovable",
-      "procedencia": "marcador de lovable presente en el repositorio",
-      "consulta": "lovable-tagger in:file filename:package.json",
-      "sha": "08348cef613f767f4e888c785b81b459ee45fb0e",
-      "rama": "main",
-      "creado": "2026-02-14",
-      "empujado": "2026-04-22",
-      "estrellas": 0,
-      "kb": 89973,
-      "stack": {
-        "tailwind": true,
-        "radix": true,
-        "next": true,
-        "vite": false,
-        "react": true
-      }
-    },
-    {
       "id": "tylerprogramming__ai",
       "repo": "tylerprogramming/ai",
       "clase": "pos",
@@ -1438,27 +2137,6 @@
         "radix": true,
         "next": true,
         "vite": false,
-        "react": true
-      }
-    },
-    {
-      "id": "xquad-io__x1",
-      "repo": "xquad-io/x1",
-      "clase": "pos",
-      "generador": "v0",
-      "procedencia": "marcador de v0 presente en el repositorio",
-      "consulta": "\"v0.dev\" in:file filename:README.md",
-      "sha": "3c41d4e5fb1e1edb8e1bbcd89660f7eb37926ca4",
-      "rama": "master",
-      "creado": "2023-11-05",
-      "empujado": "2024-01-03",
-      "estrellas": 34,
-      "kb": 9673,
-      "stack": {
-        "tailwind": false,
-        "radix": false,
-        "next": false,
-        "vite": true,
         "react": true
       }
     },

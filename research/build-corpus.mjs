@@ -52,17 +52,28 @@ const CONSULTAS = [
     q: `tailwindcss created:<${CORTE} stars:>120 fork:false` },
   { clase: 'neg_stack', gen: 'humano-tailwind', tipo: 'repositories',
     q: `tailwind language:TypeScript created:<${CORTE} stars:>60 fork:false` },
+  { clase: 'neg_stack', gen: 'humano-tailwind', tipo: 'repositories',
+    q: `tailwind language:JavaScript created:<${CORTE} stars:>40 fork:false` },
+  { clase: 'neg_stack', gen: 'humano-tailwind', tipo: 'repositories',
+    q: `tailwind created:2020-01-01..${CORTE} stars:>20 fork:false` },
+  { clase: 'neg_stack', gen: 'humano-tailwind', tipo: 'code',
+    q: `tailwindcss in:file filename:package.json` },
 ]
 
 // NEGATIVOS clasicos: curados a mano. Autoria humana documentada y anteriores
 // al corte por varios anos. No se dejan a merced de una consulta porque las
 // busquedas de "design system" devuelven libros y listas.
 const CURADOS = [
+  // Sistemas de diseno con equipo y autoria documentada
   'alphagov/govuk-frontend', 'primer/css', 'carbon-design-system/carbon',
   'Shopify/polaris', 'adobe/spectrum-css', 'twbs/bootstrap',
   'ant-design/ant-design', 'mui/material-ui', 'elastic/eui',
   'microsoft/fluentui', 'uswds/uswds', 'palantir/blueprint',
   'segmentio/evergreen', 'Semantic-Org/Semantic-UI', 'IBM/carbon-components',
+  // Productos y sitios reales con equipo de diseno conocido, anteriores al corte
+  'tailwindlabs/tailwindcss.com', 'saadeghi/daisyui', 'themesberg/flowbite',
+  'excalidraw/excalidraw', 'outline/outline', 'calcom/cal.com',
+  'withastro/astro.build', 'vercel/commerce', 'supabase/supabase',
 ]
 
 /* ── recoleccion ── */
@@ -97,8 +108,13 @@ for (const nombre of CURADOS) {
 
 const entradas = []
 for (const c of candidatos) {
+  const curado = c.gen === 'curado'
   const meta = gh(`repos/${c.nombre}`)
-  if (!meta || meta.fork || meta.archived || meta.size > 120_000) continue
+  if (!meta || meta.fork) continue
+  // Los curados no se filtran por archivado ni por tamano: que Semantic-UI este
+  // archivado o que Bootstrap pese 200 MB no los hace menos humanos. La poda al
+  // descargar deja solo los archivos legibles.
+  if (!curado && (meta.archived || meta.size > 120_000)) continue
 
   const rama = meta.default_branch
   const commits = gh(`repos/${c.nombre}/commits?sha=${rama}&per_page=1`)
