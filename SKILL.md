@@ -1,6 +1,6 @@
 ---
 name: slop-tools
-description: Detecta si un diseño visual o web parece generado por IA ("AI slop") y explica por qué. Base de conocimiento con 66 comprobaciones de procedencia contrastada —rúbrica general más un bloque específico de producto con localización, microcopy, estados, fidelidad al dominio y confianza— y un escáner estático que audita CSS/JSX/HTML y devuelve un informe puntuado. Úsalo cuando alguien pregunte si un diseño "se ve hecho con IA", "parece plantilla", "parece genérico", "AI slop", "looks AI-generated", antes de enseñar un producto a un cliente, o como control de calidad previo a un release.
+description: Detecta si un diseño visual o web parece generado por IA ("AI slop"), explica por qué y guía el arreglo. 66 comprobaciones de procedencia, lint de contrato de diseño (--contrato), y slop-fix que emite un brief ordenado para remediar en código respetando DESIGN.md. Úsalo al auditar slop, al pedir un plan de remediación, o cuando un agente deba aplicar fixes sin reinventar la paleta.
 ---
 
 # slop-tools
@@ -88,6 +88,17 @@ que no son el camino feliz, y por no modelar el negocio que dice servir.
 app, y aplicarlas a ciegas produce falsos positivos que destruyen tu credibilidad ante el
 equipo de diseño.
 
+### 6. Si hay que **arreglar** (no solo opinar)
+
+Genera el brief y sigue `references/agent-remediate.md`:
+
+```bash
+node scripts/slop-fix.mjs <ruta> --brand "Marca" --profile producto --out REMEDIAR.md
+```
+
+El brief incluye contrato (si existe), capas ordenadas, `fix` por hallazgo y el comando de
+verificación. **No edites estilos fuera de ese orden ni inventes tokens.**
+
 ## Cómo entregar el veredicto
 
 Tres reglas, aprendidas de hacerlo mal:
@@ -117,7 +128,9 @@ La hipótesis rival que debes hacerles batir siempre está en `references/advers
 | `references/producto.md` | **Para apps.** Localización, microcopy, estados, fidelidad al dominio y confianza |
 | `references/caveats.md` | Cuándo cada comprobación NO aplica |
 | `references/remediation.md` | Las 6 reglas correctivas y el orden de arreglo |
+| `references/agent-remediate.md` | **Para agentes.** Cómo ejecutar el brief de `slop-fix` |
 | `references/adversarial.md` | Cómo montar un panel que no se engañe a sí mismo |
+| `scripts/slop-fix.mjs` | Brief de remediación (md/json) con contrato y verificación |
 | `references/hallmark-extracto.md` | **hallmark, vaciado.** 58 gates clasificados, umbrales, géneros y arquetipos |
 | `references/sources.md` | Bibliografía anotada con lo que aporta cada fuente |
 | `data/rules.json` | Catálogo declarativo. Añadir una regla no exige tocar código |

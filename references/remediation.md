@@ -54,6 +54,17 @@ secciones. Si esos tres valores son iguales, la página se lee plana.
 Mide con APCA en vez del ratio de WCAG 2. Objetivos: Lc ≥ 75 para texto de lectura, ≥ 45 para
 texto grande o en negrita, ≥ 30 para elementos de interfaz no textuales.
 
+## Brief automático para agentes
+
+Para no reordenar a mano ni olvidar el contrato:
+
+```bash
+node scripts/slop-fix.mjs <ruta> --profile producto --out REMEDIAR.md
+```
+
+Procedimiento de ejecución: `references/agent-remediate.md`. El orden de capas de abajo
+sigue siendo la lógica; `slop-fix` la materializa con archivo:línea y sello de validación.
+
 ## Orden de arreglo
 
 Este orden importa y es contraintuitivo: **el CSS va el último.**

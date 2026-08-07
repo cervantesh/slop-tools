@@ -131,6 +131,16 @@ node scripts/slop-scan.mjs ./src --contrato ./sistema --fail-on-contrato
 Comprueba escala, radios, tipografía, paleta y movimiento. Es un eje aparte: limpio de slop
 ≠ fiel al sistema.
 
+### Brief para un agente que va a arreglar
+
+```bash
+node scripts/slop-fix.mjs ./src --brand "TuMarca" --profile producto --out REMEDIAR.md
+```
+
+Ordena hallazgos (peso × confianza ÷ esfuerzo), pega las restricciones del contrato y deja
+el comando de verificación. El procedimiento del agente está en
+`references/agent-remediate.md`.
+
 Dos propiedades que **se comprueban en `npm test`**, no se prometen:
 
 - **Se autoaprueba** — 10 de 10 sistemas generados pasan este mismo escáner con 100/100. Una

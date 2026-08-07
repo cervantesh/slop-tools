@@ -326,6 +326,20 @@ Va el último porque depende de P5 para poder demostrar que funciona.
 
 ---
 
+## P12 · Skill de remediación (`slop-fix`) `[x]`
+
+> **Hecho.** Detectar y lintar no bastan si el agente improvisa el arreglo.
+>
+> - `scripts/lib/sello.mjs` — sello + `armarPlan` compartidos por scan y fix.
+> - `scripts/slop-fix.mjs` — corre el scan (con contrato si existe), emite brief
+>   markdown/JSON: reglas de agente, tabla de contrato, capas ordenadas con `fix` y
+>   muestras, comando `--fail-on-contrato`.
+> - `references/agent-remediate.md` — procedimiento de ejecución para agentes.
+> - JSON del scan enriquece `fix`/`why`/`sello` y expone `plan`.
+> - `bench/verifica-fix.mjs` en `npm test`.
+
+---
+
 ## Fuera de plan, anotado
 
 - Cinco archivos de `research/` entraron en un commit mío por `git add -A` sin que yo los
