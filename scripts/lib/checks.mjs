@@ -38,7 +38,10 @@ export function programaticas(ctx) {
         return { failed: !!m, detail: m ? `principal: ${m[1]}` : 'familia no estandar' }
       } },
 
-    { id: 'B2', cat: 'Tipografia', weight: 1, applies: 'landing', title: 'Sin pareja tipografica',
+    // Peso a 0: J -0.06. Dispara en el 85% de lo generado y el 91% de lo humano.
+    // No discrimina en absoluto. Se conserva como observacion informativa porque
+    // sigue siendo un criterio de diseno valido, pero no puntua.
+    { id: 'B2', cat: 'Tipografia', weight: 0, applies: 'landing', title: 'Sin pareja tipografica',
       run() {
         const stacks = new Set([...cssTexto.matchAll(/font-family:\s*([^;]+);/g)]
           .map(m => m[1].split(',')[0].trim().replace(/["']/g, '').toLowerCase())
@@ -48,7 +51,10 @@ export function programaticas(ctx) {
 
     // Con expansion de shorthand. Sin esto, la regla se evade escribiendo
     // border-width/style/color por separado (patron de declaration-strict-value).
-    { id: 'C1', cat: 'Layout', weight: 3, applies: 'ambos', title: 'Borde gris plano de 1px',
+    // Peso bajado de 3 a 1: J 0.00 en la banda controlada. La fuente lo llamaba
+    // "el indicador aislado mas fiable"; sobre proyectos Tailwind reales apenas
+    // hay CSS donde pueda disparar. Ver research/RESULTADOS.md §3.3.
+    { id: 'C1', cat: 'Layout', weight: 1, applies: 'ambos', title: 'Borde gris plano de 1px',
       run() {
         const corto = find(/border(-(top|right|bottom|left))?:\s*1px\s+solid/i, styleFiles)
         let largo = 0
@@ -88,7 +94,10 @@ export function programaticas(ctx) {
             .filter(Boolean).join(' · ') || 'muestra insuficiente' }
       } },
 
-    { id: 'E4', cat: 'Copy', weight: 3, applies: 'ambos', title: 'Copy duplicado literalmente',
+    // Peso bajado de 3 a 1: J 0.04 en banda. Dispara en el 100% de los proyectos
+    // generados Y en el 96% de los humanos. Repetir cadenas es universal; mide
+    // calidad, no procedencia. Ver research/RESULTADOS.md §3.3.
+    { id: 'E4', cat: 'Copy', weight: 1, applies: 'ambos', title: 'Copy duplicado literalmente',
       run() {
         const seen = new Map()
         for (const f of codeFiles) {
@@ -106,12 +115,18 @@ export function programaticas(ctx) {
           samples: dups.slice(0, 6).map(([s, v]) => ({ file: v[0].file, line: v[0].line, text: `x${v.length} — "${s.slice(0, 78)}"` })) }
       } },
 
-    { id: 'F2', cat: 'Motion', weight: 1, applies: 'ambos', title: 'Sin movimiento intencionado',
-      run() {
-        const kf = find(/@keyframes/i, styleFiles).total
-        const tr = find(/transition\s*:/i, styleFiles).total
-        return { failed: kf === 0 && tr <= 2, detail: `${kf} keyframes, ${tr} transiciones` }
-      } },
+    // ELIMINADA · F2 "Sin movimiento intencionado"
+    //
+    // Unica regla del catalogo con intervalos separados apuntando AL REVES:
+    // disparaba en el 30% de los proyectos generados y en el 61% de los humanos
+    // (J = -0.31). Era un detector de diseno humano.
+    //
+    // Causa diagnosticada: exigia cero @keyframes y <=2 transition EN ARCHIVOS DE
+    // ESTILO. Un proyecto Tailwind humano no suele tener CSS propio — el
+    // movimiento vive en clases de utilidad. No medía ausencia de movimiento:
+    // medía ausencia de CSS.
+    //
+    // research/RESULTADOS.md §3.1
 
     /* ── localizacion ── */
 
@@ -136,6 +151,10 @@ export function programaticas(ctx) {
         return { failed: total > 0, detail: `${total} contador(es) sin pluralizar`, samples: out }
       } },
 
+    // MANTIENE peso 3 pese a J 0.01: NO ESTA REFUTADA, esta SIN EVALUAR. La regla
+    // es especifica del espanol y el corpus de validacion es casi todo ingles, asi
+    // que nunca tuvo oportunidad de disparar. Bajarle el peso por eso seria
+    // confundir "no medido" con "no funciona".
     { id: 'L3', cat: 'Localizacion', weight: 3, applies: 'producto', title: 'Diacriticos repartidos de forma sistematica',
       run() {
         const ES = /\b(de|la|el|los|las|para|con|tu|servicio|usuario|nombre|precio)\b/i
@@ -156,7 +175,10 @@ export function programaticas(ctx) {
           samples: ceros.slice(0, 5).map(s => ({ file: s.rel, line: 1, text: '0 caracteres no ASCII' })) }
       } },
 
-    { id: 'T1', cat: 'Accesibilidad', weight: 2, applies: 'producto', title: 'Botones de solo icono sin nombre accesible',
+    // Peso bajado de 2 a 1: J -0.07 en banda. Dispara algo mas en proyectos
+    // humanos que generados. Sigue siendo un defecto real de accesibilidad, pero
+    // no dice nada sobre procedencia.
+    { id: 'T1', cat: 'Accesibilidad', weight: 1, applies: 'producto', title: 'Botones de solo icono sin nombre accesible',
       run() {
         const out = []
         let total = 0
@@ -206,7 +228,10 @@ export function programaticas(ctx) {
           samples: hits.slice(0, 5).map(h => ({ file: '(tokens)', line: 1, text: `${h.nombre}: ${h.valor} — C=${h.C}` })) }
       } },
 
-    { id: 'K2', cat: 'Color', weight: 3, applies: 'ambos', title: 'Pares texto/fondo por debajo de 4.5:1',
+    // Peso bajado de 3 a 2: J 0.01, y con poca potencia — exige `color` y
+    // `background` en la misma regla CSS, que un proyecto Tailwind casi nunca
+    // tiene. No refutada: poco medible. Sigue valiendo como control de a11y.
+    { id: 'K2', cat: 'Color', weight: 2, applies: 'ambos', title: 'Pares texto/fondo por debajo de 4.5:1',
       run() {
         const hits = paresBajoContraste(blks, tokens)
         return { failed: hits.length > 0,

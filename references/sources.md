@@ -178,6 +178,17 @@ Marcadas como tales en la rúbrica:
 - **La prueba de distribución de diacríticos** de `caveats.md`: distinguir ASCII irregular
   (hábito humano) de corte limpio por archivo (proceso sistemático).
 
+## Estado de esa advertencia: parcialmente resuelta
+
+Lo anterior sigue siendo cierto de la **bibliografía**, pero ya no del repositorio. En
+`research/RESULTADOS.md` hay una medición propia sobre 71 proyectos etiquetados, con tasas de
+disparo por clase, control de dos confundidos e intervalos de confianza.
+
+Es, hasta donde alcanza esta revisión, **la única tasa de discriminación publicada del
+campo**. También es pequeña (n = 20 vs 23 en la banda controlada) y contradice a varias de las
+fuentes que este mismo documento cataloga — en particular la hipótesis de la uniformidad de
+radios y espaciados, que los datos invierten.
+
 ## Lo que la investigación NO encontró
 
 Dos preguntas quedaron sin una sola afirmación verificada, y conviene tratarlas como huecos

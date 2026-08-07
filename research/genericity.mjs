@@ -170,6 +170,32 @@ function auc(pos, neg) {
 const aucStack = auc(POS, NEG)
 const aucClassic = auc(POS, NEGC)
 
+/* CONTROL DE TAMANO. Los tres rasgos que mas separan —radios, espacios y
+   tamanos DISTINTOS— son conteos, y un conteo de valores distintos crece con el
+   numero de archivos. Sin restringir a la banda de solapamiento, la metrica
+   estaria midiendo lo mismo que ya contaminaba las reglas. */
+const BANDA = { min: 20, max: 200 }
+const enBanda = m => m.f.archivos >= BANDA.min && m.f.archivos < BANDA.max
+const POS_B = POS.filter(enBanda), NEG_B = NEG.filter(enBanda)
+const aucBanda = auc(POS_B, NEG_B)
+
+// Intervalo de confianza del AUC (Hanley y McNeil, 1982). Con n de dos digitas
+// un AUC puntual sin intervalo no autoriza a concluir nada.
+function icAuc(A, n1, n2) {
+  if (!n1 || !n2) return [0, 1]
+  const Q1 = A / (2 - A), Q2 = 2 * A * A / (1 + A)
+  const se = Math.sqrt((A * (1 - A) + (n1 - 1) * (Q1 - A * A) + (n2 - 1) * (Q2 - A * A)) / (n1 * n2))
+  return [Math.max(0, A - 1.96 * se), Math.min(1, A + 1.96 * se)]
+}
+const icBanda = icAuc(aucBanda, POS_B.length, NEG_B.length)
+
+const aucRasgoBanda = i => {
+  let mejor = 0, empates = 0
+  for (const a of POS_B) for (const b of NEG_B) { if (a.v[i] > b.v[i]) mejor++; else if (a.v[i] === b.v[i]) empates++ }
+  const t = POS_B.length * NEG_B.length
+  return t ? (mejor + empates / 2) / t : 0.5
+}
+
 // Discriminacion univariante de cada rasgo, tambien por AUC.
 const aucRasgo = i => {
   let mejor = 0, empates = 0
@@ -177,8 +203,11 @@ const aucRasgo = i => {
   const t = POS.length * NEG.length
   return t ? (mejor + empates / 2) / t : 0.5
 }
-const rasgos = CAMPOS.map((k, i) => ({ campo: k, auc: aucRasgo(i), separacion: Math.abs(aucRasgo(i) - 0.5) * 2 }))
-  .sort((a, b) => b.separacion - a.separacion)
+const rasgos = CAMPOS.map((k, i) => ({
+  campo: k, auc: aucRasgo(i), auc_banda: aucRasgoBanda(i),
+  separacion: Math.abs(aucRasgo(i) - 0.5) * 2,
+  separacion_banda: Math.abs(aucRasgoBanda(i) - 0.5) * 2,
+})).sort((a, b) => b.separacion_banda - a.separacion_banda)
 
 const salida = {
   _meta: {
@@ -186,15 +215,24 @@ const salida = {
     n: { pos: POS.length, neg_stack: NEG.length, neg_classic: NEGC.length },
     validacion: 'AUC con centroides leave-one-out',
   },
-  auc: { pos_vs_neg_stack: aucStack, pos_vs_neg_classic: aucClassic },
+  auc: {
+    pos_vs_neg_stack: aucStack,
+    pos_vs_neg_classic: aucClassic,
+    pos_vs_neg_stack_banda: aucBanda,
+    ic95_banda: icBanda,
+    n_banda: { pos: POS_B.length, neg: NEG_B.length },
+  },
   rasgos,
   muestras: muestras.map(({ id, clase, G, f }) => ({ id, clase, G, ...f })),
 }
 writeFileSync(join(AQUI, 'genericidad.json'), JSON.stringify(salida, null, 2), 'utf8')
 
-console.log(`\n  AUC pos vs neg_stack (comparacion valida):  ${aucStack.toFixed(3)}`)
-console.log(`  AUC pos vs neg_classic (con confundido):    ${aucClassic.toFixed(3)}\n`)
+console.log(`\n  AUC pos vs neg_stack (sin control de tamano):  ${aucStack.toFixed(3)}`)
+console.log(`  AUC pos vs neg_classic (con confundido):       ${aucClassic.toFixed(3)}`)
+console.log(`  AUC en banda ${BANDA.min}-${BANDA.max} archivos (pos=${POS_B.length} neg=${NEG_B.length}):  ${aucBanda.toFixed(3)}`)
+console.log(`  IC95 del AUC en banda (Hanley-McNeil):         [${icBanda[0].toFixed(3)}, ${icBanda[1].toFixed(3)}]`)
+console.log(`  ${icBanda[0] <= 0.5 ? '=> el intervalo toca 0.5: NO se puede afirmar separacion' : '=> separacion significativa'}\n`)
 console.log('  Discriminacion univariante por rasgo:')
-console.log('  campo                    AUC    separacion')
-for (const r of rasgos) console.log(`  ${r.campo.padEnd(22)} ${r.auc.toFixed(3)}     ${r.separacion.toFixed(3)}`)
+console.log('  campo                   AUC    AUC_banda   sep_banda')
+for (const r of rasgos) console.log(`  ${r.campo.padEnd(22)} ${r.auc.toFixed(3)}    ${r.auc_banda.toFixed(3)}       ${r.separacion_banda.toFixed(3)}`)
 console.log('\n  AUC 0.5 = azar. Guardado en research/genericidad.json\n')

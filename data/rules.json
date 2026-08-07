@@ -3,241 +3,773 @@
     "version": "1.0.0",
     "descripcion": "Reglas declarativas de slop-tools. Las que son expresables como patron viven aqui; las que exigen ratios, distribuciones o resolucion de tokens estan en scripts/lib/checks.mjs y color.mjs.",
     "esquema": "id, name, category, severity, applies(landing|producto|ambos), weight(1-3), scope(style|code|all), pattern, flags, threshold, why, fix, exempt(generos exentos), source",
-    "generos": ["editorial", "atmospheric", "modern-minimal", "playful"]
+    "generos": [
+      "editorial",
+      "atmospheric",
+      "modern-minimal",
+      "playful"
+    ],
+    "validacion": {
+      "informe": "research/RESULTADOS.md",
+      "medido": {
+        "pos": 26,
+        "neg_stack": 34,
+        "neg_classic": 11
+      },
+      "banda": {
+        "rango": {
+          "min": 20,
+          "max": 200
+        },
+        "n_pos": 20,
+        "n_neg": 23
+      },
+      "nota": "El campo validado de cada regla trae su fila de la tabla. Ausencia de validado = regla no presente en la medicion."
+    }
   },
   "rules": [
     {
-      "id": "A1", "name": "Gradiente morado-azul", "category": "Color",
-      "severity": "high", "applies": "ambos", "weight": 3, "scope": "all",
+      "id": "A1",
+      "name": "Gradiente morado-azul",
+      "category": "Color",
+      "severity": "high",
+      "applies": "ambos",
+      "weight": 2,
+      "scope": "all",
       "pattern": "\\b(from|via|to)-(indigo|violet|purple|fuchsia)-\\d{3}\\b|#(6366f1|8b5cf6|818cf8|a855f7|7c3aed)\\b",
-      "flags": "i", "threshold": 1,
+      "flags": "i",
+      "threshold": 1,
       "why": "Es la eleccion estadisticamente segura: pasa contraste y no exige teoria del color. El tell mas citado de todas las fuentes.",
       "fix": "Elige un tono con intencion de marca. Si tu marca ES indigo, declara --brand-colors para exentarlo.",
-      "source": "vibecodekit, anti-ai-slop, sikora"
+      "source": "vibecodekit, anti-ai-slop, sikora",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.133,
+        "pos": 0.35,
+        "neg": 0.217,
+        "separa": false,
+        "decision": "J 0.13 e intervalos solapados: el tell mas citado de la bibliografia rinde poco"
+      }
     },
     {
-      "id": "A4", "name": "Resplandor de acento tras el hero", "category": "Color",
-      "severity": "medium", "applies": "landing", "weight": 2, "scope": "style",
-      "pattern": "radial-gradient\\(\\s*(circle|ellipse)", "flags": "i", "threshold": 1,
-      "exempt": ["atmospheric"],
+      "id": "A4",
+      "name": "Resplandor de acento tras el hero",
+      "category": "Color",
+      "severity": "medium",
+      "applies": "landing",
+      "weight": 2,
+      "scope": "style",
+      "pattern": "radial-gradient\\(\\s*(circle|ellipse)",
+      "flags": "i",
+      "threshold": 1,
+      "exempt": [
+        "atmospheric"
+      ],
       "why": "Firma de v0/Cursor: orbe de acento difuminado detras del contenido.",
       "fix": "Si el fondo necesita profundidad, usa un escalon de luminancia en vez de un orbe.",
-      "source": "vibecodekit"
+      "source": "vibecodekit",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0,
+        "pos": 0,
+        "neg": 0,
+        "separa": false,
+        "estado": "no_medible",
+        "nota": "cero disparos en la banda; exige un hero con resplandor radial"
+      }
     },
     {
-      "id": "A5", "name": "Neon sobre oscuro con bordes que brillan", "category": "Color",
-      "severity": "medium", "applies": "ambos", "weight": 2, "scope": "style",
-      "pattern": "box-shadow:[^;]*0\\s+0\\s+\\d{2,}px[^;]*(#[0-9a-f]{6}|rgba)", "flags": "i", "threshold": 3,
+      "id": "A5",
+      "name": "Neon sobre oscuro con bordes que brillan",
+      "category": "Color",
+      "severity": "medium",
+      "applies": "ambos",
+      "weight": 2,
+      "scope": "style",
+      "pattern": "box-shadow:[^;]*0\\s+0\\s+\\d{2,}px[^;]*(#[0-9a-f]{6}|rgba)",
+      "flags": "i",
+      "threshold": 3,
       "why": "Resplandor de color como sustituto de jerarquia.",
       "fix": "Comunica elevacion con luminancia y borde, no con halo.",
-      "source": "vibecodekit"
+      "source": "vibecodekit",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0,
+        "pos": 0,
+        "neg": 0,
+        "separa": false,
+        "estado": "no_medible",
+        "nota": "cero disparos en 71 proyectos"
+      }
     },
     {
-      "id": "B4", "name": "Etiquetas en mayusculas por todas partes", "category": "Tipografia",
-      "severity": "low", "applies": "ambos", "weight": 1, "scope": "style",
-      "pattern": "text-transform:\\s*uppercase", "flags": "i", "threshold": 6,
+      "id": "B4",
+      "name": "Etiquetas en mayusculas por todas partes",
+      "category": "Tipografia",
+      "severity": "low",
+      "applies": "ambos",
+      "weight": 1,
+      "scope": "style",
+      "pattern": "text-transform:\\s*uppercase",
+      "flags": "i",
+      "threshold": 6,
       "why": "El eyebrow en mayusculas repetido en cada seccion es tic de plantilla.",
       "fix": "Reserva las mayusculas para una funcion concreta, no para decorar cada bloque.",
-      "source": "vibecodekit"
+      "source": "vibecodekit",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": -0.043,
+        "pos": 0,
+        "neg": 0.043,
+        "separa": false
+      }
     },
     {
-      "id": "C2", "name": "Franja lateral de color de 3-4px", "category": "Layout",
-      "severity": "medium", "applies": "ambos", "weight": 2, "scope": "style",
-      "pattern": "border-left:\\s*[34]px\\s+solid", "flags": "i", "threshold": 1,
+      "id": "C2",
+      "name": "Franja lateral de color de 3-4px",
+      "category": "Layout",
+      "severity": "medium",
+      "applies": "ambos",
+      "weight": 2,
+      "scope": "style",
+      "pattern": "border-left:\\s*[34]px\\s+solid",
+      "flags": "i",
+      "threshold": 1,
       "why": "Adorno sin esfuerzo para estados semanticos.",
       "fix": "Usa fondo tintado o icono; el filete lateral no escala a mas de dos estados.",
-      "source": "vibecodekit, sikora"
+      "source": "vibecodekit, sikora",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.05,
+        "pos": 0.05,
+        "neg": 0,
+        "separa": false
+      }
     },
     {
-      "id": "D1", "name": "Enlaces a bancos de imagenes", "category": "Imagen",
-      "severity": "critical", "applies": "ambos", "weight": 3, "scope": "all",
-      "pattern": "(images\\.)?(unsplash|pexels|pixabay)\\.com", "flags": "i", "threshold": 1,
+      "id": "D1",
+      "name": "Enlaces a bancos de imagenes",
+      "category": "Imagen",
+      "severity": "critical",
+      "applies": "ambos",
+      "weight": 1,
+      "scope": "all",
+      "pattern": "(images\\.)?(unsplash|pexels|pixabay)\\.com",
+      "flags": "i",
+      "threshold": 1,
       "why": "Assets nunca curados. Si el diseno cuenta con la fotografia para aportar calidez, sin ella queda geometria vacia.",
       "fix": "Fotografia propia. Con seis fotos reales basta para empezar.",
-      "source": "925studios, sikora"
+      "source": "925studios, sikora",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.026,
+        "pos": 0.2,
+        "neg": 0.174,
+        "separa": false,
+        "decision": "J 0.03 en banda (20% frente a 17%): enlazar bancos de imagenes es igual de comun en ambas clases"
+      }
     },
     {
-      "id": "D5", "name": "Emojis donde correspondia un icono", "category": "Imagen",
-      "severity": "medium", "applies": "ambos", "weight": 2, "scope": "code",
-      "pattern": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}]", "flags": "u", "threshold": 5,
+      "id": "D5",
+      "name": "Emojis donde correspondia un icono",
+      "category": "Imagen",
+      "severity": "medium",
+      "applies": "ambos",
+      "weight": 3,
+      "scope": "code",
+      "pattern": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}]",
+      "flags": "u",
+      "threshold": 5,
       "why": "El emoji es el camino mas corto de generar a publicar.",
       "fix": "Un set de iconos real, con trazo y rejilla consistentes.",
-      "source": "sikora"
+      "source": "sikora",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.407,
+        "pos": 0.45,
+        "neg": 0.043,
+        "separa": true,
+        "decision": "J 0.41 en banda, precision 93%, lift 18, intervalos separados: el discriminador mas limpio del catalogo"
+      }
     },
     {
-      "id": "E1", "name": "Abuso del em dash", "category": "Copy",
-      "severity": "medium", "applies": "ambos", "weight": 2, "scope": "code",
-      "pattern": "\\u2014", "flags": "", "threshold": 12,
+      "id": "E1",
+      "name": "Abuso del em dash",
+      "category": "Copy",
+      "severity": "medium",
+      "applies": "ambos",
+      "weight": 2,
+      "scope": "code",
+      "pattern": "\\u2014",
+      "flags": "",
+      "threshold": 12,
       "why": "Puntuacion correcta, pero la densidad anomala delata prosa generada. El umbral es 12, no 1.",
       "fix": "Sustituye por punto o dos puntos donde la frase lo admita.",
-      "source": "sikora, 925studios"
+      "source": "sikora, 925studios",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.1,
+        "pos": 0.1,
+        "neg": 0,
+        "separa": false
+      }
     },
     {
-      "id": "E2", "name": "Comillas curvas sin tocar", "category": "Copy",
-      "severity": "low", "applies": "ambos", "weight": 1, "scope": "code",
-      "pattern": "[\\u2018\\u2019\\u201C\\u201D]", "flags": "", "threshold": 10,
+      "id": "E2",
+      "name": "Comillas curvas sin tocar",
+      "category": "Copy",
+      "severity": "low",
+      "applies": "ambos",
+      "weight": 1,
+      "scope": "code",
+      "pattern": "[\\u2018\\u2019\\u201C\\u201D]",
+      "flags": "",
+      "threshold": 10,
       "why": "Indican texto pegado que nadie reescribio.",
       "fix": "Normaliza las comillas a la convencion del proyecto.",
-      "source": "sikora, 925studios"
+      "source": "sikora, 925studios",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.05,
+        "pos": 0.05,
+        "neg": 0,
+        "separa": false
+      }
     },
     {
-      "id": "E5", "name": "Densidad de palabras vacias", "category": "Copy",
-      "severity": "medium", "applies": "ambos", "weight": 2, "scope": "code",
+      "id": "E5",
+      "name": "Densidad de palabras vacias",
+      "category": "Copy",
+      "severity": "medium",
+      "applies": "ambos",
+      "weight": 2,
+      "scope": "code",
       "pattern": "\\b(seamless|innovador|innovative|leverage|potenciar|sinergia|synergy|end-to-end|revoluciona|delve into|all-in-one|todo en uno|de vanguardia|cutting-edge)\\b",
-      "flags": "i", "threshold": 3,
+      "flags": "i",
+      "threshold": 3,
       "why": "Vocabulario que no dice nada y funciona para cualquier empresa.",
       "fix": "Sustituye por la afirmacion concreta que haya detras. Si no la hay, borra la frase.",
-      "source": "growthguys"
+      "source": "growthguys",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.15,
+        "pos": 0.15,
+        "neg": 0,
+        "separa": false
+      }
     },
     {
-      "id": "E6", "name": "Nombres de relleno", "category": "Copy",
-      "severity": "medium", "applies": "ambos", "weight": 2, "scope": "code",
+      "id": "E6",
+      "name": "Nombres de relleno",
+      "category": "Copy",
+      "severity": "medium",
+      "applies": "ambos",
+      "weight": 2,
+      "scope": "code",
       "pattern": "\\b(John Smith|Jane Doe|Sarah Johnson|John Doe|Usuario Demo|[A-Z\\u00c1\\u00c9\\u00cd\\u00d3\\u00da][a-z\\u00e1\\u00e9\\u00ed\\u00f3\\u00fa]+ (Cliente|Usuario|Demo|Test|Admin|Ejemplo))\\b",
-      "flags": "", "threshold": 1,
+      "flags": "",
+      "threshold": 1,
       "why": "Es la forma en que un modelo evita inventar un nombre real.",
       "fix": "Datos de prueba con la textura del mercado objetivo.",
-      "source": "sikora, growthguys"
+      "source": "sikora, growthguys",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.17,
+        "pos": 0.3,
+        "neg": 0.13,
+        "separa": false
+      }
     },
     {
-      "id": "E7", "name": "Restos de andamiaje visibles al usuario", "category": "Copy",
-      "severity": "critical", "applies": "producto", "weight": 3, "scope": "code",
+      "id": "E7",
+      "name": "Restos de andamiaje visibles al usuario",
+      "category": "Copy",
+      "severity": "critical",
+      "applies": "producto",
+      "weight": 3,
+      "scope": "code",
       "pattern": "\\b(lorem ipsum|dummy|placeholder(?!\\s*=)|MVP|4242[\\s-]?4242|4111[\\s-]?1111|5555[\\s-]?5555|@example\\.com|\\.demo\\b)",
-      "flags": "i", "threshold": 1,
+      "flags": "i",
+      "threshold": 1,
       "why": "Senal inequivoca de que la salida nunca se reviso antes de ensenarla.",
       "fix": "Barrido de contenido antes de cualquier demo.",
-      "source": "propia"
+      "source": "propia",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.348,
+        "pos": 1,
+        "neg": 0.652,
+        "separa": true
+      }
     },
     {
-      "id": "L2", "name": "Fechas y monedas escritas a mano", "category": "Localizacion",
-      "severity": "medium", "applies": "producto", "weight": 2, "scope": "code",
+      "id": "L2",
+      "name": "Fechas y monedas escritas a mano",
+      "category": "Localizacion",
+      "severity": "medium",
+      "applies": "producto",
+      "weight": 3,
+      "scope": "code",
       "pattern": "[\"'`][^\"'`]*(RD\\$|US\\$|\\u20ac|\\$)\\s?\\{?\\d|toLocale(Date|Time)?String\\(\\s*\\)",
-      "flags": "", "threshold": 1,
+      "flags": "",
+      "threshold": 1,
       "why": "Concatenar el simbolo rompe en cuanto cambia el mercado.",
       "fix": "Intl.NumberFormat e Intl.DateTimeFormat con locale explicito.",
-      "source": "QAwerk"
+      "source": "QAwerk",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.415,
+        "pos": 0.85,
+        "neg": 0.435,
+        "separa": true,
+        "decision": "J 0.42 en banda, intervalos separados"
+      }
     },
-
     {
-      "id": "UX1", "name": "Rejilla de tres tarjetas iguales", "category": "Layout",
-      "severity": "high", "applies": "landing", "weight": 2, "scope": "all",
-      "pattern": "grid-cols-3\\b|grid-template-columns:\\s*repeat\\(\\s*3\\s*,", "flags": "i", "threshold": 1,
+      "id": "UX1",
+      "name": "Rejilla de tres tarjetas iguales",
+      "category": "Layout",
+      "severity": "high",
+      "applies": "landing",
+      "weight": 2,
+      "scope": "all",
+      "pattern": "grid-cols-3\\b|grid-template-columns:\\s*repeat\\(\\s*3\\s*,",
+      "flags": "i",
+      "threshold": 1,
       "why": "La media de toda landing page: tres features equiprobables.",
       "fix": "Si una de las tres importa mas, que ocupe mas.",
-      "source": "ux-skill three-equal-card-grid"
+      "source": "ux-skill three-equal-card-grid",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.352,
+        "pos": 0.7,
+        "neg": 0.348,
+        "separa": false
+      }
     },
     {
-      "id": "UX2", "name": "Pastilla redondeada en todo", "category": "Layout",
-      "severity": "low", "applies": "ambos", "weight": 1, "scope": "all",
-      "pattern": "rounded-full\\b|border-radius:\\s*9999px", "flags": "i", "threshold": 8,
+      "id": "UX2",
+      "name": "Pastilla redondeada en todo",
+      "category": "Layout",
+      "severity": "low",
+      "applies": "ambos",
+      "weight": 2,
+      "scope": "all",
+      "pattern": "rounded-full\\b|border-radius:\\s*9999px",
+      "flags": "i",
+      "threshold": 8,
       "why": "Radio maximo aplicado sin jerarquia.",
       "fix": "El radio deberia senalar la funcion del elemento, no ser uniforme.",
-      "source": "ux-skill pill-rounded-full-everywhere"
+      "source": "ux-skill pill-rounded-full-everywhere",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.459,
+        "pos": 0.85,
+        "neg": 0.391,
+        "separa": true,
+        "decision": "J 0.46 en banda, la mas alta, intervalos separados; precision 65% aconseja 2 y no 3"
+      }
     },
     {
-      "id": "UX3", "name": "Duracion 300ms por defecto", "category": "Motion",
-      "severity": "low", "applies": "ambos", "weight": 1, "scope": "all",
-      "pattern": "duration-300\\b|transition[^;]*\\b300ms\\b", "flags": "i", "threshold": 3,
+      "id": "UX3",
+      "name": "Duracion 300ms por defecto",
+      "category": "Motion",
+      "severity": "low",
+      "applies": "ambos",
+      "weight": 1,
+      "scope": "all",
+      "pattern": "duration-300\\b|transition[^;]*\\b300ms\\b",
+      "flags": "i",
+      "threshold": 3,
       "why": "El valor que sale de fabrica en todas las herramientas.",
       "fix": "Elige la duracion por el recorrido del elemento, no por el default.",
-      "source": "ux-skill timing-300ms-default"
+      "source": "ux-skill timing-300ms-default",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.233,
+        "pos": 0.45,
+        "neg": 0.217,
+        "separa": false
+      }
     },
     {
-      "id": "UX4", "name": "Curva de Material como unica", "category": "Motion",
-      "severity": "low", "applies": "ambos", "weight": 1, "scope": "style",
-      "pattern": "cubic-bezier\\(\\s*0?\\.4\\s*,\\s*0\\s*,\\s*0?\\.2\\s*,\\s*1\\s*\\)", "flags": "i", "threshold": 2,
+      "id": "UX4",
+      "name": "Curva de Material como unica",
+      "category": "Motion",
+      "severity": "low",
+      "applies": "ambos",
+      "weight": 1,
+      "scope": "style",
+      "pattern": "cubic-bezier\\(\\s*0?\\.4\\s*,\\s*0\\s*,\\s*0?\\.2\\s*,\\s*1\\s*\\)",
+      "flags": "i",
+      "threshold": 2,
       "why": "La curva estandar de Material copiada sin decidir nada.",
       "fix": "Una curva propia, o ninguna.",
-      "source": "ux-skill cubic-bezier-material-only"
+      "source": "ux-skill cubic-bezier-material-only",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": -0.043,
+        "pos": 0,
+        "neg": 0.043,
+        "separa": false
+      }
     },
     {
-      "id": "UX5", "name": "z-index arbitrario 9999", "category": "Calidad",
-      "severity": "medium", "applies": "ambos", "weight": 1, "scope": "all",
-      "pattern": "z-index:\\s*9{3,}|z-\\[9{3,}\\]", "flags": "i", "threshold": 1,
+      "id": "UX5",
+      "name": "z-index arbitrario 9999",
+      "category": "Calidad",
+      "severity": "medium",
+      "applies": "ambos",
+      "weight": 1,
+      "scope": "all",
+      "pattern": "z-index:\\s*9{3,}|z-\\[9{3,}\\]",
+      "flags": "i",
+      "threshold": 1,
       "why": "Sintoma de que no hay escala de apilamiento.",
       "fix": "Declara una escala de z-index con nombres.",
-      "source": "ux-skill arbitrary-z-index-9999"
+      "source": "ux-skill arbitrary-z-index-9999",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": -0.043,
+        "pos": 0,
+        "neg": 0.043,
+        "separa": false
+      }
     },
     {
-      "id": "UX6", "name": "console.log olvidado", "category": "Calidad",
-      "severity": "high", "applies": "producto", "weight": 2, "scope": "code",
-      "pattern": "console\\.(log|debug)\\s*\\(", "flags": "", "threshold": 3,
+      "id": "UX6",
+      "name": "console.log olvidado",
+      "category": "Calidad",
+      "severity": "high",
+      "applies": "producto",
+      "weight": 2,
+      "scope": "code",
+      "pattern": "console\\.(log|debug)\\s*\\(",
+      "flags": "",
+      "threshold": 3,
       "why": "Resto de desarrollo que llega a produccion.",
       "fix": "Elimina o enruta a un logger con niveles.",
-      "source": "ux-skill console-log-leak"
+      "source": "ux-skill console-log-leak",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.376,
+        "pos": 0.55,
+        "neg": 0.174,
+        "separa": false
+      }
     },
     {
-      "id": "UX7", "name": "Estilos en linea", "category": "Calidad",
-      "severity": "medium", "applies": "ambos", "weight": 1, "scope": "code",
-      "pattern": "style=\\{\\{|style=\"[^\"]{20,}\"", "flags": "", "threshold": 8,
+      "id": "UX7",
+      "name": "Estilos en linea",
+      "category": "Calidad",
+      "severity": "medium",
+      "applies": "ambos",
+      "weight": 1,
+      "scope": "code",
+      "pattern": "style=\\{\\{|style=\"[^\"]{20,}\"",
+      "flags": "",
+      "threshold": 8,
       "why": "Estilo que escapa del sistema y no se puede auditar.",
       "fix": "Mueve a clases o tokens.",
-      "source": "ux-skill inline-style-attribute"
+      "source": "ux-skill inline-style-attribute",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.263,
+        "pos": 0.35,
+        "neg": 0.087,
+        "separa": false
+      }
     },
     {
-      "id": "UX8", "name": "Defaults de shadcn sin tocar", "category": "Layout",
-      "severity": "medium", "applies": "ambos", "weight": 2, "scope": "all",
-      "pattern": "rounded-2xl[^\"']*shadow-lg[^\"']*p-6|p-6[^\"']*rounded-2xl[^\"']*shadow-lg", "flags": "i", "threshold": 1,
+      "id": "UX8",
+      "name": "Defaults de shadcn sin tocar",
+      "category": "Layout",
+      "severity": "medium",
+      "applies": "ambos",
+      "weight": 2,
+      "scope": "all",
+      "pattern": "rounded-2xl[^\"']*shadow-lg[^\"']*p-6|p-6[^\"']*rounded-2xl[^\"']*shadow-lg",
+      "flags": "i",
+      "threshold": 1,
       "why": "La terna por defecto de la libreria, publicada tal cual.",
       "fix": "Ajusta radio, sombra y padding a tu sistema.",
-      "source": "ux-skill shadcn-default-everywhere"
+      "source": "ux-skill shadcn-default-everywhere",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.1,
+        "pos": 0.1,
+        "neg": 0,
+        "separa": false
+      }
     },
     {
-      "id": "UX9", "name": "TODO o FIXME en el arbol", "category": "Calidad",
-      "severity": "low", "applies": "producto", "weight": 1, "scope": "code",
-      "pattern": "//\\s*(TODO|FIXME|HACK|XXX)\\b", "flags": "", "threshold": 5,
+      "id": "UX9",
+      "name": "TODO o FIXME en el arbol",
+      "category": "Calidad",
+      "severity": "low",
+      "applies": "producto",
+      "weight": 1,
+      "scope": "code",
+      "pattern": "//\\s*(TODO|FIXME|HACK|XXX)\\b",
+      "flags": "",
+      "threshold": 5,
       "why": "Trabajo pendiente que nadie recogio.",
       "fix": "Convierte en incidencias o resuelve.",
-      "source": "ux-skill todo-fixme-comment"
+      "source": "ux-skill todo-fixme-comment",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.057,
+        "pos": 0.1,
+        "neg": 0.043,
+        "separa": false
+      }
     },
     {
-      "id": "UX10", "name": "Texto con gradiente arcoiris", "category": "Color",
-      "severity": "medium", "applies": "landing", "weight": 2, "scope": "all",
-      "pattern": "bg-clip-text|background-clip:\\s*text", "flags": "i", "threshold": 1,
+      "id": "UX10",
+      "name": "Texto con gradiente arcoiris",
+      "category": "Color",
+      "severity": "medium",
+      "applies": "landing",
+      "weight": 2,
+      "scope": "all",
+      "pattern": "bg-clip-text|background-clip:\\s*text",
+      "flags": "i",
+      "threshold": 1,
       "why": "Titular con gradiente como sustituto de direccion tipografica.",
       "fix": "Que el titular funcione en un solo color.",
-      "source": "ux-skill gradient-text-rainbow"
+      "source": "ux-skill gradient-text-rainbow",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.176,
+        "pos": 0.35,
+        "neg": 0.174,
+        "separa": false
+      }
     },
     {
-      "id": "UX11", "name": "Tamano de titular arbitrario", "category": "Tipografia",
-      "severity": "medium", "applies": "ambos", "weight": 1, "scope": "all",
-      "pattern": "text-\\[\\d{2,3}px\\]|font-size:\\s*(9[0-9]|1[0-9]{2})px", "flags": "i", "threshold": 1,
+      "id": "UX11",
+      "name": "Tamano de titular arbitrario",
+      "category": "Tipografia",
+      "severity": "medium",
+      "applies": "ambos",
+      "weight": 1,
+      "scope": "all",
+      "pattern": "text-\\[\\d{2,3}px\\]|font-size:\\s*(9[0-9]|1[0-9]{2})px",
+      "flags": "i",
+      "threshold": 1,
       "why": "Valor fuera de escala elegido a ojo.",
       "fix": "Escala modular declarada, con clamp() para fluidez.",
-      "source": "ux-skill hero-text-arbitrary-90px"
+      "source": "ux-skill hero-text-arbitrary-90px",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.22,
+        "pos": 0.35,
+        "neg": 0.13,
+        "separa": false
+      }
     },
     {
-      "id": "UX12", "name": "Pila de avatares superpuestos", "category": "Layout",
-      "severity": "low", "applies": "landing", "weight": 1, "scope": "all",
-      "pattern": "-space-x-\\d|margin-left:\\s*-\\d+px[^;]*;[^}]*border-radius:\\s*(50%|9999px)", "flags": "i", "threshold": 1,
+      "id": "UX12",
+      "name": "Pila de avatares superpuestos",
+      "category": "Layout",
+      "severity": "low",
+      "applies": "landing",
+      "weight": 1,
+      "scope": "all",
+      "pattern": "-space-x-\\d|margin-left:\\s*-\\d+px[^;]*;[^}]*border-radius:\\s*(50%|9999px)",
+      "flags": "i",
+      "threshold": 1,
       "why": "Prueba social generica: cinco caras solapadas y un contador.",
       "fix": "Nombres reales, o nada.",
-      "source": "ux-skill avatar-stack-overlapping"
+      "source": "ux-skill avatar-stack-overlapping",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": -0.037,
+        "pos": 0.05,
+        "neg": 0.087,
+        "separa": false
+      }
     },
-
     {
-      "id": "AS1", "name": "transition: all", "category": "Motion",
-      "severity": "medium", "applies": "ambos", "weight": 2, "scope": "style",
-      "pattern": "transition:\\s*all\\b", "flags": "i", "threshold": 1,
+      "id": "AS1",
+      "name": "transition: all",
+      "category": "Motion",
+      "severity": "medium",
+      "applies": "ambos",
+      "weight": 2,
+      "scope": "style",
+      "pattern": "transition:\\s*all\\b",
+      "flags": "i",
+      "threshold": 1,
       "why": "Anima todo lo que cambie, incluido lo que no deberia. Es el idiom reflexivo por excelencia.",
       "fix": "Enumera las propiedades que animas.",
-      "source": "anti-ai-slop"
+      "source": "anti-ai-slop",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.163,
+        "pos": 0.25,
+        "neg": 0.087,
+        "separa": false
+      }
     },
     {
-      "id": "AS2", "name": "Levantar la tarjeta en hover", "category": "Motion",
-      "severity": "low", "applies": "ambos", "weight": 1, "scope": "style",
-      "pattern": "hover[^{]*\\{[^}]*translateY\\(\\s*-[23]px", "flags": "i", "threshold": 2,
+      "id": "AS2",
+      "name": "Levantar la tarjeta en hover",
+      "category": "Motion",
+      "severity": "low",
+      "applies": "ambos",
+      "weight": 1,
+      "scope": "style",
+      "pattern": "hover[^{]*\\{[^}]*translateY\\(\\s*-[23]px",
+      "flags": "i",
+      "threshold": 2,
       "why": "El micro-gesto por defecto de toda tarjeta generada.",
       "fix": "Si el hover no comunica nada, quitalo.",
-      "source": "anti-ai-slop"
+      "source": "anti-ai-slop",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0,
+        "pos": 0,
+        "neg": 0,
+        "separa": false,
+        "estado": "no_medible",
+        "nota": "cero disparos en 71 proyectos; el hover vive en clases de utilidad, no en CSS"
+      }
     },
     {
-      "id": "AS9", "name": "Monocultura de segundo orden", "category": "Color",
-      "severity": "high", "applies": "ambos", "weight": 3, "scope": "all",
+      "id": "AS9",
+      "name": "Monocultura de segundo orden",
+      "category": "Color",
+      "severity": "high",
+      "applies": "ambos",
+      "weight": 1,
+      "scope": "all",
       "pattern": "Fraunces|Instrument Serif|Playfair Display|#(fdf6e3|faf3e0|f5ecd7|fef9f0)\\b|\\b(terracotta|terracota)\\b",
-      "flags": "i", "threshold": 2,
+      "flags": "i",
+      "threshold": 2,
       "why": "El kit al que converge el PRIMER ARREGLO: papel crema, serif display, acento terracota. Las salidas de emergencia tienen su propia media, y esta ya es reconocible.",
       "fix": "Diverge en cuatro ejes a la vez: fondo, familia display, tono de acento y postura. Cambiar solo el color reproduce la monocultura.",
-      "source": "anti-ai-slop regla 9"
+      "source": "anti-ai-slop regla 9",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": -0.043,
+        "pos": 0,
+        "neg": 0.043,
+        "separa": false,
+        "decision": "J -0.04: cero disparos en la clase generada. La estetica crema/serif/terracota no aparece en el corpus"
+      }
     }
   ]
 }

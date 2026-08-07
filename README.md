@@ -146,13 +146,38 @@ Nueve defectos reales del escáner, incluidos dos de fondo:
 
 Ninguno de los dos se veía leyendo el código. Aparecieron al medir.
 
-### Lo que esto todavía NO es
+### Y el corpus etiquetado: qué reglas discriminan de verdad
 
-Recall sobre mutaciones sintéticas no es discriminación sobre diseño real. Falta el paso
-siguiente: un corpus etiquetado —repos con CSS anterior a 2021, que no puede ser generado, y
-salidas conocidas de herramientas generativas— para medir el **lift** de cada regla y
-re-derivar los pesos de ahí en vez de de la insistencia de un artículo de agencia. Está
-anotado como trabajo pendiente en `references/sources.md`.
+```bash
+node research/build-corpus.mjs && node research/fetch-corpus.mjs && node research/measure.mjs
+```
+
+71 proyectos con procedencia registrada: generados con marcador inequívoco (`lovable-tagger`,
+`v0.dev`, `bolt.new`) frente a repositorios humanos **creados antes del 2022-11-30** — nada
+anterior a ChatGPT pudo generarse con un LLM, así que la fecha es la etiqueta.
+
+**El resultado incomoda, y por eso vale.** De 49 reglas, **4 separan las clases con
+significación** tras controlar el confundido de tamaño. Seis no disparan ni una vez. Una
+disparaba al revés y se ha eliminado.
+
+| | |
+| --- | --- |
+| Mejor discriminador | `D5` emojis como iconos — J 0,41 · precisión 93% · lift 18 |
+| El tell más citado de la literatura | `A1` gradiente morado-azul — **J 0,13, no significativo** |
+| Regla eliminada | `F2` — disparaba en 30% de generado y **61% de humano** |
+| Hipótesis de las fuentes refutada | «la IA produce radios uniformes» — los datos dicen lo **contrario** |
+
+El informe completo, con método, control de confundidos y límites de la muestra, está en
+[`research/RESULTADOS.md`](research/RESULTADOS.md). Cada regla lleva ahora su fila estampada
+en `data/rules.json` bajo `validado`.
+
+### Genericidad: intento fallido, registrado
+
+Se construyó una métrica continua de «cuánto se parece al promedio» y **no pasó la
+validación**: AUC 0,665 con IC95 [0,501 – 0,830]. El intervalo roza el azar, así que no entra
+en la puntuación. El registro honesto, con lo que sí dejó —que el constructo de *colorfulness*
+no transfiere del render al código— está en
+[`references/genericidad.md`](references/genericidad.md).
 
 ## Añadir una regla
 
