@@ -298,7 +298,16 @@ procedencia: un proyecto puede estar limpio de slop y aun asi traicionar su
 propio contrato.
 `
 
-const demo = `<main class="medida">
+const demo = `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sistema ${postura} · ${tono.nombre}</title>
+  <link rel="stylesheet" href="tokens.css" />
+</head>
+<body>
+<main class="medida">
   <h1>Un titular que solo tiene sentido para este proyecto</h1>
   <p>
     Sustituye este texto por el tuyo. Si al cambiar el nombre de la marca por el de un
@@ -314,12 +323,57 @@ const demo = `<main class="medida">
     <p>Ocupa mas y lleva mas radio porque pesa mas. La jerarquia se ve sin leer.</p>
   </article>
 </main>
+</body>
+</html>
+`
+
+// Puente a Tailwind: el contrato como theme.extend para no perder la restriccion
+// al salir del CSS plano. No es un proyecto Tailwind completo: es el mapa.
+const tw = `/** @type {import('tailwindcss').Config} */
+/* Generado por slop-init · semilla ${semilla} · no editar a ciegas: cambia DESIGN.md primero */
+export default {
+  content: ['./index.html', './src/**/*.{js,jsx,ts,tsx,html}'],
+  theme: {
+    extend: {
+      colors: {
+        lienzo: '${paleta.lienzo}',
+        superficie: '${paleta.superficie}',
+        tinta: '${paleta.tinta}',
+        apagado: '${paleta.apagado}',
+        filete: '${paleta.filete}',
+        acento: '${paleta.acento}',
+        'acento-suave': '${paleta.acentoSuave}',
+        'sobre-acento': '${paleta.sobreAcento}',
+      },
+      fontFamily: {
+        display: ['${display}', 'Georgia', 'serif'],
+        sans: ['${texto}', 'system-ui', 'sans-serif'],
+      },
+      spacing: {
+${espacios.map((v, i) => `        'e${i + 1}': '${v}px',`).join('\n')}
+      },
+      borderRadius: {
+        chico: '${radios[0]}px',
+        medio: '${radios[1]}px',
+        grande: '${radios[2]}px',
+      },
+      transitionDuration: {
+        DEFAULT: '${duracion}ms',
+      },
+      transitionTimingFunction: {
+        sistema: '${curva}',
+      },
+    },
+  },
+  plugins: [],
+}
 `
 
 mkdirSync(DESTINO, { recursive: true })
 writeFileSync(join(DESTINO, 'tokens.css'), tokens, 'utf8')
 writeFileSync(join(DESTINO, 'DESIGN.md'), design, 'utf8')
 writeFileSync(join(DESTINO, 'index.html'), demo, 'utf8')
+writeFileSync(join(DESTINO, 'tailwind.theme.mjs'), tw, 'utf8')
 
 /* ── registro de divergencia ── */
 // Patron tomado de .hallmark/log.json: si dos invocaciones seguidas producen
@@ -347,7 +401,7 @@ if (AS_JSON) {
   console.log(`  espaciado   ${espacios.join(' · ')}`)
   console.log(`  radios      ${radios.join(' · ')}`)
   console.log(`  movimiento  ${duracion}ms · ${curva}\n`)
-  console.log('  tokens.css · DESIGN.md · index.html\n')
+  console.log('  tokens.css · DESIGN.md · index.html · tailwind.theme.mjs\n')
   if (repite?.igual) {
     console.log('  AVISO: mismas decisiones que la invocacion anterior en este destino.')
     console.log('  Un generador que no diverge reproduce la monocultura que intenta evitar.\n')

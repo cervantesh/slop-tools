@@ -8,12 +8,17 @@
 //                             [--write-baseline] [--since-baseline] [--fail-on-new-drift]
 //                             [--log]
 //                             [--contrato [ruta]] [--fail-on-contrato]
+//                             [--stats] [--no-history] [--dominio file]
+//                             [--min-calidad N] [--fail-on-calidad]
 //
 //   --contrato   lint del sistema de diseño (DESIGN.md / tokens.css / .slop-init.json).
-//                Sin valor: busca contrato en la raíz escaneada. Con ruta: usa ese dir.
 //   --fail-on-contrato  sale 1 si el contrato tiene fallos (para CI).
+//   --stats      resume .slop/history.jsonl y sale (observabilidad local).
+//   --no-history no registra esta ejecución en el historial.
+//   --dominio    archivo de conceptos de negocio (uno por línea).
+//   --min-calidad / --fail-on-calidad  umbral del eje de higiene de producto.
 
-import { readFileSync } from 'node:fs'
+import { readFileSync, existsSync } from 'node:fs'
 import { resolve, dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -24,14 +29,20 @@ import { firmaMacro } from './lib/structure.mjs'
 import { genericidad } from './lib/genericidad.mjs'
 import { resolverRutaContrato, cargarContrato, comprobarContrato } from './lib/contrato.mjs'
 import { sello, armarPlan } from './lib/sello.mjs'
+import { comprobarCalidad, comprobarDominio } from './lib/calidad.mjs'
+import { registrar, imprimirStats } from './lib/history.mjs'
 import * as bl from './lib/baseline.mjs'
 
 const AQUI = dirname(fileURLToPath(import.meta.url))
+const t0 = Date.now()
 
 /* ── argumentos ── */
 
 const argv = process.argv.slice(2)
-const CON_VALOR = new Set(['--brand', '--brand-colors', '--profile', '--genre', '--min-score', '--rules', '--contrato'])
+const CON_VALOR = new Set([
+  '--brand', '--brand-colors', '--profile', '--genre', '--min-score', '--rules',
+  '--contrato', '--dominio', '--min-calidad',
+])
 const flag = n => { const i = argv.indexOf(n); return i >= 0 ? argv[i + 1] : undefined }
 const has = n => argv.includes(n)
 
@@ -50,6 +61,11 @@ const SINCE_BASELINE = has('--since-baseline')
 const FAIL_NEW = has('--fail-on-new-drift')
 const WRITE_LOG = has('--log')
 const FAIL_CONTRATO = has('--fail-on-contrato')
+const STATS = has('--stats')
+const NO_HISTORY = has('--no-history')
+const DOMINIO_PATH = flag('--dominio')
+const MIN_CALIDAD = flag('--min-calidad') != null ? Number(flag('--min-calidad')) : null
+const FAIL_CALIDAD = has('--fail-on-calidad')
 // --contrato sin valor (o con valor que es otro flag) = auto en ROOT
 const contratoFlagIdx = argv.indexOf('--contrato')
 let CONTRATO_ARG = null
@@ -59,6 +75,11 @@ if (contratoFlagIdx >= 0) {
 } else if (FAIL_CONTRATO) {
   // Fallar en CI implica activar el lint del contrato.
   CONTRATO_ARG = true
+}
+
+if (STATS) {
+  imprimirStats(ROOT)
+  process.exit(0)
 }
 
 if (FAIL_NEW && !SINCE_BASELINE) {
@@ -188,7 +209,7 @@ if (CONTRATO_ARG != null) {
 // discriminacion medida, le restaban puntos. Un proyecto humano con mal
 // contraste bajaba en un marcador de procedencia, que es justo lo que este
 // repositorio acusa a otras herramientas de hacer.
-const procedencia = results.filter(r => r.tipo !== 'defecto')
+const procedencia = results.filter(r => r.tipo !== 'defecto' && r.tipo !== 'calidad')
 const defectos = results.filter(r => r.tipo === 'defecto')
 
 const maxW = procedencia.reduce((a, r) => a + r.weight, 0) + (swap ? 3 : 0)
@@ -198,6 +219,28 @@ const band = score >= 85 ? 'Limpio'
   : score >= 70 ? 'Restos localizados'
   : score >= 50 ? 'Se identificara'
   : 'Se identifica en diez segundos'
+
+/* ── calidad de producto / a11y estática (eje aparte) ── */
+
+const informeCalidad = comprobarCalidad(ctx)
+let informeDominio = null
+if (DOMINIO_PATH) {
+  const rutaDom = resolve(DOMINIO_PATH)
+  if (!existsSync(rutaDom)) {
+    console.error(`slop-scan: --dominio no existe: ${rutaDom}`)
+    process.exit(2)
+  }
+  const conceptos = readFileSync(rutaDom, 'utf8').split(/\r?\n/)
+  informeDominio = comprobarDominio(codeFiles, conceptos)
+  if (informeDominio) informeCalidad.checks.push(informeDominio)
+  // Recalcular score de calidad incluyendo dominio
+  const fallanQ = informeCalidad.checks.filter(c => c.failed)
+  const maxQ = informeCalidad.checks.reduce((a, c) => a + c.weight, 0)
+  const lostQ = fallanQ.reduce((a, c) => a + c.weight, 0)
+  informeCalidad.score = maxQ ? Math.round(100 * (1 - lostQ / maxQ)) : 100
+  informeCalidad.fallan = fallanQ.length
+  informeCalidad.total = informeCalidad.checks.length
+}
 
 /* ── baseline y registro ── */
 
@@ -215,7 +258,25 @@ if (WRITE_LOG) bl.escribirLog(ROOT, firma, score, `slop-scan ${score}/100 · ${b
 
 /* ── salida ── */
 
-const planArmado = armarPlan({ results, nameSwap: swap, contrato: informeContrato })
+const planArmado = armarPlan({
+  results, nameSwap: swap, contrato: informeContrato, calidad: informeCalidad,
+})
+
+/* ── historial local (observabilidad) ── */
+if (!NO_HISTORY && !STATS) {
+  registrar(ROOT, {
+    tool: 'slop-scan',
+    score, band, profile: PROFILE, genre: GENRE,
+    contratoScore: informeContrato?.score ?? null,
+    calidadScore: informeCalidad?.score ?? null,
+    fallanProc: procedencia.filter(r => r.failed).length,
+    fallanDef: defectos.filter(r => r.failed).length,
+    fallanContrato: informeContrato?.fallan ?? 0,
+    fallanCalidad: informeCalidad?.fallan ?? 0,
+    files: files.length,
+    ms: Date.now() - t0,
+  })
+}
 
 if (PLAN) {
   console.log(`\n  PLAN DE REMEDIACION · ${ROOT}`)
@@ -269,10 +330,14 @@ if (PLAN) {
       contrato: informeContrato
         ? { total: informeContrato.total, fallan: informeContrato.fallan, score: informeContrato.score, origen: informeContrato.origen }
         : null,
+      calidad: { total: informeCalidad.total, fallan: informeCalidad.fallan, score: informeCalidad.score },
     },
     contrato: informeContrato,
+    calidad: informeCalidad,
+    dominio: informeDominio,
     exemptedByGenre: exentasPorGenero.map(c => c.id),
     nameSwap: swap, genericidad: gen, baseline: baselineInfo, newFindings: nuevos, macro: firma, repeatsPrevious: repite,
+    ms: Date.now() - t0,
   }, null, 2))
 } else {
   const fallan = results.filter(r => r.failed)
@@ -286,6 +351,7 @@ if (PLAN) {
   if (informeContrato) {
     console.log(`  contrato:    ${informeContrato.fallan} de ${informeContrato.total} fallan  (sistema de diseño · ${informeContrato.score}/100 · ${informeContrato.origen})`)
   }
+  console.log(`  calidad:     ${informeCalidad.fallan} de ${informeCalidad.total} fallan  (higiene producto/a11y · ${informeCalidad.score}/100)`)
   if (exentasPorGenero.length) console.log(`  ${exentasPorGenero.length} exenta(s) por genero "${GENRE}": ${exentasPorGenero.map(c => c.id).join(', ')}`)
   console.log('')
 
@@ -331,6 +397,19 @@ if (PLAN) {
     console.log('')
   }
 
+  if (informeCalidad) {
+    console.log('  ── Calidad / a11y estática (NO es gusto ni UX completa; NO puntúa procedencia) ──')
+    console.log(`  score ${informeCalidad.score}/100 · ${informeCalidad.fallan}/${informeCalidad.total} fallan · ${informeCalidad.nota}`)
+    for (const c of informeCalidad.checks) {
+      console.log(`  ${c.failed ? 'x' : 'ok'} ${c.id} · ${c.title} — ${c.detail}`)
+      if (c.failed) {
+        for (const s of (c.samples || []).slice(0, 3)) console.log(`      ${s.file}:${s.line}  ${s.text}`)
+        if (c.fix) console.log(`      → ${c.fix}`)
+      }
+    }
+    console.log('')
+  }
+
   if (fallan.length) {
     console.log('  ── Fallan ──')
     for (const r of fallan) {
@@ -367,6 +446,13 @@ if (FAIL_NEW && nuevos && nuevos.length > 0) {
 if (FAIL_CONTRATO && informeContrato && informeContrato.fallan > 0) {
   console.error(`slop-scan: ${informeContrato.fallan} hallazgo(s) de contrato de diseño`)
   process.exit(1)
+}
+if ((FAIL_CALIDAD || MIN_CALIDAD != null) && informeCalidad) {
+  const umbral = MIN_CALIDAD != null ? MIN_CALIDAD : 100
+  if (informeCalidad.score < umbral) {
+    console.error(`slop-scan: calidad ${informeCalidad.score} por debajo de ${umbral}`)
+    process.exit(1)
+  }
 }
 if (MIN_SCORE !== null && score < MIN_SCORE) {
   console.error(`slop-scan: ${score} por debajo del umbral ${MIN_SCORE}`)

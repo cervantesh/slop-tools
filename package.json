@@ -1,20 +1,28 @@
 {
   "name": "slop-tools",
-  "version": "1.0.0",
-  "description": "Base de conocimiento y auditor estatico para detectar si un diseno visual o web parece generado por IA. 58 comprobaciones automaticas, con validacion empirica sobre corpus etiquetado",
+  "version": "1.2.0",
+  "description": "Auditor estatico de AI slop + contrato de diseno + gate de proceso. Validacion empirica, plan de remediacion y brief para agentes.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cervantesh/slop-tools.git"
+  },
   "bin": {
     "slop-scan": "scripts/slop-scan.mjs",
     "slop-init": "scripts/slop-init.mjs",
-    "slop-fix": "scripts/slop-fix.mjs"
+    "slop-fix": "scripts/slop-fix.mjs",
+    "slop-gate": "scripts/slop-gate.mjs",
+    "slop-visual": "scripts/slop-visual.mjs"
   },
   "scripts": {
     "scan": "node scripts/slop-scan.mjs",
     "bench": "node bench/slop-bench.mjs",
-    "test": "node bench/slop-bench.mjs && node bench/verifica-conteos.mjs && node bench/verifica-init.mjs && node bench/verifica-contrato.mjs && node bench/verifica-fix.mjs && node research/verifica-escala.mjs && node research/verifica-rasgos.mjs",
+    "test": "node bench/slop-bench.mjs && node bench/verifica-conteos.mjs && node bench/verifica-init.mjs && node bench/verifica-contrato.mjs && node bench/verifica-fix.mjs && node bench/verifica-madurez.mjs && node research/verifica-escala.mjs && node research/verifica-rasgos.mjs",
     "init": "node scripts/slop-init.mjs",
-    "fix": "node scripts/slop-fix.mjs"
+    "fix": "node scripts/slop-fix.mjs",
+    "gate": "node scripts/slop-gate.mjs",
+    "visual": "node scripts/slop-visual.mjs"
   },
   "engines": {
     "node": ">=18"
@@ -25,13 +33,17 @@
     "design-system",
     "static-analysis",
     "ux",
-    "audit"
+    "audit",
+    "design-tokens"
   ],
   "files": [
     "SKILL.md",
     "README.md",
+    "CHANGELOG.md",
+    "PLAN.md",
     "references",
     "scripts",
-    "templates"
+    "templates",
+    "data"
   ]
 }

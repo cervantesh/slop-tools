@@ -1,8 +1,8 @@
-# Ejemplo de gate en integración continua.
-# Copia este archivo al repositorio que quieras auditar y ajusta RUTA, MARCA y PERFIL.
+# Ejemplo de gate en integración continua (proceso enforceado).
+# Copia al repo que quieras auditar y ajusta RUTA, MARCA, PERFIL y umbrales.
 #
-# Recomendación: empieza con --min-score por debajo de tu puntuación actual y súbelo
-# a medida que corrijas. Un gate que falla desde el primer día se desactiva el segundo.
+# Recomendación: en legacy usa --since-baseline --fail-on-new-drift.
+# Con DESIGN.md / slop-init, añade --require-contrato.
 
 name: slop-scan
 
@@ -27,21 +27,21 @@ jobs:
           repository: cervantesh/slop-tools
           path: .slop-tools
 
-      # Trinquete: tolera lo que ya habia y falla solo ante deriva NUEVA.
-      # Genera .slop/baseline.json una vez con --write-baseline y comitealo.
-      - name: Auditar
+      # Proceso completo: score + contrato (si hay) + brief + last-gate.json
+      - name: Gate
         run: |
-          node .slop-tools/scripts/slop-scan.mjs ./src \
+          node .slop-tools/scripts/slop-gate.mjs ./src \
             --profile producto \
             --brand "TuMarca" \
+            --min-score 70 \
             --since-baseline --fail-on-new-drift
 
-      - name: Informe para el resumen del PR
+      - name: Resumen
         if: always()
         run: |
           {
-            echo '## slop-scan'
+            echo '## slop-gate'
             echo '```'
-            node .slop-tools/scripts/slop-scan.mjs ./src --profile producto --brand "TuMarca" || true
+            cat ./src/.slop/last-gate.json 2>/dev/null || cat ./.slop/last-gate.json 2>/dev/null || true
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"

@@ -8,7 +8,10 @@
 //   node scripts/slop-fix.mjs <ruta>
 //     [--brand "Marca"] [--profile landing|producto|ambos]
 //     [--contrato [ruta]] [--genre g] [--brand-colors "#hex"]
-//     [--out REMEDIAR.md] [--json]
+//     [--out REMEDIAR.md] [--json] [--apply-safe]
+//
+//   --apply-safe  aplica solo parches triviales (Inter→tokens, 300ms, transition:all)
+//                 y vuelve a escanear. No toca copy ni layout.
 //
 // Sin --contrato explicito, se activa si hay DESIGN.md / tokens / .slop-init.json
 // en la raiz (o en --contrato). Sin contrato no inventa un sistema: pide
@@ -19,6 +22,8 @@ import { resolve, dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { execFileSync } from 'node:child_process'
 import { resolverRutaContrato, cargarContrato } from './lib/contrato.mjs'
+import { collect } from './lib/util.mjs'
+import { applySafe } from './lib/apply-safe.mjs'
 
 const AQUI = dirname(fileURLToPath(import.meta.url))
 const SCAN = join(AQUI, 'slop-scan.mjs')
@@ -36,6 +41,7 @@ const BRAND = flag('--brand')
 const BRAND_COLORS = flag('--brand-colors')
 const PROFILE = flag('--profile') || 'ambos'
 const GENRE = flag('--genre')
+const APPLY_SAFE = has('--apply-safe')
 
 const contratoIdx = argv.indexOf('--contrato')
 let CONTRATO_ARG = null
@@ -56,27 +62,40 @@ if (CONTRATO_ARG != null) {
   if (CONTRATO_ARG !== true) scanArgs.push(String(CONTRATO_ARG))
 }
 
-let scan
-try {
-  const raw = execFileSync(process.execPath, scanArgs, {
-    encoding: 'utf8', maxBuffer: 32 * 1024 * 1024,
-  })
-  scan = JSON.parse(raw)
-} catch (e) {
-  // --fail no esta; el scan puede fallar por otros motivos
-  const out = e.stdout || e.message
-  try { scan = JSON.parse(out) } catch {
-    console.error('slop-fix: no se pudo ejecutar slop-scan')
-    console.error(out)
-    process.exit(2)
+function runScan() {
+  try {
+    const raw = execFileSync(process.execPath, scanArgs, {
+      encoding: 'utf8', maxBuffer: 32 * 1024 * 1024,
+    })
+    return JSON.parse(raw)
+  } catch (e) {
+    const out = e.stdout || e.message
+    try { return JSON.parse(out) } catch {
+      console.error('slop-fix: no se pudo ejecutar slop-scan')
+      console.error(out)
+      process.exit(2)
+    }
   }
 }
 
-const plan = scan.plan || { capas: [], totalHallazgos: 0, nameSwap: null }
-const contratoDir = CONTRATO_ARG != null
+let scan = runScan()
+
+// Contrato para apply-safe y reglas
+const contratoDirEarly = CONTRATO_ARG != null
   ? resolverRutaContrato(ROOT, CONTRATO_ARG)
-  : null
-const contratoObj = contratoDir ? cargarContrato(contratoDir) : null
+  : resolverRutaContrato(ROOT, true)
+const contratoEarly = contratoDirEarly ? cargarContrato(contratoDirEarly) : null
+
+let applyReport = null
+if (APPLY_SAFE) {
+  const files = collect(ROOT)
+  applyReport = applySafe(ROOT, files, contratoEarly)
+  scan = runScan()
+}
+
+const plan = scan.plan || { capas: [], totalHallazgos: 0, nameSwap: null }
+const contratoDir = contratoDirEarly
+const contratoObj = contratoEarly || (contratoDir ? cargarContrato(contratoDir) : null)
 const designPath = contratoDir && existsSync(join(contratoDir, 'DESIGN.md'))
   ? join(contratoDir, 'DESIGN.md')
   : existsSync(join(ROOT, 'DESIGN.md'))
@@ -126,6 +145,7 @@ const brief = {
   totalHallazgos: plan.totalHallazgos,
   resumen: scan.resumen,
   verificar,
+  applySafe: applyReport,
   reglasAgente: REGLAS_AGENTE(contratoObj, designPath),
 }
 
@@ -236,6 +256,14 @@ function renderMarkdown(b) {
         L.push('')
       }
     }
+  }
+
+  if (b.applySafe) {
+    L.push('## Apply-safe (ya ejecutado)')
+    L.push('')
+    L.push(`${b.applySafe.total} cambio(s) en ${b.applySafe.cambiados.length} archivo(s): familias prohibidas → tokens, 300ms → duración del contrato, \`transition: all\` acotado.`)
+    for (const c of b.applySafe.cambiados) L.push(`- \`${c.file}\` (${c.n} línea(s))`)
+    L.push('')
   }
 
   L.push('## Verificar (obligatorio al terminar)')

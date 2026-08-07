@@ -47,7 +47,24 @@ export function prioridad(r) {
  * Ordena hallazgos en capas accionables. Incluye contrato al final si falla.
  * @returns {{ capas: { capa, peso, items }[], nameSwap, contrato }}
  */
-export function armarPlan({ results, nameSwap, contrato }) {
+function itemDe(r, extras = {}) {
+  return {
+    id: r.id,
+    title: r.title,
+    weight: r.weight,
+    tipo: r.tipo || 'procedencia',
+    cat: r.cat,
+    why: r.why || null,
+    fix: r.fix || null,
+    detail: r.detail || null,
+    sello: extras.sello || sello(r).etiqueta,
+    confianza: extras.confianza ?? sello(r).confianza,
+    prioridad: extras.prioridad ?? Number(prioridad(r).toFixed(3)),
+    samples: (r.samples || []).slice(0, 5),
+  }
+}
+
+export function armarPlan({ results, nameSwap, contrato, calidad }) {
   const fallan = (results || []).filter(r => r.failed).sort((a, b) => prioridad(b) - prioridad(a))
   const porCapa = new Map()
   for (const r of fallan) {
@@ -60,37 +77,13 @@ export function armarPlan({ results, nameSwap, contrato }) {
     .map(([capa, items]) => ({
       capa,
       peso: items.reduce((s, r) => s + r.weight, 0),
-      items: items.map(r => ({
-        id: r.id,
-        title: r.title,
-        weight: r.weight,
-        tipo: r.tipo || 'procedencia',
-        cat: r.cat,
-        why: r.why || null,
-        fix: r.fix || null,
-        detail: r.detail || null,
-        sello: sello(r).etiqueta,
-        confianza: sello(r).confianza,
-        prioridad: Number(prioridad(r).toFixed(3)),
-        samples: (r.samples || []).slice(0, 5),
-      })),
+      items: items.map(r => itemDe(r)),
     }))
 
-  const contratoFallos = (contrato?.checks || []).filter(c => c.failed).map(c => ({
-    id: c.id,
-    title: c.title,
-    weight: c.weight,
-    tipo: 'contrato',
-    cat: c.cat,
-    why: null,
-    fix: c.fix || null,
-    detail: c.detail || null,
-    sello: 'contrato de diseño',
-    confianza: 0.9,
-    prioridad: c.weight,
-    samples: (c.samples || []).slice(0, 5),
-  }))
-
+  const contratoFallos = (contrato?.checks || []).filter(c => c.failed).map(c => itemDe(
+    { ...c, tipo: 'contrato' },
+    { sello: 'contrato de diseño', confianza: 0.9, prioridad: c.weight },
+  ))
   if (contratoFallos.length) {
     capas.push({
       capa: 'Contrato de diseño',
@@ -99,11 +92,23 @@ export function armarPlan({ results, nameSwap, contrato }) {
     })
   }
 
+  const calidadFallos = (calidad?.checks || []).filter(c => c.failed).map(c => itemDe(
+    { ...c, tipo: 'calidad' },
+    { sello: 'calidad / a11y', confianza: 0.85, prioridad: c.weight },
+  ))
+  if (calidadFallos.length) {
+    capas.push({
+      capa: 'Calidad y producto',
+      peso: calidadFallos.reduce((s, r) => s + r.weight, 0),
+      items: calidadFallos,
+    })
+  }
+
   return {
     nameSwap: nameSwap?.failed
       ? { count: nameSwap.count, samples: (nameSwap.samples || []).slice(0, 8) }
       : null,
     capas,
-    totalHallazgos: fallan.length + contratoFallos.length,
+    totalHallazgos: fallan.length + contratoFallos.length + calidadFallos.length,
   }
 }

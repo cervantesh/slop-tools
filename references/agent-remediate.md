@@ -15,6 +15,10 @@ node scripts/slop-fix.mjs <ruta-del-proyecto> --profile producto --out REMEDIAR.
 node scripts/slop-fix.mjs <ruta> --brand "Nombre" --profile producto --out REMEDIAR.md
 # contrato en otro directorio (p. ej. el de slop-init):
 node scripts/slop-fix.mjs <ruta> --contrato ./sistema --out REMEDIAR.md
+# parches triviales primero (Inter, 300ms, transition:all):
+node scripts/slop-fix.mjs <ruta> --apply-safe --out REMEDIAR.md
+# CI / proceso duro:
+node scripts/slop-gate.mjs <ruta> --profile producto --min-score 70 --require-contrato
 ```
 
 Lee `REMEDIAR.md` completo. Ese archivo ya trae:

@@ -46,6 +46,9 @@ node scripts/slop-scan.mjs <ruta> --brand-colors "#5E6AD2"           # exenta la
 node scripts/slop-scan.mjs <ruta> --plan                             # que hacer y en que orden
 node scripts/slop-scan.mjs <ruta> --contrato                         # respeta DESIGN.md / tokens?
 node scripts/slop-scan.mjs <ruta> --contrato --fail-on-contrato      # gate de sistema en CI
+node scripts/slop-scan.mjs <ruta> --stats                            # historial local
+node scripts/slop-gate.mjs <ruta> --min-score 70 --require-contrato  # proceso enforceado
+node scripts/slop-fix.mjs <ruta> --apply-safe --out REMEDIAR.md     # brief + parches triviales
 ```
 
 **Para entregar un veredicto usa `--plan`, no la puntuación.** Ordena por peso × confianza de

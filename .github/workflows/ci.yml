@@ -1,0 +1,22 @@
+# CI del propio repositorio slop-tools.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Test suite
+        run: npm test
+      - name: Gate sobre fixture limpio
+        run: |
+          node scripts/slop-init.mjs /tmp/slop-ci-sistema --seed 1
+          node scripts/slop-gate.mjs /tmp/slop-ci-sistema --profile landing --min-score 90 --require-contrato

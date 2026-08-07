@@ -326,6 +326,22 @@ Va el último porque depende de P5 para poder demostrar que funciona.
 
 ---
 
+## P13 · Madurez ≥ 4 en capacidades bajas `[x]`
+
+> **Hecho.** Sube observabilidad, enforcement, packaging, producto/a11y, calidad, render
+> opt-in, init y contrato.
+>
+> | Capacidad | Antes | Ahora |
+> | --- | --- | --- |
+> | Observabilidad | 0 | historial + `--stats` |
+> | Enforcement E2E | 1–2 | `slop-gate` + workflows |
+> | Packaging | 2 | 1.2.0, CHANGELOG, `data/` en publish, CI |
+> | Producto / a11y | 2 | Q1–Q8, `--dominio` |
+> | “Buen diseño” (higiene) | 1–2 | eje calidad separado |
+> | Render | 1 | `slop-visual` opt-in |
+> | Remediación | 3 | `--apply-safe` |
+> | Init / contrato | 3 | tailwind theme, DS6–DS7 |
+
 ## P12 · Skill de remediación (`slop-fix`) `[x]`
 
 > **Hecho.** Detectar y lintar no bastan si el agente improvisa el arreglo.

@@ -375,6 +375,42 @@ export function comprobarContrato(contrato, files) {
     })
   }
 
+  // DS6 · reduced-motion si el contrato declara movimiento
+  {
+    const todo = files.map(f => f.text).join('\n')
+    const tieneMotion = contrato.duracion != null
+    const reduce = /prefers-reduced-motion/i.test(todo)
+    hallazgos.push({
+      id: 'DS6',
+      cat: 'Motion',
+      title: 'Contrato con movimiento sin prefers-reduced-motion',
+      weight: 2,
+      tipo: 'contrato',
+      failed: tieneMotion && !reduce,
+      detail: !tieneMotion ? 'contrato sin duración' : reduce ? 'reduced-motion presente' : 'falta bloque reduced-motion',
+      samples: [],
+      fix: 'El contrato declara movimiento: incluye @media (prefers-reduced-motion: reduce).',
+    })
+  }
+
+  // DS7 · focus-visible si hay controles en el árbol
+  {
+    const todo = files.map(f => f.text).join('\n')
+    const controles = /<button|type=["']submit|\.accion\b/i.test(todo)
+    const focus = /:focus-visible|focus-visible:/i.test(todo)
+    hallazgos.push({
+      id: 'DS7',
+      cat: 'Accesibilidad',
+      title: 'Controles sin :focus-visible en el sistema',
+      weight: 1,
+      tipo: 'contrato',
+      failed: controles && !focus,
+      detail: !controles ? 'sin controles' : focus ? 'focus-visible presente' : 'controles sin focus-visible',
+      samples: [],
+      fix: 'Añade :focus-visible a botones/acciones del sistema (tokens o componentes base).',
+    })
+  }
+
   const fallan = hallazgos.filter(h => h.failed)
   const maxW = hallazgos.reduce((a, h) => a + h.weight, 0)
   const lostW = fallan.reduce((a, h) => a + h.weight, 0)

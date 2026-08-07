@@ -52,6 +52,9 @@ Opciones:
 | `--plan` | Plan de remediación ordenado, con el arreglo de cada hallazgo |
 | `--contrato [ruta]` | Lint del sistema de diseño (`DESIGN.md` / tokens / `.slop-init.json`) |
 | `--fail-on-contrato` | Sale 1 si el contrato se rompe (CI) |
+| `--stats` | Resume el historial local `.slop/history.jsonl` |
+| `--dominio file` | Conceptos de negocio (uno por línea) que deben aparecer en el código |
+| `--min-calidad N` / `--fail-on-calidad` | Umbral del eje de higiene producto/a11y |
 | `--json` | Salida estructurada para CI |
 | `--min-score N` | Sale con código 1 si baja del umbral |
 | `--write-baseline` | Congela los hallazgos actuales como tolerados |
@@ -135,11 +138,28 @@ Comprueba escala, radios, tipografía, paleta y movimiento. Es un eje aparte: li
 
 ```bash
 node scripts/slop-fix.mjs ./src --brand "TuMarca" --profile producto --out REMEDIAR.md
+node scripts/slop-fix.mjs ./src --apply-safe   # solo parches triviales (Inter, 300ms, transition:all)
 ```
 
 Ordena hallazgos (peso × confianza ÷ esfuerzo), pega las restricciones del contrato y deja
 el comando de verificación. El procedimiento del agente está en
 `references/agent-remediate.md`.
+
+### Gate de proceso (CI)
+
+```bash
+node scripts/slop-gate.mjs ./src --profile producto --brand "TuMarca" \
+  --min-score 70 --require-contrato --since-baseline --fail-on-new-drift
+```
+
+Escribe `.slop/last-gate.json` y `.slop/REMEDIAR.md`. Exit 0 solo si todas las puertas pasan.
+
+### Observabilidad y render
+
+```bash
+node scripts/slop-scan.mjs ./src --stats          # historial local (sin red)
+node scripts/slop-visual.mjs ./sistema            # Playwright si está; si no, skip honesto
+```
 
 Dos propiedades que **se comprueban en `npm test`**, no se prometen:
 
