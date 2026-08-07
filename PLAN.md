@@ -72,7 +72,30 @@ disparar en el stack dominante es peso muerto que infla el denominador.
 
 ---
 
-## P3 · La contradicción de `C3` `[ ]`
+## P3 · La contradicción de `C3` `[x]`
+
+> **Hecho, y resuelto en dos movimientos en vez de uno.**
+>
+> `C3` no se elimina: se **reclasifica de procedencia a defecto**. La uniformidad de escala
+> sigue siendo disciplina de sistema de diseño válida, pero con J = 0,05 no dice nada sobre
+> quién lo hizo, y no tenía por qué seguir puntuando procedencia.
+>
+> En su lugar entra **`C4` · Escala de espaciado dispersa**, que codifica lo que los datos sí
+> muestran: en la banda controlada, lo generado usa 14 o más valores distintos de espaciado
+> el **90%** de las veces, frente al **35%** de lo humano. **J = 0,552 con intervalos
+> separados — la más alta del catálogo**, por encima de `UX2` (0,46).
+>
+> Es la primera regla derivada de la medición y no de la bibliografía.
+>
+> **Dos cautelas que van escritas en la propia regla:**
+>
+> 1. El umbral se ajustó sobre la misma muestra que lo valida. La cifra encogerá fuera de
+>    muestra, así que la salida no dice «validado» sino *«J 0,552 en muestra, sin validar
+>    fuera»*, y su confianza en el orden del plan es 0,7 y no 1.
+> 2. El umbral sólo vale si el escáner cuenta igual que el extractor que midió el corpus. Se
+>    movió la extracción a `scripts/lib/escala.mjs` como definición única, y
+>    `research/verifica-escala.mjs` comprueba que las cifras siguen coincidiendo —12
+>    proyectos, cero discrepancias—. Si alguien toca la extracción, el test lo dice.
 
 **El problema.** Las fuentes afirman que lo generado tiene radios y espaciados **uniformes**.
 La medición dice lo contrario, y con separación fuerte: AUC 0,277 en dominancia del radio,

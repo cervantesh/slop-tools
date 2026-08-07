@@ -115,6 +115,9 @@ function sello(c) {
   // Decirlo importa mas que la cifra.
   if (v.revalidar) return { etiqueta: 'reimplementada, pendiente de medir', confianza: 0.4 }
   if (v.estado === 'no_medible') return { etiqueta: 'no medible', confianza: 0.3 }
+  // Umbral ajustado sobre la misma muestra que lo valida: la cifra encogera
+  // fuera de muestra. Se reporta, pero no se le da confianza plena.
+  if (v.insample) return { etiqueta: `J ${String(v.J_banda).replace('.', ',')} en muestra, sin validar fuera`, confianza: 0.7 }
   if (v.separa) return { etiqueta: `validado J ${String(v.J_banda).replace('.', ',')}`, confianza: 1 }
   return { etiqueta: `medido J ${String(v.J_banda).replace('.', ',')}, no separa`, confianza: 0.6 }
 }
@@ -169,8 +172,19 @@ const swap = nameSwap()
 
 /* ── puntuacion ── */
 
-const maxW = results.reduce((a, r) => a + r.weight, 0) + (swap ? 3 : 0)
-const lostW = results.filter(r => r.failed).reduce((a, r) => a + r.weight, 0) + (swap?.failed ? 3 : 0)
+// La puntuacion la forman SOLO las reglas de procedencia. Las de defecto
+// —accesibilidad, rendimiento, legibilidad— se reportan aparte.
+//
+// Sin esta separacion habia una contradiccion: se afirmaba que el marcador mide
+// "cuanto se parece a lo generado" mientras comprobaciones de calidad pura, sin
+// discriminacion medida, le restaban puntos. Un proyecto humano con mal
+// contraste bajaba en un marcador de procedencia, que es justo lo que este
+// repositorio acusa a otras herramientas de hacer.
+const procedencia = results.filter(r => r.tipo !== 'defecto')
+const defectos = results.filter(r => r.tipo === 'defecto')
+
+const maxW = procedencia.reduce((a, r) => a + r.weight, 0) + (swap ? 3 : 0)
+const lostW = procedencia.filter(r => r.failed).reduce((a, r) => a + r.weight, 0) + (swap?.failed ? 3 : 0)
 const score = maxW ? Math.round(100 * (1 - lostW / maxW)) : 100
 const band = score >= 85 ? 'Limpio'
   : score >= 70 ? 'Restos localizados'
@@ -243,8 +257,12 @@ if (PLAN) {
   console.log(JSON.stringify({
     root: ROOT, profile: PROFILE, genre: GENRE, brand: BRAND || null,
     score, band, filesScanned: files.length, tokens: tokens.size,
-    checks: results.map(({ id, cat, title, weight, failed, detail, samples, origen, source }) =>
-      ({ id, cat, title, weight, failed, detail, origen, source, samples: samples || [] })),
+    checks: results.map(({ id, tipo, cat, title, weight, failed, detail, samples, origen, source }) =>
+      ({ id, tipo: tipo || 'procedencia', cat, title, weight, failed, detail, origen, source, samples: samples || [] })),
+    resumen: {
+      procedencia: { total: procedencia.length, fallan: procedencia.filter(r => r.failed).length },
+      defecto: { total: defectos.length, fallan: defectos.filter(r => r.failed).length },
+    },
     exemptedByGenre: exentasPorGenero.map(c => c.id),
     nameSwap: swap, baseline: baselineInfo, newFindings: nuevos, macro: firma, repeatsPrevious: repite,
   }, null, 2))
@@ -255,7 +273,8 @@ if (PLAN) {
   console.log(`  perfil: ${PROFILE}${GENRE ? ` · genero: ${GENRE}` : ''} · ${files.length} archivos · ${tokens.size} tokens de CSS`)
   console.log(`  ${declarativas.length} reglas declarativas + ${todas.length - declarativas.length} programaticas\n`)
   console.log(`  PUNTUACION  ${score}/100 — ${band}`)
-  console.log(`  ${fallan.length} de ${results.length} comprobaciones fallan`)
+  console.log(`  procedencia: ${procedencia.filter(r => r.failed).length} de ${procedencia.length} fallan  (forman la puntuacion)`)
+  console.log(`  defecto:     ${defectos.filter(r => r.failed).length} de ${defectos.length} fallan  (calidad, NO puntuan)`)
   if (exentasPorGenero.length) console.log(`  ${exentasPorGenero.length} exenta(s) por genero "${GENRE}": ${exentasPorGenero.map(c => c.id).join(', ')}`)
   console.log('')
 

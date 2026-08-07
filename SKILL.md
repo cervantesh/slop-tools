@@ -51,8 +51,8 @@ validación ÷ esfuerzo, y cada hallazgo lleva su sello: `validado J 0,41` desca
 sobre corpus etiquetado; `no medible` es una regla que no tuvo ocasión de disparar. Decirlo
 en la entrega es la diferencia entre un peritaje y una lista de opiniones.
 
-El escáner **no puntúa gusto**. Sólo cuenta patrones nombrados por las fuentes: 28 reglas
-declarativas en `data/rules.json` más 21 comprobaciones programáticas que exigen ratios,
+El escáner **no puntúa gusto**. Sólo cuenta patrones nombrados por las fuentes: 32 reglas
+declarativas en `data/rules.json` más 26 comprobaciones programáticas que exigen ratios,
 distribuciones, resolución de tokens de color o análisis estructural.
 
 **Sobre código existente, usa el trinquete en vez del umbral.** Un gate que falla desde el
@@ -111,6 +111,7 @@ La hipótesis rival que debes hacerles batir siempre está en `references/advers
 | `references/caveats.md` | Cuándo cada comprobación NO aplica |
 | `references/remediation.md` | Las 6 reglas correctivas y el orden de arreglo |
 | `references/adversarial.md` | Cómo montar un panel que no se engañe a sí mismo |
+| `references/hallmark-extracto.md` | **hallmark, vaciado.** 58 gates clasificados, umbrales, géneros y arquetipos |
 | `references/sources.md` | Bibliografía anotada con lo que aporta cada fuente |
 | `data/rules.json` | Catálogo declarativo. Añadir una regla no exige tocar código |
 | `scripts/slop-scan.mjs` | CLI y orquestación |

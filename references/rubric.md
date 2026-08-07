@@ -1,11 +1,24 @@
-# Rúbrica general — 39 comprobaciones
+# Rúbrica general — 42 comprobaciones
 
 Consolidada de cuatro fuentes publicadas (ver `sources.md`).
 
 > **Si auditas una aplicación, esta rúbrica no basta.** Está construida sobre fuentes que
 > miran webs de marketing. El bloque específico de producto —localización, microcopy,
 > estados, fidelidad al dominio y confianza— está en **`producto.md`**, y son otras 27
-> comprobaciones. Total del repositorio: **66**, de las cuales el escáner automatiza 23.
+> comprobaciones. Total del repositorio: **70**, de las cuales el escáner automatiza 58.
+
+## Dos advertencias antes de usarla
+
+**Los identificadores de este documento no son los del escáner.** Aquí `C3` es «rejilla de
+tres tarjetas» y en `data/rules.json` es «radio y padding uniformes». Esta rúbrica es el mapa
+conceptual de lo que dicen las fuentes; **el catálogo ejecutable y su espacio de nombres
+viven en `data/rules.json`**. Cuando quieras el ID de una regla que falló, míralo ahí.
+
+**Los pesos de estas tablas son los que sugieren las fuentes, no los medidos.** Varios se
+corrigieron al medir sobre corpus etiquetado y hoy son distintos: `A1` bajó de 3 a 2, `C1` de
+3 a 1, `D1` de 3 a 1, `E4` de 3 a 1, `D5` subió de 2 a 3, `B2` quedó en 0 y `F2` se eliminó
+por disparar al revés. **Los pesos vigentes están en `data/rules.json`; el porqué de cada
+cambio, en `research/RESULTADOS.md`.**
 
 Cada comprobación indica:
 
@@ -13,7 +26,7 @@ Cada comprobación indica:
 - **Humano** — exige mirar.
 - **Aplica a** — `landing` (web de marketing), `producto` (app), o `ambos`. Léelo: aplicar
   criterios de landing a una app operativa produce falsos positivos.
-- **Peso** — 3 alto, 2 medio, 1 bajo. Refleja cuánta señal aporta según las fuentes.
+- **Peso** — 3 alto, 2 medio, 1 bajo, **según las fuentes** (ver advertencia arriba).
 
 ---
 
@@ -59,7 +72,12 @@ color.
 | C8 | Anidamiento excesivo de tarjetas dentro de tarjetas | Humano | ambos | 1 | vibecodekit |
 
 **C1** es descrito por vibecodekit como el indicador aislado más fiable. El escáner mide
-densidad, no presencia: un borde plano no dice nada, cuarenta y ocho sí.
+densidad, no presencia: un borde plano no dice nada, cuarenta sí.
+
+> Medido, no lo es. `C1` da **J = 0,00** en la banda controlada. Además pasó diez meses
+> mirando sólo archivos CSS, donde un proyecto Tailwind no tiene bordes: hoy cuenta también
+> `border border-gray-200` y está **pendiente de remedir**. Puede que la fuente tuviera razón
+> y no lo supiéramos.
 
 ---
 
@@ -101,8 +119,14 @@ usuario final son señal fortísima de que la salida nunca se revisó.
 | # | Comprobación | Modo | Aplica a | Peso | Fuente |
 | --- | --- | --- | --- | --- | --- |
 | F1 | Estados hover que no hacen nada | Humano | ambos | 2 | 925, vibecodekit |
-| F2 | La misma animación de entrada en todos los elementos, o ninguna | Auto | ambos | 1 | 925, vibecodekit |
+| ~~F2~~ | ~~La misma animación de entrada en todos los elementos, o ninguna~~ | **eliminada** | — | — | 925, vibecodekit |
 | F3 | Botones que saltan en vez de acelerar | Humano | ambos | 1 | 925 |
+
+**`F2` se eliminó del escáner.** Medida, disparaba en el 30% de lo generado y el **61% de lo
+humano** (J = −0,31, intervalos separados): era un detector de diseño humano. La causa es
+diagnosticable — exigía cero `@keyframes` en archivos de estilo, y un proyecto Tailwind
+humano no tiene CSS propio. No medía ausencia de movimiento: medía **ausencia de CSS**.
+Se deja tachada aquí porque la fuente sigue afirmándola.
 
 ---
 
@@ -133,7 +157,7 @@ identificadores esté completo en un solo sitio.
 | L3 | Diacríticos repartidos de forma sistemática entre archivos | Auto | producto | 3 | propia |
 | T1 | Botones de solo icono sin nombre accesible | Auto | producto | 2 | LQA / a11y |
 
-Las otras 23 comprobaciones de `producto.md` —revisión por hablante nativo de la variante
+Las otras comprobaciones de `producto.md` —revisión por hablante nativo de la variante
 regional, microcopy, los cinco estados fuera del camino feliz, la prueba de los conceptos del
 negocio y los seis pilares de confianza— son humanas y viven en
 `templates/revision-humana.md`.

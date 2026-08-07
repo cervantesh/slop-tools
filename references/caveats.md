@@ -70,6 +70,39 @@ umbral y no lo es:
   `declaration-strict-value`, la expansión sólo actúa cuando no hay coincidencia exacta de
   propiedad.
 
+## Donde la bibliografía se equivoca, medido
+
+No es una sospecha: es el resultado de medir las reglas de las fuentes contra un corpus
+etiquetado. Tres correcciones que conviene tener presentes al leer cualquiera de esos
+artículos.
+
+**La uniformidad de escala está invertida.** Las fuentes afirman que lo generado tiene
+«padding idéntico, radio idéntico, alturas de tarjeta idénticas». Medido en la banda de
+tamaño controlada, ocurre lo contrario y con separación fuerte:
+
+| Rasgo | AUC | Dirección |
+| --- | --- | --- |
+| Espaciados distintos | 0,767 | lo generado tiene **más** variedad |
+| Radios distintos | 0,753 | lo generado tiene **más** variedad |
+| Dominancia del radio principal | 0,277 | lo generado es **menos** uniforme |
+
+Lo generado esparce la escala de Tailwind (`rounded-sm`, `rounded-lg`, `rounded-2xl`…)
+mientras lo humano se concentra en menos valores. Lo que discrimina no es la uniformidad sino
+**escaparse de la escala por los extremos**.
+
+**El indicio más citado rinde poco.** El gradiente morado-azul, que las cuatro fuentes
+repiten como el tell principal, mide **J = 0,13** con intervalos solapados: 35% en generado
+frente a 22% en humano. No es ruido, pero no justificaba el peso máximo que le habíamos dado
+por consenso de artículos.
+
+**Y una regla detectaba lo contrario de lo que decía.** «Sin movimiento intencionado»
+disparaba en el 61% del diseño humano y el 30% del generado. Exigía cero `@keyframes` en
+archivos de estilo, y un proyecto Tailwind humano no tiene CSS propio: medía ausencia de CSS.
+
+> La lección general, y aplica a cualquier regla que copies de un artículo: **una regla puede
+> estar midiendo el stack en vez del origen.** Si la clase negativa usa otra tecnología que la
+> positiva, cualquier diferencia técnica se lee como diferencia de autoría.
+
 ## Las puntuaciones no son comparables entre versiones
 
 Añadir comprobaciones cambia el denominador. Un proyecto que sacaba 32 puede sacar 53 sin

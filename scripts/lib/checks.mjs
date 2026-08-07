@@ -5,6 +5,7 @@
 import { find, all, esProsa, lineaDe, clasesUtilidad, findClases } from './util.mjs'
 import { neutrosPlanos, paresBajoContraste, botonInvisible, diversidadDeTono } from './color.mjs'
 import { navPorDefecto, footerPorDefecto, cromoFalso, kickerEnDosColumnas, esqueletoDashboard } from './structure.mjs'
+import { escalas } from './escala.mjs'
 
 // Arreglo y estado de validacion de cada comprobacion programatica. Van aparte
 // del cuerpo para que las funciones queden legibles; las cifras de `validado`
@@ -16,6 +17,14 @@ const META = {
   B2: { fix: 'Una sola familia bien usada es disciplina en producto; en marca, empareja.', validado: { J_banda: -0.06, separa: false } },
   C1: { fix: 'Separa con espacio primero, luego con un escalon de luminancia del 3-5%. El filete gris es el ultimo recurso.', validado: { J_banda: 0, separa: false, estado: 'no_medible' , revalidar: 'sustrato ampliado a clases de utilidad tras la medicion' } },
   C3: { fix: 'Que el radio y el padding senalen la funcion del elemento en vez de ser constantes.', validado: { J_banda: 0.05, separa: false } },
+  C4: {
+    fix: 'Declara una escala de espaciado y quedate en ella. Catorce valores distintos no es un sistema, es la escala de Tailwind usada a discrecion.',
+    validado: {
+      J_banda: 0.552, pos: 0.90, neg: 0.35, separa: true, insample: true,
+      n: { pos: 20, neg: 23 },
+      decision: 'J 0,55 con intervalos separados, la mas alta del catalogo. Pero el umbral se ajusto sobre la MISMA muestra que la valida: la cifra encogera fuera de muestra.',
+    },
+  },
   E4: { fix: 'Cinco descripciones distintas, o ninguna. Una repetida cinco veces es peor que el vacio.', validado: { J_banda: 0.04, separa: false } },
   L1: { fix: 'Resuelve el plural con un condicional o con Intl.PluralRules.', validado: { J_banda: 0.40, separa: false } },
   L3: { fix: 'Restaura los diacriticos en los archivos que salieron en ASCII plano.', validado: { J_banda: 0.01, separa: false, estado: 'no_medible' } },
@@ -33,12 +42,30 @@ const META = {
 }
 
 export function programaticas(ctx) {
-  const { styleFiles, codeFiles, tokens, blks, cssTexto } = ctx
+  const { files, styleFiles, codeFiles, tokens, blks, cssTexto } = ctx
   const clases = clasesUtilidad(codeFiles)
+  const textoTodo = all(files)
 
   return aplicarMeta([
 
-    { id: 'A2', cat: 'Color', weight: 2, applies: 'landing', title: 'Dark mode permanente por defecto',
+    // La inversa de C3, y la unica regla del catalogo derivada de la medicion
+    // en vez de la bibliografia. Las fuentes decian uniformidad; los datos
+    // dicen dispersion: en la banda controlada, lo generado usa 14+ valores
+    // distintos de espaciado el 90% de las veces frente al 35% de lo humano.
+    //
+    // Usa el extractor compartido de escala.mjs a proposito: el umbral se
+    // ajusto sobre las cifras que produce ese extractor y no transfiere a otro.
+    // research/verifica-escala.mjs comprueba que siguen coincidiendo.
+    { id: 'C4', tipo: 'procedencia', cat: 'Layout', weight: 3, applies: 'ambos',
+      title: 'Escala de espaciado dispersa',
+      run() {
+        const { espacios } = escalas(cssTexto, textoTodo)
+        const distintos = new Set(espacios).size
+        return { failed: distintos >= 14,
+          detail: `${distintos} valores distintos de espaciado sobre ${espacios.length} declaraciones (umbral 14)` }
+      } },
+
+    { id: 'A2', tipo: 'procedencia', cat: 'Color', weight: 2, applies: 'landing', title: 'Dark mode permanente por defecto',
       exempt: ['atmospheric'],
       run() {
         const dark = /color-scheme:\s*dark\b/.test(cssTexto)
@@ -47,7 +74,7 @@ export function programaticas(ctx) {
           detail: dark ? (luz ? 'oscuro con alternativa clara' : 'solo oscuro, sin alternativa') : 'no fija esquema oscuro' }
       } },
 
-    { id: 'A3', cat: 'Color', weight: 2, applies: 'ambos', title: 'Glassmorphism indiscriminado',
+    { id: 'A3', tipo: 'procedencia', cat: 'Color', weight: 2, applies: 'ambos', title: 'Glassmorphism indiscriminado',
       run() {
         const css = find(/backdrop-filter\s*:/i, styleFiles)
         const util = findClases(/\bbackdrop-blur(-\w+)?\b/i, codeFiles)
@@ -61,7 +88,7 @@ export function programaticas(ctx) {
           samples: r.samples }
       } },
 
-    { id: 'B1', cat: 'Tipografia', weight: 2, applies: 'ambos', title: 'Familia por defecto de las herramientas de IA',
+    { id: 'B1', tipo: 'procedencia', cat: 'Tipografia', weight: 2, applies: 'ambos', title: 'Familia por defecto de las herramientas de IA',
       run() {
         const m = cssTexto.match(/font-family:\s*["']?(Inter|Poppins|Geist|Space Grotesk|Roboto|Open Sans)\b/i)
         return { failed: !!m, detail: m ? `principal: ${m[1]}` : 'familia no estandar' }
@@ -70,7 +97,7 @@ export function programaticas(ctx) {
     // Peso a 0: J -0.06. Dispara en el 85% de lo generado y el 91% de lo humano.
     // No discrimina en absoluto. Se conserva como observacion informativa porque
     // sigue siendo un criterio de diseno valido, pero no puntua.
-    { id: 'B2', cat: 'Tipografia', weight: 0, applies: 'landing', title: 'Sin pareja tipografica',
+    { id: 'B2', tipo: 'defecto', cat: 'Tipografia', weight: 1, applies: 'landing', title: 'Sin pareja tipografica',
       run() {
         const stacks = new Set([...cssTexto.matchAll(/font-family:\s*([^;]+);/g)]
           .map(m => m[1].split(',')[0].trim().replace(/["']/g, '').toLowerCase())
@@ -83,7 +110,7 @@ export function programaticas(ctx) {
     // Peso bajado de 3 a 1: J 0.00 en la banda controlada. La fuente lo llamaba
     // "el indicador aislado mas fiable"; sobre proyectos Tailwind reales apenas
     // hay CSS donde pueda disparar. Ver research/RESULTADOS.md §3.3.
-    { id: 'C1', cat: 'Layout', weight: 1, applies: 'ambos', title: 'Borde gris plano de 1px',
+    { id: 'C1', tipo: 'procedencia', cat: 'Layout', weight: 1, applies: 'ambos', title: 'Borde gris plano de 1px',
       run() {
         const corto = find(/border(-(top|right|bottom|left))?:\s*1px\s+solid/i, styleFiles)
         let largo = 0
@@ -105,7 +132,18 @@ export function programaticas(ctx) {
           samples: [...corto.samples, ...muestrasLargo, ...util.samples] }
       } },
 
-    { id: 'C3', cat: 'Layout', weight: 2, applies: 'ambos', title: 'Radio y padding uniformes',
+    // RECLASIFICADA de procedencia a defecto.
+    //
+    // Codificaba la hipotesis de las fuentes —"la IA produce radios y
+    // espaciados uniformes"— y la medicion la refuto con separacion fuerte:
+    // AUC 0,277 en dominancia del radio, o sea que lo GENERADO es MENOS
+    // uniforme. C3 mide J = 0,05: no dice nada sobre procedencia.
+    //
+    // No se elimina porque la uniformidad si es un criterio de disciplina de
+    // sistema de diseno. Sigue reportandose, pero fuera de la puntuacion de
+    // procedencia. La regla que si discrimina es su inversa, C4.
+    // research/RESULTADOS.md §3.5
+    { id: 'C3', tipo: 'defecto', cat: 'Layout', weight: 2, applies: 'ambos', title: 'Radio y padding uniformes',
       run() {
         const dominancia = (re) => {
           const vals = [...cssTexto.matchAll(re)].map(m => m[1].trim())
@@ -129,7 +167,7 @@ export function programaticas(ctx) {
     // Peso bajado de 3 a 1: J 0.04 en banda. Dispara en el 100% de los proyectos
     // generados Y en el 96% de los humanos. Repetir cadenas es universal; mide
     // calidad, no procedencia. Ver research/RESULTADOS.md §3.3.
-    { id: 'E4', cat: 'Copy', weight: 1, applies: 'ambos', title: 'Copy duplicado literalmente',
+    { id: 'E4', tipo: 'procedencia', cat: 'Copy', weight: 1, applies: 'ambos', title: 'Copy duplicado literalmente',
       run() {
         const seen = new Map()
         for (const f of codeFiles) {
@@ -166,7 +204,7 @@ export function programaticas(ctx) {
     // implementacion CORRECTA del plural —un ternario que devuelve
     // `${n} plazas` en la rama del plural— contiene literalmente el patron.
     // Solo cuenta si en esa linea no hay condicional ni ayudante de plural.
-    { id: 'L1', cat: 'Localizacion', weight: 3, applies: 'producto', title: 'Plural sin resolver junto a un contador',
+    { id: 'L1', tipo: 'procedencia', cat: 'Localizacion', weight: 3, applies: 'producto', title: 'Plural sin resolver junto a un contador',
       run() {
         const PATRON = /\{[^}]{1,40}\}\s+[a-záéíóúñ]{3,}s\b/i
         const RESUELVE = /\?|===\s*1|==\s*1|\bplural|\bcount\s*===|\bIntl\.PluralRules/
@@ -187,7 +225,7 @@ export function programaticas(ctx) {
     // es especifica del espanol y el corpus de validacion es casi todo ingles, asi
     // que nunca tuvo oportunidad de disparar. Bajarle el peso por eso seria
     // confundir "no medido" con "no funciona".
-    { id: 'L3', cat: 'Localizacion', weight: 3, applies: 'producto', title: 'Diacriticos repartidos de forma sistematica',
+    { id: 'L3', tipo: 'procedencia', cat: 'Localizacion', weight: 3, applies: 'producto', title: 'Diacriticos repartidos de forma sistematica',
       run() {
         const ES = /\b(de|la|el|los|las|para|con|tu|servicio|usuario|nombre|precio)\b/i
         const stats = []
@@ -210,7 +248,7 @@ export function programaticas(ctx) {
     // Peso bajado de 2 a 1: J -0.07 en banda. Dispara algo mas en proyectos
     // humanos que generados. Sigue siendo un defecto real de accesibilidad, pero
     // no dice nada sobre procedencia.
-    { id: 'T1', cat: 'Accesibilidad', weight: 1, applies: 'producto', title: 'Botones de solo icono sin nombre accesible',
+    { id: 'T1', tipo: 'defecto', cat: 'Accesibilidad', weight: 1, applies: 'producto', title: 'Botones de solo icono sin nombre accesible',
       run() {
         const out = []
         let total = 0
@@ -233,7 +271,7 @@ export function programaticas(ctx) {
     // Ojo: la regla original casa la cadena COMPLETA. Aqui se amplia a la
     // cadena completa tras normalizar, que es el mismo perfil de falsos
     // positivos; ampliarlo a subcadena dispararia los FP.
-    { id: 'T2', cat: 'Copy', weight: 1, applies: 'ambos', title: 'Enlaces y botones con texto vacio',
+    { id: 'T2', tipo: 'defecto', cat: 'Copy', weight: 1, applies: 'ambos', title: 'Enlaces y botones con texto vacio',
       run() {
         const VACIAS = new Set(['click here', 'here', 'link', 'a link', 'learn more',
           'clic aqui', 'aqui', 'enlace', 'saber mas', 'leer mas', 'ver mas', 'mas informacion'])
@@ -251,7 +289,7 @@ export function programaticas(ctx) {
 
     /* ── color resuelto sobre tokens ── */
 
-    { id: 'K1', cat: 'Color', weight: 2, applies: 'ambos', title: 'Neutros de croma cero',
+    { id: 'K1', tipo: 'procedencia', cat: 'Color', weight: 2, applies: 'ambos', title: 'Neutros de croma cero',
       exempt: ['modern-minimal'],
       run() {
         const hits = neutrosPlanos(tokens)
@@ -263,7 +301,7 @@ export function programaticas(ctx) {
     // Peso bajado de 3 a 2: J 0.01, y con poca potencia — exige `color` y
     // `background` en la misma regla CSS, que un proyecto Tailwind casi nunca
     // tiene. No refutada: poco medible. Sigue valiendo como control de a11y.
-    { id: 'K2', cat: 'Color', weight: 2, applies: 'ambos', title: 'Pares texto/fondo por debajo de 4.5:1',
+    { id: 'K2', tipo: 'defecto', cat: 'Color', weight: 2, applies: 'ambos', title: 'Pares texto/fondo por debajo de 4.5:1',
       run() {
         const hits = paresBajoContraste(blks, tokens)
         return { failed: hits.length > 0,
@@ -274,7 +312,7 @@ export function programaticas(ctx) {
     // Cero disparos en 71 proyectos porque exigia `color` y `background` en la
     // misma regla CSS. En Tailwind el par vive en la cadena de clases:
     // `bg-slate-900 text-slate-900`. Se anade ese sustrato.
-    { id: 'K3', cat: 'Color', weight: 3, applies: 'ambos', title: 'Texto de boton indistinguible del relleno',
+    { id: 'K3', tipo: 'defecto', cat: 'Color', weight: 1, applies: 'ambos', title: 'Texto de boton indistinguible del relleno',
       run() {
         const hits = botonInvisible(blks, tokens)
         const util = findClases(/\bbg-(black|white)\b(?=[^"']*\btext-\1\b)|\bbg-(\w+)-(\d{2,3})\b(?=[^"']*\btext-\2-\3\b)/i, codeFiles)
@@ -284,17 +322,91 @@ export function programaticas(ctx) {
           samples: [...hits.slice(0, 3).map(h => ({ file: h.file, line: 1, text: `${h.selector} — dL=${h.dL} dC=${h.dC}` })), ...util.samples] }
       } },
 
-    { id: 'K4', cat: 'Color', weight: 1, applies: 'ambos', title: 'Paleta sin foco: demasiadas familias de tono',
+    { id: 'K4', tipo: 'procedencia', cat: 'Color', weight: 1, applies: 'ambos', title: 'Paleta sin foco: demasiadas familias de tono',
       run() {
         const d = diversidadDeTono(tokens)
         return { failed: d.familias > 4,
           detail: `${d.tonos} tokens cromaticos en ${d.familias} familia(s) de tono (cubos de 30 grados)` }
       } },
 
+    /* ── extraidas de hallmark tras la medicion ──
+       Todas con peso 1 y sin validar contra el corpus. Se anaden porque son
+       comprobaciones de DEFECTO —accesibilidad, rendimiento, legibilidad— cuyo
+       valor no depende de que discriminen procedencia. No suben la puntuacion
+       de deteccion; cierran huecos de calidad. */
+
+    { id: 'HM1', tipo: 'defecto', cat: 'Tipografia', weight: 1, applies: 'ambos', title: 'Titulares en italica',
+      run() {
+        const hits = []
+        for (const b of blks) {
+          if (!/(^|[\s,>+~])(h[1-6]|[.#][\w-]*(title|heading|display|hero)[\w-]*)\b/i.test(b.selector)) continue
+          if (!/font-style:\s*italic/i.test(b.cuerpo)) continue
+          hits.push({ file: b.file, line: lineaDe(b.texto, b.indice), text: b.selector.slice(0, 80) })
+        }
+        return { failed: hits.length > 0,
+          detail: `${hits.length} titular(es) en italica`,
+          samples: hits.slice(0, 4) }
+      } },
+
+    { id: 'HM7', tipo: 'defecto', cat: 'Tipografia', weight: 1, applies: 'ambos', title: 'Mas de tres familias tipograficas',
+      run() {
+        const fam = new Set([...cssTexto.matchAll(/font-family:\s*([^;}]+)/gi)]
+          .map(m => m[1].split(',')[0].trim().replace(/["']/g, '').toLowerCase())
+          .filter(s => s && !s.startsWith('var(') && s !== 'inherit' && s !== 'initial'))
+        return { failed: fam.size > 3,
+          detail: `${fam.size} familia(s): ${[...fam].slice(0, 6).join(', ')}` }
+      } },
+
+    { id: 'HM8', tipo: 'defecto', cat: 'Motion', weight: 1, applies: 'ambos', title: 'Animacion sin alternativa de movimiento reducido',
+      run() {
+        const anima = find(/@keyframes|animation\s*:/i, styleFiles).total
+        const respeta = /prefers-reduced-motion/i.test(cssTexto)
+        return { failed: anima > 0 && !respeta,
+          detail: anima ? `${anima} declaracion(es) de animacion, ${respeta ? 'con' : 'SIN'} bloque prefers-reduced-motion` : 'sin animacion' }
+      } },
+
+    // DESCARTADA · HM9 "sin overflow-x: clip en html y body" (hallmark gate 34).
+    //
+    // Se implemento y se retiro el mismo dia. Afirmaba un defecto a partir de la
+    // AUSENCIA DE UNA PROFILAXIS: el gate original exige que no haya scroll
+    // horizontal entre 320 y 1920px —cosa que solo se sabe renderizando— y
+    // prescribe overflow-x: clip como arreglo. Marcar la falta del arreglo hace
+    // disparar la regla en casi todo proyecto bien construido que sencillamente
+    // no desborda.
+    //
+    // Es el modo de fallo de E4, medido: disparar en el 100% de una clase y el
+    // 96% de la otra no es detectar, es ruido con peso.
+
+    { id: 'HM10', tipo: 'defecto', cat: 'Tipografia', weight: 1, applies: 'ambos', title: 'Medida de prosa fuera de 45-75ch',
+      run() {
+        const fuera = []
+        for (const m of cssTexto.matchAll(/max-width:\s*(\d+(?:\.\d+)?)ch/gi)) {
+          const v = parseFloat(m[1])
+          if (v < 45 || v > 75) fuera.push(`${v}ch`)
+        }
+        return { failed: fuera.length > 0,
+          detail: fuera.length ? `${fuera.length} medida(s) fuera de rango: ${[...new Set(fuera)].slice(0, 5).join(', ')}` : 'sin medidas en ch fuera de rango' }
+      } },
+
+    { id: 'HM12', tipo: 'defecto', cat: 'Tipografia', weight: 1, applies: 'ambos', title: 'Mayusculas de display con interlineado bajo 1.0',
+      run() {
+        // Las mayusculas no tienen descendentes: por debajo de 1.0 las cabezas
+        // de una linea chocan con la base de la anterior al partirse el titular.
+        const hits = []
+        for (const b of blks) {
+          if (!/text-transform:\s*uppercase/i.test(b.cuerpo)) continue
+          const m = b.cuerpo.match(/line-height:\s*(0?\.\d+)/i)
+          if (m && parseFloat(m[1]) < 1) {
+            hits.push({ file: b.file, line: lineaDe(b.texto, b.indice), text: `${b.selector.slice(0, 60)} — line-height ${m[1]}` })
+          }
+        }
+        return { failed: hits.length > 0, detail: `${hits.length} bloque(s) en mayusculas con interlineado < 1.0`, samples: hits.slice(0, 4) }
+      } },
+
     /* ── huellas estructurales ── */
 
     // El hairline puede venir del CSS o de la clase `border-b`.
-    { id: 'S1', cat: 'Estructura', weight: 2, applies: 'landing', title: 'Nav por defecto',
+    { id: 'S1', tipo: 'procedencia', cat: 'Estructura', weight: 2, applies: 'landing', title: 'Nav por defecto',
       run() {
         const { hits } = navPorDefecto(codeFiles, cssTexto)
         const hairline = /border-bottom:\s*1px\s+solid/i.test(cssTexto)
@@ -308,7 +420,7 @@ export function programaticas(ctx) {
     // componentes no lo expone al regex — las columnas suelen salir de un
     // .map() sobre datos. Se ancla en las cuatro etiquetas canonicas juntas,
     // que es la forma del contenido y no su marcado.
-    { id: 'S2', cat: 'Estructura', weight: 2, applies: 'landing', title: 'Footer de cuatro columnas canonicas',
+    { id: 'S2', tipo: 'procedencia', cat: 'Estructura', weight: 2, applies: 'landing', title: 'Footer de cuatro columnas canonicas',
       run() {
         const hits = footerPorDefecto(codeFiles)
         const CANON = [/\bproducto?\b/i, /\b(company|empresa|compa)/i, /\b(resources|recursos)\b/i, /\blegal\b/i]
@@ -323,13 +435,13 @@ export function programaticas(ctx) {
           samples: [...hits.slice(0, 2), ...porContenido.slice(0, 2)] }
       } },
 
-    { id: 'S3', cat: 'Estructura', weight: 2, applies: 'ambos', title: 'Cromo falso dibujado a mano',
+    { id: 'S3', tipo: 'procedencia', cat: 'Estructura', weight: 2, applies: 'ambos', title: 'Cromo falso dibujado a mano',
       run() {
         const hits = cromoFalso(codeFiles, cssTexto)
         return { failed: hits.length > 0, detail: `${hits.length} senal(es) de navegador, movil o terminal simulados`, samples: hits.slice(0, 4) }
       } },
 
-    { id: 'S4', cat: 'Estructura', weight: 1, applies: 'landing', title: 'Kicker y titular en varias columnas',
+    { id: 'S4', tipo: 'procedencia', cat: 'Estructura', weight: 1, applies: 'landing', title: 'Kicker y titular en varias columnas',
       run() {
         const { hits } = kickerEnDosColumnas(codeFiles, cssTexto)
         const gridMulti = /grid-template-columns:\s*(?:repeat\(\s*[2-9]|[^;]*\b(?:1fr|auto)\b[^;]*\b(?:1fr|auto)\b)/i.test(cssTexto)
@@ -339,7 +451,7 @@ export function programaticas(ctx) {
           samples: hits.slice(0, 4) }
       } },
 
-    { id: 'S5', cat: 'Estructura', weight: 2, applies: 'producto', title: 'Esqueleto de dashboard por defecto',
+    { id: 'S5', tipo: 'procedencia', cat: 'Estructura', weight: 2, applies: 'producto', title: 'Esqueleto de dashboard por defecto',
       run() {
         const p = esqueletoDashboard(codeFiles)
         return { failed: p.length >= 3,

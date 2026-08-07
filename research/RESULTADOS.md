@@ -277,6 +277,88 @@ falta de oportunidad de disparo sería el mismo error que aceptarlas sin medida.
 
 ---
 
+## 7 bis · Segunda ronda
+
+Se volvió a medir tras dos cambios que invalidaban las cifras de la primera pasada.
+
+### Cambio 1 — se separó procedencia de defecto
+
+Había una contradicción de fondo: el marcador decía medir «cuánto se parece a lo generado»,
+pero comprobaciones de calidad pura —contraste, nombre accesible, movimiento reducido— le
+restaban puntos. Un proyecto humano con mal contraste bajaba en un marcador de procedencia.
+
+Ahora cada regla lleva `tipo`:
+
+| Tipo | Cuántas | Efecto |
+| --- | --- | --- |
+| `procedencia` | 43 | Forman la puntuación |
+| `defecto` | 14 | Se reportan aparte y **no puntúan** |
+
+El criterio: **el propósito clasifica, la evidencia promueve.** Una regla de calidad con
+J ≥ 0,20 o intervalos separados cuenta como procedencia, porque demostró llevar señal —así
+`UX6` (console.log olvidado, J 0,38) sigue puntuando pese a ser un defecto de código.
+
+**La separación evitó un daño real.** `HM8` —animación sin `prefers-reduced-motion`— mide
+J = **−0,16**: dispara en el 10% de lo generado y en el **26% de lo humano**. Los proyectos
+generados suelen incluir el bloque porque está en el material del que aprendieron; los
+humanos con prisa lo omiten. Como señal de procedencia está invertida; como comprobación de
+accesibilidad sigue siendo válida. Clasificada como defecto, no contamina la puntuación.
+
+### Cambio 2 — el sustrato se amplió a clases de utilidad
+
+Varias reglas sólo miraban declaraciones CSS. En un proyecto Tailwind el estilo vive en
+clases de utilidad, así que no tenían ocasión de disparar. Al ampliar el sustrato,
+**cinco reglas pasaron de no medibles a medibles**, y el resultado se reparte:
+
+| Regla | Antes | Ahora | Lectura |
+| --- | --- | --- | --- |
+| `A3` glassmorphism | 0% / 0% | **20% / 0%** · J **0,20** | Rescatada: sí discrimina |
+| `S1` nav por defecto | 0% / 0% | 20% / 4% · J 0,16 | Rescatada, señal moderada |
+| `S5` esqueleto de dashboard | 0% / 0% | 10% / 0% · J 0,10 | Rescatada, señal débil |
+| `K3` botón invisible | 0% / 0% | 20% / **26%** · J **−0,06** | Medible, y **no discrimina** |
+| `C1` bordes planos | 0% / 0% | 20% / 22% · J −0,02 | Medible, y **no discrimina** |
+
+Es un resultado honesto en las dos direcciones: ampliar el sustrato no fue una forma de
+inflar el catálogo, porque dos de las cinco quedaron refutadas en cuanto tuvieron
+oportunidad de disparar.
+
+### Las nueve reglas extraídas de hallmark, medidas por primera vez
+
+| Regla | pos | neg | J banda | Veredicto |
+| --- | --- | --- | --- | --- |
+| `HM4` hover-scale uniforme | 25% | 0% | **0,25** | La mejor del lote. Peso 1 → 2 |
+| `HM2` transición sobre layout | 10% | 4% | 0,06 | Débil |
+| `HM12`, `HM5`, `HM1`, `HM3` | ≤4% | ≤4% | 0,00 | Sin oportunidad de disparar en este corpus |
+| `HM7` más de tres familias | 0% | 4% | −0,04 | Sin señal |
+| `HM10` medida de prosa | 0% | 4% | −0,04 | Sin señal |
+| `HM8` sin movimiento reducido | 10% | 26% | **−0,16** | **Invertida** — ver arriba |
+
+De nueve reglas importadas, **una lleva señal**. Es la tasa que cabía esperar y es el
+argumento para no seguir importando catálogos ajenos sin medirlos.
+
+### Ajustes aplicados en esta ronda
+
+| Regla | de → a | Motivo |
+| --- | --- | --- |
+| `HM4` | 1 → 2 | J 0,25, medida por primera vez |
+| `K3` | 3 → 1 | J −0,06 ya siendo medible |
+| `B2` | 0 → 1 | El peso 0 era un parche; como defecto no puntúa igualmente |
+
+### Sesgo del corpus que esto destapa
+
+**El corpus es Tailwind por construcción.** La clase positiva son salidas de lovable, v0 y
+bolt, que usan Tailwind por defecto; la negativa se seleccionó *exigiendo* Tailwind para
+emparejar el stack. 62 de los 99 proyectos del manifiesto lo llevan.
+
+Eso significa que **las reglas que dependen del sustrato de clases de utilidad se están
+midiendo sobre una población que les es favorable**. `A3` con J 0,20 lo es sobre proyectos
+Tailwind; sobre una población general con CSS-in-JS, módulos CSS o estilos de componente su
+rendimiento es desconocido.
+
+No invalida la medición —el emparejamiento por stack era necesario para controlar el
+confundido de época— pero acota a qué población se puede extrapolar: **proyectos web
+modernos con Tailwind**, que es donde vive el problema hoy, y no más allá.
+
 ## 7 · Lo que esto no responde
 
 Sigue en pie la distinción que abre `SKILL.md`: incluso una regla con J alta mide
