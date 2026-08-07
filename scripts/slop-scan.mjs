@@ -35,6 +35,7 @@ const PROFILE = flag('--profile') || 'ambos'
 const GENRE = flag('--genre') || null
 const RULES_PATH = flag('--rules') || join(AQUI, '..', 'data', 'rules.json')
 const AS_JSON = has('--json')
+const PLAN = has('--plan')
 const MIN_SCORE = flag('--min-score') ? Number(flag('--min-score')) : null
 const WRITE_BASELINE = has('--write-baseline')
 const SINCE_BASELINE = has('--since-baseline')
@@ -101,8 +102,34 @@ function correrDeclarativa(regla) {
 const declarativas = CATALOGO.rules.map(r => ({
   id: r.id, cat: r.category, title: r.name, weight: r.weight ?? 2,
   applies: r.applies || 'ambos', exempt: r.exempt || [], why: r.why, fix: r.fix, source: r.source,
+  validado: r.validado || null,
   origen: 'json', run: () => correrDeclarativa(r),
 }))
+
+// Estado epistemico de cada comprobacion, para que la salida distinga lo medido
+// de lo opinado. Sale de research/RESULTADOS.md.
+function sello(c) {
+  const v = c.validado
+  if (!v) return { etiqueta: 'sin medir', confianza: 0.4 }
+  if (v.estado === 'no_medible') return { etiqueta: 'no medible', confianza: 0.3 }
+  if (v.separa) return { etiqueta: `validado J ${String(v.J_banda).replace('.', ',')}`, confianza: 1 }
+  return { etiqueta: `medido J ${String(v.J_banda).replace('.', ',')}, no separa`, confianza: 0.6 }
+}
+
+// El esfuerzo no esta en el catalogo: se deriva de la categoria. Es una
+// heuristica declarada, no una medicion — sirve para ordenar el plan, no para
+// prometer plazos.
+const ESFUERZO = {
+  Copy: 1, Localizacion: 1, Imagen: 2, Calidad: 2,
+  Color: 2, Tipografia: 2, Motion: 2, Accesibilidad: 2,
+  Layout: 3, Estructura: 3,
+}
+const CAPA = {
+  Copy: 'Contenido y datos', Localizacion: 'Contenido y datos',
+  Imagen: 'Imagen', Accesibilidad: 'Accesibilidad',
+  Color: 'Sistema visual', Tipografia: 'Sistema visual', Layout: 'Sistema visual',
+  Motion: 'Sistema visual', Estructura: 'Arquitectura', Calidad: 'Higiene del codigo',
+}
 
 const todas = [...declarativas, ...programaticas(ctx).map(c => ({ ...c, origen: 'js', title: c.title }))]
 
@@ -163,7 +190,53 @@ if (WRITE_LOG) bl.escribirLog(ROOT, firma, score, `slop-scan ${score}/100 · ${b
 
 /* ── salida ── */
 
-if (AS_JSON) {
+// Prioridad de un hallazgo: cuanto pesa, corregido por cuanto sabemos que
+// importa de verdad, dividido por lo que cuesta arreglarlo. Que la confianza
+// entre en el numerador es deliberado: el plan debe apoyarse en lo medido.
+const prioridad = r => (r.weight * sello(r).confianza) / (ESFUERZO[r.cat] || 2)
+
+if (PLAN) {
+  const fallan = results.filter(r => r.failed).sort((a, b) => prioridad(b) - prioridad(a))
+  console.log(`\n  PLAN DE REMEDIACION · ${ROOT}`)
+  console.log(`  Puntuacion ${score}/100 — ${band} · ${fallan.length} hallazgo(s)\n`)
+
+  if (swap?.failed) {
+    console.log('  ANTES DE NADA · prueba del cambio de nombre')
+    console.log(`  ${swap.count} titular(es) funcionarian igual para un competidor. Ninguna`)
+    console.log('  correccion de sistema visual arregla eso.')
+    for (const s of swap.samples.slice(0, 3)) console.log(`      ${s.file}:${s.line}  "${s.text}"`)
+    console.log('')
+  }
+
+  const capas = new Map()
+  for (const r of fallan) {
+    const capa = CAPA[r.cat] || 'Otros'
+    if (!capas.has(capa)) capas.set(capa, [])
+    capas.get(capa).push(r)
+  }
+  const ordenCapas = [...capas.entries()]
+    .sort((a, b) => b[1].reduce((s, r) => s + prioridad(r), 0) - a[1].reduce((s, r) => s + prioridad(r), 0))
+
+  let paso = 0
+  for (const [capa, reglas] of ordenCapas) {
+    paso++
+    const peso = reglas.reduce((s, r) => s + r.weight, 0)
+    console.log(`  ${paso} · ${capa.toUpperCase()}   ${reglas.length} hallazgo(s) · peso ${peso}`)
+    for (const r of reglas) {
+      console.log(`\n      ${r.id} · ${r.title}   [${sello(r).etiqueta}]`)
+      if (r.why) console.log(`      Por que delata: ${r.why}`)
+      console.log(`      Que hacer:      ${r.fix || '(sin arreglo declarado — ver references/remediation.md)'}`)
+      const d = (r.samples || []).slice(0, 3).map(s => `${s.file}:${s.line}`).join(', ')
+      if (d) console.log(`      Donde:          ${d}${(r.samples || []).length > 3 ? ' y mas' : ''}`)
+    }
+    console.log('')
+  }
+
+  console.log('  El orden sale de peso x confianza de validacion / esfuerzo estimado.')
+  console.log('  La confianza viene de research/RESULTADOS.md; el esfuerzo es heuristico por categoria.')
+  console.log('  Lo que exige ojo humano no esta aqui: templates/revision-humana.md\n')
+
+} else if (AS_JSON) {
   console.log(JSON.stringify({
     root: ROOT, profile: PROFILE, genre: GENRE, brand: BRAND || null,
     score, band, filesScanned: files.length, tokens: tokens.size,
@@ -203,10 +276,12 @@ if (AS_JSON) {
   if (fallan.length) {
     console.log('  ── Fallan ──')
     for (const r of fallan) {
-      console.log(`  x ${r.id} · ${r.title}  [peso ${r.weight}${r.source ? ` · ${r.source}` : ''}]`)
+      console.log(`  x ${r.id} · ${r.title}  [peso ${r.weight} · ${sello(r).etiqueta}]`)
       console.log(`      ${r.detail}`)
       if (r.nota) console.log(`      nota: ${r.nota}`)
       for (const s of (r.samples || []).slice(0, 3)) console.log(`      ${s.file}:${s.line}  ${s.text}`)
+      // El arreglo estaba en el catalogo y no llegaba nunca a la salida.
+      if (r.fix) console.log(`      → ${r.fix}`)
     }
     console.log('')
   }

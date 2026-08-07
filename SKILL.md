@@ -43,7 +43,13 @@ node scripts/slop-scan.mjs <ruta> --json                             # para CI
 node scripts/slop-scan.mjs <ruta> --min-score 70                     # umbral duro
 node scripts/slop-scan.mjs <ruta> --genre modern-minimal             # exenta por estética
 node scripts/slop-scan.mjs <ruta> --brand-colors "#5E6AD2"           # exenta la marca
+node scripts/slop-scan.mjs <ruta> --plan                             # que hacer y en que orden
 ```
+
+**Para entregar un veredicto usa `--plan`, no la puntuación.** Ordena por peso × confianza de
+validación ÷ esfuerzo, y cada hallazgo lleva su sello: `validado J 0,41` descansa en medición
+sobre corpus etiquetado; `no medible` es una regla que no tuvo ocasión de disparar. Decirlo
+en la entrega es la diferencia entre un peritaje y una lista de opiniones.
 
 El escáner **no puntúa gusto**. Sólo cuenta patrones nombrados por las fuentes: 28 reglas
 declarativas en `data/rules.json` más 21 comprobaciones programáticas que exigen ratios,

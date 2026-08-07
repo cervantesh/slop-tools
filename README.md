@@ -49,6 +49,7 @@ Opciones:
 | `--brand-colors "#hex,#hex"` | Exenta los colores legítimos de tu marca |
 | `--profile landing\|producto\|ambos` | Filtra las comprobaciones que no aplican |
 | `--genre editorial\|atmospheric\|modern-minimal\|playful` | Exenta reglas por decisión estética declarada |
+| `--plan` | Plan de remediación ordenado, con el arreglo de cada hallazgo |
 | `--json` | Salida estructurada para CI |
 | `--min-score N` | Sale con código 1 si baja del umbral |
 | `--write-baseline` | Congela los hallazgos actuales como tolerados |
@@ -57,6 +58,31 @@ Opciones:
 | `--rules <ruta>` | Catálogo de reglas alternativo |
 
 Sin dependencias. Sólo Node 18 o superior.
+
+### De detección a dirección
+
+Identificar no es encaminar. `--plan` coge los hallazgos y devuelve qué hacer, en qué orden:
+
+```bash
+node scripts/slop-scan.mjs ./src --brand "TuMarca" --plan
+```
+
+```
+  1 · CONTENIDO Y DATOS   6 hallazgo(s) · peso 15
+
+      L2 · Fechas y monedas escritas a mano   [validado J 0,415]
+      Por que delata: Concatenar el simbolo rompe en cuanto cambia el mercado.
+      Que hacer:      Intl.NumberFormat e Intl.DateTimeFormat con locale explicito.
+      Donde:          data/mockData.js:49, data/mockData.js:192
+```
+
+El orden sale de **peso × confianza de validación ÷ esfuerzo**. Que la confianza entre en el
+numerador es deliberado: el plan se apoya en lo que está medido, no en lo que las fuentes
+repiten más. Cada hallazgo lleva su sello —`validado J 0,41`, `medido, no separa`,
+`no medible`— para que se vea de qué descansa en evidencia y qué en juicio.
+
+La prueba del cambio de nombre va antes que todo lo demás, porque ninguna corrección de
+sistema visual la arregla.
 
 ### El trinquete, que es lo que hace esto adoptable
 

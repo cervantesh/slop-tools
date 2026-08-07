@@ -6,10 +6,36 @@ import { find, all, esProsa, lineaDe } from './util.mjs'
 import { neutrosPlanos, paresBajoContraste, botonInvisible, diversidadDeTono } from './color.mjs'
 import { navPorDefecto, footerPorDefecto, cromoFalso, kickerEnDosColumnas, esqueletoDashboard } from './structure.mjs'
 
+// Arreglo y estado de validacion de cada comprobacion programatica. Van aparte
+// del cuerpo para que las funciones queden legibles; las cifras de `validado`
+// salen de research/RESULTADOS.md, misma medicion que las declarativas.
+const META = {
+  A2: { fix: 'Ofrece alternativa clara o justifica el oscuro en el contrato de marca.', validado: { J_banda: 0.06, separa: false } },
+  A3: { fix: 'Reserva el desenfoque para lo que de verdad flota sobre contenido.', validado: { J_banda: 0, separa: false, estado: 'no_medible' } },
+  B1: { fix: 'Empareja una display con una de texto. Inter como unica familia es el default de las herramientas.', validado: { J_banda: 0.06, separa: false } },
+  B2: { fix: 'Una sola familia bien usada es disciplina en producto; en marca, empareja.', validado: { J_banda: -0.06, separa: false } },
+  C1: { fix: 'Separa con espacio primero, luego con un escalon de luminancia del 3-5%. El filete gris es el ultimo recurso.', validado: { J_banda: 0, separa: false, estado: 'no_medible' } },
+  C3: { fix: 'Que el radio y el padding senalen la funcion del elemento en vez de ser constantes.', validado: { J_banda: 0.05, separa: false } },
+  E4: { fix: 'Cinco descripciones distintas, o ninguna. Una repetida cinco veces es peor que el vacio.', validado: { J_banda: 0.04, separa: false } },
+  L1: { fix: 'Resuelve el plural con un condicional o con Intl.PluralRules.', validado: { J_banda: 0.40, separa: false } },
+  L3: { fix: 'Restaura los diacriticos en los archivos que salieron en ASCII plano.', validado: { J_banda: 0.01, separa: false, estado: 'no_medible' } },
+  T1: { fix: 'Anade aria-label a todo boton que solo lleve icono.', validado: { J_banda: -0.07, separa: false } },
+  T2: { fix: 'Que el texto del enlace diga a donde lleva, fuera de su contexto.', validado: { J_banda: 0.01, separa: false } },
+  K1: { fix: 'Da a los neutros un croma minimo de 0.005: un gris con temperatura ancla la paleta.', validado: { J_banda: 0.01, separa: false } },
+  K2: { fix: 'Sube el contraste a 4.5:1 en texto de lectura.', validado: { J_banda: 0.01, separa: false } },
+  K3: { fix: 'Separa el texto del relleno al menos 5% en luminosidad.', validado: { J_banda: 0, separa: false, estado: 'no_medible' } },
+  K4: { fix: 'Acota a un dominante, un neutro y un acento. Los semanticos van aparte.', validado: { J_banda: -0.04, separa: false } },
+  S1: { fix: 'Rompe el arquetipo: la navegacion no tiene por que ser wordmark-enlaces-boton.', validado: { J_banda: 0, separa: false, estado: 'no_medible' } },
+  S2: { fix: 'Agrupa el pie por lo que la gente busca, no por Product/Company/Resources/Legal.', validado: { J_banda: 0, separa: false, estado: 'no_medible' } },
+  S3: { fix: 'Captura real en vez de cromo de navegador dibujado a mano.', validado: { J_banda: 0.01, separa: false } },
+  S4: { fix: 'Kicker y titular en una sola columna.', validado: { J_banda: 0, separa: false, estado: 'no_medible' } },
+  S5: { fix: 'Ordena el panel por la decision que toma quien lo usa, no por el esqueleto canonico.', validado: { J_banda: 0, separa: false, estado: 'no_medible' } },
+}
+
 export function programaticas(ctx) {
   const { styleFiles, codeFiles, tokens, blks, cssTexto } = ctx
 
-  return [
+  return aplicarMeta([
 
     { id: 'A2', cat: 'Color', weight: 2, applies: 'landing', title: 'Dark mode permanente por defecto',
       exempt: ['atmospheric'],
@@ -289,6 +315,10 @@ export function programaticas(ctx) {
         const p = esqueletoDashboard(codeFiles)
         return { failed: p.length >= 3,
           detail: p.length ? `${p.length}/4 senales: ${p.join(', ')}` : 'sin senales' }
-      } },
-  ]
+      } },  ])
+}
+
+// Une cada comprobacion con su arreglo y su estado de validacion.
+function aplicarMeta(lista) {
+  return lista.map(c => ({ ...c, ...(META[c.id] || {}) }))
 }
