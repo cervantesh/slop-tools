@@ -24,7 +24,13 @@
         "n_pos": 20,
         "n_neg": 23
       },
-      "nota": "El campo validado de cada regla trae su fila de la tabla. Ausencia de validado = regla no presente en la medicion."
+      "nota": "El campo validado de cada regla trae su fila de la tabla. Ausencia de validado = regla no presente en la medicion.",
+      "ronda": 2
+    },
+    "tipos": {
+      "procedencia": "Su proposito es detectar generacion. Forma la puntuacion.",
+      "defecto": "Problema de calidad real, independiente de la autoria. Se reporta aparte y no puntua.",
+      "promocion": "Una regla de calidad con J >= 0.20 o intervalos separados cuenta como procedencia: demostro llevar senal."
     }
   },
   "rules": [
@@ -52,8 +58,9 @@
         "pos": 0.35,
         "neg": 0.217,
         "separa": false,
-        "decision": "J 0.13 e intervalos solapados: el tell mas citado de la bibliografia rinde poco"
-      }
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "A4",
@@ -78,15 +85,15 @@
           "pos": 20,
           "neg": 23
         },
-        "J_banda": 0,
-        "pos": 0,
-        "neg": 0,
+        "J_banda": 0.113,
+        "pos": 0.2,
+        "neg": 0.087,
         "separa": false,
-        "estado": "no_medible",
-        "nota": "cero disparos en la banda; exige un hero con resplandor radial",
-        "revalidar": "patron ampliado tras la medicion: la cifra es anterior al cambio"
+        "ronda": 2,
+        "nota": "Antes no medible; el sustrato ampliado a clases de utilidad le dio ocasion de disparar"
       },
-      "sustrato": "CSS y clases de utilidad"
+      "sustrato": "CSS y clases de utilidad",
+      "tipo": "procedencia"
     },
     {
       "id": "A5",
@@ -108,15 +115,15 @@
           "pos": 20,
           "neg": 23
         },
-        "J_banda": 0,
-        "pos": 0,
+        "J_banda": 0.05,
+        "pos": 0.05,
         "neg": 0,
         "separa": false,
-        "estado": "no_medible",
-        "nota": "cero disparos en 71 proyectos",
-        "revalidar": "patron ampliado tras la medicion: la cifra es anterior al cambio"
+        "ronda": 2,
+        "nota": "Antes no medible; el sustrato ampliado a clases de utilidad le dio ocasion de disparar"
       },
-      "sustrato": "CSS y clases de utilidad"
+      "sustrato": "CSS y clases de utilidad",
+      "tipo": "procedencia"
     },
     {
       "id": "B4",
@@ -141,8 +148,10 @@
         "J_banda": -0.043,
         "pos": 0,
         "neg": 0.043,
-        "separa": false
-      }
+        "separa": false,
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "C2",
@@ -167,8 +176,10 @@
         "J_banda": 0.05,
         "pos": 0.05,
         "neg": 0,
-        "separa": false
-      }
+        "separa": false,
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "D1",
@@ -194,8 +205,9 @@
         "pos": 0.2,
         "neg": 0.174,
         "separa": false,
-        "decision": "J 0.03 en banda (20% frente a 17%): enlazar bancos de imagenes es igual de comun en ambas clases"
-      }
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "D5",
@@ -221,8 +233,9 @@
         "pos": 0.45,
         "neg": 0.043,
         "separa": true,
-        "decision": "J 0.41 en banda, precision 93%, lift 18, intervalos separados: el discriminador mas limpio del catalogo"
-      }
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "E1",
@@ -247,8 +260,10 @@
         "J_banda": 0.1,
         "pos": 0.1,
         "neg": 0,
-        "separa": false
-      }
+        "separa": false,
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "E2",
@@ -273,8 +288,10 @@
         "J_banda": 0.05,
         "pos": 0.05,
         "neg": 0,
-        "separa": false
-      }
+        "separa": false,
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "E5",
@@ -299,8 +316,10 @@
         "J_banda": 0.15,
         "pos": 0.15,
         "neg": 0,
-        "separa": false
-      }
+        "separa": false,
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "E6",
@@ -325,8 +344,10 @@
         "J_banda": 0.17,
         "pos": 0.3,
         "neg": 0.13,
-        "separa": false
-      }
+        "separa": false,
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "E7",
@@ -351,8 +372,10 @@
         "J_banda": 0.348,
         "pos": 1,
         "neg": 0.652,
-        "separa": true
-      }
+        "separa": true,
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "L2",
@@ -378,8 +401,9 @@
         "pos": 0.85,
         "neg": 0.435,
         "separa": true,
-        "decision": "J 0.42 en banda, intervalos separados"
-      }
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "UX1",
@@ -404,8 +428,10 @@
         "J_banda": 0.352,
         "pos": 0.7,
         "neg": 0.348,
-        "separa": false
-      }
+        "separa": false,
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "UX2",
@@ -431,8 +457,9 @@
         "pos": 0.85,
         "neg": 0.391,
         "separa": true,
-        "decision": "J 0.46 en banda, la mas alta, intervalos separados; precision 65% aconseja 2 y no 3"
-      }
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "UX3",
@@ -457,8 +484,10 @@
         "J_banda": 0.233,
         "pos": 0.45,
         "neg": 0.217,
-        "separa": false
-      }
+        "separa": false,
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "UX4",
@@ -483,8 +512,10 @@
         "J_banda": -0.043,
         "pos": 0,
         "neg": 0.043,
-        "separa": false
-      }
+        "separa": false,
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "UX5",
@@ -509,8 +540,10 @@
         "J_banda": -0.043,
         "pos": 0,
         "neg": 0.043,
-        "separa": false
-      }
+        "separa": false,
+        "ronda": 2
+      },
+      "tipo": "defecto"
     },
     {
       "id": "UX6",
@@ -535,8 +568,10 @@
         "J_banda": 0.376,
         "pos": 0.55,
         "neg": 0.174,
-        "separa": false
-      }
+        "separa": false,
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "UX7",
@@ -561,8 +596,10 @@
         "J_banda": 0.263,
         "pos": 0.35,
         "neg": 0.087,
-        "separa": false
-      }
+        "separa": false,
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "UX8",
@@ -587,8 +624,10 @@
         "J_banda": 0.1,
         "pos": 0.1,
         "neg": 0,
-        "separa": false
-      }
+        "separa": false,
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "UX9",
@@ -613,8 +652,10 @@
         "J_banda": 0.057,
         "pos": 0.1,
         "neg": 0.043,
-        "separa": false
-      }
+        "separa": false,
+        "ronda": 2
+      },
+      "tipo": "defecto"
     },
     {
       "id": "UX10",
@@ -639,8 +680,10 @@
         "J_banda": 0.176,
         "pos": 0.35,
         "neg": 0.174,
-        "separa": false
-      }
+        "separa": false,
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "UX11",
@@ -665,8 +708,10 @@
         "J_banda": 0.22,
         "pos": 0.35,
         "neg": 0.13,
-        "separa": false
-      }
+        "separa": false,
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "UX12",
@@ -691,8 +736,10 @@
         "J_banda": -0.037,
         "pos": 0.05,
         "neg": 0.087,
-        "separa": false
-      }
+        "separa": false,
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "AS1",
@@ -717,8 +764,10 @@
         "J_banda": 0.163,
         "pos": 0.25,
         "neg": 0.087,
-        "separa": false
-      }
+        "separa": false,
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "AS2",
@@ -740,15 +789,15 @@
           "pos": 20,
           "neg": 23
         },
-        "J_banda": 0,
-        "pos": 0,
+        "J_banda": 0.1,
+        "pos": 0.1,
         "neg": 0,
         "separa": false,
-        "estado": "no_medible",
-        "nota": "cero disparos en 71 proyectos; el hover vive en clases de utilidad, no en CSS",
-        "revalidar": "patron ampliado tras la medicion: la cifra es anterior al cambio"
+        "ronda": 2,
+        "nota": "Antes no medible; el sustrato ampliado a clases de utilidad le dio ocasion de disparar"
       },
-      "sustrato": "CSS y clases de utilidad"
+      "sustrato": "CSS y clases de utilidad",
+      "tipo": "procedencia"
     },
     {
       "id": "AS9",
@@ -774,8 +823,9 @@
         "pos": 0,
         "neg": 0.043,
         "separa": false,
-        "decision": "J -0.04: cero disparos en la clase generada. La estetica crema/serif/terracota no aparece en el corpus"
-      }
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "HM2",
@@ -792,9 +842,18 @@
       "fix": "Sustituye por transform: translate/scale y opacity.",
       "source": "hallmark gate 14",
       "validado": {
-        "estado": "no_medido",
-        "nota": "Extraida de hallmark tras la medicion. Es comprobacion de defecto, no de procedencia: su valor no depende de que discrimine."
-      }
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.057,
+        "pos": 0.1,
+        "neg": 0.043,
+        "separa": false,
+        "ronda": 2
+      },
+      "tipo": "defecto"
     },
     {
       "id": "HM3",
@@ -811,9 +870,18 @@
       "fix": "Curva sin rebote para cambios de estado de interfaz.",
       "source": "hallmark gate 12",
       "validado": {
-        "estado": "no_medido",
-        "nota": "Extraida de hallmark tras la medicion. Es comprobacion de defecto, no de procedencia: su valor no depende de que discrimine."
-      }
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0,
+        "pos": 0,
+        "neg": 0,
+        "separa": false,
+        "ronda": 2
+      },
+      "tipo": "defecto"
     },
     {
       "id": "HM4",
@@ -821,7 +889,7 @@
       "category": "Motion",
       "severity": "low",
       "applies": "ambos",
-      "weight": 1,
+      "weight": 2,
       "scope": "all",
       "pattern": "hover\\\\?:scale-1[01][05]\\b",
       "flags": "i",
@@ -830,9 +898,19 @@
       "fix": "Que el hover diga algo distinto segun lo que sea el elemento, o quitalo.",
       "source": "hallmark gate 11",
       "validado": {
-        "estado": "no_medido",
-        "nota": "Extraida de hallmark tras la medicion. Es comprobacion de defecto, no de procedencia: su valor no depende de que discrimine."
-      }
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0.25,
+        "pos": 0.25,
+        "neg": 0,
+        "separa": false,
+        "ronda": 2,
+        "decision": "J 0.25 en banda (25% frente a 0%). Medida por primera vez: es la mejor de las nueve extraidas de hallmark"
+      },
+      "tipo": "procedencia"
     },
     {
       "id": "HM5",
@@ -849,9 +927,18 @@
       "fix": "Sustituye por un guion y la etiqueta, o reconstruye la seccion sin el hueco de cifra.",
       "source": "hallmark gate 46",
       "validado": {
-        "estado": "no_medido",
-        "nota": "Extraida de hallmark tras la medicion. Es comprobacion de defecto, no de procedencia: su valor no depende de que discrimine."
-      }
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 20,
+          "neg": 23
+        },
+        "J_banda": 0,
+        "pos": 0,
+        "neg": 0,
+        "separa": false,
+        "ronda": 2
+      },
+      "tipo": "procedencia"
     }
   ]
 }
