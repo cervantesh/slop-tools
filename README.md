@@ -12,9 +12,14 @@ sola.
 señalar qué se lo dice, y quien la recibe no puede refutar una impresión. La discusión se
 queda en gustos y no cambia nada del producto.
 
-Este repositorio convierte esa impresión en **28 comprobaciones contrastables**, la mitad
-automatizables, con la procedencia de cada una y —tan importante— **la salvedad de cuándo no
-aplican**.
+Este repositorio convierte esa impresión en **66 comprobaciones contrastables**, con la
+procedencia de cada una y —tan importante— **la salvedad de cuándo no aplican**.
+
+| Bloque | Comprobaciones | Automatizadas |
+| --- | --- | --- |
+| Rúbrica general (`rubric.md`) | 39 | 19 |
+| Bloque de producto (`producto.md`) | 27 | 4 |
+| **Total** | **66** | **23** |
 
 ## Uso rápido
 
@@ -23,8 +28,8 @@ node scripts/slop-scan.mjs ./src --brand "TuMarca" --profile producto
 ```
 
 ```
-  PUNTUACIÓN  35/100 — Se identifica en diez segundos
-  9 de 16 comprobaciones automáticas fallan
+  PUNTUACIÓN  32/100 — Se identifica en diez segundos
+  12 de 20 comprobaciones automáticas fallan
 
   ── Prueba del cambio de nombre (marca: "TuMarca") ──
   ✗ 16 titular(es) que funcionarían para un competidor
@@ -48,14 +53,15 @@ Sin dependencias. Sólo Node 18 o superior.
 | Ruta | Contenido |
 | --- | --- |
 | `SKILL.md` | Punto de entrada como skill: procedimiento y cómo entregar el veredicto |
-| `references/rubric.md` | Las 28 comprobaciones, con fuente, peso y aplicabilidad |
+| `references/rubric.md` | Rúbrica general: 39 comprobaciones con fuente, peso y aplicabilidad |
 | `references/producto.md` | Criterios que sí transfieren a una app: localización, microcopy, estados, dominio y confianza |
 | `references/caveats.md` | **Léelo antes de dar un veredicto.** Cuándo la rúbrica se equivoca |
 | `references/remediation.md` | Las 6 reglas correctivas y el orden de arreglo |
 | `references/adversarial.md` | Cómo montar un panel de modelos que no se engañe a sí mismo |
 | `references/sources.md` | Bibliografía anotada |
 | `scripts/slop-scan.mjs` | El escáner |
-| `templates/revision-humana.md` | Las 9 comprobaciones que exigen mirar |
+| `templates/revision-humana.md` | Las comprobaciones que exigen mirar, en dos partes: general y producto |
+| `.github/workflows/slop-scan.yml` | Ejemplo de gate en integración continua |
 
 ## Las tres ideas que lo ordenan todo
 

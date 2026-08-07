@@ -1,6 +1,6 @@
 ---
 name: slop-tools
-description: Detecta si un diseño visual o web parece generado por IA ("AI slop") y explica por qué. Base de conocimiento con rúbrica de 28 comprobaciones de procedencia contrastada, más un escáner estático que audita CSS/JSX/HTML y devuelve un informe puntuado. Úsalo cuando alguien pregunte si un diseño "se ve hecho con IA", "parece plantilla", "parece genérico", "AI slop", "looks AI-generated", antes de enseñar un producto a un cliente, o como control de calidad previo a un release.
+description: Detecta si un diseño visual o web parece generado por IA ("AI slop") y explica por qué. Base de conocimiento con 66 comprobaciones de procedencia contrastada —rúbrica general más un bloque específico de producto con localización, microcopy, estados, fidelidad al dominio y confianza— y un escáner estático que audita CSS/JSX/HTML y devuelve un informe puntuado. Úsalo cuando alguien pregunte si un diseño "se ve hecho con IA", "parece plantilla", "parece genérico", "AI slop", "looks AI-generated", antes de enseñar un producto a un cliente, o como control de calidad previo a un release.
 ---
 
 # slop-tools
@@ -88,7 +88,7 @@ La hipótesis rival que debes hacerles batir siempre está en `references/advers
 
 | Ruta | Contenido |
 | --- | --- |
-| `references/rubric.md` | Las 28 comprobaciones, con fuente, aplicabilidad y si son automatizables |
+| `references/rubric.md` | Rúbrica general: 39 comprobaciones con fuente, peso y aplicabilidad |
 | `references/producto.md` | **Para apps.** Localización, microcopy, estados, fidelidad al dominio y confianza |
 | `references/caveats.md` | Cuándo cada comprobación NO aplica |
 | `references/remediation.md` | Las 6 reglas correctivas y el orden de arreglo |

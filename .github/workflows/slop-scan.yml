@@ -1,0 +1,45 @@
+# Ejemplo de gate en integración continua.
+# Copia este archivo al repositorio que quieras auditar y ajusta RUTA, MARCA y PERFIL.
+#
+# Recomendación: empieza con --min-score por debajo de tu puntuación actual y súbelo
+# a medida que corrijas. Un gate que falla desde el primer día se desactiva el segundo.
+
+name: slop-scan
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Obtener slop-tools
+        uses: actions/checkout@v4
+        with:
+          repository: cervantesh/slop-tools
+          path: .slop-tools
+
+      - name: Auditar
+        run: |
+          node .slop-tools/scripts/slop-scan.mjs ./src \
+            --profile producto \
+            --brand "TuMarca" \
+            --min-score 60
+
+      - name: Informe para el resumen del PR
+        if: always()
+        run: |
+          {
+            echo '## slop-scan'
+            echo '```'
+            node .slop-tools/scripts/slop-scan.mjs ./src --profile producto --brand "TuMarca" || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

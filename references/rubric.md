@@ -1,6 +1,13 @@
-# Rúbrica — 28 comprobaciones
+# Rúbrica general — 39 comprobaciones
 
-Consolidada de cuatro fuentes publicadas (ver `sources.md`). Cada comprobación indica:
+Consolidada de cuatro fuentes publicadas (ver `sources.md`).
+
+> **Si auditas una aplicación, esta rúbrica no basta.** Está construida sobre fuentes que
+> miran webs de marketing. El bloque específico de producto —localización, microcopy,
+> estados, fidelidad al dominio y confianza— está en **`producto.md`**, y son otras 27
+> comprobaciones. Total del repositorio: **66**, de las cuales el escáner automatiza 23.
+
+Cada comprobación indica:
 
 - **Auto** — la ejecuta `slop-scan.mjs`.
 - **Humano** — exige mirar.
@@ -109,6 +116,27 @@ usuario final son señal fortísima de que la salida nunca se revisó.
 
 `Auto*` — el escáner extrae los titulares que **no** mencionan la marca y te los devuelve
 como candidatos. El juicio final es tuyo.
+
+---
+
+---
+
+## Bloque de producto — las que el escáner también ejecuta
+
+Documentadas por extenso en `producto.md`. Se listan aquí para que el espacio de
+identificadores esté completo en un solo sitio.
+
+| # | Comprobación | Modo | Aplica a | Peso | Fuente |
+| --- | --- | --- | --- | --- | --- |
+| L1 | Plural sin resolver junto a un contador: «1 opciones» | Auto | producto | 3 | QAwerk |
+| L2 | Fechas y monedas concatenadas en vez de formateadas | Auto | producto | 2 | QAwerk |
+| L3 | Diacríticos repartidos de forma sistemática entre archivos | Auto | producto | 3 | propia |
+| T1 | Botones de solo icono sin nombre accesible | Auto | producto | 2 | LQA / a11y |
+
+Las otras 23 comprobaciones de `producto.md` —revisión por hablante nativo de la variante
+regional, microcopy, los cinco estados fuera del camino feliz, la prueba de los conceptos del
+negocio y los seis pilares de confianza— son humanas y viven en
+`templates/revision-humana.md`.
 
 ---
 

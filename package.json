@@ -1,7 +1,7 @@
 {
   "name": "slop-tools",
-  "version": "0.1.0",
-  "description": "Base de conocimiento y auditor estatico para detectar si un diseno visual o web parece generado por IA",
+  "version": "0.2.0",
+  "description": "Base de conocimiento y auditor estatico para detectar si un diseno visual o web parece generado por IA. 66 comprobaciones con procedencia; 23 automatizadas",
   "type": "module",
   "license": "MIT",
   "bin": {

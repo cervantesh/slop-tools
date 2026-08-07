@@ -1,14 +1,19 @@
-# Revisión humana — las comprobaciones que exigen mirar
+# Revisión humana
 
-Nueve comprobaciones. Caben en una página y se hacen en quince minutos.
-El escáner ya cubrió el resto.
+Las comprobaciones que no se pueden automatizar. El escáner ya cubrió el resto.
+
+**Parte 1** aplica a cualquier artefacto. **Parte 2** sólo a aplicaciones — sáltala si
+auditas una web de marketing.
 
 **Artefacto:**
 **Perfil:** landing / producto
 **Revisor:**
 **Fecha:**
+**Puntuación del escáner:** ___ / 100
 
 ---
+
+# Parte 1 · General
 
 ### 1 · Prueba del cambio de nombre
 
@@ -23,8 +28,8 @@ Titular evaluado:
 
 ### 2 · Prueba del negocio
 
-Abre el plan de negocio o la propuesta de valor. Escoge sus cinco conceptos centrales y
-búscalos en el código y en la interfaz.
+Abre el plan de negocio. Escoge sus cinco conceptos centrales y búscalos en el código y en la
+interfaz.
 
 | Concepto del negocio | ¿Aparece? | Dónde |
 | --- | --- | --- |
@@ -59,9 +64,7 @@ búscalos en el código y en la interfaz.
 
 ### 5 · Jerarquía y variación
 
-¿La rejilla varía según la importancia de cada elemento, o todo tiene el mismo tamaño?
-
-- [ ] Hay variación intencionada
+- [ ] Hay variación intencionada según la importancia de cada elemento
 - [ ] Padding, radio y altura idénticos en todo
 - [ ] Tarjetas dentro de tarjetas dentro de tarjetas
 
@@ -86,21 +89,7 @@ Pasa el ratón, pulsa, tabula.
 
 ---
 
-### 8 · Estados que no son el camino feliz
-
-Provoca cada uno y mira qué pasa.
-
-- [ ] Carga
-- [ ] Vacío por primera vez
-- [ ] Vacío por filtro sin resultados
-- [ ] Error
-- [ ] Sin permiso
-
-> Un producto sin estos estados resueltos se delata en cuanto sale del recorrido de demo.
-
----
-
-### 9 · La prueba de los diez segundos
+### 8 · La prueba de los diez segundos
 
 Enseña **una sola pantalla** a alguien que no conozca el proyecto y pídele que lea en voz
 alta lo que ve. Anota literalmente lo primero que comente.
@@ -110,14 +99,86 @@ Reacción:
 
 ---
 
-## Veredicto
+# Parte 2 · Producto
+
+Sáltala si auditas una landing. Detalle completo en `references/producto.md`.
+
+### 9 · Lengua y variante regional
+
+- [ ] Revisado por hablante nativo **de la variante correcta** del mercado objetivo
+- [ ] Las cadenas se validaron en su pantalla, no en una hoja de cálculo
+- [ ] Los formularios aceptan diacríticos sin fallar la validación
+- [ ] Precios, fechas, teléfonos y copy legal siguen la convención local
+
+Variante objetivo: _______________  ·  Revisor nativo: _______________
+
+> Compartir idioma no es compartir mercado. Un revisor de la variante equivocada no ve el
+> problema.
+
+---
+
+### 10 · Expansión y escala
+
+- [ ] Nada se trunca ni se solapa a 375px
+- [ ] La interfaz aguanta la escala tipográfica del sistema al 200%
+- [ ] Ningún contenedor de texto tiene ancho fijo
+
+---
+
+### 11 · Microcopy
+
+- [ ] Los botones usan verbos concretos, no «Aceptar» ni «Enviar» genérico
+- [ ] Los errores dicen **qué pasó y qué hacer**, en ese orden
+- [ ] Los vacíos explican qué va a aparecer ahí
+- [ ] Las instrucciones están junto a la acción
+- [ ] El tono es consistente en todo el producto
+- [ ] **No hay jerga de ingeniería en superficie de usuario**
+
+---
+
+### 12 · Los cinco estados fuera del camino feliz
+
+Provoca cada uno y mira qué pasa. Marca sólo los que estén **resueltos**.
+
+| Estado | ¿Resuelto? | Notas |
+| --- | --- | --- |
+| Cargando | ☐ | |
+| Vacío de primera vez — ¿invita? | ☐ | |
+| Vacío por filtro — ¿deja corregir? | ☐ | |
+| Error — ¿qué pasó, qué hacer, referencia? | ☐ | |
+| Sin permiso — ¿distingue rol de dispositivo? | ☐ | |
+
+> Los tres vacíos son problemas distintos. Un único componente genérico de «no hay datos»
+> para los tres delata que nadie pensó en ninguno.
+
+---
+
+### 13 · Confianza — sólo si es un marketplace
+
+No se evalúa si el backend lo implementa, sino **si el producto lo comunica**.
+
+- [ ] Se ve **qué** se verifica de los proveedores, y dónde
+- [ ] La regla de privacidad aparece en el momento en que importa, no en unos términos
+- [ ] Las reseñas indican que la transacción existió
+- [ ] Hay una salida clara cuando algo sale mal, no sólo un correo de soporte
+- [ ] La política de cancelación se lee **antes** de pagar
+
+> En servicios prestados en el domicilio del cliente, la confianza no es una característica:
+> es la condición de existencia del negocio.
+
+---
+
+# Veredicto
 
 **Puntuación automática:** ___ / 100
-**Comprobaciones humanas que fallan:** ___ / 9
+**Parte 1 — fallan:** ___ / 8
+**Parte 2 — fallan:** ___ / 5
 
 **Capa que falla más:** sistema visual / copy y datos / arquitectura de producto
 
 **Lo primero a arreglar:**
 
-> Recuerda: separa las capas, nombra lo que está bien, y cierra con una prueba que un
-> escéptico pueda verificar en diez segundos.
+**Lo que está bien y hay que decir:**
+
+> Separa las capas, nombra lo que está bien, y cierra con una prueba que un escéptico pueda
+> verificar en diez segundos.
