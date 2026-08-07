@@ -110,14 +110,30 @@ datos, y RESULTADOS §6 no la tocó.
 
 ---
 
-## P4 · Consistencia tras los cambios de peso `[ ]`
+## P4 · Consistencia tras los cambios de peso `[x]`
 
-Los conteos de `README.md`, `SKILL.md` y `references/rubric.md` son anteriores a la
-eliminación de `F2` y al recuento de reglas. Hoy son 48 comprobaciones, no 49. Ya pasó una
-vez que un conteo mal quedó propagado por tres archivos.
+> **Hecho, y la lección no es corregir los números: es hacer que fallen solos.**
+>
+> `bench/verifica-conteos.mjs` extrae los conteos reales del código, los compara con los que
+> afirma la documentación y falla si difieren. Entra en `npm test` junto a `verifica-escala`.
+> Es la tercera vez que derivan; ya no depende de que alguien se acuerde.
+>
+> Corregido lo obsoleto: 32 declarativas, 26 programáticas, 42 filas de rúbrica, descripción
+> del paquete. Pero el verificador destapó tres cosas peores que un conteo:
+>
+> - **Los pesos de `rubric.md` eran los de las fuentes, no los medidos.** Con `A1` en 3 cuando
+>   ya era 2 y `C1` en 3 cuando ya era 1, el documento contradecía al catálogo justo en el
+>   punto que más importa. Lleva advertencia arriba y puntero a la fuente de verdad.
+> - **Los IDs de `rubric.md` no son los del escáner.** Ahí `C3` es «rejilla de tres tarjetas»
+>   y en el catálogo es «radio y padding uniformes». El documento afirmaba tener el espacio de
+>   identificadores completo en un solo sitio, y era falso.
+> - **`F2` seguía listada como viva** tras eliminarse por disparar al revés. Queda tachada con
+>   el porqué, porque la fuente sigue afirmándola.
+>
+> Y `caveats.md` recoge ya, con cifras, las tres cosas en que la bibliografía se equivoca.
 
-Añadir además a `caveats.md` el hallazgo de §3.5: la bibliografía se equivoca en la
-uniformidad, y conviene que quede escrito donde se leen las salvedades.
+**El problema original.** Los conteos de `README.md`, `SKILL.md` y `references/rubric.md`
+eran anteriores a la eliminación de `F2` y al recuento de reglas.
 
 ---
 
