@@ -1,0 +1,31 @@
+{
+  "name": "slop-tools",
+  "version": "0.1.0",
+  "description": "Base de conocimiento y auditor estatico para detectar si un diseno visual o web parece generado por IA",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "slop-scan": "scripts/slop-scan.mjs"
+  },
+  "scripts": {
+    "scan": "node scripts/slop-scan.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "ai-slop",
+    "design-review",
+    "design-system",
+    "static-analysis",
+    "ux",
+    "audit"
+  ],
+  "files": [
+    "SKILL.md",
+    "README.md",
+    "references",
+    "scripts",
+    "templates"
+  ]
+}
