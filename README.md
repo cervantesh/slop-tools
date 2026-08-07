@@ -17,9 +17,9 @@ de cada una y —tan importante— **la salvedad de cuándo no aplican**.
 
 | | Cuántas | Dónde |
 | --- | --- | --- |
-| Reglas declarativas | 28 | `data/rules.json` |
-| Comprobaciones programáticas | 21 | `scripts/lib/` |
-| **Automatizadas** | **49** | |
+| Reglas declarativas | 40 | `data/rules.json` |
+| Comprobaciones programáticas | 26 | `scripts/lib/` |
+| **Automatizadas** | **66** | |
 | Criterios de revisión humana | 66 | `references/rubric.md` + `references/producto.md` |
 
 Las programáticas son las que no caben en un patrón: ratios de densidad, distribuciones entre
@@ -102,14 +102,14 @@ de cada hallazgo excluye el número de línea, así que mover código no lo conv
 | Ruta | Contenido |
 | --- | --- |
 | `SKILL.md` | Punto de entrada como skill: procedimiento y cómo entregar el veredicto |
-| `references/rubric.md` | Rúbrica general: 39 comprobaciones con fuente, peso y aplicabilidad |
+| `references/rubric.md` | Rúbrica general: 42 comprobaciones con fuente, peso y aplicabilidad |
 | `references/producto.md` | Criterios que sí transfieren a una app: localización, microcopy, estados, dominio y confianza |
 | `references/caveats.md` | **Léelo antes de dar un veredicto.** Cuándo la rúbrica se equivoca |
 | `references/remediation.md` | Las 6 reglas correctivas y el orden de arreglo |
 | `references/adversarial.md` | Cómo montar un panel de modelos que no se engañe a sí mismo |
 | `references/hallmark-extracto.md` | **hallmark, vaciado.** 58 gates clasificados, umbrales, géneros y arquetipos |
 | `references/sources.md` | Bibliografía anotada |
-| `data/rules.json` | Catálogo declarativo: 32 reglas con patrón, umbral, porqué y arreglo |
+| `data/rules.json` | Catálogo declarativo: 40 reglas con patrón, umbral, porqué y arreglo |
 | `scripts/slop-scan.mjs` | CLI y orquestación |
 | `scripts/lib/checks.mjs` | Las 26 comprobaciones que exigen ratios o distribuciones |
 | `scripts/lib/color.mjs` | OKLCH, resolución de tokens y puertas cromáticas |
@@ -142,14 +142,14 @@ acierto. Una regla así está demostrada como **existente**, no como **discrimin
 npm run bench
 ```
 
-La suite parte de un proyecto limpio de referencia, le inyecta 38 patrones de slop conocidos
+La suite parte de un proyecto limpio de referencia, le inyecta 57 patrones de slop conocidos
 —uno por mecanismo— y comprueba que la regla objetivo dispara.
 
 ```
   LINEA BASE (proyecto limpio)   puntuacion 100/100
   Reglas que disparan sin slop:  ninguna
 
-  RECALL  38/38 mutaciones detectadas (100%)
+  RECALL  57/57 mutaciones detectadas (100%)
   Diafonia media: 0.1 reglas colaterales por mutacion
 ```
 

@@ -51,7 +51,7 @@ validación ÷ esfuerzo, y cada hallazgo lleva su sello: `validado J 0,41` desca
 sobre corpus etiquetado; `no medible` es una regla que no tuvo ocasión de disparar. Decirlo
 en la entrega es la diferencia entre un peritaje y una lista de opiniones.
 
-El escáner **no puntúa gusto**. Sólo cuenta patrones nombrados por las fuentes: 32 reglas
+El escáner **no puntúa gusto**. Sólo cuenta patrones nombrados por las fuentes: 40 reglas
 declarativas en `data/rules.json` más 26 comprobaciones programáticas que exigen ratios,
 distribuciones, resolución de tokens de color o análisis estructural.
 
@@ -106,7 +106,7 @@ La hipótesis rival que debes hacerles batir siempre está en `references/advers
 
 | Ruta | Contenido |
 | --- | --- |
-| `references/rubric.md` | Rúbrica general: 39 comprobaciones con fuente, peso y aplicabilidad |
+| `references/rubric.md` | Rúbrica general: 42 comprobaciones con fuente, peso y aplicabilidad |
 | `references/producto.md` | **Para apps.** Localización, microcopy, estados, fidelidad al dominio y confianza |
 | `references/caveats.md` | Cuándo cada comprobación NO aplica |
 | `references/remediation.md` | Las 6 reglas correctivas y el orden de arreglo |

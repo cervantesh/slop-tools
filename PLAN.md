@@ -176,7 +176,41 @@ separación y intervalo.
 
 ---
 
-## P6 · Ampliar el corpus `[ ]`
+## P6 · Ampliar el corpus `[x]`
+
+> **Hecho.** Corpus de 99 a 164 entradas, 123 proyectos medidos, banda de pos=20/neg=23 a
+> **pos=34/neg=32**. Separan **siete** reglas, no cuatro. Detalle en `research/RESULTADOS.md`.
+>
+> - **`C4` cumplió su predicción**: ajustada en muestra daba 0,552, fuera encoge a **0,386** y
+>   sigue separando.
+> - **`A3` pasó de «no medible» a validada** (24% frente a 0%) gracias al sustrato de P2. Un
+>   «no medible» puede ser falta de oportunidad, no falta de señal.
+> - **`L1` y `UX6` salieron del limbo**: era falta de n.
+> - **`C1` y `K3` quedan refutadas con oportunidad real** — ya disparan y dan J −0,01 y 0,02.
+> - `E7` pierde significación; `HM8` apunta al revés.
+> - La evidencia de las programáticas se exporta a `data/validacion.json` y se carga en
+>   ejecución: deja de copiarse a mano.
+>
+> **Residuo declarado:** `L3` sigue sin evaluar (corpus en inglés), no hay conjunto reservado
+> formal, y `neg_classic` sigue en n=11.
+
+## P7 · Los verticales sin cubrir `[x]`
+
+> **Hecho.** Ocho reglas nuevas de los dos verticales que la investigación dejó vacíos.
+>
+> **Prosa** — de *Wikipedia: Signs of AI writing* y `textlint-rule-preset-ai-writing`:
+> `P1` paralelismo negativo («no sólo X, sino también Y»), `P2` verbos de relleno en vez de
+> ser o tener, `P3` atribución vaga, `P4` emoji como viñeta, `P5` negrita como prefijo de
+> viñeta.
+>
+> **Código generado** — `CS1` comentarios que narran la línea siguiente, `CS2` excepciones
+> tragadas, `CS3` tipos silenciados.
+>
+> Cada una con su mutación: la suite pasa de 49 a **57/57**. Todas entran marcadas *sin medir*
+> y se validarán en la próxima medición: no se les da autoridad por venir de una fuente.
+>
+> **`anti-ui-slop` de skills.rest sigue inaccesible** tras un segundo intento. No hay mirror,
+> paquete ni caché. Queda como la única fuente citada que nunca se pudo abrir.
 
 Tres carencias declaradas en RESULTADOS §5, por orden de rendimiento:
 
@@ -194,16 +228,6 @@ Y recuperar las pérdidas: 24 repositorios saltados por tamaño, que son sobre t
 
 ---
 
-## P7 · Los verticales sin cubrir `[ ]`
-
-De la investigación quedaron dos huecos con cero afirmaciones verificadas:
-
-- **Calidad de prosa** — alex, write-good, textlint, retext, Vale. Es donde vive la mitad del
-  slop textual que ya intentamos medir, y no se verificó ni una regla.
-- **Detectores de código generado** — qué señales usan y cuáles son estáticas.
-
-Y una fuente sigue sin abrir: `anti-ui-slop` de skills.rest, HTTP 403. Es lo más parecido a
-un competidor directo.
 
 ---
 

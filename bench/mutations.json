@@ -405,6 +405,70 @@
       "file": "Dispersa.jsx",
       "mode": "create",
       "content": "export const Dispersa = () => (\n  <section>\n    <div className=\"p-1\">bloque 1</div>\n    <div className=\"p-2\">bloque 2</div>\n    <div className=\"p-3\">bloque 3</div>\n    <div className=\"p-5\">bloque 4</div>\n    <div className=\"p-7\">bloque 5</div>\n    <div className=\"p-9\">bloque 6</div>\n    <div className=\"p-10\">bloque 7</div>\n    <div className=\"p-11\">bloque 8</div>\n    <div className=\"p-12\">bloque 9</div>\n    <div className=\"p-14\">bloque 10</div>\n    <div className=\"p-16\">bloque 11</div>\n    <div className=\"p-20\">bloque 12</div>\n    <div className=\"p-24\">bloque 13</div>\n    <div className=\"gap-11\">bloque 14</div>\n    <div className=\"m-9\">bloque 15</div>\n  </section>\n);"
+    },
+    {
+      "id": "m-P1",
+      "rule": "P1",
+      "desc": "Paralelismo negativo",
+      "file": "Prosa.jsx",
+      "mode": "create",
+      "content": "export const a = \"No solo reservas el servicio, sino tambien lo sigues en vivo\";\nexport const b = \"No solo es rapido, sino tambien seguro\";\nexport const c = \"No solo ahorras tiempo, sino tambien dinero\";"
+    },
+    {
+      "id": "m-P2",
+      "rule": "P2",
+      "desc": "Verbos de relleno",
+      "file": "Prosa.jsx",
+      "mode": "create",
+      "content": "export const a = \"El taller se erige como referencia\";\nexport const b = \"La prensa constituye un simbolo\";\nexport const c = \"El curso representa un salto\";\nexport const d = \"La sala sirve como aula\";"
+    },
+    {
+      "id": "m-P3",
+      "rule": "P3",
+      "desc": "Atribucion vaga",
+      "file": "Prosa.jsx",
+      "mode": "create",
+      "content": "export const a = \"Los expertos coinciden en que la encuadernacion manual mejora la retencion\";"
+    },
+    {
+      "id": "m-P4",
+      "rule": "P4",
+      "desc": "Emoji como vineta",
+      "file": "Prosa.jsx",
+      "mode": "create",
+      "content": "export const L = () => (\n  <ul>\n    <li>✅ Reserva confirmada</li>\n    <li>🔥 Plazas limitadas</li>\n    <li>💡 Trae tu cuaderno</li>\n    <li>🎯 Nivel inicial</li>\n  </ul>\n);"
+    },
+    {
+      "id": "m-P5",
+      "rule": "P5",
+      "desc": "Negrita como prefijo de vineta",
+      "file": "Prosa.jsx",
+      "mode": "create",
+      "content": "export const L = () => (\n  <ul>\n    <li><strong>Duracion</strong>: cinco sabados</li>\n    <li><strong>Plazas</strong>: ocho por taller</li>\n    <li><strong>Material</strong>: incluido</li>\n    <li><strong>Nivel</strong>: inicial</li>\n  </ul>\n);"
+    },
+    {
+      "id": "m-CS1",
+      "rule": "CS1",
+      "desc": "Comentarios que narran la linea siguiente",
+      "file": "Codigo.js",
+      "mode": "create",
+      "content": "// Now we map over the items\nexport const a = [].map(x => x);\n// First, we filter the list\nexport const b = [].filter(Boolean);\n// Then we sort the result\nexport const c = [].sort();\n// Finally, we return the value\nexport const d = 1;"
+    },
+    {
+      "id": "m-CS2",
+      "rule": "CS2",
+      "desc": "Catch vacio",
+      "file": "Codigo.js",
+      "mode": "create",
+      "content": "export function leer() {\n  try { return JSON.parse(\"{}\"); } catch {}\n}"
+    },
+    {
+      "id": "m-CS3",
+      "rule": "CS3",
+      "desc": "Tipos silenciados",
+      "file": "Codigo.ts",
+      "mode": "create",
+      "content": "export const a = {} as any;\nexport const b = [] as any;\nexport const c: any = 1;\nexport const d: any = 2;\n// @ts-ignore\nexport const e: any = 3;"
     }
   ]
 }
