@@ -1,6 +1,6 @@
 {
   "name": "slop-tools",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "Auditor estatico de AI slop + contrato de diseno + gate de proceso. Validacion empirica, plan de remediacion y brief para agentes.",
   "type": "module",
   "license": "MIT",
@@ -13,16 +13,18 @@
     "slop-init": "scripts/slop-init.mjs",
     "slop-fix": "scripts/slop-fix.mjs",
     "slop-gate": "scripts/slop-gate.mjs",
-    "slop-visual": "scripts/slop-visual.mjs"
+    "slop-visual": "scripts/slop-visual.mjs",
+    "slop-refine": "scripts/slop-refine.mjs"
   },
   "scripts": {
     "scan": "node scripts/slop-scan.mjs",
     "bench": "node bench/slop-bench.mjs",
-    "test": "node bench/slop-bench.mjs && node bench/verifica-conteos.mjs && node bench/verifica-init.mjs && node bench/verifica-contrato.mjs && node bench/verifica-fix.mjs && node bench/verifica-madurez.mjs && node bench/verifica-nucleo.mjs && node research/verifica-escala.mjs && node research/verifica-rasgos.mjs",
+    "test": "node bench/slop-bench.mjs && node bench/verifica-conteos.mjs && node bench/verifica-init.mjs && node bench/verifica-refine.mjs && node bench/verifica-contrato.mjs && node bench/verifica-fix.mjs && node bench/verifica-madurez.mjs && node bench/verifica-nucleo.mjs && node research/verifica-escala.mjs && node research/verifica-rasgos.mjs",
     "init": "node scripts/slop-init.mjs",
     "fix": "node scripts/slop-fix.mjs",
     "gate": "node scripts/slop-gate.mjs",
-    "visual": "node scripts/slop-visual.mjs"
+    "visual": "node scripts/slop-visual.mjs",
+    "refine": "node scripts/slop-refine.mjs"
   },
   "engines": {
     "node": ">=18"

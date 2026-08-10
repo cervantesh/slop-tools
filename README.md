@@ -350,6 +350,253 @@ cual falla — para casi todo lo estilístico, **la señal es la densidad, no la
   académico equivalente para diseño de interfaz. Envejecerá con las modas.
 - La puntuación es el punto de partida de una conversación, no un veredicto.
 
+## Tutorial paso a paso
+
+### Escenario: Tienes un proyecto React/Next.js y quieres eliminar la "apariencia de IA"
+
+---
+
+#### Paso 1: Instalar y verificar
+
+```bash
+# Clona o ve a tu proyecto
+cd mi-proyecto
+
+# Verifica que tienes Node 18+
+node --version
+
+# Ejecuta slop-tools desde su ubicación (o instálalo globalmente con npm link)
+node /ruta/a/slop-tools/scripts/slop-scan.mjs --help
+```
+
+---
+
+#### Paso 2: Primer escaneo — conoce tu puntuación
+
+```bash
+node /ruta/a/slop-tools/scripts/slop-scan.mjs ./src --brand "MiMarca" --profile producto
+```
+
+**Qué mirar en la salida:**
+
+| Sección | Qué significa |
+|---------|---------------|
+| `PUNTUACIÓN` | 0–100. Menos de 50 = se identifica como slop en segundos |
+| `NÚCLEO` | Puntuación solo con reglas de **confianza alta** (holdout validado) |
+| `Fallan ALTA` | Reglas que sí discriminan (J ≥ 0.4). Aquí apoyas el veredicto |
+| `Fallan DUDOSA` | Reglas que en muestra funcionan pero en holdout caen. Úsalas como pista, no como prueba |
+
+> **Regla de oro**: Si `Fallan ALTA` tiene entradas, el veredicto "parece hecho por IA" tiene evidencia. Si solo hay `DUDOSA`, es una conversación de calidad, no de autoría.
+
+---
+
+#### Paso 3: Genera un plan de remediación ordenado
+
+```bash
+node /ruta/a/slop-tools/scripts/slop-scan.mjs ./src --brand "MiMarca" --profile producto --plan
+```
+
+**Salida típica:**
+
+```
+1 · CONTENIDO Y DATOS   6 hallazgos · peso 15
+  L2 · Fechas y monedas escritas a mano   [validado J 0,415]
+  Por que delata: Concatenar el simbolo rompe en cuanto cambia el mercado.
+  Que hacer:      Intl.NumberFormat e Intl.DateTimeFormat con locale explicito.
+  Donde:          src/components/Pricing.jsx:49, src/utils/format.js:12
+
+2 · SISTEMA VISUAL   4 hallazgos · peso 12
+  C4 · Radios uniformes (2/4/8/16)   [medido, no separa]
+  Por que delata: Escala geométrica perfecta = plantilla.
+  Que hacer:      Usa la escala de radios de tu contrato (2/6/14 o 3/8/18).
+  Donde:          src/components/Button.jsx:3, src/components/Card.jsx:7
+```
+
+El orden es **peso × confianza ÷ esfuerzo**. Empieza por arriba.
+
+---
+
+#### Paso 4: Crea tu contrato de diseño (slop-init)
+
+```bash
+# Genera un sistema en ./sistema con semilla fija (reproducible)
+node /ruta/a/slop-tools/scripts/slop-init.mjs ./sistema --seed 42
+```
+
+**Se crea:**
+```
+sistema/
+├── DESIGN.md           # Documento legible: paleta, tipografía, escala, movimiento
+├── tokens.css          # Variables CSS listas para importar
+├── tokens.json         # Tokens estructurados para tooling
+└── .slop-init.json     # Metadatos (semilla, versión)
+```
+
+**Abre `DESIGN.md` y ajústalo si quieres** (cambia la tipografía, el tono, los radios). Ese es *tu* diseño.
+
+---
+
+#### Paso 5: Exige el contrato en tu código
+
+```bash
+# Verifica que tu código respeta DESIGN.md
+node /ruta/a/slop-tools/scripts/slop-scan.mjs ./src --contrato ./sistema --fail-on-contrato
+```
+
+**Qué comprueba:**
+- Tipografías (display + texto) → solo las del contrato
+- Paleta OKLCH → solo colores del contrato + neutros
+- Radios → solo valores de la escala del contrato
+- Espaciado → solo valores de la escala del contrato
+- Movimiento → duración y curva del contrato
+
+Si falla, te dice **archivo, línea y qué token viola**.
+
+---
+
+#### Paso 6: Baseline — tolera lo viejo, vigila lo nuevo
+
+```bash
+# Una sola vez: congela hallazgos actuales como "aceptados"
+node /ruta/a/slop-tools/scripts/slop-scan.mjs ./src --write-baseline
+```
+
+```bash
+# En CI: falla SOLO si aparecen hallazgos NUEVOS
+node /ruta/a/slop-tools/scripts/slop-scan.mjs ./src --since-baseline --fail-on-new-drift
+```
+
+> La identidad del hallazgo **excluye el número de línea**. Mover código no cuenta como nuevo.
+
+---
+
+#### Paso 7: Remedia con ayuda del agente
+
+```bash
+# Genera brief completo para un agente (Cursor, Copilot, Claude, etc.)
+node /ruta/a/slop-tools/scripts/slop-fix.mjs ./src --brand "MiMarca" --profile producto --out REMEDIAR.md
+```
+
+```bash
+# Aplica solo fixes triviales y seguros (Inter → fuente del contrato, 300ms → duración del contrato, transition:all → curva del contrato)
+node /ruta/a/slop-tools/scripts/slop-fix.mjs ./src --apply-safe
+```
+
+**REMEDIAR.md contiene:**
+- Hallazgos ordenados (peso × confianza ÷ esfuerzo)
+- Restricciones del contrato pegadas en cada ítem
+- Comando de verificación al final
+
+---
+
+#### Paso 8: Gate completo en CI (todo en uno)
+
+```yaml
+# .github/workflows/slop.yml
+name: slop-gate
+on: [push, pull_request]
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - run: npm ci
+      - run: npx slop-tools@latest gate ./src --strict --profile producto --brand "MiMarca"
+```
+
+O local:
+```bash
+node /ruta/a/slop-tools/scripts/slop-gate.mjs ./src --strict --profile producto --brand "MiMarca"
+```
+
+**Puertas que valida:**
+1. `apply-safe` → parches triviales
+2. `scan` → puntuación + contrato + baseline
+3. `visual` → regression visual (Playwright si está)
+4. `brief` → genera `.slop/REMEDIAR.md`
+
+Exit code 0 **solo si todas pasan**.
+
+---
+
+#### Paso 9: Observa la evolución
+
+```bash
+# Historial local (sin red, sin telemetría)
+node /ruta/a/slop-tools/scripts/slop-scan.mjs ./src --stats
+```
+
+```
+Historial (últimos 10):
+2026-08-09 10:15  score=32  nucleo=71  alta=2  dudosa=3  nuevos=0
+2026-08-08 14:22  score=28  nucleo=65  alta=3  dudosa=4  nuevos=2  ← drift detectado
+2026-08-07 09:00  score=41  nucleo=78  alta=1  dudosa=2  nuevos=0
+```
+
+---
+
+### Referencia rápida de comandos
+
+| Comando | Para qué |
+|---------|----------|
+| `slop-scan ./src --brand "X" --profile producto` | Escaneo base |
+| `slop-scan ./src --plan` | Plan de remediación ordenado |
+| `slop-scan ./src --write-baseline` | Congela estado actual (1 vez) |
+| `slop-scan ./src --since-baseline --fail-on-new-drift` | CI: solo falla ante deriva nueva |
+| `slop-scan ./src --contrato ./sistema --fail-on-contrato` | Verifica fidelidad al sistema de diseño |
+| `slop-init ./sistema --seed 42` | Genera contrato de diseño reproducible |
+| `slop-fix ./src --brand "X" --out REMEDIAR.md` | Brief para agente |
+| `slop-fix ./src --apply-safe` | Parches triviales automáticos |
+| `slop-gate ./src --strict --profile producto --brand "X"` | Pipeline completo CI |
+| `slop-scan ./src --stats` | Historial local |
+| `slop-visual ./sistema` | Visual regression (Playwright) |
+
+---
+
+### Perfiles y géneros — usa el que corresponda
+
+```bash
+# Landing page marketing
+--profile landing --genre modern-minimal
+
+# App/producto (dashboard, SaaS, etc.)
+--profile producto
+
+# Blog/editorial
+--profile landing --genre editorial
+
+# Marca con personalidad fuerte
+--profile landing --genre playful
+```
+
+**Por qué importa**: `--genre editorial` exime reglas de "densidad alta" y "Inter obligatorio"; `--genre playful` exime reglas de "radios uniformes" y "colores apagados". Declara tu intención estética y la herramienta deja de penalizarla.
+
+---
+
+### Qué NO hace esta herramienta
+
+- ❌ No renderiza ni mide contraste real (usa WCAG 2 ratio, no APCA)
+- ❌ No dice "esto fue hecho por IA" (no es respondible desde el artefacto)
+- ❌ No reemplaza revisión humana (`references/caveats.md` lista 14 casos donde la rúbrica se equivoca)
+- ❌ Las puntuaciones **no son comparables entre versiones** (usa el trinquete para evolución)
+
+---
+
+### Validación empírica (corre tú mismo)
+
+```bash
+# Bench: 57 mutaciones inyectadas, 100% recall, 0 falsos positivos en base limpia
+npm run bench
+
+# Corpus etiquetado: 71 proyectos (generados vs pre-2022-11-30)
+node research/build-corpus.mjs && node research/fetch-corpus.mjs && node research/measure.mjs
+# → 4 reglas discriminan de verdad (J ≥ 0.4): D5, CS3, E7, L2
+```
+
+---
+
 ## Licencia
 
 MIT.
