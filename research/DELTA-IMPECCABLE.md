@@ -164,3 +164,62 @@ sólo se vio al medir.
 
 Impeccable clasifica varias de éstas como `slop`. Es una discrepancia deliberada y está aquí
 para que se pueda discutir.
+
+---
+
+## 5 · Triaje de la doctrina (los ~40 documentos de referencia)
+
+Impeccable no es sólo un detector. Alrededor lleva ~40 documentos Markdown que un agente lee
+para ejecutar sus ~23 comandos. **Ninguno de esos comandos toca un archivo**: son
+procedimientos para que los interprete un modelo. Lo único ejecutable y determinista de la
+herramienta es el detector de 59 reglas de arriba.
+
+Por eso la pregunta no era «qué comandos portamos» —ya tenemos seis binarios que hacen el
+trabajo mecánico, y `slop-init` además **genera** el sistema, cosa que ellos no hacen— sino
+**qué criterio de diseño escrito merece entrar aquí como doctrina propia**.
+
+Medido por sustancia: longitud, densidad de criterio comprobable y proporción de andamiaje.
+
+| Documento | Palabras | ¿Umbrales? | Equivalente nuestro | Decisión | Motivo |
+| --- | --- | --- | --- | --- | --- |
+| `craft-floor.md` | 979 | Sí, muchos | — | **Portar** → `suelo-de-oficio.md` | La mayor densidad de criterio por palabra de todo el conjunto. Casi cero acoplamiento a su herramienta. La distinción defaults-vs-vetos es reutilizable como estructura, no sólo como contenido |
+| `clarify.md` | 694 | Algunos | `producto.md` parcial | **Portar** → `microcopy.md` | Cada línea es una regla. Sus reglas de localización valen más en español que en el original, y conectan con `L1`/`L2`/`L3` |
+| `animate.md` | 774 | Sí, tabla completa | `HM2`, `HM3`, `UX3` | **Portar** → `movimiento.md` | La tabla de duraciones y «un fundido-y-subida no es una tesis» |
+| `layout.md` | 724 | Uno | `C3`, `C4` | **Portar** → `composicion.md` | Prueba de los ojos entornados, seis ejes, «contenedores compensando proximidad débil» |
+| `colorize.md` | 680 | Sí | `K1`–`K4` | **Portar** → `color.md` | Taxonomía de roles de color. Es la espina dorsal que nos faltaba escrita |
+| `typeset.md` | 765 | Sí | `HM10`, `B1` | **Portar** → `tipografia.md` | Medida, suelo, roles, y la compensación de tres ejes en modo oscuro |
+| `new-work.md` | 6.114 | Sí | `remediation.md` parcial | **Portar en cirugía** → `direccion.md` | ~3.000 palabras de criterio raro y bien calibrado dentro de ~3.000 de cableado. Las tres estéticas de reflejo, la prueba de categoría-más-evitación y el techo de dos rondas no están en ninguna otra parte |
+| `bolder.md` | 589 | No | — | **Fundir** en `composicion.md` | Pequeño pero con dos pruebas excelentes: el esqueleto y «si todo subió de volumen, quedó más plano» |
+| `quieter.md` | 682 | Sí, los más | — | **Fundir** en `color.md` | La carga numérica más alta. Se toma la numérica y se descarta su registro de lista de mandamientos |
+| `overdrive.md` | 1.255 | Algunos | — | **Fundir parcial** en `movimiento.md` | La mitad es un catálogo de APIs de navegador que caduca. Se toman las cuatro pruebas y la regla de contexto |
+| `critique.md` | 6.484 | Sí | `rubric.md`, `adversarial.md` | **Descartar** | Su mitad de referencia es buena pero es material de manual (Nielsen, carga cognitiva, P0–P3) y aquí ya está cubierto. Se rescata sólo una idea, en el README del directorio |
+| `harden.md` | 1.202 | Sí | `producto.md` | **Descartar** | Correcto y portable, pero es checklist de QA de industria sin juicio propio |
+| `optimize.md` | 1.055 | Sí | — | **Descartar** | Core Web Vitals. Citar web.dev es mejor que parafrasearlo |
+| `distill.md` | 786 | Cuatro | — | **Descartar salvo topes** | Minimalismo genérico. Se rescatan cuatro topes numéricos y su lista de «nunca» |
+| `shape.md` | 524 | Algunos | `slop-refine` | **Descartar** | Protocolo de entrevista de briefing, no criterio visual |
+| `craft.md` | **78** | No | — | **Descartar** | Alias obsoleto que sólo redirige. No es doctrina |
+| `ios.md`, `android.md` | 638 / 684 | Sí | — | **Descartar** | Guías de plataforma. Fuera del alcance de un escáner web |
+| `live*.md`, `hooks.md`, `doctor.md`, `operate.md`, `init.md`, `onboard.md`, `routing.md`, `document.md`, `extract.md`, `visualize.md`, `audit*.md`, `adapt*.md`, `polish.md` (parcial) | — | — | Nuestros binarios | **Descartar** | Andamiaje de su herramienta: sus scripts, sus rutas `.impeccable/`, sus códigos de salida, sus subagentes. Nada de eso transfiere |
+
+**Siete documentos portados de ~40.** El resto se descarta por escrito, que era la condición.
+
+### Lo que NO se portó de lo portado
+
+- **El procedimiento.** Sus documentos invocan `concept-seed.mjs`, `serve-question.mjs`,
+  `.impeccable/mocks/decision/` y cuatro subagentes declarados en `.toml`. Se portó el
+  criterio y se dejó fuera el cableado.
+- **Su arquitectura de subagentes** (`asset_producer`, `documenter`, `finish_reviewer`,
+  `manual_edit_applier`) es un reparto de trabajo, no criterio. `slop-refine` ya cubre el
+  caso con el humano en el lazo, y lo cubre mejor para nosotros porque el presupuesto de
+  rondas lo pone una persona. **Descartado por redundante.** Se recoge una sola idea suya: que
+  el revisor **no herede la transcripción del constructor**, porque hereda con ella su
+  encuadre y su optimismo.
+
+### La regla que gobierna toda esta carpeta
+
+La doctrina **no puntúa y no genera reglas**. Si de leerla sale una hipótesis comprobable,
+entra como regla aparte, sin validar, y se mide como todas.
+
+Y donde el criterio contradice la medición, gana la medición. Ha pasado tres veces y está
+escrito en cada documento: la jerarquía tipográfica plana (`B9`), la estética del papel crema
+(`K5`, `AS9`) y el espaciado uniforme (`monotonous-spacing`, no portada).

@@ -12,8 +12,8 @@
     "validacion": {
       "informe": "research/RESULTADOS.md",
       "medido": {
-        "pos": 50,
-        "neg_stack": 62,
+        "pos": 56,
+        "neg_stack": 146,
         "neg_classic": 11
       },
       "banda": {
@@ -21,8 +21,8 @@
           "min": 20,
           "max": 200
         },
-        "n_pos": 34,
-        "n_neg": 32
+        "n_pos": 39,
+        "n_neg": 76
       },
       "nota": "El campo validado de cada regla trae su fila de la tabla. Ausencia de validado = regla no presente en la medicion."
     },
@@ -50,16 +50,17 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.103,
-        "pos": 0.353,
-        "neg": 0.25,
+        "J_banda": 0.123,
+        "pos": 0.333,
+        "neg": 0.211,
         "separa": false,
         "decision": "J 0.13 e intervalos solapados: el tell mas citado de la bibliografia rinde poco"
       },
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/color.md"
     },
     {
       "id": "A4",
@@ -81,18 +82,19 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.143,
-        "pos": 0.206,
-        "neg": 0.063,
+        "J_banda": 0.139,
+        "pos": 0.205,
+        "neg": 0.066,
         "separa": false,
         "estado": "no_medible",
         "nota": "cero disparos en la banda; exige un hero con resplandor radial"
       },
       "sustrato": "CSS y clases de utilidad",
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/color.md"
     },
     {
       "id": "A5",
@@ -111,16 +113,17 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.088,
-        "pos": 0.088,
-        "neg": 0,
+        "J_banda": 0.064,
+        "pos": 0.077,
+        "neg": 0.013,
         "separa": false
       },
       "sustrato": "CSS y clases de utilidad",
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/color.md"
     },
     {
       "id": "A6",
@@ -136,7 +139,19 @@
       "why": "La textura de rayas hecha con un degradado repetido es decoracion de superficie que ningun contenido pidio. Aparece cuando hace falta rellenar un fondo vacio y no hay material que poner.",
       "fix": "Deja la superficie lisa, o dale profundidad con un escalon de luminancia. Si la textura es de marca, decláralaen el contrato.",
       "source": "impeccable: repeating-stripes-gradient (Apache-2.0)",
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 39,
+          "neg": 76
+        },
+        "J_banda": -0.013,
+        "pos": 0,
+        "neg": 0.013,
+        "separa": false
+      },
+      "doctrina": "references/doctrina/color.md"
     },
     {
       "id": "B4",
@@ -155,15 +170,16 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": -0.031,
-        "pos": 0,
-        "neg": 0.031,
+        "J_banda": -0.04,
+        "pos": 0.026,
+        "neg": 0.066,
         "separa": false
       },
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/tipografia.md"
     },
     {
       "id": "B5",
@@ -179,7 +195,19 @@
       "why": "Por debajo de -0,05em los caracteres pierden su silueta y el titular se lee como una mancha. Apretar display es correcto; apretarlo hasta ahi cuesta legibilidad.",
       "fix": "Aprieta opticamente, entre -0,01em y -0,03em. Si el titular sigue sin caber, el problema es el tamano, no el interletraje.",
       "source": "impeccable: extreme-negative-tracking (Apache-2.0)",
-      "tipo": "defecto"
+      "tipo": "defecto",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 39,
+          "neg": 76
+        },
+        "J_banda": 0.011,
+        "pos": 0.077,
+        "neg": 0.066,
+        "separa": false
+      },
+      "doctrina": "references/doctrina/tipografia.md"
     },
     {
       "id": "B6",
@@ -195,7 +223,19 @@
       "why": "Por debajo de 12px el texto falla en pantallas densas y en viewports pequenos. Que la etiqueta sea secundaria no la hace menos legible: si nadie tiene que leerla, sobra.",
       "fix": "Suelo de 12px para texto de lectura y 11px para texto funcional (enlaces, botones, celdas). Anadir el tamano a la escala del contrato no arregla la legibilidad, solo blanquea el token.",
       "source": "impeccable: tiny-text + undersized-ui-text (Apache-2.0)",
-      "tipo": "defecto"
+      "tipo": "defecto",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 39,
+          "neg": 76
+        },
+        "J_banda": 0.137,
+        "pos": 0.282,
+        "neg": 0.145,
+        "separa": false
+      },
+      "doctrina": "references/doctrina/tipografia.md"
     },
     {
       "id": "C2",
@@ -214,15 +254,16 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.029,
-        "pos": 0.029,
-        "neg": 0,
+        "J_banda": 0.012,
+        "pos": 0.026,
+        "neg": 0.013,
         "separa": false
       },
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/composicion.md"
     },
     {
       "id": "D1",
@@ -241,12 +282,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.02,
-        "pos": 0.176,
-        "neg": 0.156,
+        "J_banda": 0.074,
+        "pos": 0.179,
+        "neg": 0.105,
         "separa": false,
         "decision": "J 0.02 en banda: enlazar bancos de imagenes es igual de comun en ambas clases"
       },
@@ -269,16 +310,17 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.263,
-        "pos": 0.294,
-        "neg": 0.031,
+        "J_banda": 0.241,
+        "pos": 0.333,
+        "neg": 0.092,
         "separa": true,
         "decision": "J 0.26 en banda, intervalos separados. Precision alta y tasa negativa del 3%"
       },
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/suelo-de-oficio.md"
     },
     {
       "id": "D6",
@@ -294,7 +336,18 @@
       "why": "Un <img> sin fuente utilizable se publica como el recuadro de imagen rota del navegador. Es la evidencia de que nadie abrio la pagina antes de ensenarla.",
       "fix": "Pon la imagen real, genera el activo, o quita la etiqueta. Un hueco vacio es mejor que un icono de error.",
       "source": "impeccable: broken-image (Apache-2.0)",
-      "tipo": "defecto"
+      "tipo": "defecto",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 39,
+          "neg": 76
+        },
+        "J_banda": -0.066,
+        "pos": 0,
+        "neg": 0.066,
+        "separa": false
+      }
     },
     {
       "id": "E1",
@@ -313,15 +366,16 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.088,
-        "pos": 0.088,
-        "neg": 0,
+        "J_banda": 0.102,
+        "pos": 0.128,
+        "neg": 0.026,
         "separa": false
       },
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/direccion.md"
     },
     {
       "id": "E2",
@@ -340,15 +394,16 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.029,
-        "pos": 0.029,
-        "neg": 0,
+        "J_banda": -0.014,
+        "pos": 0.026,
+        "neg": 0.039,
         "separa": false
       },
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/microcopy.md"
     },
     {
       "id": "E5",
@@ -367,15 +422,16 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.118,
-        "pos": 0.118,
+        "J_banda": 0.128,
+        "pos": 0.128,
         "neg": 0,
-        "separa": false
+        "separa": true
       },
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/direccion.md"
     },
     {
       "id": "E6",
@@ -394,15 +450,16 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.136,
-        "pos": 0.324,
-        "neg": 0.188,
+        "J_banda": 0.189,
+        "pos": 0.333,
+        "neg": 0.145,
         "separa": false
       },
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/microcopy.md"
     },
     {
       "id": "E7",
@@ -421,16 +478,17 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.254,
-        "pos": 0.941,
-        "neg": 0.688,
-        "separa": false,
+        "J_banda": 0.317,
+        "pos": 0.949,
+        "neg": 0.632,
+        "separa": true,
         "decision": "J 0.25 pero los intervalos vuelven a solaparse con n mayor: dispara en el 94% de lo generado y el 69% de lo humano"
       },
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/direccion.md"
     },
     {
       "id": "E8",
@@ -438,7 +496,7 @@
       "category": "Copy",
       "severity": "medium",
       "applies": "landing",
-      "weight": 2,
+      "weight": 1,
       "scope": "code",
       "pattern": "\\b(?:streamline your|empower your|supercharge (?:your|the)|unleash the power|harness the power|best-in-class|industry-leading|world-class|enterprise-grade|next-generation|game-?changer|mission-critical|future-proof|seamless experience|drive (?:engagement|growth|results)|revolutioniz(?:e|es|ing)|impulsa tu|potencia tu|lider del sector|de clase mundial|listo para el futuro)\\b",
       "flags": "i",
@@ -446,7 +504,20 @@
       "why": "Sintagmas que encajan en cualquier empresa y por tanto no describen ninguna. \"Supercharge your workflow\" vale igual para un CRM que para una sierra de calar.",
       "fix": "Un verbo y un sustantivo que digan lo que el producto hace literalmente. Si al sustituir el nombre del producto por el de un competidor la frase sigue valiendo, sobra.",
       "source": "impeccable: marketing-buzzword (Apache-2.0); las formas en espanol son aportacion propia",
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 39,
+          "neg": 76
+        },
+        "J_banda": 0.038,
+        "pos": 0.051,
+        "neg": 0.013,
+        "separa": false,
+        "decision": "J 0.04 en banda (5% frente a 1%): los sintagmas de marketing casi no aparecen en repositorios de codigo, igual que le paso a P1 y P2"
+      },
+      "doctrina": "references/doctrina/direccion.md"
     },
     {
       "id": "E9",
@@ -462,7 +533,21 @@
       "why": "El contraste fabricado —\"Not a feature. A platform.\"— simula corregir una idea que nadie tenia. Una vez es voz; tres veces en la misma pagina es cadencia de plantilla.",
       "fix": "Di la afirmacion en positivo y sin el contraste. Si la negacion aporta, que sea una y elegida.",
       "source": "impeccable: aphoristic-cadence (Apache-2.0); la forma en espanol es aportacion propia",
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 39,
+          "neg": 76
+        },
+        "J_banda": 0,
+        "pos": 0,
+        "neg": 0,
+        "separa": false,
+        "estado": "no_medible",
+        "nota": "cero disparos en ambas clases; la cadencia aforistica es prosa de landing y el corpus son repositorios de codigo"
+      },
+      "doctrina": "references/doctrina/direccion.md"
     },
     {
       "id": "E10",
@@ -478,7 +563,19 @@
       "why": "Descalificar algo como \"security theater\", \"compliance theater\" o \"performance theater\" es un tic de copy generado: suena a critica afilada sin comprometerse a decir que falla.",
       "fix": "Di llanamente que hace o que no hace la cosa.",
       "source": "impeccable: theater-slop-phrase (Apache-2.0)",
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 39,
+          "neg": 76
+        },
+        "J_banda": 0.026,
+        "pos": 0.026,
+        "neg": 0,
+        "separa": false
+      },
+      "doctrina": "references/doctrina/direccion.md"
     },
     {
       "id": "L2",
@@ -497,16 +594,17 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.447,
-        "pos": 0.853,
-        "neg": 0.406,
+        "J_banda": 0.517,
+        "pos": 0.846,
+        "neg": 0.329,
         "separa": true,
         "decision": "J 0.45 en banda, intervalos separados, confirmada con n mayor"
       },
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/microcopy.md"
     },
     {
       "id": "UX1",
@@ -525,15 +623,16 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.208,
-        "pos": 0.676,
-        "neg": 0.469,
-        "separa": false
+        "J_banda": 0.298,
+        "pos": 0.692,
+        "neg": 0.395,
+        "separa": true
       },
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/composicion.md"
     },
     {
       "id": "UX2",
@@ -552,16 +651,17 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.449,
-        "pos": 0.824,
-        "neg": 0.375,
+        "J_banda": 0.571,
+        "pos": 0.821,
+        "neg": 0.25,
         "separa": true,
         "decision": "J 0.45 en banda con intervalos separados y n mayor; sube de 2 a 3"
       },
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/composicion.md"
     },
     {
       "id": "UX3",
@@ -580,15 +680,16 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.162,
-        "pos": 0.412,
-        "neg": 0.25,
+        "J_banda": 0.187,
+        "pos": 0.41,
+        "neg": 0.224,
         "separa": false
       },
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/movimiento.md"
     },
     {
       "id": "UX4",
@@ -607,15 +708,16 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": -0.063,
+        "J_banda": -0.066,
         "pos": 0,
-        "neg": 0.063,
+        "neg": 0.066,
         "separa": false
       },
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/movimiento.md"
     },
     {
       "id": "UX5",
@@ -634,12 +736,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": -0.035,
-        "pos": 0.059,
-        "neg": 0.094,
+        "J_banda": -0.002,
+        "pos": 0.077,
+        "neg": 0.079,
         "separa": false
       },
       "tipo": "defecto"
@@ -650,7 +752,7 @@
       "category": "Calidad",
       "severity": "high",
       "applies": "producto",
-      "weight": 3,
+      "weight": 2,
       "scope": "code",
       "pattern": "console\\.(log|debug)\\s*\\(",
       "flags": "",
@@ -661,14 +763,14 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.342,
-        "pos": 0.529,
-        "neg": 0.188,
-        "separa": true,
-        "decision": "J 0.34 en banda, intervalos separados. Igual que L1: la primera medicion no tenia potencia para verla"
+        "J_banda": 0.09,
+        "pos": 0.564,
+        "neg": 0.474,
+        "separa": false,
+        "decision": "J 0.09 en banda con intervalos solapados (56% frente a 47%), cuando en la medicion anterior daba 0.34 y separaba. Baja de 3 a 2. Es el riesgo que declaraba el informe: la J de una regla ajustada con n pequena encoge al ampliar la muestra"
       },
       "tipo": "procedencia"
     },
@@ -689,12 +791,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.169,
-        "pos": 0.294,
-        "neg": 0.125,
+        "J_banda": 0.215,
+        "pos": 0.333,
+        "neg": 0.118,
         "separa": false
       },
       "tipo": "procedencia"
@@ -716,15 +818,16 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.059,
-        "pos": 0.059,
-        "neg": 0,
+        "J_banda": 0.025,
+        "pos": 0.051,
+        "neg": 0.026,
         "separa": false
       },
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/composicion.md"
     },
     {
       "id": "UX9",
@@ -743,12 +846,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.028,
-        "pos": 0.059,
-        "neg": 0.031,
+        "J_banda": 0.025,
+        "pos": 0.051,
+        "neg": 0.026,
         "separa": false
       },
       "tipo": "defecto"
@@ -770,15 +873,16 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.134,
-        "pos": 0.353,
-        "neg": 0.219,
-        "separa": false
+        "J_banda": 0.241,
+        "pos": 0.359,
+        "neg": 0.118,
+        "separa": true
       },
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/color.md"
     },
     {
       "id": "UX11",
@@ -797,15 +901,16 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.199,
-        "pos": 0.324,
-        "neg": 0.125,
-        "separa": false
+        "J_banda": 0.241,
+        "pos": 0.359,
+        "neg": 0.118,
+        "separa": true
       },
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/tipografia.md"
     },
     {
       "id": "UX12",
@@ -824,15 +929,16 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": -0.004,
-        "pos": 0.059,
-        "neg": 0.063,
+        "J_banda": -0.001,
+        "pos": 0.051,
+        "neg": 0.053,
         "separa": false
       },
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/composicion.md"
     },
     {
       "id": "UX13",
@@ -848,7 +954,19 @@
       "why": "La cinta de logos que se desplaza sola exige atencion que no ha ganado y esconde la mitad de su contenido en todo momento. Es el relleno por defecto de la seccion \"confian en nosotros\".",
       "fix": "Ensena los logos quietos. Si no caben, ensena menos.",
       "source": "impeccable: marquee (Apache-2.0)",
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 39,
+          "neg": 76
+        },
+        "J_banda": 0.038,
+        "pos": 0.051,
+        "neg": 0.013,
+        "separa": false
+      },
+      "doctrina": "references/doctrina/movimiento.md"
     },
     {
       "id": "UX14",
@@ -856,7 +974,7 @@
       "category": "Motion",
       "severity": "low",
       "applies": "ambos",
-      "weight": 1,
+      "weight": 2,
       "scope": "code",
       "pattern": "\\banimate-(?:ping|pulse)\\b(?=[^\"']*\\brounded-full\\b)|\\brounded-full\\b(?=[^\"']*\\banimate-(?:ping|pulse)\\b)",
       "flags": "i",
@@ -864,7 +982,20 @@
       "why": "El puntito verde que late simula que algo esta vivo. Cuando no hay dato que cambie detras, es decoracion que finge telemetria.",
       "fix": "Reserva el pulso para indicadores atados a datos que de verdad cambian. Un punto quieto con su etiqueta es mas honesto y mas tranquilo.",
       "source": "impeccable: pulsing-dot (Apache-2.0)",
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 39,
+          "neg": 76
+        },
+        "J_banda": 0.269,
+        "pos": 0.282,
+        "neg": 0.013,
+        "separa": true,
+        "decision": "J 0.27 en banda con intervalos separados: 28% frente a 1%. Es la octava J mas alta del catalogo entero y la mejor de todo lo portado. Sube de 1 a 2"
+      },
+      "doctrina": "references/doctrina/movimiento.md"
     },
     {
       "id": "AS1",
@@ -883,15 +1014,16 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.083,
-        "pos": 0.176,
-        "neg": 0.094,
+        "J_banda": 0.009,
+        "pos": 0.154,
+        "neg": 0.145,
         "separa": false
       },
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/movimiento.md"
     },
     {
       "id": "AS2",
@@ -910,16 +1042,17 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.057,
-        "pos": 0.088,
-        "neg": 0.031,
+        "J_banda": 0.102,
+        "pos": 0.128,
+        "neg": 0.026,
         "separa": false
       },
       "sustrato": "CSS y clases de utilidad",
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/movimiento.md"
     },
     {
       "id": "AS9",
@@ -938,16 +1071,17 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": -0.002,
-        "pos": 0.029,
-        "neg": 0.031,
+        "J_banda": -0.001,
+        "pos": 0.026,
+        "neg": 0.026,
         "separa": false,
         "decision": "J -0.00: la estetica crema/serif/terracota no aparece en el corpus"
       },
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/direccion.md"
     },
     {
       "id": "HM2",
@@ -966,15 +1100,16 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.028,
-        "pos": 0.059,
-        "neg": 0.031,
+        "J_banda": 0.024,
+        "pos": 0.077,
+        "neg": 0.053,
         "separa": false
       },
-      "tipo": "defecto"
+      "tipo": "defecto",
+      "doctrina": "references/doctrina/movimiento.md"
     },
     {
       "id": "HM3",
@@ -993,15 +1128,16 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.029,
-        "pos": 0.029,
+        "J_banda": 0.026,
+        "pos": 0.026,
         "neg": 0,
         "separa": false
       },
-      "tipo": "defecto"
+      "tipo": "defecto",
+      "doctrina": "references/doctrina/movimiento.md"
     },
     {
       "id": "HM4",
@@ -1020,15 +1156,16 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.233,
-        "pos": 0.265,
-        "neg": 0.031,
-        "separa": false
+        "J_banda": 0.243,
+        "pos": 0.282,
+        "neg": 0.039,
+        "separa": true
       },
-      "tipo": "procedencia"
+      "tipo": "procedencia",
+      "doctrina": "references/doctrina/movimiento.md"
     },
     {
       "id": "HM5",
@@ -1047,8 +1184,8 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
         "J_banda": 0,
         "pos": 0,
@@ -1074,8 +1211,8 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
         "J_banda": 0,
         "pos": 0,
@@ -1101,8 +1238,8 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
         "J_banda": 0,
         "pos": 0,
@@ -1128,11 +1265,11 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.029,
-        "pos": 0.029,
+        "J_banda": 0.026,
+        "pos": 0.026,
         "neg": 0,
         "separa": false,
         "decision": "J 0.03 en banda"
@@ -1155,13 +1292,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.176,
-        "pos": 0.176,
-        "neg": 0,
-        "separa": false,
+        "J_banda": 0.179,
+        "pos": 0.205,
+        "neg": 0.026,
+        "separa": true,
         "decision": "J 0.18 en banda con 0% de falsos positivos: dispara en el 18% de lo generado y en ninguno humano"
       }
     },
@@ -1182,11 +1319,11 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.029,
-        "pos": 0.029,
+        "J_banda": 0.026,
+        "pos": 0.026,
         "neg": 0,
         "separa": false
       }
@@ -1208,8 +1345,8 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
         "J_banda": 0,
         "pos": 0,
@@ -1237,12 +1374,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": -0.096,
-        "pos": 0.029,
-        "neg": 0.125,
+        "J_banda": -0.028,
+        "pos": 0.077,
+        "neg": 0.105,
         "separa": false,
         "decision": "J -0.10: el catch vacio es MAS comun en codigo humano. Se reclasifica a defecto"
       }
@@ -1266,13 +1403,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 34,
-          "neg": 32
+          "pos": 39,
+          "neg": 76
         },
-        "J_banda": 0.281,
-        "pos": 0.5,
-        "neg": 0.219,
-        "separa": false,
+        "J_banda": 0.368,
+        "pos": 0.513,
+        "neg": 0.145,
+        "separa": true,
         "decision": "J 0.28 en banda (50% frente a 22%), la mas alta de las nuevas. Intervalos solapados, pero sube de 1 a 2"
       }
     },
@@ -1290,7 +1427,19 @@
       "why": "El gris esta calibrado contra un fondo neutro. Sobre un fondo saturado pierde el contraste y se lee desvaido, aunque el par pase el ratio por los pelos.",
       "fix": "Usa un tono oscuro del propio color del fondo, o blanco. El gris neutro solo funciona sobre neutros.",
       "source": "impeccable: gray-on-color (Apache-2.0)",
-      "tipo": "defecto"
+      "tipo": "defecto",
+      "validado": {
+        "corpus": "research/corpus.json",
+        "n": {
+          "pos": 39,
+          "neg": 76
+        },
+        "J_banda": -0.056,
+        "pos": 0.128,
+        "neg": 0.184,
+        "separa": false
+      },
+      "doctrina": "references/doctrina/color.md"
     }
   ]
 }

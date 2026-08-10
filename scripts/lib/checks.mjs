@@ -24,14 +24,15 @@ try {
 // del cuerpo para que las funciones queden legibles; las cifras de `validado`
 // salen de research/RESULTADOS.md, misma medicion que las declarativas.
 const META = {
-  A2: { fix: 'Ofrece alternativa clara o justifica el oscuro en el contrato de marca.' },
-  A3: { fix: 'Reserva el desenfoque para lo que de verdad flota sobre contenido.' },
-  B1: { fix: 'Empareja una display con una de texto. Inter como unica familia es el default de las herramientas.' },
-  B2: { fix: 'Una sola familia bien usada es disciplina en producto; en marca, empareja.' },
-  C1: { fix: 'Separa con espacio primero, luego con un escalon de luminancia del 3-5%. El filete gris es el ultimo recurso.' },
-  C3: { fix: 'Que el radio y el padding senalen la funcion del elemento en vez de ser constantes.' },
+  A2: { fix: 'Ofrece alternativa clara o justifica el oscuro en el contrato de marca.', doctrina: 'references/doctrina/color.md' },
+  A3: { fix: 'Reserva el desenfoque para lo que de verdad flota sobre contenido.', doctrina: 'references/doctrina/color.md' },
+  B1: { fix: 'Empareja una display con una de texto. Inter como unica familia es el default de las herramientas.', doctrina: 'references/doctrina/tipografia.md' },
+  B2: { fix: 'Una sola familia bien usada es disciplina en producto; en marca, empareja.', doctrina: 'references/doctrina/tipografia.md' },
+  C1: { fix: 'Separa con espacio primero, luego con un escalon de luminancia del 3-5%. El filete gris es el ultimo recurso.', doctrina: 'references/doctrina/composicion.md' },
+  C3: { fix: 'Que el radio y el padding senalen la funcion del elemento en vez de ser constantes.', doctrina: 'references/doctrina/composicion.md' },
   C4: {
     fix: 'Declara una escala de espaciado y quedate en ella. Catorce valores distintos no es un sistema, es la escala de Tailwind usada a discrecion.',
+    doctrina: 'references/doctrina/composicion.md',
     validado: {
       J_banda: 0.552, pos: 0.90, neg: 0.35, separa: true, insample: true,
       n: { pos: 20, neg: 23 },
@@ -39,32 +40,40 @@ const META = {
     },
   },
   E4: { fix: 'Cinco descripciones distintas, o ninguna. Una repetida cinco veces es peor que el vacio.' },
-  L1: { fix: 'Resuelve el plural con un condicional o con Intl.PluralRules.' },
-  L3: { fix: 'Restaura los diacriticos en los archivos que salieron en ASCII plano.' },
-  T1: { fix: 'Anade aria-label a todo boton que solo lleve icono.' },
-  T2: { fix: 'Que el texto del enlace diga a donde lleva, fuera de su contexto.' },
-  K1: { fix: 'Da a los neutros un croma minimo de 0.005: un gris con temperatura ancla la paleta.' },
-  K2: { fix: 'Sube el contraste a 4.5:1 en texto de lectura.' },
-  K3: { fix: 'Separa el texto del relleno al menos 5% en luminosidad.' },
-  K4: { fix: 'Acota a un dominante, un neutro y un acento. Los semanticos van aparte.' },
-  S1: { fix: 'Rompe el arquetipo: la navegacion no tiene por que ser wordmark-enlaces-boton.' },
-  S2: { fix: 'Agrupa el pie por lo que la gente busca, no por Product/Company/Resources/Legal.' },
-  S3: { fix: 'Captura real en vez de cromo de navegador dibujado a mano.' },
-  S4: { fix: 'Kicker y titular en una sola columna.' },
-  S5: { fix: 'Ordena el panel por la decision que toma quien lo usa, no por el esqueleto canonico.' },
+  L1: { fix: 'Resuelve el plural con un condicional o con Intl.PluralRules.', doctrina: 'references/doctrina/microcopy.md' },
+  L3: { fix: 'Restaura los diacriticos en los archivos que salieron en ASCII plano.', doctrina: 'references/doctrina/microcopy.md' },
+  T1: { fix: 'Anade aria-label a todo boton que solo lleve icono.', doctrina: 'references/doctrina/microcopy.md' },
+  T2: { fix: 'Que el texto del enlace diga a donde lleva, fuera de su contexto.', doctrina: 'references/doctrina/microcopy.md' },
+  K1: { fix: 'Da a los neutros un croma minimo de 0.005: un gris con temperatura ancla la paleta.', doctrina: 'references/doctrina/color.md' },
+  K2: { fix: 'Sube el contraste a 4.5:1 en texto de lectura.', doctrina: 'references/doctrina/color.md' },
+  K3: { fix: 'Separa el texto del relleno al menos 5% en luminosidad.', doctrina: 'references/doctrina/color.md' },
+  K4: { fix: 'Acota a un dominante, un neutro y un acento. Los semanticos van aparte.', doctrina: 'references/doctrina/color.md' },
+  S1: { fix: 'Rompe el arquetipo: la navegacion no tiene por que ser wordmark-enlaces-boton.', doctrina: 'references/doctrina/direccion.md' },
+  S2: { fix: 'Agrupa el pie por lo que la gente busca, no por Product/Company/Resources/Legal.', doctrina: 'references/doctrina/direccion.md' },
+  S3: { fix: 'Captura real en vez de cromo de navegador dibujado a mano.', doctrina: 'references/doctrina/direccion.md' },
+  S4: { fix: 'Kicker y titular en una sola columna.', doctrina: 'references/doctrina/suelo-de-oficio.md' },
+  S5: { fix: 'Ordena el panel por la decision que toma quien lo usa, no por el esqueleto canonico.', doctrina: 'references/doctrina/direccion.md' },
+
+  // Estas cinco salieron de hallmark sin `fix` declarado, asi que el escaner
+  // imprimia «(sin arreglo declarado)». Se les da arreglo y puntero de criterio.
+  HM1: { fix: 'Titular en redonda. La italica de display es recurso editorial, no enfasis por defecto.', doctrina: 'references/doctrina/tipografia.md' },
+  HM7: { fix: 'Dos familias con roles distintos. Una tercera necesita un trabajo que solo ella pueda hacer.', doctrina: 'references/doctrina/tipografia.md' },
+  HM8: { fix: 'Anade el bloque prefers-reduced-motion. Movimiento reducido es menos animacion y mas suave, no ninguna.', doctrina: 'references/doctrina/movimiento.md' },
+  HM10: { fix: 'Medida de prosa entre 45 y 75 caracteres. El interlineado se ajusta inversamente a la medida.', doctrina: 'references/doctrina/tipografia.md' },
+  HM12: { fix: 'Interlineado por encima de 1,0 en mayusculas: sin descendentes, las lineas chocan al partirse.', doctrina: 'references/doctrina/tipografia.md' },
 
   /* ── portadas de impeccable (Apache-2.0) ── */
-  B7: { fix: 'Interlineado de 1,5 a 1,7 en texto de lectura. Por debajo de 1,3 las lineas se tocan.' },
-  B8: { fix: 'Alinea a la izquierda. Si el justificado es de marca, activa hyphens: auto y declara el idioma.' },
-  B9: { fix: 'Menos tamanos y mas distancia entre ellos: una razon de 1,25 como minimo entre escalones.' },
-  C5: { fix: 'Quita el borde o quita el radio. Los dos juntos hacen que el filete corte la curva.' },
-  C6: { fix: 'Elige uno: borde definido o elevacion suave. Los dos a la vez es la firma, no el estilo.' },
-  D7: { fix: 'Un visual a tamano de hero merece ilustracion, fotografia o grafico de datos real.' },
-  K5: { fix: 'Elige el fondo desde la paleta. El crema por reflejo es el beis de la IA.' },
-  S6: { fix: 'Borra el kicker. Si las palabras importan, van dentro del titular o en el cuerpo.' },
-  S7: { fix: 'Que la jerarquia y el contenido lleven la secuencia; una pagina no numera sus propios capitulos.' },
-  S8: { fix: 'Icono y titular en linea, o el icono suelto en el flujo sin su propia baldosa.' },
-  UX15: { fix: 'Reserva la rejilla para lienzos, mapas o planos. En lo demas, superficie lisa.' },
+  B7: { fix: 'Interlineado de 1,5 a 1,7 en texto de lectura. Por debajo de 1,3 las lineas se tocan.', doctrina: 'references/doctrina/tipografia.md' },
+  B8: { fix: 'Alinea a la izquierda. Si el justificado es de marca, activa hyphens: auto y declara el idioma.', doctrina: 'references/doctrina/tipografia.md' },
+  B9: { fix: 'Menos tamanos y mas distancia entre ellos: una razon de 1,25 como minimo entre escalones.', doctrina: 'references/doctrina/tipografia.md' },
+  C5: { fix: 'Quita el borde o quita el radio. Los dos juntos hacen que el filete corte la curva.', doctrina: 'references/doctrina/composicion.md' },
+  C6: { fix: 'Elige uno: borde definido o elevacion suave. Los dos a la vez es la firma, no el estilo.', doctrina: 'references/doctrina/composicion.md' },
+  D7: { fix: 'Un visual a tamano de hero merece ilustracion, fotografia o grafico de datos real.', doctrina: 'references/doctrina/suelo-de-oficio.md' },
+  K5: { fix: 'Elige el fondo desde la paleta. El crema por reflejo es el beis de la IA.', doctrina: 'references/doctrina/color.md' },
+  S6: { fix: 'Borra el kicker. Si las palabras importan, van dentro del titular o en el cuerpo.', doctrina: 'references/doctrina/suelo-de-oficio.md' },
+  S7: { fix: 'Que la jerarquia y el contenido lleven la secuencia; una pagina no numera sus propios capitulos.', doctrina: 'references/doctrina/suelo-de-oficio.md' },
+  S8: { fix: 'Icono y titular en linea, o el icono suelto en el flujo sin su propia baldosa.', doctrina: 'references/doctrina/suelo-de-oficio.md' },
+  UX15: { fix: 'Reserva la rejilla para lienzos, mapas o planos. En lo demas, superficie lisa.', doctrina: 'references/doctrina/suelo-de-oficio.md' },
 }
 
 /* ── utilidades de las comprobaciones portadas ── */
@@ -552,7 +561,11 @@ export function programaticas(ctx) {
 
     // impeccable: flat-type-hierarchy. Reutiliza el extractor compartido de
     // escala.mjs, el mismo del que depende el umbral de C4.
-    { id: 'B9', tipo: 'procedencia', cat: 'Tipografia', weight: 2, applies: 'ambos', title: 'Jerarquia tipografica plana',
+    // MEDIDA: peso 2 -> 1. J -0.05 en banda; cero disparos en generado y 5% en
+    // humano. La hipotesis de impeccable —que lo generado aplana la escala de
+    // tipo— apunta al reves sobre este corpus, igual que le paso a la de
+    // espaciado uniforme (C3). No se elimina: sigue siendo criterio valido.
+    { id: 'B9', tipo: 'procedencia', cat: 'Tipografia', weight: 1, applies: 'ambos', title: 'Jerarquia tipografica plana',
       run() {
         const { tamanos } = escalas(cssTexto, textoTodo)
         const utiles = tamanos.filter(v => v >= 8 && v <= 200)
@@ -590,7 +603,12 @@ export function programaticas(ctx) {
     // impeccable: gpt-thin-border-wide-shadow. No es C1 (filete gris a secas):
     // lo que es firma es la COMBINACION de borde definido y elevacion difusa,
     // dos decisiones que se contradicen.
-    { id: 'C6', tipo: 'procedencia', cat: 'Layout', weight: 1, applies: 'ambos', title: 'Filete de un pixel con sombra ancha',
+    // MEDIDA: peso 1 -> 2. J 0.22 en banda CON INTERVALOS SEPARADOS, 28% frente
+    // a 7%. Es una de las dos portadas que discriminan, y dice algo util: C1
+    // —el filete gris a secas— da J -0.01, y la fuente lo llamaba el indicador
+    // aislado mas fiable. Lo que separa no es el borde: es el borde CON la
+    // sombra ancha, dos decisiones que se contradicen.
+    { id: 'C6', tipo: 'procedencia', cat: 'Layout', weight: 2, applies: 'ambos', title: 'Filete de un pixel con sombra ancha',
       run() {
         const hits = []
         for (const b of blks) {
@@ -616,7 +634,8 @@ export function programaticas(ctx) {
 
     // impeccable: shape-assembled-illustration. Enteramente estatico y
     // sorprendentemente especifico: una escena montada con primitivas.
-    { id: 'D7', tipo: 'procedencia', cat: 'Imagen', weight: 2, applies: 'landing', title: 'Ilustracion ensamblada con primitivas',
+    // MEDIDA: peso 2 -> 1. J -0.03: cero disparos en generado, 3% en humano.
+    { id: 'D7', tipo: 'procedencia', cat: 'Imagen', weight: 1, applies: 'landing', title: 'Ilustracion ensamblada con primitivas',
       run() {
         const hits = []
         for (const f of codeFiles) {
@@ -649,7 +668,12 @@ export function programaticas(ctx) {
     // impeccable: cream-palette. AS9 casa cuatro hexes concretos y da J ~ 0;
     // esto es la prueba algoritmica, que alcanza toda la familia del papel
     // crema en vez de cuatro puntos sueltos.
-    { id: 'K5', tipo: 'procedencia', cat: 'Color', weight: 2, applies: 'landing', title: 'Fondo crema por defecto',
+    // MEDIDA: peso 2 -> 1. J -0.00 (3% frente a 3%). Se porto justamente para
+    // dar a AS9 una oportunidad real: AS9 casa cuatro hexes y esto casa toda la
+    // familia del papel crema. Con la puerta ancha sigue sin separar, asi que la
+    // estetica crema/serif/terracota no esta en el corpus — no es que no la
+    // supieramos detectar.
+    { id: 'K5', tipo: 'procedencia', cat: 'Color', weight: 1, applies: 'landing', title: 'Fondo crema por defecto',
       exempt: ['editorial'],
       run() {
         // Crema: claro, calido y poco saturado. r >= g >= b con una distancia

@@ -198,6 +198,9 @@ orden —papel crema, serif display, acento terracota— al que converge el prim
 | `references/adversarial.md` | Cómo montar un panel de modelos que no se engañe a sí mismo |
 | `references/hallmark-extracto.md` | **hallmark, vaciado.** 58 gates clasificados, umbrales, géneros y arquetipos |
 | `references/sources.md` | Bibliografía anotada |
+| `references/doctrina/` | **Criterio de oficio, adaptado de impeccable.** No está medido y **no puntúa**: cuando el `fix` de una línea no basta, la regla apunta aquí |
+| `research/DELTA-IMPECCABLE.md` | Qué se portó de impeccable, qué ya estaba cubierto y qué se descartó, con el motivo de cada decisión |
+| `NOTICE` | Aviso de licencia Apache-2.0 de la porción derivada de impeccable |
 | `data/rules.json` | Catálogo declarativo: 50 reglas con patrón, umbral, porqué y arreglo |
 | `scripts/slop-scan.mjs` | CLI y orquestación |
 | `scripts/lib/checks.mjs` | Las 37 comprobaciones que exigen ratios o distribuciones |

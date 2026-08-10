@@ -44,6 +44,23 @@ La correspondencia completa —qué se portó, qué ya estaba cubierto y qué se
 descartó, con el motivo de cada decisión— está en
 `research/DELTA-IMPECCABLE.md`.
 
+Ademas de las reglas, SIETE documentos de `references/doctrina/` derivan de sus
+documentos de referencia (`skill/reference/*.md`):
+
+    suelo-de-oficio.md  <- craft-floor.md
+    direccion.md        <- new-work.md
+    composicion.md      <- layout.md, bolder.md
+    color.md            <- colorize.md, quieter.md
+    tipografia.md       <- typeset.md, new-work.md
+    movimiento.md       <- animate.md, overdrive.md
+    microcopy.md        <- clarify.md
+
+Cada uno declara su origen en la cabecera. Tampoco son traducciones: se tomo el
+criterio —taxonomias, umbrales y pruebas de decision— y se reescribio en nuestra
+voz y en espanol, descartando el procedimiento, que referencia sus scripts, sus
+rutas y su arquitectura de subagentes. El triaje documento a documento, con lo
+descartado y su motivo, esta en `research/DELTA-IMPECCABLE.md` seccion 5.
+
 MODIFICACIONES
 
 Se declaran como exige la sección 4(b) de la licencia:
@@ -62,6 +79,12 @@ Se declaran como exige la sección 4(b) de la licencia:
     (AUC 0,277). Ver `research/RESULTADOS.md` §3.5.
   - Los umbrales portados entran sin validar. Las cifras de `validado` de cada
     regla salen de nuestra propia medición, no de la fuente.
+  - Medidas después sobre 213 proyectos, DOS de las 21 que puntúan separan
+    (`C6` y `UX14`), y tres criterios suyos quedan contradichos por los datos.
+    Está en `research/RESULTADOS.md`.
+  - La doctrina se marca EXPLÍCITAMENTE como doctrina en cada archivo: no está
+    medida, no puntúa y no genera reglas. Donde su criterio contradice nuestra
+    medición, gana la medición y el conflicto queda escrito en el documento.
 
 Ninguna de estas decisiones implica a los autores de impeccable ni cuenta con su
 aval.

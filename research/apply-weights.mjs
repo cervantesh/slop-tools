@@ -54,6 +54,24 @@ const DECISIONES = {
   P3: [1, 'J 0.03 en banda'],
   CS1: [1, 'J 0.00 y dispara mas en humano fuera de banda. El comentario narrativo no aparece en el codigo publicado'],
   CS2: [1, 'J -0.10: el catch vacio es MAS comun en codigo humano. Se reclasifica a defecto'],
+
+  // CUARTA MEDICION — corpus ampliado otra vez (banda pos=39, neg=76 frente a
+  // 34/32) y primera medida de las 22 reglas portadas de impeccable.
+  //
+  // De las 21 portadas que puntuan o pueden puntuar, DOS separan. El resto no.
+  // Ver research/RESULTADOS.md, seccion del porte.
+  UX14: [2, 'J 0.27 en banda con intervalos separados: 28% frente a 1%. Es la octava J mas alta del catalogo entero y la mejor de todo lo portado. Sube de 1 a 2'],
+  C6: [2, 'J 0.22 en banda con intervalos separados: 28% frente a 7%. El filete fino CON sombra ancha discrimina donde C1 —el filete a secas, J -0.01— no discriminaba. Sube de 1 a 2'],
+
+  // Las que se midieron y no despegan. Entraron con peso 2 por parecerse a
+  // tells conocidos; medidas, no lo son.
+  B9: [1, 'J -0.05 en banda: la jerarquia plana dispara mas en proyectos humanos (0% frente a 5%). La hipotesis de impeccable no se sostiene sobre este corpus'],
+  E8: [1, 'J 0.04 en banda (5% frente a 1%): los sintagmas de marketing casi no aparecen en repositorios de codigo, igual que le paso a P1 y P2'],
+  K5: [1, 'J -0.00 en banda (3% frente a 3%). La prueba algoritmica del fondo crema alcanza mas que los cuatro hexes de AS9 y aun asi no separa: la estetica del papel crema sigue sin aparecer en el corpus'],
+  D7: [1, 'J -0.03 en banda: cero disparos en generado y 3% en humano. La escena montada con primitivas SVG existe, pero no del lado que suponiamos'],
+
+  // Una regla del nucleo pierde la separacion al ampliar el corpus.
+  UX6: [2, 'J 0.09 en banda con intervalos solapados (56% frente a 47%), cuando en la medicion anterior daba 0.34 y separaba. Baja de 3 a 2. Es el riesgo que declaraba el informe: la J de una regla ajustada con n pequena encoge al ampliar la muestra'],
 }
 
 // Comprobaciones que miden calidad, no procedencia. Salen de la puntuacion.
@@ -67,6 +85,12 @@ const A_DEFECTO = {
 const NO_MEDIBLES = {
   A4: 'cero disparos en la banda; exige un hero con resplandor radial',
   HM1: 'cero disparos en 123 proyectos',
+  // Portadas que no tuvieron NINGUNA oportunidad de disparar: cero en ambas
+  // clases. No se les baja el peso — bajarlo por falta de oportunidad seria el
+  // mismo error que aceptarlas sin medida.
+  C5: 'cero disparos en ambas clases; exige un filete de acento y un radio declarados en el mismo bloque CSS, y en un proyecto Tailwind eso vive en clases',
+  S8: 'cero disparos en ambas clases; exige la baldosa, el icono y el titular dentro de la misma ventana de 400 caracteres del arbol JSX',
+  E9: 'cero disparos en ambas clases; la cadencia aforistica es prosa de landing y el corpus son repositorios de codigo',
 }
 
 // Mediciones que no salen de la banda inglesa de medicion.json. Se estampan
