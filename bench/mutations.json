@@ -469,6 +469,174 @@
       "file": "Codigo.ts",
       "mode": "create",
       "content": "export const a = {} as any;\nexport const b = [] as any;\nexport const c: any = 1;\nexport const d: any = 2;\n// @ts-ignore\nexport const e: any = 3;"
+    },
+    {
+      "id": "m-A6",
+      "rule": "A6",
+      "desc": "Franjas hechas con degradado repetido",
+      "file": "styles.css",
+      "mode": "append",
+      "content": ".franjas { background: repeating-linear-gradient(45deg, #efe9e2, #efe9e2 8px, #f7f3ee 8px, #f7f3ee 16px); }"
+    },
+    {
+      "id": "m-B5",
+      "rule": "B5",
+      "desc": "Interletraje por debajo de -0,05em",
+      "file": "styles.css",
+      "mode": "append",
+      "content": ".reclamo { letter-spacing: -0.07em; }"
+    },
+    {
+      "id": "m-B6",
+      "rule": "B6",
+      "desc": "Texto de 9px",
+      "file": "styles.css",
+      "mode": "append",
+      "content": ".pie-nota { font-size: 9px; }"
+    },
+    {
+      "id": "m-B7",
+      "rule": "B7",
+      "desc": "Interlineado 1,15 en texto de lectura",
+      "file": "styles.css",
+      "mode": "append",
+      "content": ".parrafo-denso { line-height: 1.15; }"
+    },
+    {
+      "id": "m-B8",
+      "rule": "B8",
+      "desc": "Justificado sin particion silabica",
+      "file": "styles.css",
+      "mode": "append",
+      "content": ".columna-justificada { text-align: justify; }"
+    },
+    {
+      "id": "m-B9",
+      "rule": "B9",
+      "desc": "Escala de tipo sin contraste entre escalones",
+      "file": "styles.css",
+      "mode": "append",
+      "content": ".t-a { font-size: 18px; }\n.t-b { font-size: 20px; }\n.t-c { font-size: 22px; }"
+    },
+    {
+      "id": "m-C5",
+      "rule": "C5",
+      "desc": "Filete de acento sobre esquina redondeada",
+      "file": "styles.css",
+      "mode": "append",
+      "content": ".tarjeta-acento { border-top: 3px solid #0f766e; border-radius: 10px; }"
+    },
+    {
+      "id": "m-C6",
+      "rule": "C6",
+      "desc": "Filete de 1px con sombra ancha, tres veces",
+      "file": "styles.css",
+      "mode": "append",
+      "content": ".panel-a { border: 1px solid #e5e0d8; box-shadow: 0 8px 24px rgba(0,0,0,.08); }\n.panel-b { border: 1px solid #e5e0d8; box-shadow: 0 10px 30px rgba(0,0,0,.07); }\n.panel-c { border: 1px solid #e5e0d8; box-shadow: 0 12px 32px rgba(0,0,0,.06); }"
+    },
+    {
+      "id": "m-D6",
+      "rule": "D6",
+      "desc": "img con src vacio y img sin src",
+      "file": "Roto.jsx",
+      "mode": "create",
+      "content": "export const Roto = () => (\n  <figure>\n    <img src=\"\" alt=\"Prensa manual\" />\n    <img alt=\"Taller\" />\n  </figure>\n);"
+    },
+    {
+      "id": "m-D7",
+      "rule": "D7",
+      "desc": "SVG grande montado con primitivas",
+      "file": "Escena.jsx",
+      "mode": "create",
+      "content": "export const Escena = () => (\n  <svg viewBox=\"0 0 480 360\" width=\"480\" height=\"360\">\n    <rect x=\"0\" y=\"0\" width=\"480\" height=\"200\" fill=\"#dbe7e4\" />\n    <rect x=\"40\" y=\"120\" width=\"90\" height=\"80\" fill=\"#8c5a3c\" />\n    <circle cx=\"380\" cy=\"70\" r=\"34\" fill=\"#e8c46a\" />\n    <circle cx=\"120\" cy=\"90\" r=\"18\" fill=\"#e8c46a\" />\n    <ellipse cx=\"240\" cy=\"300\" rx=\"160\" ry=\"30\" fill=\"#dbe7e4\" />\n    <polygon points=\"200,200 260,120 320,200\" fill=\"#8c5a3c\" />\n    <rect x=\"300\" y=\"150\" width=\"60\" height=\"50\" fill=\"#e8c46a\" />\n    <circle cx=\"60\" cy=\"40\" r=\"12\" fill=\"#8c5a3c\" />\n    <rect x=\"150\" y=\"160\" width=\"30\" height=\"40\" fill=\"#dbe7e4\" />\n  </svg>\n);"
+    },
+    {
+      "id": "m-E8",
+      "rule": "E8",
+      "desc": "Sintagmas de marketing SaaS",
+      "file": "Reclamo.jsx",
+      "mode": "create",
+      "content": "export const Reclamo = () => (\n  <section>\n    <p>Supercharge your workflow with best-in-class tooling.</p>\n    <p>Enterprise-grade infrastructure, built to future-proof your stack.</p>\n  </section>\n);"
+    },
+    {
+      "id": "m-E9",
+      "rule": "E9",
+      "desc": "Tres contrastes fabricados",
+      "file": "Cadencia.jsx",
+      "mode": "create",
+      "content": "export const Cadencia = () => (\n  <section>\n    <p>Not a tool. A workshop.</p>\n    <p>Not a course. A practice.</p>\n    <p>Not a subscription. A membership.</p>\n  </section>\n);"
+    },
+    {
+      "id": "m-E10",
+      "rule": "E10",
+      "desc": "Marco de \"theater\"",
+      "file": "Marco.jsx",
+      "mode": "create",
+      "content": "export const Marco = () => (\n  <p>Most compliance work is compliance theater and nobody says it.</p>\n);"
+    },
+    {
+      "id": "m-K5",
+      "rule": "K5",
+      "desc": "Fondo en la banda del papel crema",
+      "file": "styles.css",
+      "mode": "append",
+      "content": "body { background: #faf6ec; }"
+    },
+    {
+      "id": "m-K6",
+      "rule": "K6",
+      "desc": "Gris sobre fondo cromatico",
+      "file": "Aviso.jsx",
+      "mode": "create",
+      "content": "export const Aviso = () => (\n  <div className=\"bg-rose-600 text-gray-500\">Quedan tres plazas</div>\n);"
+    },
+    {
+      "id": "m-S6",
+      "rule": "S6",
+      "desc": "Kicker en mayusculas sobre el titular",
+      "file": "Kicker.jsx",
+      "mode": "create",
+      "content": "export const Kicker = () => (\n  <header>\n    <p className=\"text-xs uppercase tracking-widest\">Nuestro metodo</p>\n    <h2>Cinco sabados con prensa manual</h2>\n  </header>\n);"
+    },
+    {
+      "id": "m-S7",
+      "rule": "S7",
+      "desc": "Secciones numeradas 01 y 02",
+      "file": "Pasos.jsx",
+      "mode": "create",
+      "content": "export const Pasos = () => (\n  <div>\n    <span>01</span>\n    <h2>Cortar el papel</h2>\n    <span>02</span>\n    <h2>Coser el cuadernillo</h2>\n  </div>\n);"
+    },
+    {
+      "id": "m-S8",
+      "rule": "S8",
+      "desc": "Baldosa de icono sobre el titular, dos veces",
+      "file": "Baldosas.jsx",
+      "mode": "create",
+      "content": "export const Baldosas = () => (\n  <div>\n    <div className=\"w-12 h-12 rounded-xl bg-teal-100\">\n      <svg viewBox=\"0 0 24 24\" />\n      <h3>Prensa manual</h3>\n    </div>\n    <div className=\"w-12 h-12 rounded-xl bg-amber-100\">\n      <svg viewBox=\"0 0 24 24\" />\n      <h3>Costura japonesa</h3>\n    </div>\n  </div>\n);"
+    },
+    {
+      "id": "m-UX13",
+      "rule": "UX13",
+      "desc": "Cinta de logos en marquesina",
+      "file": "styles.css",
+      "mode": "append",
+      "content": "@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-100%); } }\n.cinta { animation: marquee 18s linear infinite; }"
+    },
+    {
+      "id": "m-UX14",
+      "rule": "UX14",
+      "desc": "Punto de estado pulsante",
+      "file": "Estado.jsx",
+      "mode": "create",
+      "content": "export const Estado = () => (\n  <span className=\"w-2 h-2 rounded-full bg-emerald-500 animate-pulse\" />\n);"
+    },
+    {
+      "id": "m-UX15",
+      "rule": "UX15",
+      "desc": "Rejilla decorativa de fondo",
+      "file": "styles.css",
+      "mode": "append",
+      "content": ".rejilla { background-image: linear-gradient(to right, #eceae4 1px, transparent 1px), linear-gradient(to bottom, #eceae4 1px, transparent 1px); background-size: 24px 24px; }"
     }
   ]
 }

@@ -1,0 +1,77 @@
+AVISOS DE TERCEROS
+==================
+
+slop-tools se distribuye bajo licencia MIT (ver package.json). Este archivo
+declara la parte de la obra que deriva de trabajo ajeno y bajo qué términos.
+
+
+1. impeccable — Apache License 2.0
+----------------------------------
+
+    Copyright 2025 Paul Bakaus
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+    implied. See the License for the specific language governing
+    permissions and limitations under the License.
+
+Obra original: https://github.com/pbakaus/impeccable
+
+QUÉ SE TOMÓ
+
+Veintidós comprobaciones de este repositorio derivan del catálogo de 59 reglas
+del detector de impeccable, en concreto de
+`.agents/skills/impeccable/scripts/detector/registry/antipatterns.mjs` y
+`.agents/skills/impeccable/scripts/detector/rules/checks.mjs`.
+
+Lo tomado es el CRITERIO: qué antipatrón vale la pena detectar y a partir de qué
+umbral. La implementación está reescrita — otro motor (lectura estática de la
+fuente frente a su navegador vivo), otro esquema de regla, otro idioma.
+
+Las reglas afectadas llevan la referencia al identificador original en su campo
+`source`, con la forma:
+
+    "impeccable: bounce-easing (Apache-2.0)"
+
+La correspondencia completa —qué se portó, qué ya estaba cubierto y qué se
+descartó, con el motivo de cada decisión— está en
+`research/DELTA-IMPECCABLE.md`.
+
+MODIFICACIONES
+
+Se declaran como exige la sección 4(b) de la licencia:
+
+  - Reescritura completa de la implementación. No se copió código. Cualquier
+    fragmento literal iría marcado en el propio archivo; a fecha de este aviso
+    no hay ninguno.
+  - Cuatro pares de reglas suyas se fundieron en una sola nuestra
+    (`tiny-text`+`undersized-ui-text`, `kicker-above-heading`+`hero-eyebrow-chip`,
+    `radial-halo`+`radial-spotlight-glow`, `side-tab`+`border-accent-on-rounded`).
+  - Se reclasificaron seis reglas de «slop» (procedencia) a «defecto»
+    (calidad), porque afirman un fallo de legibilidad o accesibilidad y no
+    dicen nada sobre quién escribió el código.
+  - Se DESCARTÓ `monotonous-spacing`. Nuestra medición sobre 123 proyectos la
+    contradice: lo generado resulta ser MÁS disperso, no más uniforme
+    (AUC 0,277). Ver `research/RESULTADOS.md` §3.5.
+  - Los umbrales portados entran sin validar. Las cifras de `validado` de cada
+    regla salen de nuestra propia medición, no de la fuente.
+
+Ninguna de estas decisiones implica a los autores de impeccable ni cuenta con su
+aval.
+
+
+2. Reglas anteriores tomadas de otras herramientas
+--------------------------------------------------
+
+El catálogo previo tomó reglas y arquitectura de ux-skill (MIT), hallmark (MIT),
+anti-ai-slop (MIT), stylelint-plugin-rhythmguard (MIT),
+stylelint-declaration-strict-value (MIT), eslint-plugin-i18next y
+eslint-plugin-jsx-a11y (MIT). El detalle de qué se tomó de cada una está en
+`references/sources.md`.

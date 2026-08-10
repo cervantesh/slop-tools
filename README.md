@@ -198,9 +198,9 @@ orden —papel crema, serif display, acento terracota— al que converge el prim
 | `references/adversarial.md` | Cómo montar un panel de modelos que no se engañe a sí mismo |
 | `references/hallmark-extracto.md` | **hallmark, vaciado.** 58 gates clasificados, umbrales, géneros y arquetipos |
 | `references/sources.md` | Bibliografía anotada |
-| `data/rules.json` | Catálogo declarativo: 40 reglas con patrón, umbral, porqué y arreglo |
+| `data/rules.json` | Catálogo declarativo: 50 reglas con patrón, umbral, porqué y arreglo |
 | `scripts/slop-scan.mjs` | CLI y orquestación |
-| `scripts/lib/checks.mjs` | Las 26 comprobaciones que exigen ratios o distribuciones |
+| `scripts/lib/checks.mjs` | Las 37 comprobaciones que exigen ratios o distribuciones |
 | `scripts/lib/color.mjs` | OKLCH, resolución de tokens y puertas cromáticas |
 | `scripts/lib/structure.mjs` | Huellas estructurales: nav, footer, cromo falso |
 | `scripts/lib/baseline.mjs` | Trinquete y registro entre ejecuciones |

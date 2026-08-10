@@ -53,6 +53,7 @@ try {
   margin: 7px;
   border-radius: 11px;
   font-family: Inter, sans-serif;
+  font-size: 15px;
   color: #ff00aa;
   transition: all 300ms ease;
 }
@@ -60,7 +61,7 @@ try {
 
   const roto = JSON.parse(correr(SCAN, [dir, '--json', '--contrato', '--profile', 'landing']))
   const ids = new Set(roto.contrato.checks.filter(x => x.failed).map(x => x.id))
-  const esperados = ['DS1', 'DS2', 'DS3', 'DS4', 'DS5']
+  const esperados = ['DS1', 'DS2', 'DS3', 'DS4', 'DS5', 'DS8']
   const faltan = esperados.filter(id => !ids.has(id))
   if (faltan.length) {
     console.log(`  x mutacion: no dispararon ${faltan.join(', ')} (dispararon: ${[...ids].join(', ') || 'ninguno'})`)

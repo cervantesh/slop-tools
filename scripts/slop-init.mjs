@@ -68,6 +68,10 @@ const RADIOS = [[2, 6, 14], [0, 4, 12], [3, 8, 18], [4, 10, 20], [1, 5, 16]]
 // Cinco valores: muy por debajo del umbral de 14 de C4, que es lo que separa
 // una escala de una dispersion.
 const ESPACIOS = [[4, 8, 16, 24, 40], [4, 8, 12, 20, 32], [6, 12, 18, 30, 48], [8, 16, 24, 32, 56]]
+// Escala de tipo. Suelo en 13px —por encima del suelo de legibilidad de B6— y
+// razon extremo a extremo por encima de 3, muy lejos del 2 con que B9 marca una
+// jerarquia plana. El sistema que generamos tiene que pasar nuestras reglas.
+const TIPOS = [[13, 16, 21, 28, 37, 50], [14, 17, 22, 28, 36, 48], [14, 16, 20, 26, 34, 44], [15, 18, 23, 30, 40, 52]]
 const DURACION = [120, 140, 160, 180, 200]
 const CURVAS = ['cubic-bezier(.2,.7,.3,1)', 'cubic-bezier(.33,1,.68,1)', 'cubic-bezier(.16,1,.3,1)', 'cubic-bezier(.25,.8,.25,1)']
 const POSTURA = ['sobria', 'calida', 'tecnica', 'editorial']
@@ -95,6 +99,7 @@ const display = elige(DISPLAY)
 const texto = elige(TEXTO.filter(f => f !== display))
 const radios = elige(RADIOS)
 const espacios = elige(ESPACIOS)
+const tipos = elige(TIPOS)
 const duracion = elige(DURACION)
 const curva = elige(CURVAS)
 const postura = elige(POSTURA)
@@ -119,7 +124,7 @@ const paleta = claro
 const sistema = {
   semilla, postura, esquema: claro ? 'claro' : 'oscuro',
   tono: tono.nombre, tonoGrados: tono.H,
-  display, texto, radios, espacios, duracion, curva, paleta,
+  display, texto, radios, espacios, tipos, duracion, curva, paleta,
 }
 
 /* ── archivos ── */
@@ -150,6 +155,8 @@ ${espacios.map((v, i) => `  --e-${i + 1}: ${v}px;`).join('\n')}
   --r-medio: ${radios[1]}px;
   --r-grande: ${radios[2]}px;
 
+${tipos.map((v, i) => `  --t-${i + 1}: ${v}px;`).join('\n')}
+
   --duracion: ${duracion}ms;
   --curva: ${curva};
 
@@ -162,11 +169,14 @@ body {
   background: var(--lienzo);
   color: var(--tinta);
   font-family: var(--texto);
+  font-size: var(--t-2);
   line-height: 1.55;
 }
 
 h1, h2, h3 { font-family: var(--display); letter-spacing: -0.015em; }
-h1 { font-size: clamp(2rem, 5vw, 3.25rem); }
+h1 { font-size: var(--t-6); line-height: 1.08; }
+h2 { font-size: var(--t-5); line-height: 1.15; }
+h3 { font-size: var(--t-4); line-height: 1.25; }
 
 .medida { max-width: 66ch; }
 
@@ -270,6 +280,11 @@ diseno con criterio.
 
 Radios: ${radios.map(v => `${v}px`).join(' · ')}, y cada uno significa algo — chico para
 controles, medio para tarjetas, grande para superficies clave.
+
+Escala de tipo: ${tipos.map(v => `${v}px`).join(' · ')}. El suelo esta en ${tipos[0]}px porque por
+debajo de 12px el texto deja de leerse en pantallas densas, y la razon entre extremos es
+${(tipos[tipos.length - 1] / tipos[0]).toFixed(1)} para que la jerarquia se vea sin tener que
+anunciarla. Anadir un escalon a esta lista no es gratis: legitima el tamano en todo el arbol.
 
 ## Movimiento
 

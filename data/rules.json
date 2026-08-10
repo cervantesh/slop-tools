@@ -123,6 +123,22 @@
       "tipo": "procedencia"
     },
     {
+      "id": "A6",
+      "name": "Franjas de degradado repetido",
+      "category": "Color",
+      "severity": "low",
+      "applies": "ambos",
+      "weight": 1,
+      "scope": "all",
+      "pattern": "repeating-(?:linear|radial|conic)-gradient\\s*\\(",
+      "flags": "i",
+      "threshold": 1,
+      "why": "La textura de rayas hecha con un degradado repetido es decoracion de superficie que ningun contenido pidio. Aparece cuando hace falta rellenar un fondo vacio y no hay material que poner.",
+      "fix": "Deja la superficie lisa, o dale profundidad con un escalon de luminancia. Si la textura es de marca, decláralaen el contrato.",
+      "source": "impeccable: repeating-stripes-gradient (Apache-2.0)",
+      "tipo": "procedencia"
+    },
+    {
       "id": "B4",
       "name": "Etiquetas en mayusculas por todas partes",
       "category": "Tipografia",
@@ -148,6 +164,38 @@
         "separa": false
       },
       "tipo": "procedencia"
+    },
+    {
+      "id": "B5",
+      "name": "Interletraje aplastado",
+      "category": "Tipografia",
+      "severity": "low",
+      "applies": "ambos",
+      "weight": 1,
+      "scope": "all",
+      "pattern": "letter-spacing:\\s*-\\s*0?\\.(?:0[5-9]|[1-9]\\d*)\\s*r?em|\\btracking-tighter\\b",
+      "flags": "i",
+      "threshold": 1,
+      "why": "Por debajo de -0,05em los caracteres pierden su silueta y el titular se lee como una mancha. Apretar display es correcto; apretarlo hasta ahi cuesta legibilidad.",
+      "fix": "Aprieta opticamente, entre -0,01em y -0,03em. Si el titular sigue sin caber, el problema es el tamano, no el interletraje.",
+      "source": "impeccable: extreme-negative-tracking (Apache-2.0)",
+      "tipo": "defecto"
+    },
+    {
+      "id": "B6",
+      "name": "Texto por debajo del suelo de legibilidad",
+      "category": "Tipografia",
+      "severity": "medium",
+      "applies": "ambos",
+      "weight": 1,
+      "scope": "all",
+      "pattern": "font-size:\\s*(?:[0-9]|10|11)(?:\\.\\d+)?px\\b|font-size:\\s*0?\\.[0-6]\\d*rem\\b|\\btext-\\[(?:[0-9]|10|11)(?:\\.\\d+)?px\\]",
+      "flags": "i",
+      "threshold": 1,
+      "why": "Por debajo de 12px el texto falla en pantallas densas y en viewports pequenos. Que la etiqueta sea secundaria no la hace menos legible: si nadie tiene que leerla, sobra.",
+      "fix": "Suelo de 12px para texto de lectura y 11px para texto funcional (enlaces, botones, celdas). Anadir el tamano a la escala del contrato no arregla la legibilidad, solo blanquea el token.",
+      "source": "impeccable: tiny-text + undersized-ui-text (Apache-2.0)",
+      "tipo": "defecto"
     },
     {
       "id": "C2",
@@ -231,6 +279,22 @@
         "decision": "J 0.26 en banda, intervalos separados. Precision alta y tasa negativa del 3%"
       },
       "tipo": "procedencia"
+    },
+    {
+      "id": "D6",
+      "name": "Imagen rota o sin fuente",
+      "category": "Imagen",
+      "severity": "medium",
+      "applies": "ambos",
+      "weight": 1,
+      "scope": "code",
+      "pattern": "<img\\b(?![^>]*\\bsrc\\s*=)[^>]*>|<img\\b[^>]*\\bsrc\\s*=\\s*[\"'](?:\\s*|#)[\"']",
+      "flags": "i",
+      "threshold": 1,
+      "why": "Un <img> sin fuente utilizable se publica como el recuadro de imagen rota del navegador. Es la evidencia de que nadie abrio la pagina antes de ensenarla.",
+      "fix": "Pon la imagen real, genera el activo, o quita la etiqueta. Un hueco vacio es mejor que un icono de error.",
+      "source": "impeccable: broken-image (Apache-2.0)",
+      "tipo": "defecto"
     },
     {
       "id": "E1",
@@ -366,6 +430,54 @@
         "separa": false,
         "decision": "J 0.25 pero los intervalos vuelven a solaparse con n mayor: dispara en el 94% de lo generado y el 69% de lo humano"
       },
+      "tipo": "procedencia"
+    },
+    {
+      "id": "E8",
+      "name": "Sintagmas de marketing SaaS",
+      "category": "Copy",
+      "severity": "medium",
+      "applies": "landing",
+      "weight": 2,
+      "scope": "code",
+      "pattern": "\\b(?:streamline your|empower your|supercharge (?:your|the)|unleash the power|harness the power|best-in-class|industry-leading|world-class|enterprise-grade|next-generation|game-?changer|mission-critical|future-proof|seamless experience|drive (?:engagement|growth|results)|revolutioniz(?:e|es|ing)|impulsa tu|potencia tu|lider del sector|de clase mundial|listo para el futuro)\\b",
+      "flags": "i",
+      "threshold": 2,
+      "why": "Sintagmas que encajan en cualquier empresa y por tanto no describen ninguna. \"Supercharge your workflow\" vale igual para un CRM que para una sierra de calar.",
+      "fix": "Un verbo y un sustantivo que digan lo que el producto hace literalmente. Si al sustituir el nombre del producto por el de un competidor la frase sigue valiendo, sobra.",
+      "source": "impeccable: marketing-buzzword (Apache-2.0); las formas en espanol son aportacion propia",
+      "tipo": "procedencia"
+    },
+    {
+      "id": "E9",
+      "name": "Cadencia aforistica",
+      "category": "Copy",
+      "severity": "medium",
+      "applies": "landing",
+      "weight": 2,
+      "scope": "code",
+      "pattern": "\\bNot an? [a-z][^.!?]{1,40}[.!]\\s+[A-Z][^.!?]{1,60}[.!]|[A-Z][^.!?]{4,80}[.!]\\s+(?:No|Just)\\s+[a-z][^.!?]{2,60}[.!]|\\bNo es un[ao]? [^.!?]{1,40}[.!]\\s+Es un[ao]? [^.!?]{1,60}[.!]",
+      "flags": "",
+      "threshold": 3,
+      "why": "El contraste fabricado —\"Not a feature. A platform.\"— simula corregir una idea que nadie tenia. Una vez es voz; tres veces en la misma pagina es cadencia de plantilla.",
+      "fix": "Di la afirmacion en positivo y sin el contraste. Si la negacion aporta, que sea una y elegida.",
+      "source": "impeccable: aphoristic-cadence (Apache-2.0); la forma en espanol es aportacion propia",
+      "tipo": "procedencia"
+    },
+    {
+      "id": "E10",
+      "name": "Marco de \"theater\"",
+      "category": "Copy",
+      "severity": "low",
+      "applies": "ambos",
+      "weight": 1,
+      "scope": "code",
+      "pattern": "\\b\\w+ theater\\b",
+      "flags": "i",
+      "threshold": 1,
+      "why": "Descalificar algo como \"security theater\", \"compliance theater\" o \"performance theater\" es un tic de copy generado: suena a critica afilada sin comprometerse a decir que falla.",
+      "fix": "Di llanamente que hace o que no hace la cosa.",
+      "source": "impeccable: theater-slop-phrase (Apache-2.0)",
       "tipo": "procedencia"
     },
     {
@@ -720,6 +832,38 @@
         "neg": 0.063,
         "separa": false
       },
+      "tipo": "procedencia"
+    },
+    {
+      "id": "UX13",
+      "name": "Marquesina automatica",
+      "category": "Motion",
+      "severity": "low",
+      "applies": "landing",
+      "weight": 1,
+      "scope": "all",
+      "pattern": "<marquee\\b|\\banimate-marquee\\b|animation:[^;]*\\bmarquee\\b|@keyframes\\s+marquee\\b",
+      "flags": "i",
+      "threshold": 1,
+      "why": "La cinta de logos que se desplaza sola exige atencion que no ha ganado y esconde la mitad de su contenido en todo momento. Es el relleno por defecto de la seccion \"confian en nosotros\".",
+      "fix": "Ensena los logos quietos. Si no caben, ensena menos.",
+      "source": "impeccable: marquee (Apache-2.0)",
+      "tipo": "procedencia"
+    },
+    {
+      "id": "UX14",
+      "name": "Punto de estado pulsante",
+      "category": "Motion",
+      "severity": "low",
+      "applies": "ambos",
+      "weight": 1,
+      "scope": "code",
+      "pattern": "\\banimate-(?:ping|pulse)\\b(?=[^\"']*\\brounded-full\\b)|\\brounded-full\\b(?=[^\"']*\\banimate-(?:ping|pulse)\\b)",
+      "flags": "i",
+      "threshold": 1,
+      "why": "El puntito verde que late simula que algo esta vivo. Cuando no hay dato que cambie detras, es decoracion que finge telemetria.",
+      "fix": "Reserva el pulso para indicadores atados a datos que de verdad cambian. Un punto quieto con su etiqueta es mas honesto y mas tranquilo.",
+      "source": "impeccable: pulsing-dot (Apache-2.0)",
       "tipo": "procedencia"
     },
     {
@@ -1131,6 +1275,22 @@
         "separa": false,
         "decision": "J 0.28 en banda (50% frente a 22%), la mas alta de las nuevas. Intervalos solapados, pero sube de 1 a 2"
       }
+    },
+    {
+      "id": "K6",
+      "name": "Texto gris sobre fondo cromatico",
+      "category": "Color",
+      "severity": "medium",
+      "applies": "ambos",
+      "weight": 1,
+      "scope": "all",
+      "pattern": "\\btext-(?:gray|slate|zinc|neutral|stone)-\\d{2,3}\\b(?=[^\"']*\\bbg-(?:red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\\d{2,3}\\b)|\\bbg-(?:red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\\d{2,3}\\b(?=[^\"']*\\btext-(?:gray|slate|zinc|neutral|stone)-\\d{2,3}\\b)",
+      "flags": "i",
+      "threshold": 1,
+      "why": "El gris esta calibrado contra un fondo neutro. Sobre un fondo saturado pierde el contraste y se lee desvaido, aunque el par pase el ratio por los pelos.",
+      "fix": "Usa un tono oscuro del propio color del fondo, o blanco. El gris neutro solo funciona sobre neutros.",
+      "source": "impeccable: gray-on-color (Apache-2.0)",
+      "tipo": "defecto"
     }
   ]
 }
