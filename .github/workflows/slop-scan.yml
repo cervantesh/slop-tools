@@ -1,8 +1,19 @@
-# Ejemplo de gate en integración continua (proceso enforceado).
-# Copia al repo que quieras auditar y ajusta RUTA, MARCA, PERFIL y umbrales.
+# Gate de proceso en integración continua.
 #
-# Recomendación: en legacy usa --since-baseline --fail-on-new-drift.
-# Con DESIGN.md / slop-init, añade --require-contrato.
+# Este archivo hace DOS cosas:
+#
+#   1. Sirve de plantilla para copiar a otro repositorio. El bloque comentado
+#      del final es lo que hay que pegar, ajustando ruta, marca y umbrales.
+#
+#   2. Aquí dentro, se come su propia comida: genera un sistema con `slop-init`
+#      y lo pasa por `slop-gate`. Si la herramienta no puede aprobar lo que ella
+#      misma produce, el gate no vale para nadie.
+#
+# POR QUE CAMBIO. Antes este workflow apuntaba a `./src`, que en este
+# repositorio no existe, así que llevaba fallando en cada commit desde hacía
+# meses. Un check permanentemente rojo no informa de nada: se aprende a
+# ignorarlo, que es exactamente lo que SKILL.md dice de un gate que falla desde
+# el primer día.
 
 name: slop-scan
 
@@ -21,20 +32,19 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Obtener slop-tools
-        uses: actions/checkout@v4
-        with:
-          repository: cervantesh/slop-tools
-          path: .slop-tools
+      # Un sistema recién generado es el caso que un usuario tiene delante.
+      - name: Generar un sistema con slop-init
+        run: node scripts/slop-init.mjs ./.ci-sistema --semilla "ci-${{ github.sha }}"
 
-      # Proceso completo: score + contrato (si hay) + brief + last-gate.json
+      # Proceso completo: score + contrato + brief + last-gate.json.
+      # --require-contrato porque slop-init deja uno: si no lo encuentra, es un
+      # fallo real y no una configuración ausente.
       - name: Gate
         run: |
-          node .slop-tools/scripts/slop-gate.mjs ./src \
-            --profile producto \
-            --brand "TuMarca" \
+          node scripts/slop-gate.mjs ./.ci-sistema \
+            --profile landing \
             --min-score 70 \
-            --since-baseline --fail-on-new-drift
+            --require-contrato
 
       - name: Resumen
         if: always()
@@ -42,6 +52,27 @@ jobs:
           {
             echo '## slop-gate'
             echo '```'
-            cat ./src/.slop/last-gate.json 2>/dev/null || cat ./.slop/last-gate.json 2>/dev/null || true
+            cat ./.ci-sistema/.slop/last-gate.json 2>/dev/null || true
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+
+# ── Plantilla para copiar a otro repositorio ─────────────────────────────────
+#
+#     - uses: actions/checkout@v4
+#       with:
+#         repository: cervantesh/slop-tools
+#         path: .slop-tools
+#
+#     - name: Gate
+#       run: |
+#         node .slop-tools/scripts/slop-gate.mjs ./src \
+#           --profile producto \
+#           --brand "TuMarca" \
+#           --min-score 70 \
+#           --since-baseline --fail-on-new-drift
+#
+# En código legado usa `--since-baseline --fail-on-new-drift`: sólo falla ante
+# deriva NUEVA y tolera la preexistente. Un gate que falla el primer día se
+# desactiva el segundo.
+#
+# Con DESIGN.md o slop-init en el repositorio, añade `--require-contrato`.
