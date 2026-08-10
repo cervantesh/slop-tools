@@ -274,6 +274,7 @@ function renderMarkdown(b) {
         if (item.detail) L.push(`- Detalle: ${item.detail}`)
         if (item.why) L.push(`- Por que: ${item.why}`)
         L.push(`- **Que hacer:** ${item.fix || 'Ver references/remediation.md'}`)
+        if (item.doctrina) L.push(`- **Criterio ampliado:** \`${item.doctrina}\` — leelo antes de tocar nada si el arreglo no es mecanico.`)
         if (item.samples?.length) {
           L.push('- Donde:')
           for (const s of item.samples) {

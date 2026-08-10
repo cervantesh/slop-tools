@@ -9,3 +9,4 @@ research/.corpus-estado.json
 Thumbs.db
 /tmp/
 *.local.*
+.ci-sistema/

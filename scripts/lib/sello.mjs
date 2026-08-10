@@ -79,6 +79,10 @@ function itemDe(r, extras = {}) {
     cat: r.cat,
     why: r.why || null,
     fix: r.fix || null,
+    // Puntero a doctrina: el `fix` de una regla es una linea, y hay arreglos
+    // que no caben en una linea. Cuando existe, apunta al documento de
+    // references/doctrina/ que desarrolla el criterio.
+    doctrina: r.doctrina || null,
     detail: r.detail || null,
     sello: extras.sello || s.etiqueta,
     confianza: extras.confianza ?? s.confianza,

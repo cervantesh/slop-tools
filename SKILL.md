@@ -61,8 +61,8 @@ Si el proyecto tiene (o debería tener) un sistema declarado con `slop-init`, a�
 `.slop-init.json` / `tokens.css` / `DESIGN.md`. Ese eje **no** se mezcla con la puntuación de
 procedencia — un UI puede no parecer IA y aun así traicionar su propio contrato.
 
-El escáner **no puntúa gusto**. Sólo cuenta patrones nombrados por las fuentes: 40 reglas
-declarativas en `data/rules.json` más 26 comprobaciones programáticas que exigen ratios,
+El escáner **no puntúa gusto**. Sólo cuenta patrones nombrados por las fuentes: 50 reglas
+declarativas en `data/rules.json` más 37 comprobaciones programáticas que exigen ratios,
 distribuciones, resolución de tokens de color o análisis estructural.
 
 **Sobre código existente, usa el trinquete en vez del umbral.** Un gate que falla desde el

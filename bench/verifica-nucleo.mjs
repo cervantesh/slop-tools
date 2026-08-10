@@ -3,26 +3,56 @@
 //
 //   node bench/verifica-nucleo.mjs
 
+import { readFileSync } from 'node:fs'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { nucleoInfo, nivelConfianza, resumenConfianza } from '../scripts/lib/nucleo.mjs'
 import { armarPlan } from '../scripts/lib/sello.mjs'
+
+const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..')
 
 console.log('\n  verifica-nucleo\n')
 let fallos = 0
 
 const n = nucleoInfo()
-const esperadas = ['UX2', 'L2', 'L1', 'UX6', 'D5', 'CS3']
-for (const id of esperadas) {
-  if (!n.alta.includes(id)) {
-    console.log(`  x falta en ALTA: ${id}`)
-    fallos++
-  }
-}
-// C4 es famosa por caer en holdout
-const c4 = nivelConfianza('C4', { separa: true, J_banda: 0.39 })
-if (c4.nivel !== 'dudosa') {
-  console.log(`  x C4 debia ser dudosa, es ${c4.nivel}`)
+
+// NO se fija una lista de ids esperados.
+//
+// La habia, y quedo obsoleta en cuanto el corpus crecio: exigia en ALTA a `L1`,
+// `UX6` y `D5`, que dejaron de aguantar fuera de muestra, y daba por dudosa a
+// `C4`, que empezo a aguantar. Un test que codifica el RESULTADO de una medicion
+// convierte cada medicion nueva en un test roto, y la tentacion entonces es
+// tocar el test en vez de leer el hallazgo.
+//
+// Lo que se comprueba es la CONSISTENCIA: que la copia empaquetada describa el
+// mismo holdout que hay en research/, aplicando el mismo criterio.
+const holdout = JSON.parse(readFileSync(join(RAIZ, 'research', 'holdout.json'), 'utf8'))
+const empaquetado = JSON.parse(readFileSync(join(RAIZ, 'data', 'nucleo-validado.json'), 'utf8'))
+const esAlta = f => f.J_ajuste > 0.15 && f.J_reserva > 0 && f.J_reserva >= f.J_ajuste / 2
+const altaReal = holdout.filas.filter(f => f.J_ajuste > 0.15).filter(esAlta).map(f => f.id).sort()
+
+const dif = [
+  ...altaReal.filter(id => !empaquetado.alta.includes(id)).map(id => `falta ${id}`),
+  ...empaquetado.alta.filter(id => !altaReal.includes(id)).map(id => `sobra ${id}`),
+]
+if (dif.length) {
+  console.log(`  x data/nucleo-validado.json no cuadra con research/holdout.json: ${dif.join(', ')}`)
+  console.log('     regenera con: node research/exporta-nucleo.mjs')
   fallos++
-} else console.log('  ok C4         confianza dudosa (cae en reserva)')
+} else {
+  console.log(`  ok nucleo     copia empaquetada al dia (${altaReal.length} en ALTA)`)
+}
+
+// Una regla con J alta en ajuste que NO aguanta en reserva tiene que salir como
+// dudosa, sea cual sea. Se toma del propio archivo en vez de nombrarla.
+const caida = holdout.filas.find(f => f.J_ajuste > 0.15 && !esAlta(f))
+if (caida) {
+  const nivel = nivelConfianza(caida.id, { separa: true, J_banda: caida.J_ajuste })
+  if (nivel.nivel !== 'dudosa') {
+    console.log(`  x ${caida.id} cae en reserva (${caida.J_ajuste.toFixed(2)} -> ${caida.J_reserva.toFixed(2)}) y debia ser dudosa, es ${nivel.nivel}`)
+    fallos++
+  } else console.log(`  ok ${caida.id.padEnd(10)} confianza dudosa (cae en reserva)`)
+}
 
 const ux2 = nivelConfianza('UX2', { separa: true, J_banda: 0.45 })
 if (ux2.nivel !== 'alta') {
@@ -30,9 +60,11 @@ if (ux2.nivel !== 'alta') {
   fallos++
 } else console.log('  ok UX2        confianza alta')
 
+// La dudosa se toma del holdout vigente, no se nombra a mano: es lo que rompio
+// la version anterior de este test.
 const fake = resumenConfianza([
   { id: 'UX2', title: 'pastilla', failed: true, tipo: 'procedencia', validado: { separa: true } },
-  { id: 'C4', title: 'escala', failed: true, tipo: 'procedencia', validado: { separa: true } },
+  { id: caida?.id || 'L1', title: 'cae en reserva', failed: true, tipo: 'procedencia', validado: { separa: true } },
   { id: 'ZZ9', title: 'inventada', failed: true, tipo: 'procedencia', validado: null },
 ])
 if (fake.fallan.alta.length !== 1 || fake.fallan.alta[0].id !== 'UX2') {

@@ -7,519 +7,644 @@
     "UX2": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.449,
-      "pos": 0.824,
-      "neg": 0.375,
+      "J_banda": 0.571,
+      "pos": 0.821,
+      "neg": 0.25,
       "separa": true,
       "decision": "J 0.45 en banda con intervalos separados y n mayor; sube de 2 a 3"
     },
     "L2": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.447,
-      "pos": 0.853,
-      "neg": 0.406,
+      "J_banda": 0.517,
+      "pos": 0.846,
+      "neg": 0.329,
       "separa": true,
       "decision": "J 0.45 en banda, intervalos separados, confirmada con n mayor"
     },
     "C4": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.386,
-      "pos": 0.824,
-      "neg": 0.438,
+      "J_banda": 0.399,
+      "pos": 0.846,
+      "neg": 0.447,
       "separa": true,
       "decision": "J 0.39 en banda con intervalos separados. Ajustada en muestra dio 0.55; fuera de muestra encoge a 0.39 y SIGUE separando"
-    },
-    "L1": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": 0.362,
-      "pos": 0.706,
-      "neg": 0.344,
-      "separa": true,
-      "decision": "J 0.36 en banda, intervalos separados. En la primera medicion tenia J alta sin significacion: era falta de n, no falta de senal"
-    },
-    "UX6": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": 0.342,
-      "pos": 0.529,
-      "neg": 0.188,
-      "separa": true,
-      "decision": "J 0.34 en banda, intervalos separados. Igual que L1: la primera medicion no tenia potencia para verla"
     },
     "CS3": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.281,
-      "pos": 0.5,
-      "neg": 0.219,
-      "separa": false,
-      "decision": "J 0.28 en banda (50% frente a 22%), la mas alta de las nuevas. Intervalos solapados, pero sube de 1 a 2"
-    },
-    "D5": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": 0.263,
-      "pos": 0.294,
-      "neg": 0.031,
+      "J_banda": 0.368,
+      "pos": 0.513,
+      "neg": 0.145,
       "separa": true,
-      "decision": "J 0.26 en banda, intervalos separados. Precision alta y tasa negativa del 3%"
+      "decision": "J 0.28 en banda (50% frente a 22%), la mas alta de las nuevas. Intervalos solapados, pero sube de 1 a 2"
     },
     "E7": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.254,
-      "pos": 0.941,
-      "neg": 0.688,
-      "separa": false,
+      "J_banda": 0.317,
+      "pos": 0.949,
+      "neg": 0.632,
+      "separa": true,
       "decision": "J 0.25 pero los intervalos vuelven a solaparse con n mayor: dispara en el 94% de lo generado y el 69% de lo humano"
+    },
+    "L1": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.31,
+      "pos": 0.718,
+      "neg": 0.408,
+      "separa": true,
+      "decision": "J 0.36 en banda, intervalos separados. En la primera medicion tenia J alta sin significacion: era falta de n, no falta de senal"
+    },
+    "UX1": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.298,
+      "pos": 0.692,
+      "neg": 0.395,
+      "separa": true
+    },
+    "UX14": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.269,
+      "pos": 0.282,
+      "neg": 0.013,
+      "separa": true,
+      "decision": "J 0.27 en banda con intervalos separados: 28% frente a 1%. Es la octava J mas alta del catalogo entero y la mejor de todo lo portado. Sube de 1 a 2"
     },
     "A3": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.235,
-      "pos": 0.235,
-      "neg": 0,
+      "J_banda": 0.243,
+      "pos": 0.256,
+      "neg": 0.013,
       "separa": true,
       "decision": "J 0.24 en banda con intervalos separados: 24% frente a 0%. Daba cero disparos hasta que se anadio el sustrato de clases de utilidad"
     },
     "HM4": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.233,
-      "pos": 0.265,
-      "neg": 0.031,
-      "separa": false
+      "J_banda": 0.243,
+      "pos": 0.282,
+      "neg": 0.039,
+      "separa": true
     },
-    "UX1": {
+    "D5": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.208,
-      "pos": 0.676,
-      "neg": 0.469,
-      "separa": false
+      "J_banda": 0.241,
+      "pos": 0.333,
+      "neg": 0.092,
+      "separa": true,
+      "decision": "J 0.26 en banda, intervalos separados. Precision alta y tasa negativa del 3%"
     },
     "UX11": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.199,
-      "pos": 0.324,
-      "neg": 0.125,
-      "separa": false
+      "J_banda": 0.241,
+      "pos": 0.359,
+      "neg": 0.118,
+      "separa": true
     },
-    "P4": {
+    "UX10": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.176,
-      "pos": 0.176,
-      "neg": 0,
-      "separa": false,
-      "decision": "J 0.18 en banda con 0% de falsos positivos: dispara en el 18% de lo generado y en ninguno humano"
+      "J_banda": 0.241,
+      "pos": 0.359,
+      "neg": 0.118,
+      "separa": true
+    },
+    "C6": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.216,
+      "pos": 0.282,
+      "neg": 0.066,
+      "separa": true,
+      "decision": "J 0.22 en banda con intervalos separados: 28% frente a 7%. El filete fino CON sombra ancha discrimina donde C1 —el filete a secas, J -0.01— no discriminaba. Sube de 1 a 2"
     },
     "UX7": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.169,
-      "pos": 0.294,
-      "neg": 0.125,
+      "J_banda": 0.215,
+      "pos": 0.333,
+      "neg": 0.118,
+      "separa": false
+    },
+    "E6": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.189,
+      "pos": 0.333,
+      "neg": 0.145,
       "separa": false
     },
     "UX3": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.162,
-      "pos": 0.412,
-      "neg": 0.25,
+      "J_banda": 0.187,
+      "pos": 0.41,
+      "neg": 0.224,
       "separa": false
+    },
+    "P4": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.179,
+      "pos": 0.205,
+      "neg": 0.026,
+      "separa": true,
+      "decision": "J 0.18 en banda con 0% de falsos positivos: dispara en el 18% de lo generado y en ninguno humano"
     },
     "S1": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.145,
-      "pos": 0.176,
-      "neg": 0.031,
-      "separa": false
-    },
-    "A2": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": 0.145,
-      "pos": 0.176,
-      "neg": 0.031,
+      "J_banda": 0.153,
+      "pos": 0.179,
+      "neg": 0.026,
       "separa": false
     },
     "A4": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.143,
-      "pos": 0.206,
-      "neg": 0.063,
+      "J_banda": 0.139,
+      "pos": 0.205,
+      "neg": 0.066,
       "separa": false,
       "estado": "no_medible",
       "nota": "cero disparos en la banda; exige un hero con resplandor radial"
     },
-    "E6": {
+    "B6": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.136,
-      "pos": 0.324,
-      "neg": 0.188,
-      "separa": false
-    },
-    "UX10": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": 0.134,
-      "pos": 0.353,
-      "neg": 0.219,
+      "J_banda": 0.137,
+      "pos": 0.282,
+      "neg": 0.145,
       "separa": false
     },
     "E5": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.118,
-      "pos": 0.118,
+      "J_banda": 0.128,
+      "pos": 0.128,
       "neg": 0,
-      "separa": false
+      "separa": true
     },
     "A1": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.103,
-      "pos": 0.353,
-      "neg": 0.25,
+      "J_banda": 0.123,
+      "pos": 0.333,
+      "neg": 0.211,
       "separa": false,
       "decision": "J 0.13 e intervalos solapados: el tell mas citado de la bibliografia rinde poco"
     },
-    "E4": {
+    "S6": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.094,
-      "pos": 1,
-      "neg": 0.906,
+      "J_banda": 0.115,
+      "pos": 0.128,
+      "neg": 0.013,
       "separa": false
     },
     "E1": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.088,
-      "pos": 0.088,
-      "neg": 0,
-      "separa": false
-    },
-    "A5": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": 0.088,
-      "pos": 0.088,
-      "neg": 0,
-      "separa": false
-    },
-    "B1": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": 0.086,
-      "pos": 0.118,
-      "neg": 0.031,
-      "separa": false
-    },
-    "AS1": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": 0.083,
-      "pos": 0.176,
-      "neg": 0.094,
-      "separa": false
-    },
-    "S5": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": 0.059,
-      "pos": 0.059,
-      "neg": 0,
-      "separa": false
-    },
-    "UX8": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": 0.059,
-      "pos": 0.059,
-      "neg": 0,
-      "separa": false
-    },
-    "K1": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": 0.057,
-      "pos": 0.088,
-      "neg": 0.031,
+      "J_banda": 0.102,
+      "pos": 0.128,
+      "neg": 0.026,
       "separa": false
     },
     "AS2": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.057,
-      "pos": 0.088,
-      "neg": 0.031,
+      "J_banda": 0.102,
+      "pos": 0.128,
+      "neg": 0.026,
       "separa": false
     },
-    "E2": {
+    "UX6": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.029,
-      "pos": 0.029,
+      "J_banda": 0.09,
+      "pos": 0.564,
+      "neg": 0.474,
+      "separa": false,
+      "decision": "J 0.09 en banda con intervalos solapados (56% frente a 47%), cuando en la medicion anterior daba 0.34 y separaba. Baja de 3 a 2. Es el riesgo que declaraba el informe: la J de una regla ajustada con n pequena encoge al ampliar la muestra"
+    },
+    "A2": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.088,
+      "pos": 0.154,
+      "neg": 0.066,
+      "separa": false
+    },
+    "K3": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.085,
+      "pos": 0.256,
+      "neg": 0.171,
+      "separa": false,
+      "decision": "Ya puede disparar (24% frente a 18%) tras el cambio de sustrato, y con oportunidad real da J 0.02"
+    },
+    "E4": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.079,
+      "pos": 1,
+      "neg": 0.921,
+      "separa": false
+    },
+    "D1": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.074,
+      "pos": 0.179,
+      "neg": 0.105,
+      "separa": false,
+      "decision": "J 0.02 en banda: enlazar bancos de imagenes es igual de comun en ambas clases"
+    },
+    "A5": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.064,
+      "pos": 0.077,
+      "neg": 0.013,
+      "separa": false
+    },
+    "B2": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.061,
+      "pos": 0.692,
+      "neg": 0.632,
+      "separa": false
+    },
+    "S5": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.051,
+      "pos": 0.051,
       "neg": 0,
       "separa": false
     },
-    "C2": {
+    "S7": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.029,
-      "pos": 0.029,
+      "J_banda": 0.051,
+      "pos": 0.051,
       "neg": 0,
       "separa": false
     },
-    "S2": {
+    "E8": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.029,
-      "pos": 0.029,
-      "neg": 0,
+      "J_banda": 0.038,
+      "pos": 0.051,
+      "neg": 0.013,
+      "separa": false,
+      "decision": "J 0.04 en banda (5% frente a 1%): los sintagmas de marketing casi no aparecen en repositorios de codigo, igual que le paso a P1 y P2"
+    },
+    "UX13": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.038,
+      "pos": 0.051,
+      "neg": 0.013,
       "separa": false
     },
-    "S4": {
+    "S3": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.029,
-      "pos": 0.029,
-      "neg": 0,
+      "J_banda": 0.038,
+      "pos": 0.051,
+      "neg": 0.013,
       "separa": false
     },
     "P3": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.029,
-      "pos": 0.029,
+      "J_banda": 0.026,
+      "pos": 0.026,
       "neg": 0,
       "separa": false,
       "decision": "J 0.03 en banda"
     },
-    "HM3": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": 0.029,
-      "pos": 0.029,
-      "neg": 0,
-      "separa": false
-    },
     "C3": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.029,
-      "pos": 0.029,
+      "J_banda": 0.026,
+      "pos": 0.026,
+      "neg": 0,
+      "separa": false
+    },
+    "E10": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.026,
+      "pos": 0.026,
+      "neg": 0,
+      "separa": false
+    },
+    "HM3": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.026,
+      "pos": 0.026,
       "neg": 0,
       "separa": false
     },
     "P5": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.029,
-      "pos": 0.029,
+      "J_banda": 0.026,
+      "pos": 0.026,
       "neg": 0,
-      "separa": false
-    },
-    "K2": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": 0.028,
-      "pos": 0.059,
-      "neg": 0.031,
       "separa": false
     },
     "UX9": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.028,
-      "pos": 0.059,
-      "neg": 0.031,
+      "J_banda": 0.025,
+      "pos": 0.051,
+      "neg": 0.026,
       "separa": false
     },
-    "S3": {
+    "UX8": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.028,
-      "pos": 0.059,
-      "neg": 0.031,
+      "J_banda": 0.025,
+      "pos": 0.051,
+      "neg": 0.026,
+      "separa": false
+    },
+    "K1": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.024,
+      "pos": 0.077,
+      "neg": 0.053,
+      "separa": false
+    },
+    "K4": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.024,
+      "pos": 0.077,
+      "neg": 0.053,
       "separa": false
     },
     "HM2": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.028,
-      "pos": 0.059,
-      "neg": 0.031,
+      "J_banda": 0.024,
+      "pos": 0.077,
+      "neg": 0.053,
       "separa": false
     },
-    "D1": {
+    "B1": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.022,
+      "pos": 0.154,
+      "neg": 0.132,
+      "separa": false
+    },
+    "T1": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
       },
       "J_banda": 0.02,
-      "pos": 0.176,
-      "neg": 0.156,
+      "pos": 0.256,
+      "neg": 0.237,
       "separa": false,
-      "decision": "J 0.02 en banda: enlazar bancos de imagenes es igual de comun en ambas clases"
+      "decision": "J -0.08: dispara mas en diseno humano"
     },
-    "K3": {
+    "C2": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": 0.017,
-      "pos": 0.235,
-      "neg": 0.219,
-      "separa": false,
-      "decision": "Ya puede disparar (24% frente a 18%) tras el cambio de sustrato, y con oportunidad real da J 0.02"
+      "J_banda": 0.012,
+      "pos": 0.026,
+      "neg": 0.013,
+      "separa": false
+    },
+    "S4": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.012,
+      "pos": 0.026,
+      "neg": 0.013,
+      "separa": false
+    },
+    "HM10": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.012,
+      "pos": 0.026,
+      "neg": 0.013,
+      "separa": false
+    },
+    "UX15": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.012,
+      "pos": 0.026,
+      "neg": 0.013,
+      "separa": false
+    },
+    "B5": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.011,
+      "pos": 0.077,
+      "neg": 0.066,
+      "separa": false
+    },
+    "AS1": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0.009,
+      "pos": 0.154,
+      "neg": 0.145,
+      "separa": false
     },
     "HM5": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
       "J_banda": 0,
       "pos": 0,
@@ -529,8 +654,8 @@
     "P1": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
       "J_banda": 0,
       "pos": 0,
@@ -538,11 +663,24 @@
       "separa": false,
       "decision": "J 0.00 en banda: la prosa de marketing casi no existe en repositorios de codigo"
     },
+    "E9": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0,
+      "pos": 0,
+      "neg": 0,
+      "separa": false,
+      "estado": "no_medible",
+      "nota": "cero disparos en ambas clases; la cadencia aforistica es prosa de landing y el corpus son repositorios de codigo"
+    },
     "P2": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
       "J_banda": 0,
       "pos": 0,
@@ -550,11 +688,24 @@
       "separa": false,
       "decision": "J 0.00 en banda, mismo motivo que P1"
     },
+    "C5": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0,
+      "pos": 0,
+      "neg": 0,
+      "separa": false,
+      "estado": "no_medible",
+      "nota": "cero disparos en ambas clases; exige un filete de acento y un radio declarados en el mismo bloque CSS, y en un proyecto Tailwind eso vive en clases"
+    },
     "HM12": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
       "J_banda": 0,
       "pos": 0,
@@ -564,8 +715,8 @@
     "HM1": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
       "J_banda": 0,
       "pos": 0,
@@ -574,17 +725,257 @@
       "estado": "no_medible",
       "nota": "cero disparos en 123 proyectos"
     },
+    "S8": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": 0,
+      "pos": 0,
+      "neg": 0,
+      "separa": false,
+      "estado": "no_medible",
+      "nota": "cero disparos en ambas clases; exige la baldosa, el icono y el titular dentro de la misma ventana de 400 caracteres del arbol JSX"
+    },
     "CS1": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
       "J_banda": 0,
       "pos": 0,
       "neg": 0,
       "separa": false,
       "decision": "J 0.00 y dispara mas en humano fuera de banda. El comentario narrativo no aparece en el codigo publicado"
+    },
+    "S2": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": -0.001,
+      "pos": 0.026,
+      "neg": 0.026,
+      "separa": false
+    },
+    "K5": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": -0.001,
+      "pos": 0.026,
+      "neg": 0.026,
+      "separa": false,
+      "decision": "J -0.00 en banda (3% frente a 3%). La prueba algoritmica del fondo crema alcanza mas que los cuatro hexes de AS9 y aun asi no separa: la estetica del papel crema sigue sin aparecer en el corpus"
+    },
+    "AS9": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": -0.001,
+      "pos": 0.026,
+      "neg": 0.026,
+      "separa": false,
+      "decision": "J -0.00: la estetica crema/serif/terracota no aparece en el corpus"
+    },
+    "UX12": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": -0.001,
+      "pos": 0.051,
+      "neg": 0.053,
+      "separa": false
+    },
+    "UX5": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": -0.002,
+      "pos": 0.077,
+      "neg": 0.079,
+      "separa": false
+    },
+    "A6": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": -0.013,
+      "pos": 0,
+      "neg": 0.013,
+      "separa": false
+    },
+    "E2": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": -0.014,
+      "pos": 0.026,
+      "neg": 0.039,
+      "separa": false
+    },
+    "D7": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": -0.026,
+      "pos": 0,
+      "neg": 0.026,
+      "separa": false,
+      "decision": "J -0.03 en banda: cero disparos en generado y 3% en humano. La escena montada con primitivas SVG existe, pero no del lado que suponiamos"
+    },
+    "K2": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": -0.028,
+      "pos": 0.051,
+      "neg": 0.079,
+      "separa": false
+    },
+    "CS2": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": -0.028,
+      "pos": 0.077,
+      "neg": 0.105,
+      "separa": false,
+      "decision": "J -0.10: el catch vacio es MAS comun en codigo humano. Se reclasifica a defecto"
+    },
+    "B4": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": -0.04,
+      "pos": 0.026,
+      "neg": 0.066,
+      "separa": false
+    },
+    "B7": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": -0.043,
+      "pos": 0.128,
+      "neg": 0.171,
+      "separa": false
+    },
+    "C1": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": -0.044,
+      "pos": 0.179,
+      "neg": 0.224,
+      "separa": false,
+      "decision": "Con el sustrato de clases ya dispara (16% frente a 15%) y da J -0.01. La fuente lo llamaba el indicador aislado mas fiable; medido con oportunidad real, no lo es"
+    },
+    "B9": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": -0.053,
+      "pos": 0,
+      "neg": 0.053,
+      "separa": false,
+      "decision": "J -0.05 en banda: la jerarquia plana dispara mas en proyectos humanos (0% frente a 5%). La hipotesis de impeccable no se sostiene sobre este corpus"
+    },
+    "T2": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": -0.053,
+      "pos": 0.026,
+      "neg": 0.079,
+      "separa": false
+    },
+    "K6": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": -0.056,
+      "pos": 0.128,
+      "neg": 0.184,
+      "separa": false
+    },
+    "UX4": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": -0.066,
+      "pos": 0,
+      "neg": 0.066,
+      "separa": false
+    },
+    "D6": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": -0.066,
+      "pos": 0,
+      "neg": 0.066,
+      "separa": false
+    },
+    "B8": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": -0.066,
+      "pos": 0,
+      "neg": 0.066,
+      "separa": false
+    },
+    "HM8": {
+      "corpus": "research/corpus.json",
+      "n": {
+        "pos": 39,
+        "neg": 76
+      },
+      "J_banda": -0.11,
+      "pos": 0.179,
+      "neg": 0.289,
+      "separa": false,
+      "decision": "J -0.17 con intervalos separados apuntando al reves: es un detector de diseno humano, como lo fue F2"
     },
     "L3": {
       "corpus": "research/l3-espanol.json",
@@ -600,164 +991,16 @@
       "estado": "premisas_falsada",
       "decision": "Dispara en 5/19 (26%, IC95 12-49) de proyectos humanos en espanol anteriores a ChatGPT. La premisa (corte limpio por archivo = proceso automatico) queda falsada sobre su propia poblacion: uno de cada cuatro humanos deja la misma huella. Sin clase positiva no hay J. Peso 3->1 en checks.mjs."
     },
-    "AS9": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": -0.002,
-      "pos": 0.029,
-      "neg": 0.031,
-      "separa": false,
-      "decision": "J -0.00: la estetica crema/serif/terracota no aparece en el corpus"
-    },
-    "K4": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": -0.004,
-      "pos": 0.059,
-      "neg": 0.063,
-      "separa": false
-    },
-    "UX12": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": -0.004,
-      "pos": 0.059,
-      "neg": 0.063,
-      "separa": false
-    },
-    "C1": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": -0.011,
-      "pos": 0.176,
-      "neg": 0.188,
-      "separa": false,
-      "decision": "Con el sustrato de clases ya dispara (16% frente a 15%) y da J -0.01. La fuente lo llamaba el indicador aislado mas fiable; medido con oportunidad real, no lo es"
-    },
-    "B2": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": -0.015,
-      "pos": 0.735,
-      "neg": 0.75,
-      "separa": false
-    },
-    "B4": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": -0.031,
-      "pos": 0,
-      "neg": 0.031,
-      "separa": false
-    },
-    "HM10": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": -0.031,
-      "pos": 0,
-      "neg": 0.031,
-      "separa": false
-    },
-    "UX5": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": -0.035,
-      "pos": 0.059,
-      "neg": 0.094,
-      "separa": false
-    },
-    "UX4": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": -0.063,
-      "pos": 0,
-      "neg": 0.063,
-      "separa": false
-    },
-    "T2": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": -0.064,
-      "pos": 0.029,
-      "neg": 0.094,
-      "separa": false
-    },
-    "T1": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": -0.075,
-      "pos": 0.206,
-      "neg": 0.281,
-      "separa": false,
-      "decision": "J -0.08: dispara mas en diseno humano"
-    },
-    "CS2": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": -0.096,
-      "pos": 0.029,
-      "neg": 0.125,
-      "separa": false,
-      "decision": "J -0.10: el catch vacio es MAS comun en codigo humano. Se reclasifica a defecto"
-    },
     "HM7": {
       "corpus": "research/corpus.json",
       "n": {
-        "pos": 34,
-        "neg": 32
+        "pos": 39,
+        "neg": 76
       },
-      "J_banda": -0.125,
+      "J_banda": -0.145,
       "pos": 0,
-      "neg": 0.125,
+      "neg": 0.145,
       "separa": false
-    },
-    "HM8": {
-      "corpus": "research/corpus.json",
-      "n": {
-        "pos": 34,
-        "neg": 32
-      },
-      "J_banda": -0.167,
-      "pos": 0.176,
-      "neg": 0.344,
-      "separa": false,
-      "decision": "J -0.17 con intervalos separados apuntando al reves: es un detector de diseno humano, como lo fue F2"
     }
   }
 }

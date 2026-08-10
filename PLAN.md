@@ -283,10 +283,13 @@ Va el último porque depende de P5 para poder demostrar que funciona.
 
 > **Hecho.** `research/holdout.mjs` parte la banda en 70% ajuste / 30% reserva con hash
 > determinista del repositorio. De 21 reglas con J > 0,15 en ajuste, **8 conservan al menos
-> la mitad en reserva**. `C4` cae de 0,44 a 0,17; `A3` de 0,28 a 0,11. Lo defendible dentro y
-> fuera: `UX2`, `L2`, `L1`, `UX6`, `D5`, `CS3`. Escrito en `caveats.md` como techo de lo que
-> podemos afirmar. La reserva es pequeña (pos=9, neg=7): advertencia agregada, no veredicto
-> regla a regla.
+> la mitad en reserva**. Escrito en `caveats.md` como techo de lo que podemos afirmar. La
+> reserva es pequeña: advertencia agregada, no veredicto regla a regla.
+>
+> **Remedido con el corpus ampliado:** la pertenencia al núcleo resultó **inestable**. `L1`,
+> `UX6` y `D5` salieron; `C4`, `C6` y `S1` entraron. La lista vigente la genera
+> `research/exporta-nucleo.mjs` y la comprueba `bench/verifica-nucleo.mjs`, que ya no fija
+> ids a mano precisamente por esto.
 
 ## P10 · `L3` en español `[x]`
 
@@ -359,11 +362,66 @@ Va el último porque depende de P5 para poder demostrar que funciona.
 
 ## P14 · Núcleo de confianza ALTA vs DUDOSA `[x]`
 
-> **Hecho.** La salida distingue reglas que aguantan holdout (`UX2`, `L2`, `L1`, `UX6`,
-> `D5`, `E7`, `CS3`, `P4`) de las dudosas. Score **NÚCLEO**, bloque «De qué fiarte», sellos
+> **Hecho.** La salida distingue las reglas que aguantan el holdout de las dudosas —la lista
+> concreta se genera, no se escribe—. Score **NÚCLEO**, bloque «De qué fiarte», sellos
 > y plan ordenado por confianza. `data/nucleo-validado.json` + `scripts/lib/nucleo.mjs`.
 
 ---
+
+## P15 · Escala de tipo en el contrato `[x]`
+
+> **Hecho.** Era el único hueco real del contrato: había escala de espaciado (`DS1`), de radio
+> (`DS2`), pareja tipográfica (`DS3`), paleta (`DS4`) y duración (`DS5`), pero **ninguna rampa
+> de tamaños de tipo**. Es donde la deriva se cuela sin que nadie la vea, porque cada
+> `text-[15px]` parece inofensivo por separado.
+>
+> `DS8` juzga `font-size` literal, `text-*` de Tailwind y los **extremos** de `clamp()`, con
+> tolerancia ±0,5px. `slop-init` genera ahora `--t-1..--t-6` con suelo en 13px y razón > 3,
+> para que el sistema que producimos pase `B6` y `B9`.
+>
+> Portado de `design-system-font-size` de impeccable (Apache-2.0).
+
+## P16 · Doctrina portada, y separada de la evidencia `[x]`
+
+> **Hecho.** Impeccable reparte criterio de diseño en ~40 documentos. Triados por sustancia
+> (`research/DELTA-IMPECCABLE.md` §5), **siete tienen contenido real** y están en
+> `references/doctrina/`. El resto se descarta por escrito: alias obsoletos —`craft.md` son 78
+> palabras que sólo redirigen—, guías de plataforma, doctrina de industria ya cubierta, y
+> andamiaje de su herramienta.
+>
+> **Lo que hacía falta no eran comandos.** Ya tenemos seis binarios para el trabajo mecánico, y
+> `slop-init` además genera el sistema, cosa que ellos no hacen. Lo que no teníamos era
+> **criterio escrito**: nuestro `remediation.md` resuelve en tres páginas lo que ellos
+> reparten en cuarenta documentos, y el campo `fix` de cada regla es una línea.
+>
+> Por eso la integración importa más que la carpeta: cuando el arreglo no cabe en una línea,
+> la regla apunta a su documento. `slop-scan --plan` lo imprime como `Criterio:` y `slop-fix`
+> lo emite como `Criterio ampliado`. **65 reglas** llevan puntero.
+>
+> **La disciplina epistémica no se relajó.** La doctrina está etiquetada como doctrina en cada
+> archivo, **no puntúa y no genera reglas**, y donde contradice la medición gana la medición
+> —ha pasado tres veces y está escrito en cada documento—.
+
+## P17 · Motor de render `[ ]`
+
+> **Propuesto, no hecho.** Es el hueco de capacidad más grande que tiene el repositorio, y
+> ahora hay un argumento concreto en vez de una intuición: **once reglas de impeccable no se
+> pudieron portar porque exigen geometría renderizada.**
+>
+> `script-error` · `content-hidden-at-rest` · `text-occlusion` · `edge-flush-cards` ·
+> `first-viewport-column-overflow` · `heading-rhythm` · `text-overflow` ·
+> `body-text-viewport-edge` · `cramped-padding` · `blinking-cursor` · `nested-cards`
+>
+> No son once que no queramos: son once que **no podemos escribir**. Y son justo las que miran
+> lo que el usuario ve, no lo que el código dice.
+>
+> Qué haría falta: llevar el catálogo de reglas al motor de `slop-visual` (que ya abre
+> Playwright de forma opcional) con un tercer `scope` además de `style` y `code`, y decidir qué
+> pasa con la puntuación cuando el motor no está disponible — porque una regla que sólo puede
+> disparar con Playwright instalado **mide la instalación, no el diseño**, que es el modo de
+> fallo de `F2` en otra forma.
+>
+> Sin resolver eso antes, no se empieza.
 
 ## Fuera de plan, anotado
 

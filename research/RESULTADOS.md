@@ -568,3 +568,124 @@ que introduce su propio sesgo —serían nuestros prompts, no una muestra del mu
 una fuente de proyectos generados fuera de GitHub. Ninguna de las dos es una tarde de trabajo.
 
 Reproducir: `node research/corpus-es.mjs && node research/fetch-corpus.mjs && node research/idioma.mjs && node research/l3-espanol.mjs`
+
+---
+
+# El porte de `impeccable` — 21 reglas medidas, 2 discriminan
+
+Cuarta medición. Corpus ampliado otra vez: **56 positivos y 157 negativos medidos**, banda
+controlada **pos=39, neg=76** (antes 34/32). Es la primera cifra de las 22 comprobaciones
+portadas de [impeccable](https://github.com/pbakaus/impeccable), que entraron sin validar.
+
+Reproducir: `node research/measure.mjs && node research/apply-weights.mjs && node research/holdout.mjs && node research/exporta-nucleo.mjs`
+
+## El resultado, sin adornos
+
+De las 21 portadas que pueden puntuar, **dos separan con intervalos disjuntos**:
+
+| Regla | pos | neg | J banda | Holdout | Lectura |
+| --- | --- | --- | --- | --- | --- |
+| **`UX14`** punto de estado pulsante | 28% | 1% | **0,269** | 0,34 → 0,05 | Octava J más alta del catálogo. **No aguanta fuera de muestra.** |
+| **`C6`** filete fino con sombra ancha | 28% | 7% | **0,216** | 0,20 → **0,25** | Entra en el núcleo. La única portada que lo hace. |
+
+Las otras diecinueve no separan. Siete tienen **cero disparos en la clase positiva**.
+
+| Regla | pos | neg | J | Estado |
+| --- | --- | --- | --- | --- |
+| `B6` suelo de legibilidad | 28% | 14% | 0,137 | Es `defecto`: no puntúa aunque discrimine |
+| `S6` kicker sobre titular | 13% | 1% | 0,115 | Intervalos solapados. Poco recall, precisión alta |
+| `S7` secciones numeradas | 5% | 0% | 0,051 | Solapan |
+| `E8` sintagmas de marketing | 5% | 1% | 0,038 | Peso 2 → 1 |
+| `UX13` marquesina | 5% | 1% | 0,038 | Solapan |
+| `E10` marco de «theater» | 3% | 0% | 0,026 | Solapan |
+| `UX15` rejilla decorativa | 3% | 1% | 0,012 | Solapan |
+| `B5` interletraje aplastado | 8% | 7% | 0,011 | `defecto` |
+| `C5` borde sobre esquina redondeada | 0% | 0% | 0,000 | **No medible** |
+| `S8` baldosa de icono | 0% | 0% | 0,000 | **No medible** |
+| `E9` cadencia aforística | 0% | 0% | 0,000 | **No medible** |
+| `K5` fondo crema | 3% | 3% | −0,001 | Peso 2 → 1 |
+| `D7` ilustración con primitivas | 0% | 3% | −0,026 | Peso 2 → 1 |
+| `B7` interlineado apretado | 13% | 17% | −0,043 | `defecto`, y apunta al revés |
+| `B9` jerarquía tipográfica plana | 0% | 5% | −0,053 | Peso 2 → 1. **Apunta al revés** |
+| `K6` gris sobre color | 13% | 18% | −0,056 | `defecto`, apunta al revés |
+| `B8` justificado sin partición | 0% | 7% | −0,066 | `defecto`, apunta al revés |
+| `D6` imagen rota | 0% | 7% | −0,066 | `defecto`, apunta al revés |
+| `A6` franjas de degradado | 0% | 1% | −0,013 | Solapan |
+
+**Dos de veintiuna.** Ése es el rendimiento del catálogo de la herramienta más popular del
+campo, medido sobre nuestro corpus. Y es exactamente lo que ya nos pasó con nuestras propias
+reglas en la primera medición: el porcentaje de aciertos de una fuente publicada, cuando se
+mide, se parece mucho al porcentaje de aciertos de cualquier otra.
+
+## Lo que sí hay que subrayar
+
+**`C6` es un hallazgo de verdad, y explica un fracaso anterior.** `C1` —el filete gris de 1px
+a secas— fue durante dos mediciones nuestra mayor decepción: la fuente lo llamaba «el
+indicador aislado más fiable» y mide **J −0,01**. `C6` mide el filete fino **junto con** una
+sombra ancha y difusa, y da **J 0,22 separando**, y **gana J fuera de muestra** (0,20 → 0,25),
+que es el único caso del catálogo entero.
+
+La lectura: lo que delata no es el borde. Es **la combinación de dos decisiones que se
+contradicen** —un canto definido y una elevación difusa a la vez—, que es justo lo que produce
+un generador que aplica ambas convenciones sin elegir entre ellas.
+
+**`UX14` es el aviso opuesto.** J 0,269 en banda con intervalos disjuntos, y en reserva se
+desploma a 0,05. Si sólo miráramos la tabla de la banda, la habríamos subido a peso 3 y
+anunciado como discriminador. El holdout es lo único que lo impidió.
+
+## Tres cosas que la medición contradice de la fuente
+
+1. **`B9` jerarquía tipográfica plana.** Impeccable sostiene que lo generado usa tamaños
+   demasiado próximos. Medido: **0% en generado, 5% en humano**. Es la misma dirección de
+   fallo que ya encontramos con el espaciado uniforme (§3.5) — y con eso ya son **dos
+   hipótesis de uniformidad refutadas** sobre este corpus. Empieza a parecer un patrón: la
+   intuición de que «la IA lo hace todo igual» no se sostiene al medirla.
+
+2. **`K5` fondo crema.** Se portó precisamente para dar a `AS9` una oportunidad justa: `AS9`
+   casa cuatro hexes concretos y mide J ≈ 0, así que cabía pensar que el problema era la
+   estrechez del patrón. Con la prueba algorítmica —toda la banda del papel crema, no cuatro
+   puntos— sigue dando **3% frente a 3%**. Conclusión: la estética crema/serif/terracota **no
+   está en el corpus**. No es que no supiéramos detectarla.
+
+3. **Seis reglas de `defecto` apuntan al revés** (`B7`, `B8`, `D6`, `K6`, y en menor medida
+   `B5`). Esto **no las invalida**: se clasificaron como defecto justamente porque su
+   propósito no es detectar autoría. Un `<img>` sin `src` es un fallo lo escriba quien lo
+   escriba. Pero confirma que la clasificación fue la correcta: si hubieran entrado como
+   procedencia —que es como las clasifica la fuente— habrían inflado la puntuación en la
+   dirección equivocada.
+
+## Lo que esta medición NO resuelve
+
+- **Siete reglas sin oportunidad.** `C5`, `S8` y `E9` no dispararon ni una vez en ninguna
+  clase. No están refutadas: están **sin medir**. `S8` y `S6` exigen que la baldosa, el icono
+  y el titular quepan en la misma ventana del árbol JSX, y `E9` busca prosa de landing en un
+  corpus que son repositorios de código. El sesgo del corpus vuelve a ser el límite, como en
+  §3.2.
+- **El corpus sigue siendo GitHub y sigue siendo casi todo inglés.** Las reglas de copy
+  portadas (`E8`, `E9`, `E10`) miden en el peor sitio posible para ellas.
+- **Las once reglas descartadas por exigir navegador no se midieron y no se pueden medir**
+  con este motor. Es posible que estén ahí las que discriminan; no lo sabemos, y decir otra
+  cosa sería inventar.
+
+## Efecto colateral: el núcleo se movió
+
+Al ampliar el corpus, la pertenencia al conjunto de reglas que aguantan el holdout **cambió de
+forma sustancial**:
+
+| | Antes | Ahora |
+| --- | --- | --- |
+| Entran | — | `C4` (0,43 → 0,30), `C6` (0,20 → 0,25), `S1` (0,15 → 0,15) |
+| Salen | `L1`, `UX6`, `D5` | — |
+| Se mantienen | `UX2`, `L2`, `CS3`, `E7`, `P4` | igual |
+
+`D5` —«emojis como iconos», que el primer informe llamó **el discriminador más limpio del
+catálogo**, con precisión 93% y lift 18— cae de 0,31 en ajuste a **0,05** en reserva. Y `C4`,
+que era el ejemplo canónico de regla sobreajustada, ahora aguanta.
+
+La conclusión no es que una medición estuviera mal. Es que **con esta n la pertenencia al
+núcleo es ruidosa**, y tratarla como una credencial estable fue un error de lectura nuestro.
+Está corregido en `caveats.md`, y `bench/verifica-nucleo.mjs` ya no fija ids a mano: comprueba
+que la copia empaquetada describa el holdout vigente, que es lo único que puede exigirse sin
+convertir cada medición nueva en un test roto.
+
+`UX6` baja de peso 3 a 2 por este motivo (J 0,34 → 0,09, intervalos solapados).

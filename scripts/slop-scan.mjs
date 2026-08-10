@@ -142,7 +142,7 @@ function correrDeclarativa(regla) {
 
 const declarativas = CATALOGO.rules.map(r => ({
   id: r.id, cat: r.category, title: r.name, weight: r.weight ?? 2,
-  applies: r.applies || 'ambos', exempt: r.exempt || [], why: r.why, fix: r.fix, source: r.source,
+  applies: r.applies || 'ambos', exempt: r.exempt || [], why: r.why, fix: r.fix, doctrina: r.doctrina, source: r.source,
   validado: r.validado || null,
   origen: 'json', run: () => correrDeclarativa(r),
 }))
@@ -316,6 +316,7 @@ if (PLAN) {
       console.log(`\n      ${r.id} · ${r.title}   [${r.sello}]${nv}`)
       if (r.why) console.log(`      Por que delata: ${r.why}`)
       console.log(`      Que hacer:      ${r.fix || '(sin arreglo declarado — ver references/remediation.md)'}`)
+      if (r.doctrina) console.log(`      Criterio:       ${r.doctrina}`)
       const d = (r.samples || []).slice(0, 3).map(s => `${s.file}:${s.line}`).join(', ')
       if (d) console.log(`      Donde:          ${d}${(r.samples || []).length > 3 ? ' y mas' : ''}`)
     }
@@ -336,7 +337,7 @@ if (PLAN) {
       return {
         id: r.id, tipo: r.tipo || 'procedencia', cat: r.cat, title: r.title, weight: r.weight,
         failed: r.failed, detail: r.detail, origen: r.origen, source: r.source,
-        why: r.why || null, fix: r.fix || null, validado: r.validado || null,
+        why: r.why || null, fix: r.fix || null, doctrina: r.doctrina || null, validado: r.validado || null,
         sello: s.etiqueta, confianza: s.confianza, nivel: s.nivel, detalle_nivel: s.detalle_nivel,
         samples: r.samples || [],
       }

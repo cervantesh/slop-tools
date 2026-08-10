@@ -109,17 +109,26 @@ Los intervalos de confianza que acompañan a cada regla miden **el error de mues
 tasa**. No miden que hayamos elegido qué reglas mirar *después* de ver los datos, que es la
 fuente de optimismo más grande de todo el proceso.
 
-La partición en conjunto reservado lo pone en números: **de 21 reglas con J > 0,15, sólo 8
+La partición en conjunto reservado lo pone en números: **de 24 reglas con J > 0,15, sólo 8
 conservan al menos la mitad de su fuerza en proyectos que no participaron en ninguna decisión
 de peso.**
 
-Las que aguantan con margen —`UX2`, `L2`, `L1`, `UX6`, `D5`, `CS3`— son, hoy, lo único
-defendible dentro y fuera de la muestra. Todo lo demás merece la coletilla «medido, pendiente
-de confirmar».
+Las que aguantan con margen —`UX2`, `L2`, `C4`, `C6`, `CS3`, `E7`, `P4`, `S1`— son, hoy, lo
+único defendible dentro y fuera de la muestra. Todo lo demás merece la coletilla «medido,
+pendiente de confirmar».
 
-> Ojo con leerlo al revés: la reserva tiene pos=9 y neg=7. Con esa n, una regla puede moverse
-> medio punto por azar, y **no es una refutación de trece reglas**. Es una advertencia sobre
-> la confianza agregada, no un veredicto regla a regla.
+> **La lista de arriba cambió al ampliar el corpus, y ese cambio dice más que la lista.**
+> `L1`, `UX6` y `D5` estaban en ella y ya no están: `D5`, que era «el discriminador más
+> limpio del catálogo» con lift 18, cae de 0,31 en ajuste a 0,05 en reserva. `C4`, que era el
+> ejemplo canónico de regla que se cae fuera de muestra, ahora aguanta (0,43 → 0,30).
+>
+> No es que antes estuviéramos equivocados y ahora acertemos. Es que **con esta n, la
+> pertenencia al núcleo es inestable**, y conviene tratarla como una estimación ruidosa y no
+> como una credencial.
+
+> Ojo con leerlo al revés: la reserva tiene pos=10 y neg=20. Con esa n, una regla puede
+> moverse medio punto por azar, y **no es una refutación de dieciséis reglas**. Es una
+> advertencia sobre la confianza agregada, no un veredicto regla a regla.
 
 ## La regla propia que no sobrevive
 

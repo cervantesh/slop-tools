@@ -12,7 +12,7 @@
 
 import { existsSync, readFileSync, statSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
-import { px, TW_ESPACIO, TW_RADIO } from './escala.mjs'
+import { px, TW_ESPACIO, TW_RADIO, TW_TEXTO } from './escala.mjs'
 import { parseColor } from './color.mjs'
 // OJO: no reutilizamos escalas() de escala.mjs para el lint del contrato.
 // px() interpreta `var(--e-4)` como el numero 4 (casa con el 4 del token), y
@@ -59,6 +59,7 @@ export function cargarContrato(dir) {
         texto: j.texto,
         radios: j.radios || [],
         espacios: j.espacios || [],
+        tipos: j.tipos || [],
         duracion: j.duracion,
         curva: j.curva,
         paleta: j.paleta || {},
@@ -96,6 +97,7 @@ function normalizar(c) {
     ...c,
     espacios: (c.espacios || []).map(Number).filter(n => !Number.isNaN(n)),
     radios: (c.radios || []).map(Number).filter(n => !Number.isNaN(n)),
+    tipos: (c.tipos || []).map(Number).filter(n => !Number.isNaN(n)),
     duracion: c.duracion != null ? Number(c.duracion) : null,
     paletaHex,
     paletaSet: set,
@@ -107,13 +109,21 @@ function parseTokensCss(text) {
   for (const m of text.matchAll(/--e-\d+\s*:\s*([\d.]+)px/gi)) espacios.push(parseFloat(m[1]))
   const radios = []
   for (const m of text.matchAll(/--r-(?:chico|medio|grande)\s*:\s*([\d.]+)px/gi)) radios.push(parseFloat(m[1]))
+  const tipos = []
+  for (const m of text.matchAll(/--t-\d+\s*:\s*([\d.]+)px/gi)) tipos.push(parseFloat(m[1]))
   const dur = text.match(/--duracion\s*:\s*([\d.]+)ms/i)
   const display = text.match(/--display\s*:\s*"([^"]+)"/i)
   const texto = text.match(/--texto\s*:\s*"([^"]+)"/i)
+  // Gana la PRIMERA definicion, que es la de :root. Un sistema oscuro emite
+  // despues un bloque de alternativa clara que redefine los mismos tokens; si
+  // ganara la ultima, el contrato quedaria describiendo la alternativa y no el
+  // sistema, y DS4 marcaba como ajena la paleta real (la que va en
+  // tailwind.theme.mjs). Fallaba en todo esquema oscuro por esta via.
+  // Es el mismo criterio de primera-gana que ya usa recogerTokens.
   const paleta = {}
   for (const m of text.matchAll(/--(lienzo|superficie|tinta|apagado|filete|acento|acento-suave|sobre-acento)\s*:\s*(#[0-9a-fA-F]{3,8})/g)) {
     const key = m[1].replace(/-([a-z])/g, (_, c) => c.toUpperCase())
-    paleta[key] = m[2]
+    if (!(key in paleta)) paleta[key] = m[2]
   }
   if (!espacios.length && !radios.length && !display) return null
   return normalizar({
@@ -121,6 +131,7 @@ function parseTokensCss(text) {
     texto: texto?.[1],
     espacios,
     radios,
+    tipos,
     duracion: dur ? parseFloat(dur[1]) : null,
     paleta,
   })
@@ -130,6 +141,7 @@ function parseDesignMd(text) {
   const esp = text.match(/Espaciado:\s*([^\n.]+)/i)
   const rad = text.match(/Radios:\s*([^\n,]+)/i)
   const tip = text.match(/Pareja intencionada:\s*\*\*([^*]+)\*\*\s+para titulares,\s*\*\*([^*]+)\*\*/i)
+  const tipoEscala = text.match(/Escala de tipo:\s*([^\n.]+)/i)
   const mov = text.match(/Una duraci[oó]n\s*\((\d+)\s*ms\)/i)
   const paleta = {}
   for (const m of text.matchAll(/`(--[\w-]+)`\s*\|\s*`(#[0-9a-fA-F]{3,8})`/g)) {
@@ -144,6 +156,7 @@ function parseDesignMd(text) {
     texto: tip?.[2]?.trim(),
     espacios,
     radios,
+    tipos: tipoEscala ? numList(tipoEscala[1]) : [],
     duracion: mov ? parseFloat(mov[1]) : null,
     paleta,
   })
@@ -411,6 +424,35 @@ export function comprobarContrato(contrato, files) {
     })
   }
 
+  // DS8 · Tamaño de tipo fuera de la escala
+  //
+  // Portado de impeccable (`design-system-font-size`, Apache-2.0). Era el único
+  // hueco real de nuestro contrato: teníamos escala de espaciado (DS1), de radio
+  // (DS2), pareja tipográfica (DS3), paleta (DS4) y duración (DS5), pero ningún
+  // control sobre la rampa de tamaños — que es justo donde la deriva se cuela sin
+  // que nadie la vea, porque cada `text-[15px]` parece inofensivo por separado.
+  //
+  // Tolerancia ±0,5px, la misma que usa la fuente. De `clamp()` sólo se juzgan
+  // los extremos: el tramo intermedio es fluido por diseño y no es un escalón.
+  if (contrato.tipos && contrato.tipos.length) {
+    const dentro = v => contrato.tipos.some(t => Math.abs(t - v) <= 0.5)
+    const { valores, samples } = usosTipo(files, dentro)
+    const fuera = [...new Set(valores)].sort((a, b) => a - b)
+    hallazgos.push({
+      id: 'DS8',
+      cat: 'Tipografia',
+      title: 'Tamaño de tipo fuera de la escala del contrato',
+      weight: 2,
+      tipo: 'contrato',
+      failed: fuera.length > 0,
+      detail: fuera.length
+        ? `${fuera.length} tamaño(s) fuera de la rampa: ${fuera.slice(0, 10).join('px, ')}px · permitidos: ${contrato.tipos.join(' · ')}`
+        : `todos los tamaños caen en la rampa (${contrato.tipos.join(' · ')})`,
+      samples,
+      fix: `Usa var(--t-*) o uno de los escalones declarados (${contrato.tipos.map(v => v + 'px').join(', ')}). Si de verdad falta un escalón, decláralo en DESIGN.md antes de usarlo — añadirlo después legitima el tamaño en todo el árbol.`,
+    })
+  }
+
   const fallan = hallazgos.filter(h => h.failed)
   const maxW = hallazgos.reduce((a, h) => a + h.weight, 0)
   const lostW = fallan.reduce((a, h) => a + h.weight, 0)
@@ -432,6 +474,39 @@ export function comprobarContrato(contrato, files) {
     fallan: fallan.length,
     checks: hallazgos,
   }
+}
+
+/**
+ * Tamaños de tipo literales usados en el árbol que caen fuera de la rampa.
+ * Sólo se juzgan px y rem: `em`, `%` y `calc()` dependen del contexto del
+ * elemento y afirmarlos sin renderizar sería adivinar.
+ */
+function usosTipo(files, dentro) {
+  const valores = []
+  const samples = []
+  const anota = (v, f, i, line) => {
+    if (v === null || !Number.isFinite(v) || dentro(v)) return
+    valores.push(v)
+    if (samples.length < 5) samples.push({ file: f.rel, line: i + 1, text: line.trim().slice(0, 110) })
+  }
+  for (const f of files) {
+    for (let i = 0; i < f.lines.length; i++) {
+      const line = f.lines[i]
+      if (esDefinicionToken(line)) continue
+      const sinVar = line.replace(/var\([^)]*\)/gi, ' ')
+      for (const m of sinVar.matchAll(/font-size:\s*([^;}{]+)/gi)) {
+        const bruto = m[1].trim()
+        const clamp = bruto.match(/clamp\(\s*([^,]+),[^,]+,\s*([^)]+)\)/i)
+        if (clamp) { anota(px(clamp[1]), f, i, line); anota(px(clamp[2]), f, i, line); continue }
+        if (/em\b|%|calc\(/i.test(bruto) && !/rem\b/i.test(bruto)) continue
+        anota(px(bruto), f, i, line)
+      }
+      // Utilidades de Tailwind con valor conocido, y las arbitrarias.
+      for (const m of line.matchAll(/\btext-(xs|sm|base|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl|8xl|9xl)\b/g)) anota(TW_TEXTO[m[1]], f, i, line)
+      for (const m of line.matchAll(/\btext-\[(\d+(?:\.\d+)?)(px|rem)\]/g)) anota(m[2] === 'rem' ? parseFloat(m[1]) * 16 : parseFloat(m[1]), f, i, line)
+    }
+  }
+  return { valores, samples }
 }
 
 function muestrasEspacio(files, escalaSet) {

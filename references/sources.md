@@ -130,6 +130,47 @@ Su `expandShorthand` reveló **una fuga real en nuestra comprobación C1**: busc
 `border: 1px solid` se evade escribiendo `border-width` y `border-style` por separado. C1
 ahora expande shorthands.
 
+### impeccable — Paul Bakaus, **Apache-2.0**
+<https://github.com/pbakaus/impeccable>
+
+La única fuente de este repositorio que **no es MIT**, y la única que exige aviso. El
+`NOTICE` de la raíz declara el copyright, la referencia a Apache-2.0 y las modificaciones,
+como pide la sección 4 de la licencia. Cada regla portada cita su id original en `source`
+con la forma `impeccable: <id> (Apache-2.0)`.
+
+**Qué es.** Un detector determinista de 59 antipatrones
+(`.agents/skills/impeccable/scripts/detector/`) con cuatro motores: regex sobre fuente,
+HTML+CSS estático, navegador vivo con Puppeteer y contraste sobre captura. Alrededor, ~40
+documentos de referencia en Markdown que un agente lee para ejecutar sus comandos.
+
+**Qué se tomó de las reglas.** El criterio y el umbral de 26 de sus ids, convertidos en 22
+comprobaciones nuestras. No se copió código: otro motor, otro esquema, otro idioma. La tabla
+completa —id suyo, equivalente nuestro, decisión y motivo— está en
+`research/DELTA-IMPECCABLE.md`.
+
+**Qué NO se tomó, y por qué importa.** Trece reglas descartadas. Once exigen geometría
+renderizada que nuestro escáner estático no puede producir; quedan anotadas como el argumento
+concreto para un motor de render. Una, `monotonous-spacing`, **contradice nuestra medición**:
+codifica que lo generado usa espaciado uniforme, y sobre 123 proyectos medimos lo contrario
+con separación fuerte (AUC 0,277 — `RESULTADOS.md` §3.5). Y `wide-tracking` dispara sobre su
+propia excepción.
+
+**Qué se tomó de la doctrina.** Siete de sus ~40 documentos de referencia tienen criterio
+real; el resto es andamiaje de su herramienta, guías de plataforma, doctrina de industria o
+alias obsoletos. Los siete están adaptados en `doctrina/`, **etiquetados como doctrina y
+fuera de la puntuación**. El triaje está en `research/DELTA-IMPECCABLE.md` §5.
+
+**La regla de la casa que esto pone a prueba.** Las 22 entraron **sin cifra**. Que la fuente
+tenga 57.800 estrellas y esté activa no es evidencia de que sus reglas discriminen: es
+evidencia de que a mucha gente le parecen razonables. La misma distinción que este
+repositorio lleva haciendo desde la primera medición, aplicada ahora a la fuente más
+prestigiosa del catálogo.
+
+Medidas después: **dos de veintiuna separan.** Una de ellas, `C6`, entra en el núcleo
+validado y explica de paso por qué `C1` llevaba dos mediciones fracasando. Las otras
+diecinueve no discriminan, y tres contradicen directamente el criterio de la fuente.
+`research/RESULTADOS.md`.
+
 ### eslint-plugin-i18next y eslint-plugin-jsx-a11y
 <https://github.com/edvardchen/eslint-plugin-i18next> ·
 <https://github.com/jsx-eslint/eslint-plugin-jsx-a11y>
