@@ -8,6 +8,12 @@ autoría humana. Hasta ahora las 49 comprobaciones del escáner estaban demostra
 controlar el confundido de tamaño. Seis no disparan ni una vez en 71 proyectos reales. Una
 dispara al revés.**
 
+> **Revisión posterior — [ARBITRAJE.md](ARBITRAJE.md).** Veinte comprobaciones dejaron de
+> puntuar y cinco bajaron de peso tras una revisión adversarial. En el mismo pase apareció que
+> el escáner **nunca leía el campo `tipo` de las reglas declarativas**: las reclasificadas a
+> `defecto` llevaban meses votando igual. Hoy puntúan 44 de 87 comprobaciones. Las cifras de
+> este informe siguen siendo válidas; lo que cambió es cuáles de ellas cuentan para el veredicto.
+
 ---
 
 ## 1 · Método

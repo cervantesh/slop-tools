@@ -140,8 +140,14 @@ function correrDeclarativa(regla) {
 
 /* ── ejecucion ── */
 
+// `tipo` y `motivo_defecto` viajan a proposito: sin ellos toda regla del
+// catalogo llegaba aqui como procedencia y VOTABA, dijera lo que dijera su
+// ficha. CS2 y CS3 estuvieron puntuando meses despues de reclasificarse, con su
+// motivo_defecto escrito al lado y sin efecto ninguno. Si anades un campo que
+// decida si una regla puntua, tiene que estar en esta lista.
 const declarativas = CATALOGO.rules.map(r => ({
   id: r.id, cat: r.category, title: r.name, weight: r.weight ?? 2,
+  tipo: r.tipo || 'procedencia', motivo_defecto: r.motivo_defecto,
   applies: r.applies || 'ambos', exempt: r.exempt || [], why: r.why, fix: r.fix, doctrina: r.doctrina, source: r.source,
   validado: r.validado || null,
   origen: 'json', run: () => correrDeclarativa(r),

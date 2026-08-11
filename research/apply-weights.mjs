@@ -72,12 +72,60 @@ const DECISIONES = {
 
   // Una regla del nucleo pierde la separacion al ampliar el corpus.
   UX6: [2, 'J 0.09 en banda con intervalos solapados (56% frente a 47%), cuando en la medicion anterior daba 0.34 y separaba. Baja de 3 a 2. Es el riesgo que declaraba el informe: la J de una regla ajustada con n pequena encoge al ampliar la muestra'],
+
+  // QUINTA REVISION — el sello de confianza no sobrevive a la reserva.
+  //
+  // Peso 3 significa "discriminante validado". Estas separan en la banda
+  // completa pero se desploman fuera de muestra, asi que el 3 vende mas de lo
+  // que la evidencia sostiene. Bajan UN escalon, no dos: la reserva es n=10
+  // positivos / 20 negativos, y a esa escala el desplome es tan ruidoso como
+  // la subida simetrica de B2 (-0.04 -> +0.35) que nadie propone ascender.
+  // Descontar el ruido en una sola direccion seria elegir el resultado.
+  D5: [2, 'Separa en banda (J 0.241) pero cae de 0.31 a 0.05 en la reserva. Pierde el sello de confianza alta, no la senal: 3 -> 2'],
+  UX14: [1, 'J 0.27 separando en banda y 0.34 -> 0.05 en la reserva. El peso 2 se le dio por la banda sola, antes de tener reserva contra la que contrastarlo: 2 -> 1'],
+  HM4: [1, 'Separa en banda (J 0.243) y su J en la reserva es exactamente 0.00. El peso 2 no sobrevive fuera de muestra: 2 -> 1'],
 }
 
 // Comprobaciones que miden calidad, no procedencia. Salen de la puntuacion.
+//
+// QUINTA REVISION — arbitraje adversarial (ver research/ARBITRAJE.md). Veinte
+// identificadores dejan de votar. Ninguno se borra: el patron sigue en el
+// catalogo y sigue apareciendo en --plan y en slop-fix como consejo de arreglo.
+// Lo que se retira es el VOTO, no el detector.
+//
+// El argumento que zanjo los tres bloques: "no refutada" no es lo mismo que
+// "sigue puntuando". Una regla que no ha tenido oportunidad de fallar no puede
+// alegar en contra del proyecto escaneado.
 const A_DEFECTO = {
   CS2: 'J -0.10: dispara mas en diseno humano. Un catch vacio es un defecto real, pero no dice quien escribio el codigo',
   CS3: 'silenciar el comprobador de tipos es deuda tecnica; que correlacione con generacion no lo convierte en prueba de autoria',
+
+  // J <= 0 en la banda con oportunidad real de disparar. Ninguna separa: el
+  // signo negativo se apoya en entre 1 y 5 disparos sobre 76 proyectos humanos,
+  // asi que no son detectores invertidos — son reglas que no informan. Mismo
+  // desenlace que HM8, F2 y CS2, distinto motivo.
+  A6: 'J -0.013 en banda sin separar (0/39 generados frente a 1/76 humanos). Con esos conteos el intervalo cubre el cero: no informa',
+  B4: 'J -0.040 en banda sin separar (2.6% frente a 6.6%). Fuera de muestra baja a -0.10',
+  E2: 'J -0.014 en banda sin separar (2.6% frente a 3.9%)',
+  UX4: 'J -0.066 en banda sin separar: cero disparos en generado frente al 6.6% humano. Es la mas negativa del grupo',
+  UX12: 'J -0.001 en banda sin separar (5.1% frente a 5.3%): tasas indistinguibles',
+  AS9: 'J -0.001 en banda sin separar (2.6% frente a 2.6%): tasas identicas. La estetica crema/serif/terracota no aparece en el corpus',
+
+  // Peso 2 —"tell secundario confirmado" segun la propia documentacion— sin
+  // confirmacion ninguna. Bajarlas a peso 1 se descarto por cosmetico: seguirian
+  // votando sobre evidencia que no existe.
+  C2: 'J 0.012 en banda sin separar. Entro con peso 2 por parecerse a un tell conocido; medida, no lo es',
+  UX8: 'J 0.025 en banda sin separar (5.1% frente a 2.6%)',
+  AS1: 'J 0.009 en banda sin separar (15.4% frente a 14.5%). Dispara mucho en ambas clases, que es la forma mas cara de no discriminar',
+  E9: 'cero disparos en ambas clases y peso 2. La cadencia aforistica es prosa de landing y el corpus son repositorios de codigo',
+
+  // Cero oportunidad de disparar. Se conservan enteras —el patron puede valer
+  // el dia que el corpus incluya paginas de aterrizaje— pero no votan mientras
+  // no hayan tenido ocasion de equivocarse.
+  HM5: 'cero disparos en ambas clases: sin oportunidad, no hay evidencia que alegar',
+  P1: 'cero disparos en ambas clases: la prosa de marketing casi no existe en repositorios de codigo',
+  P2: 'cero disparos en ambas clases, mismo motivo que P1',
+  CS1: 'cero disparos en ambas clases: el comentario narrativo no aparece en el codigo publicado',
 }
 
 // Reglas sin oportunidad de disparar en este corpus. No se eliminan: eliminar

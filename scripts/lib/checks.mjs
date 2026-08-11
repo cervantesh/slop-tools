@@ -25,10 +25,17 @@ try {
 // salen de research/RESULTADOS.md, misma medicion que las declarativas.
 const META = {
   A2: { fix: 'Ofrece alternativa clara o justifica el oscuro en el contrato de marca.', doctrina: 'references/doctrina/color.md' },
-  A3: { fix: 'Reserva el desenfoque para lo que de verdad flota sobre contenido.', doctrina: 'references/doctrina/color.md' },
+  // Baja un escalon, no dos: separa en banda (J 0.243, 26% frente a 1%) pero
+  // cae de 0.29 a 0.10 en la reserva. Pierde el sello de confianza alta, no la
+  // senal. Ver research/ARBITRAJE.md sobre por que un escalon y no dos.
+  A3: { weight: 2, fix: 'Reserva el desenfoque para lo que de verdad flota sobre contenido.', doctrina: 'references/doctrina/color.md' },
   B1: { fix: 'Empareja una display con una de texto. Inter como unica familia es el default de las herramientas.', doctrina: 'references/doctrina/tipografia.md' },
   B2: { fix: 'Una sola familia bien usada es disciplina en producto; en marca, empareja.', doctrina: 'references/doctrina/tipografia.md' },
-  C1: { fix: 'Separa con espacio primero, luego con un escalon de luminancia del 3-5%. El filete gris es el ultimo recurso.', doctrina: 'references/doctrina/composicion.md' },
+  // El filete a secas: su fuente lo llamaba "el indicador aislado mas fiable".
+  // Medido con oportunidad real da J -0.044 y no separa. Lo que si discrimina es
+  // C6, el filete fino CON sombra ancha — la combinacion contradictoria, no el borde.
+  C1: { tipo: 'defecto', motivo_defecto: 'J -0.044 en banda sin separar. La fuente lo llamaba el indicador aislado mas fiable; medido, no lo es. C6 recoge lo que si discrimina',
+    fix: 'Separa con espacio primero, luego con un escalon de luminancia del 3-5%. El filete gris es el ultimo recurso.', doctrina: 'references/doctrina/composicion.md' },
   C3: { fix: 'Que el radio y el padding senalen la funcion del elemento en vez de ser constantes.', doctrina: 'references/doctrina/composicion.md' },
   C4: {
     fix: 'Declara una escala de espaciado y quedate en ella. Catorce valores distintos no es un sistema, es la escala de Tailwind usada a discrecion.',
@@ -40,7 +47,10 @@ const META = {
     },
   },
   E4: { fix: 'Cinco descripciones distintas, o ninguna. Una repetida cinco veces es peor que el vacio.' },
-  L1: { fix: 'Resuelve el plural con un condicional o con Intl.PluralRules.', doctrina: 'references/doctrina/microcopy.md' },
+  // Baja un escalon: separa en banda (J 0.31, dispara en el 72% de lo generado)
+  // pero cae a 0.10 en la reserva. Peso 1 borraria recall real; peso 3 vende un
+  // sello que la reserva no respalda.
+  L1: { weight: 2, fix: 'Resuelve el plural con un condicional o con Intl.PluralRules.', doctrina: 'references/doctrina/microcopy.md' },
   L3: { fix: 'Restaura los diacriticos en los archivos que salieron en ASCII plano.', doctrina: 'references/doctrina/microcopy.md' },
   T1: { fix: 'Anade aria-label a todo boton que solo lleve icono.', doctrina: 'references/doctrina/microcopy.md' },
   T2: { fix: 'Que el texto del enlace diga a donde lleva, fuera de su contexto.', doctrina: 'references/doctrina/microcopy.md' },
@@ -65,14 +75,23 @@ const META = {
   /* ── portadas de impeccable (Apache-2.0) ── */
   B7: { fix: 'Interlineado de 1,5 a 1,7 en texto de lectura. Por debajo de 1,3 las lineas se tocan.', doctrina: 'references/doctrina/tipografia.md' },
   B8: { fix: 'Alinea a la izquierda. Si el justificado es de marca, activa hyphens: auto y declara el idioma.', doctrina: 'references/doctrina/tipografia.md' },
-  B9: { fix: 'Menos tamanos y mas distancia entre ellos: una razon de 1,25 como minimo entre escalones.', doctrina: 'references/doctrina/tipografia.md' },
-  C5: { fix: 'Quita el borde o quita el radio. Los dos juntos hacen que el filete corte la curva.', doctrina: 'references/doctrina/composicion.md' },
+  // Las seis que dejan de votar por arbitraje (research/ARBITRAJE.md). El
+  // patron se queda entero y sigue saliendo en --plan y en slop-fix; lo que se
+  // retira es el voto. `aplicarMeta` extiende la comprobacion con esta entrada,
+  // asi que `tipo` aqui gana sobre el declarado en la propia comprobacion.
+  B9: { tipo: 'defecto', motivo_defecto: 'J -0.053 en banda: cero disparos en generado frente al 5% humano. La hipotesis de impeccable no se sostiene sobre este corpus',
+    fix: 'Menos tamanos y mas distancia entre ellos: una razon de 1,25 como minimo entre escalones.', doctrina: 'references/doctrina/tipografia.md' },
+  C5: { tipo: 'defecto', motivo_defecto: 'cero disparos en ambas clases con peso 2: exige un filete de acento y un radio en el mismo bloque CSS, y en un proyecto Tailwind eso vive en clases',
+    fix: 'Quita el borde o quita el radio. Los dos juntos hacen que el filete corte la curva.', doctrina: 'references/doctrina/composicion.md' },
   C6: { fix: 'Elige uno: borde definido o elevacion suave. Los dos a la vez es la firma, no el estilo.', doctrina: 'references/doctrina/composicion.md' },
-  D7: { fix: 'Un visual a tamano de hero merece ilustracion, fotografia o grafico de datos real.', doctrina: 'references/doctrina/suelo-de-oficio.md' },
-  K5: { fix: 'Elige el fondo desde la paleta. El crema por reflejo es el beis de la IA.', doctrina: 'references/doctrina/color.md' },
+  D7: { tipo: 'defecto', motivo_defecto: 'J -0.026 en banda: cero disparos en generado y 2.6% en humano. La escena montada con primitivas SVG existe, pero no del lado que suponiamos',
+    fix: 'Un visual a tamano de hero merece ilustracion, fotografia o grafico de datos real.', doctrina: 'references/doctrina/suelo-de-oficio.md' },
+  K5: { tipo: 'defecto', motivo_defecto: 'J -0.001 en banda (3% frente a 3%): tasas identicas. Alcanza mas que los cuatro hexes de AS9 y aun asi no separa',
+    fix: 'Elige el fondo desde la paleta. El crema por reflejo es el beis de la IA.', doctrina: 'references/doctrina/color.md' },
   S6: { fix: 'Borra el kicker. Si las palabras importan, van dentro del titular o en el cuerpo.', doctrina: 'references/doctrina/suelo-de-oficio.md' },
   S7: { fix: 'Que la jerarquia y el contenido lleven la secuencia; una pagina no numera sus propios capitulos.', doctrina: 'references/doctrina/suelo-de-oficio.md' },
-  S8: { fix: 'Icono y titular en linea, o el icono suelto en el flujo sin su propia baldosa.', doctrina: 'references/doctrina/suelo-de-oficio.md' },
+  S8: { tipo: 'defecto', motivo_defecto: 'cero disparos en ambas clases con peso 2: exige la baldosa, el icono y el titular dentro de la misma ventana de 400 caracteres del arbol JSX',
+    fix: 'Icono y titular en linea, o el icono suelto en el flujo sin su propia baldosa.', doctrina: 'references/doctrina/suelo-de-oficio.md' },
   UX15: { fix: 'Reserva la rejilla para lienzos, mapas o planos. En lo demas, superficie lisa.', doctrina: 'references/doctrina/suelo-de-oficio.md' },
 }
 
