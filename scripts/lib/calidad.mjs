@@ -185,14 +185,29 @@ export function comprobarCalidad(ctx) {
   {
     const samples = []
     let n = 0
+    // Envolver el control en la etiqueta lo asocia sin `for` ni `aria-label`:
+    //
+    //   <label>Servicio <input value={...} /></label>
+    //
+    // Es HTML valido, es accesible, y es el patron mas comun en React porque
+    // evita inventar ids unicos. Sin esta comprobacion la regla contaba como
+    // fallo cada formulario bien escrito: sobre stylo daba 24 controles sin
+    // etiqueta donde solo habia 4, con 45 correctamente envueltos.
+    const dentroDeLabel = (texto, pos) => {
+      const antes = texto.slice(0, pos)
+      return antes.lastIndexOf('<label') > antes.lastIndexOf('</label>')
+    }
     for (const f of codeFiles) {
-      if (!/<form\b|<input\b|<Input\b/i.test(f.text)) continue
-      for (const m of f.text.matchAll(/<(?:input|Input)\b([^>]*)\/?>/gi)) {
+      if (!/<form\b|<input\b|<Input\b|<select\b|<textarea\b/i.test(f.text)) continue
+      // select y textarea son controles de formulario igual que input, y el
+      // propio consejo de la regla habla de "cada control de formulario".
+      for (const m of f.text.matchAll(/<(?:input|Input|select|textarea)\b([^>]*?)\/?>/gi)) {
         const a = m[1] || ''
         if (/type\s*=\s*["']hidden["']/i.test(a)) continue
         if (/aria-label|aria-labelledby|title=/i.test(a)) continue
         const id = (a.match(/\bid\s*=\s*["']([^"']+)/i) || [])[1]
         if (id && new RegExp(`for=["']${id}["']`, 'i').test(f.text)) continue
+        if (dentroDeLabel(f.text, m.index)) continue
         n++
         if (samples.length < 5) samples.push({ file: f.rel, line: lineaDe(f.text, m.index), text: m[0].slice(0, 80) })
       }

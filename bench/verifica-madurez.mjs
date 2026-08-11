@@ -49,6 +49,36 @@ try {
     fallos++
   } else console.log(`  ok calidad     score ${scan.calidad.score}/100 · ejes ${scan.calidad.total}`)
 
+  // 2b · Q10 no puede castigar el control envuelto en su etiqueta.
+  //
+  // `<label>Texto <input/></label>` asocia sin `for` ni `aria-label`, es el
+  // patron mas comun en React, y la regla lo contaba como fallo: sobre stylo
+  // reportaba 24 controles sin etiqueta donde solo habia 4. Se comprueban las
+  // dos direcciones, porque una regla que nunca dispara tampoco sirve.
+  {
+    const dirQ10 = mkdtempSync(join(tmpdir(), 'slop-q10-'))
+    const envueltos = Array.from({ length: 4 }, (_, i) =>
+      `<label className="f">Campo ${i}<input value={v${i}} onChange={o} /></label>`).join('\n      ')
+    const sueltos = Array.from({ length: 4 }, (_, i) =>
+      `<input value={s${i}} onChange={o} placeholder="sin etiqueta" />`).join('\n      ')
+    const q10 = ruta => {
+      const s = JSON.parse(correr(SCAN, [ruta, '--json', '--profile', 'producto', '--no-history']))
+      return (s.calidad?.checks || []).find(c => c.id === 'Q10')
+    }
+    writeFileSync(join(dirQ10, 'Bien.jsx'), `export const A = () => (<form>\n      ${envueltos}\n    </form>)\n`)
+    const bien = q10(dirQ10)
+    writeFileSync(join(dirQ10, 'Mal.jsx'), `export const B = () => (<form>\n      ${sueltos}\n    </form>)\n`)
+    const mal = q10(dirQ10)
+    if (bien?.failed) {
+      console.log(`  x Q10          castiga controles envueltos en <label> (${bien.detail})`)
+      fallos++
+    } else if (!mal?.failed) {
+      console.log('  x Q10          no detecta controles realmente sin etiqueta')
+      fallos++
+    } else console.log('  ok Q10         <label> envolvente cuenta como etiqueta; el suelto sigue fallando')
+    rmSync(dirQ10, { recursive: true, force: true })
+  }
+
   // 3 · stats con tendencia
   correr(SCAN, [dir, '--json', '--profile', 'landing', '--contrato'])
   const statsOut = correr(SCAN, [dir, '--stats'])
