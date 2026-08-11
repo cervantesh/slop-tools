@@ -81,9 +81,15 @@ const DECISIONES = {
   // positivos / 20 negativos, y a esa escala el desplome es tan ruidoso como
   // la subida simetrica de B2 (-0.04 -> +0.35) que nadie propone ascender.
   // Descontar el ruido en una sola direccion seria elegir el resultado.
-  D5: [2, 'Separa en banda (J 0.241) pero cae de 0.31 a 0.05 en la reserva. Pierde el sello de confianza alta, no la senal: 3 -> 2'],
-  UX14: [1, 'J 0.27 separando en banda y 0.34 -> 0.05 en la reserva. El peso 2 se le dio por la banda sola, antes de tener reserva contra la que contrastarlo: 2 -> 1'],
-  HM4: [1, 'Separa en banda (J 0.243) y su J en la reserva es exactamente 0.00. El peso 2 no sobrevive fuera de muestra: 2 -> 1'],
+  // SEXTA MEDICION — la reserva pasa de 10/20 a 65/45 y desmiente tres de las
+  // cinco demociones de la quinta. No cambio la regla: cambio la potencia con
+  // que se la miraba. Los "desplomes" de D5, A3 y HM4 eran la varianza de una
+  // reserva de diez positivos, que es justo lo que se argumento al negarse a
+  // bajarlas dos escalones. Un escalon se pudo deshacer; dos habrian dejado el
+  // catalogo sin sus mejores reglas por un artefacto de muestreo.
+  D5: [3, 'Se revierte a 3. Con reserva 65/45 da 0.33 -> 0.27 y aguanta el criterio. El 0.31 -> 0.05 que motivo la bajada era ruido de una reserva de 10 positivos'],
+  HM4: [2, 'Se revierte a 2. Con reserva 65/45 da 0.22 -> 0.20. El 0.33 -> 0.00 anterior no describia la regla, describia el tamano de la reserva'],
+  UX14: [1, 'Se mantiene en 1: con la reserva ampliada sigue sin aguantar (0.37 -> 0.17, por debajo del 50% exigido). Es la unica de las cinco cuyo desplome resiste al aumento de n'],
 }
 
 // Comprobaciones que miden calidad, no procedencia. Salen de la puntuacion.
@@ -100,32 +106,39 @@ const A_DEFECTO = {
   CS2: 'J -0.10: dispara mas en diseno humano. Un catch vacio es un defecto real, pero no dice quien escribio el codigo',
   CS3: 'silenciar el comprobador de tipos es deuda tecnica; que correlacione con generacion no lo convierte en prueba de autoria',
 
-  // J <= 0 en la banda con oportunidad real de disparar. Ninguna separa: el
-  // signo negativo se apoya en entre 1 y 5 disparos sobre 76 proyectos humanos,
-  // asi que no son detectores invertidos — son reglas que no informan. Mismo
-  // desenlace que HM8, F2 y CS2, distinto motivo.
-  A6: 'J -0.013 en banda sin separar (0/39 generados frente a 1/76 humanos). Con esos conteos el intervalo cubre el cero: no informa',
-  B4: 'J -0.040 en banda sin separar (2.6% frente a 6.6%). Fuera de muestra baja a -0.10',
-  E2: 'J -0.014 en banda sin separar (2.6% frente a 3.9%)',
-  UX4: 'J -0.066 en banda sin separar: cero disparos en generado frente al 6.6% humano. Es la mas negativa del grupo',
-  UX12: 'J -0.001 en banda sin separar (5.1% frente a 5.3%): tasas indistinguibles',
-  AS9: 'J -0.001 en banda sin separar (2.6% frente a 2.6%): tasas identicas. La estetica crema/serif/terracota no aparece en el corpus',
+  // NO SE REPITE LA CIFRA AQUI. Estas frases llevaban la J escrita a mano y la
+  // sexta medicion las dejo obsoletas de golpe: el corpus paso de 213 a 644
+  // proyectos y A6, por ejemplo, cambio de -0.013 a +0.034. La cifra viva viaja
+  // en el bloque `validado` de cada regla, que se regenera; aqui va el MOTIVO,
+  // que es lo que no caduca al remedir. Es el mismo fallo de copiar numeros a
+  // mano que ya costo tres correcciones en este repositorio.
 
-  // Peso 2 —"tell secundario confirmado" segun la propia documentacion— sin
-  // confirmacion ninguna. Bajarlas a peso 1 se descarto por cosmetico: seguirian
-  // votando sobre evidencia que no existe.
-  C2: 'J 0.012 en banda sin separar. Entro con peso 2 por parecerse a un tell conocido; medida, no lo es',
-  UX8: 'J 0.025 en banda sin separar (5.1% frente a 2.6%)',
-  AS1: 'J 0.009 en banda sin separar (15.4% frente a 14.5%). Dispara mucho en ambas clases, que es la forma mas cara de no discriminar',
-  E9: 'cero disparos en ambas clases y peso 2. La cadencia aforistica es prosa de landing y el corpus son repositorios de codigo',
+  // No separan pese a tener oportunidad real de disparar. Sus tasas en ambas
+  // clases son indistinguibles; el signo de la J es ruido de muestreo.
+  A6: 'no separa: tasas indistinguibles entre generado y humano, con muy pocos disparos en ambas clases',
+  B4: 'no separa, y lo poco que hace apunta al reves: dispara mas en proyectos humanos',
+  E2: 'no separa: tasas practicamente iguales en las dos clases',
+  UX4: 'no separa y apunta al reves: la curva de Material aparece mas en diseno humano',
+  UX12: 'no separa: tasas indistinguibles',
+  AS9: 'no separa. La estetica crema/serif/terracota apenas aparece en el corpus',
 
-  // Cero oportunidad de disparar. Se conservan enteras —el patron puede valer
-  // el dia que el corpus incluya paginas de aterrizaje— pero no votan mientras
-  // no hayan tenido ocasion de equivocarse.
-  HM5: 'cero disparos en ambas clases: sin oportunidad, no hay evidencia que alegar',
-  P1: 'cero disparos en ambas clases: la prosa de marketing casi no existe en repositorios de codigo',
-  P2: 'cero disparos en ambas clases, mismo motivo que P1',
-  CS1: 'cero disparos en ambas clases: el comentario narrativo no aparece en el codigo publicado',
+  // Entraron con peso 2 por parecerse a tells conocidos. Medidas con
+  // oportunidad real, no lo son. Bajarlas a peso 1 se descarto por cosmetico:
+  // seguirian votando sobre evidencia que no existe.
+  C2: 'no separa. Entro con peso 2 por parecerse a un tell conocido; medida, no lo es',
+  UX8: 'no separa: la diferencia entre clases cabe dentro del intervalo',
+  AS1: 'no separa, y dispara mucho en ambas clases: la forma mas cara de no discriminar',
+  E9: 'la cadencia aforistica es prosa de landing y el corpus son repositorios de codigo',
+
+  // Sin oportunidad, o casi. Se conservan enteras —el patron puede valer el dia
+  // que el corpus incluya paginas de aterrizaje— pero no votan mientras no
+  // hayan tenido ocasion de equivocarse.
+  HM5: 'apenas tiene oportunidad de disparar en este corpus: sin ocasion de equivocarse no hay evidencia que alegar',
+  P1: 'la prosa de marketing casi no existe en repositorios de codigo',
+  P2: 'mismo motivo que P1: no hay prosa de landing en el corpus',
+  CS1: 'el comentario narrativo no aparece en el codigo publicado',
+  C5: 'exige un filete de acento y un radio en el mismo bloque CSS, y en un proyecto Tailwind eso vive en clases: casi nunca tiene ocasion de disparar',
+  S8: 'exige la baldosa, el icono y el titular dentro de la misma ventana de 400 caracteres del arbol JSX',
 }
 
 // Reglas sin oportunidad de disparar en este corpus. No se eliminan: eliminar

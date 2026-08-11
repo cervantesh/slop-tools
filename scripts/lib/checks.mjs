@@ -25,10 +25,10 @@ try {
 // salen de research/RESULTADOS.md, misma medicion que las declarativas.
 const META = {
   A2: { fix: 'Ofrece alternativa clara o justifica el oscuro en el contrato de marca.', doctrina: 'references/doctrina/color.md' },
-  // Baja un escalon, no dos: separa en banda (J 0.243, 26% frente a 1%) pero
-  // cae de 0.29 a 0.10 en la reserva. Pierde el sello de confianza alta, no la
-  // senal. Ver research/ARBITRAJE.md sobre por que un escalon y no dos.
-  A3: { weight: 2, fix: 'Reserva el desenfoque para lo que de verdad flota sobre contenido.', doctrina: 'references/doctrina/color.md' },
+  // Se revierte a peso 3. La bajada se hizo con una reserva de 10 positivos,
+  // donde daba 0.29 -> 0.10; con la reserva ampliada a 65/45 da 0.32 -> 0.30 y
+  // aguanta de sobra. Ver research/ARBITRAJE.md.
+  A3: { weight: 3, fix: 'Reserva el desenfoque para lo que de verdad flota sobre contenido.', doctrina: 'references/doctrina/color.md' },
   B1: { fix: 'Empareja una display con una de texto. Inter como unica familia es el default de las herramientas.', doctrina: 'references/doctrina/tipografia.md' },
   B2: { fix: 'Una sola familia bien usada es disciplina en producto; en marca, empareja.', doctrina: 'references/doctrina/tipografia.md' },
   // El filete a secas: su fuente lo llamaba "el indicador aislado mas fiable".
@@ -47,9 +47,9 @@ const META = {
     },
   },
   E4: { fix: 'Cinco descripciones distintas, o ninguna. Una repetida cinco veces es peor que el vacio.' },
-  // Baja un escalon: separa en banda (J 0.31, dispara en el 72% de lo generado)
-  // pero cae a 0.10 en la reserva. Peso 1 borraria recall real; peso 3 vende un
-  // sello que la reserva no respalda.
+  // Se queda en peso 2. Con la reserva ampliada a 65/45 sigue sin aguantar
+  // (0.36 -> 0.18, justo por debajo del 50% exigido): es, con UX14, la unica
+  // cuya caida sobrevive al aumento de n. Ver research/ARBITRAJE.md.
   L1: { weight: 2, fix: 'Resuelve el plural con un condicional o con Intl.PluralRules.', doctrina: 'references/doctrina/microcopy.md' },
   L3: { fix: 'Restaura los diacriticos en los archivos que salieron en ASCII plano.', doctrina: 'references/doctrina/microcopy.md' },
   T1: { fix: 'Anade aria-label a todo boton que solo lleve icono.', doctrina: 'references/doctrina/microcopy.md' },
