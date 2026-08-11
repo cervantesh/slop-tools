@@ -97,7 +97,7 @@
       "pos": 0.282,
       "neg": 0.013,
       "separa": true,
-      "decision": "J 0.27 en banda con intervalos separados: 28% frente a 1%. Es la octava J mas alta del catalogo entero y la mejor de todo lo portado. Sube de 1 a 2"
+      "decision": "J 0.27 separando en banda y 0.34 -> 0.05 en la reserva. El peso 2 se le dio por la banda sola, antes de tener reserva contra la que contrastarlo: 2 -> 1"
     },
     "A3": {
       "corpus": "research/corpus.json",
@@ -120,7 +120,8 @@
       "J_banda": 0.243,
       "pos": 0.282,
       "neg": 0.039,
-      "separa": true
+      "separa": true,
+      "decision": "Separa en banda (J 0.243) y su J en la reserva es exactamente 0.00. El peso 2 no sobrevive fuera de muestra: 2 -> 1"
     },
     "D5": {
       "corpus": "research/corpus.json",
@@ -132,7 +133,7 @@
       "pos": 0.333,
       "neg": 0.092,
       "separa": true,
-      "decision": "J 0.26 en banda, intervalos separados. Precision alta y tasa negativa del 3%"
+      "decision": "Separa en banda (J 0.241) pero cae de 0.31 a 0.05 en la reserva. Pierde el sello de confianza alta, no la senal: 3 -> 2"
     },
     "UX11": {
       "corpus": "research/corpus.json",

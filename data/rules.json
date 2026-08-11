@@ -139,7 +139,7 @@
       "why": "La textura de rayas hecha con un degradado repetido es decoracion de superficie que ningun contenido pidio. Aparece cuando hace falta rellenar un fondo vacio y no hay material que poner.",
       "fix": "Deja la superficie lisa, o dale profundidad con un escalon de luminancia. Si la textura es de marca, decláralaen el contrato.",
       "source": "impeccable: repeating-stripes-gradient (Apache-2.0)",
-      "tipo": "procedencia",
+      "tipo": "defecto",
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
@@ -151,7 +151,8 @@
         "neg": 0.013,
         "separa": false
       },
-      "doctrina": "references/doctrina/color.md"
+      "doctrina": "references/doctrina/color.md",
+      "motivo_defecto": "J -0.013 en banda sin separar (0/39 generados frente a 1/76 humanos). Con esos conteos el intervalo cubre el cero: no informa"
     },
     {
       "id": "B4",
@@ -178,8 +179,9 @@
         "neg": 0.066,
         "separa": false
       },
-      "tipo": "procedencia",
-      "doctrina": "references/doctrina/tipografia.md"
+      "tipo": "defecto",
+      "doctrina": "references/doctrina/tipografia.md",
+      "motivo_defecto": "J -0.040 en banda sin separar (2.6% frente a 6.6%). Fuera de muestra baja a -0.10"
     },
     {
       "id": "B5",
@@ -262,8 +264,9 @@
         "neg": 0.013,
         "separa": false
       },
-      "tipo": "procedencia",
-      "doctrina": "references/doctrina/composicion.md"
+      "tipo": "defecto",
+      "doctrina": "references/doctrina/composicion.md",
+      "motivo_defecto": "J 0.012 en banda sin separar. Entro con peso 2 por parecerse a un tell conocido; medida, no lo es"
     },
     {
       "id": "D1",
@@ -299,7 +302,7 @@
       "category": "Imagen",
       "severity": "medium",
       "applies": "ambos",
-      "weight": 3,
+      "weight": 2,
       "scope": "code",
       "pattern": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}]",
       "flags": "u",
@@ -317,7 +320,7 @@
         "pos": 0.333,
         "neg": 0.092,
         "separa": true,
-        "decision": "J 0.26 en banda, intervalos separados. Precision alta y tasa negativa del 3%"
+        "decision": "Separa en banda (J 0.241) pero cae de 0.31 a 0.05 en la reserva. Pierde el sello de confianza alta, no la senal: 3 -> 2"
       },
       "tipo": "procedencia",
       "doctrina": "references/doctrina/suelo-de-oficio.md"
@@ -402,8 +405,9 @@
         "neg": 0.039,
         "separa": false
       },
-      "tipo": "procedencia",
-      "doctrina": "references/doctrina/microcopy.md"
+      "tipo": "defecto",
+      "doctrina": "references/doctrina/microcopy.md",
+      "motivo_defecto": "J -0.014 en banda sin separar (2.6% frente a 3.9%)"
     },
     {
       "id": "E5",
@@ -533,7 +537,7 @@
       "why": "El contraste fabricado —\"Not a feature. A platform.\"— simula corregir una idea que nadie tenia. Una vez es voz; tres veces en la misma pagina es cadencia de plantilla.",
       "fix": "Di la afirmacion en positivo y sin el contraste. Si la negacion aporta, que sea una y elegida.",
       "source": "impeccable: aphoristic-cadence (Apache-2.0); la forma en espanol es aportacion propia",
-      "tipo": "procedencia",
+      "tipo": "defecto",
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
@@ -547,7 +551,8 @@
         "estado": "no_medible",
         "nota": "cero disparos en ambas clases; la cadencia aforistica es prosa de landing y el corpus son repositorios de codigo"
       },
-      "doctrina": "references/doctrina/direccion.md"
+      "doctrina": "references/doctrina/direccion.md",
+      "motivo_defecto": "cero disparos en ambas clases y peso 2. La cadencia aforistica es prosa de landing y el corpus son repositorios de codigo"
     },
     {
       "id": "E10",
@@ -716,8 +721,9 @@
         "neg": 0.066,
         "separa": false
       },
-      "tipo": "procedencia",
-      "doctrina": "references/doctrina/movimiento.md"
+      "tipo": "defecto",
+      "doctrina": "references/doctrina/movimiento.md",
+      "motivo_defecto": "J -0.066 en banda sin separar: cero disparos en generado frente al 6.6% humano. Es la mas negativa del grupo"
     },
     {
       "id": "UX5",
@@ -826,8 +832,9 @@
         "neg": 0.026,
         "separa": false
       },
-      "tipo": "procedencia",
-      "doctrina": "references/doctrina/composicion.md"
+      "tipo": "defecto",
+      "doctrina": "references/doctrina/composicion.md",
+      "motivo_defecto": "J 0.025 en banda sin separar (5.1% frente a 2.6%)"
     },
     {
       "id": "UX9",
@@ -937,8 +944,9 @@
         "neg": 0.053,
         "separa": false
       },
-      "tipo": "procedencia",
-      "doctrina": "references/doctrina/composicion.md"
+      "tipo": "defecto",
+      "doctrina": "references/doctrina/composicion.md",
+      "motivo_defecto": "J -0.001 en banda sin separar (5.1% frente a 5.3%): tasas indistinguibles"
     },
     {
       "id": "UX13",
@@ -974,7 +982,7 @@
       "category": "Motion",
       "severity": "low",
       "applies": "ambos",
-      "weight": 2,
+      "weight": 1,
       "scope": "code",
       "pattern": "\\banimate-(?:ping|pulse)\\b(?=[^\"']*\\brounded-full\\b)|\\brounded-full\\b(?=[^\"']*\\banimate-(?:ping|pulse)\\b)",
       "flags": "i",
@@ -993,7 +1001,7 @@
         "pos": 0.282,
         "neg": 0.013,
         "separa": true,
-        "decision": "J 0.27 en banda con intervalos separados: 28% frente a 1%. Es la octava J mas alta del catalogo entero y la mejor de todo lo portado. Sube de 1 a 2"
+        "decision": "J 0.27 separando en banda y 0.34 -> 0.05 en la reserva. El peso 2 se le dio por la banda sola, antes de tener reserva contra la que contrastarlo: 2 -> 1"
       },
       "doctrina": "references/doctrina/movimiento.md"
     },
@@ -1022,8 +1030,9 @@
         "neg": 0.145,
         "separa": false
       },
-      "tipo": "procedencia",
-      "doctrina": "references/doctrina/movimiento.md"
+      "tipo": "defecto",
+      "doctrina": "references/doctrina/movimiento.md",
+      "motivo_defecto": "J 0.009 en banda sin separar (15.4% frente a 14.5%). Dispara mucho en ambas clases, que es la forma mas cara de no discriminar"
     },
     {
       "id": "AS2",
@@ -1080,8 +1089,9 @@
         "separa": false,
         "decision": "J -0.00: la estetica crema/serif/terracota no aparece en el corpus"
       },
-      "tipo": "procedencia",
-      "doctrina": "references/doctrina/direccion.md"
+      "tipo": "defecto",
+      "doctrina": "references/doctrina/direccion.md",
+      "motivo_defecto": "J -0.001 en banda sin separar (2.6% frente a 2.6%): tasas identicas. La estetica crema/serif/terracota no aparece en el corpus"
     },
     {
       "id": "HM2",
@@ -1145,7 +1155,7 @@
       "category": "Motion",
       "severity": "low",
       "applies": "ambos",
-      "weight": 2,
+      "weight": 1,
       "scope": "all",
       "pattern": "hover\\\\?:scale-1[01][05]\\b",
       "flags": "i",
@@ -1162,7 +1172,8 @@
         "J_banda": 0.243,
         "pos": 0.282,
         "neg": 0.039,
-        "separa": true
+        "separa": true,
+        "decision": "Separa en banda (J 0.243) y su J en la reserva es exactamente 0.00. El peso 2 no sobrevive fuera de muestra: 2 -> 1"
       },
       "tipo": "procedencia",
       "doctrina": "references/doctrina/movimiento.md"
@@ -1192,7 +1203,8 @@
         "neg": 0,
         "separa": false
       },
-      "tipo": "procedencia"
+      "tipo": "defecto",
+      "motivo_defecto": "cero disparos en ambas clases: sin oportunidad, no hay evidencia que alegar"
     },
     {
       "id": "P1",
@@ -1219,7 +1231,9 @@
         "neg": 0,
         "separa": false,
         "decision": "J 0.00 en banda: la prosa de marketing casi no existe en repositorios de codigo"
-      }
+      },
+      "tipo": "defecto",
+      "motivo_defecto": "cero disparos en ambas clases: la prosa de marketing casi no existe en repositorios de codigo"
     },
     {
       "id": "P2",
@@ -1246,7 +1260,9 @@
         "neg": 0,
         "separa": false,
         "decision": "J 0.00 en banda, mismo motivo que P1"
-      }
+      },
+      "tipo": "defecto",
+      "motivo_defecto": "cero disparos en ambas clases, mismo motivo que P1"
     },
     {
       "id": "P3",
@@ -1353,7 +1369,9 @@
         "neg": 0,
         "separa": false,
         "decision": "J 0.00 y dispara mas en humano fuera de banda. El comentario narrativo no aparece en el codigo publicado"
-      }
+      },
+      "tipo": "defecto",
+      "motivo_defecto": "cero disparos en ambas clases: el comentario narrativo no aparece en el codigo publicado"
     },
     {
       "id": "CS2",
