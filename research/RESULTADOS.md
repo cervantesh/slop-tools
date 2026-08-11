@@ -8,6 +8,13 @@ autoría humana. Hasta ahora las 49 comprobaciones del escáner estaban demostra
 controlar el confundido de tamaño. Seis no disparan ni una vez en 71 proyectos reales. Una
 dispara al revés.**
 
+> **Corpus ampliado (sexta medición).** El corpus pasó de 289 a **771 entradas** y de 213 a
+> **644 proyectos medibles**; la banda común, de 39/76 a **214 positivos / 161 negativos**, y la
+> reserva del holdout de 10/20 a **65/45**. Sobreviven fuera de muestra **14 reglas**, no 8. La
+> ampliación desmintió tres de las cinco demociones de peso de la revisión anterior y tumbó la
+> afirmación de que `C6` era la única regla que ganaba fuera de muestra. Detalle en
+> [ARBITRAJE.md](ARBITRAJE.md), *Addendum*.
+>
 > **Revisión posterior — [ARBITRAJE.md](ARBITRAJE.md).** Veinte comprobaciones dejaron de
 > puntuar y cinco bajaron de peso tras una revisión adversarial. En el mismo pase apareció que
 > el escáner **nunca leía el campo `tipo` de las reglas declarativas**: las reclasificadas a

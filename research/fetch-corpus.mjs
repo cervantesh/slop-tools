@@ -52,13 +52,28 @@ for (const e of corpus.entradas) {
   if (e.kb > MAX_KB) { saltados++; estado.push({ id: e.id, estado: 'saltado_por_tamano', kb: e.kb }); continue }
 
   try {
-    const url = `https://codeload.github.com/${e.repo}/tar.gz/${e.sha}`
-    const res = await fetch(url, { headers: { Authorization: `Bearer ${token}`, 'User-Agent': 'slop-tools' } })
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
     const tgz = join(DESTINO, `${e.id}.tgz`)
-    writeFileSync(tgz, Buffer.from(await res.arrayBuffer()))
+    // Un .tgz que sobrevive de una corrida anterior es una descarga completa
+    // cuya extraccion fallo: se reaprovecha en vez de volver a pedirlo.
+    if (!existsSync(tgz)) {
+      const url = `https://codeload.github.com/${e.repo}/tar.gz/${e.sha}`
+      const res = await fetch(url, { headers: { Authorization: `Bearer ${token}`, 'User-Agent': 'slop-tools' } })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      writeFileSync(tgz, Buffer.from(await res.arrayBuffer()))
+    }
     mkdirSync(dir, { recursive: true })
-    execFileSync('tar', ['-xzf', tgz, '-C', dir, '--strip-components=1'], { stdio: 'ignore' })
+    // Rutas RELATIVAS con cwd, nunca absolutas de Windows. GNU tar (el de Git
+    // Bash, que es el que resuelve `tar` aqui) lee la `C:` de una ruta absoluta
+    // como un host remoto —sintaxis host:ruta de rsh— e intenta conectarse:
+    // "Cannot connect to C: resolve failed". Y --force-local no basta, porque
+    // entonces interpreta las contrabarras como escapes y \0 se come el cero de
+    // un nombre de directorio.
+    //
+    // El fallo se comio 525 descargas sin que se notara: las entradas ya
+    // extraidas se saltan por .listo, asi que el contador de exitos seguia
+    // marcando el mismo numero de antes de ampliar el corpus.
+    execFileSync('tar', ['-xzf', `${e.id}.tgz`, '-C', e.id, '--strip-components=1'],
+      { stdio: 'ignore', cwd: DESTINO })
     rmSync(tgz, { force: true })
     const vivos = podar(dir)
     if (vivos < 3) { rmSync(dir, { recursive: true, force: true }); estado.push({ id: e.id, estado: 'sin_archivos_utiles' }); saltados++; continue }

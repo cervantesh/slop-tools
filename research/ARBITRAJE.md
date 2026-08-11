@@ -120,9 +120,66 @@ Volver a puntuar exige **medición nueva**, no criterio:
 3. Una regla hoy sin oportunidad que llegue a tenerla y mida J ≤ 0 **se queda en
    `defecto`**: pasa de «sin medir» a «refutada», que es peor, no mejor.
 
-## Lo que este documento no resuelve
+## Addendum: la reserva se amplió, y desmintió tres de las cinco demociones
 
-La reserva sigue siendo de 10 positivos y 20 negativos. Todo lo que se apoya en
-ella —incluidas las cinco demociones de arriba— es frágil por construcción, y por
-eso se movió un escalón y no dos. Ampliar la reserva es la única forma de cerrar
-esto, y sigue pendiente.
+El apartado anterior cerraba diciendo que la reserva de 10/20 era frágil por
+construcción y que ampliarla era lo único que cerraba el asunto. Se amplió: el
+corpus pasó de 289 a **771 entradas** etiquetadas y de 213 a **644** medibles, y
+la reserva de 10/20 a **65 positivos / 45 negativos**.
+
+El resultado contradice al documento que estás leyendo.
+
+| id | reserva 10/20 | reserva 65/45 | veredicto |
+|---|---|---|---|
+| `D5` | 0,31 → 0,05 | 0,33 → **0,27** | aguanta · se revierte a peso 3 |
+| `A3` | 0,29 → 0,10 | 0,32 → **0,30** | aguanta · se revierte a peso 3 |
+| `HM4` | 0,33 → 0,00 | 0,22 → **0,20** | aguanta · se revierte a peso 2 |
+| `L1` | 0,38 → 0,10 | 0,36 → 0,18 | sigue sin aguantar · se queda en 2 |
+| `UX14` | 0,34 → 0,05 | 0,37 → 0,17 | sigue sin aguantar · se queda en 1 |
+
+Tres de los cinco «desplomes» eran la varianza de una reserva de diez positivos.
+No describían la regla: describían el tamaño de la muestra con que se la miraba.
+
+**Esto vindica el criterio, no lo refuta.** La decisión de bajar *un* escalón y
+no dos se tomó precisamente porque `B2` subía de −0,04 a +0,35 en esa misma
+reserva y ascenderla habría sido absurdo. Un escalón se ha podido deshacer; dos
+habrían dejado el catálogo sin tres de sus mejores reglas por un artefacto de
+muestreo. `B2`, por cierto, se quedó en 0,06 → 0,11: aquel +0,35 también era
+ruido, como se sospechaba.
+
+### Lo que además se cae
+
+`C6` se presentó en el porte de impeccable como **la única regla del catálogo que
+ganaba fuera de muestra** (0,20 → 0,25). Con la reserva ampliada mide 0,14 → 0,10
+y ni siquiera alcanza el umbral de 0,15 para entrar en la comparación. Aquella
+afirmación se apoyaba en tres proyectos.
+
+### Lo que se confirma
+
+Las **veinte reclasificaciones aguantan enteras**. Ninguna alcanza el umbral de
+reversión (J ≥ 0,15 con intervalos separados) sobre el corpus triplicado. Las que
+apuntaban al revés siguen apuntando al revés y ahora con intervalos separados:
+`B9` da −0,073 y `C1` −0,063, o sea que son detectores de diseño humano, no de
+procedencia.
+
+El núcleo validado pasa de 8 reglas a **14**: `L2` `UX2` `E7` `C4` `UX1` `UX3`
+`UX10` `D5` `A3` `UX7` `A1` `HM4` `P4` `UX6`.
+
+### La lección de método
+
+Las cifras de este documento estuvieron un día en vigor y tres de sus cinco
+decisiones eran ruido. No por un error de cálculo: por falta de potencia, que
+estaba declarada al pie y aun así se usó para decidir. La conclusión no es
+«no decidir con poca n» —a veces no hay más— sino **mover lo mínimo que la
+evidencia sostiene, y volver cuando haya más**.
+
+Por eso mismo los `motivo_defecto` de las veinte reclasificadas ya no llevan la
+cifra escrita a mano: al remedir quedaron obsoletos de golpe (`A6` pasó de −0,013
+a +0,034). El motivo no caduca al remedir; el número sí, y para eso está el
+bloque `validado`, que se regenera.
+
+## Lo que sigue sin resolver
+
+`neg_classic` sigue en 4 proyectos dentro de la banda: la comparación contra
+otros stacks no tiene potencia. Y 85 repositorios descargados se quedaron sin
+archivos legibles tras la poda, un sesgo de selección que nadie ha medido.

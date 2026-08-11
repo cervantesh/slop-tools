@@ -12,8 +12,8 @@
     "validacion": {
       "informe": "research/RESULTADOS.md",
       "medido": {
-        "pos": 56,
-        "neg_stack": 146,
+        "pos": 284,
+        "neg_stack": 349,
         "neg_classic": 11
       },
       "banda": {
@@ -21,8 +21,8 @@
           "min": 20,
           "max": 200
         },
-        "n_pos": 39,
-        "n_neg": 76
+        "n_pos": 214,
+        "n_neg": 161
       },
       "nota": "El campo validado de cada regla trae su fila de la tabla. Ausencia de validado = regla no presente en la medicion."
     },
@@ -50,13 +50,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.123,
-        "pos": 0.333,
-        "neg": 0.211,
-        "separa": false,
+        "J_banda": 0.206,
+        "pos": 0.374,
+        "neg": 0.168,
+        "separa": true,
         "decision": "J 0.13 e intervalos solapados: el tell mas citado de la bibliografia rinde poco"
       },
       "tipo": "procedencia",
@@ -82,13 +82,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.139,
-        "pos": 0.205,
-        "neg": 0.066,
-        "separa": false,
+        "J_banda": 0.167,
+        "pos": 0.21,
+        "neg": 0.043,
+        "separa": true,
         "estado": "no_medible",
         "nota": "cero disparos en la banda; exige un hero con resplandor radial"
       },
@@ -113,13 +113,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.064,
-        "pos": 0.077,
-        "neg": 0.013,
-        "separa": false
+        "J_banda": 0.072,
+        "pos": 0.084,
+        "neg": 0.012,
+        "separa": true
       },
       "sustrato": "CSS y clases de utilidad",
       "tipo": "procedencia",
@@ -143,16 +143,16 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": -0.013,
-        "pos": 0,
-        "neg": 0.013,
+        "J_banda": 0.034,
+        "pos": 0.047,
+        "neg": 0.012,
         "separa": false
       },
       "doctrina": "references/doctrina/color.md",
-      "motivo_defecto": "J -0.013 en banda sin separar (0/39 generados frente a 1/76 humanos). Con esos conteos el intervalo cubre el cero: no informa"
+      "motivo_defecto": "no separa: tasas indistinguibles entre generado y humano, con muy pocos disparos en ambas clases"
     },
     {
       "id": "B4",
@@ -171,17 +171,17 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": -0.04,
-        "pos": 0.026,
-        "neg": 0.066,
+        "J_banda": -0.039,
+        "pos": 0.005,
+        "neg": 0.043,
         "separa": false
       },
       "tipo": "defecto",
       "doctrina": "references/doctrina/tipografia.md",
-      "motivo_defecto": "J -0.040 en banda sin separar (2.6% frente a 6.6%). Fuera de muestra baja a -0.10"
+      "motivo_defecto": "no separa, y lo poco que hace apunta al reves: dispara mas en proyectos humanos"
     },
     {
       "id": "B5",
@@ -201,12 +201,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.011,
-        "pos": 0.077,
-        "neg": 0.066,
+        "J_banda": -0.006,
+        "pos": 0.075,
+        "neg": 0.081,
         "separa": false
       },
       "doctrina": "references/doctrina/tipografia.md"
@@ -229,13 +229,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.137,
-        "pos": 0.282,
-        "neg": 0.145,
-        "separa": false
+        "J_banda": 0.123,
+        "pos": 0.248,
+        "neg": 0.124,
+        "separa": true
       },
       "doctrina": "references/doctrina/tipografia.md"
     },
@@ -256,17 +256,17 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.012,
-        "pos": 0.026,
-        "neg": 0.013,
+        "J_banda": 0.031,
+        "pos": 0.037,
+        "neg": 0.006,
         "separa": false
       },
       "tipo": "defecto",
       "doctrina": "references/doctrina/composicion.md",
-      "motivo_defecto": "J 0.012 en banda sin separar. Entro con peso 2 por parecerse a un tell conocido; medida, no lo es"
+      "motivo_defecto": "no separa. Entro con peso 2 por parecerse a un tell conocido; medida, no lo es"
     },
     {
       "id": "D1",
@@ -285,12 +285,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.074,
-        "pos": 0.179,
-        "neg": 0.105,
+        "J_banda": 0.014,
+        "pos": 0.145,
+        "neg": 0.13,
         "separa": false,
         "decision": "J 0.02 en banda: enlazar bancos de imagenes es igual de comun en ambas clases"
       },
@@ -302,7 +302,7 @@
       "category": "Imagen",
       "severity": "medium",
       "applies": "ambos",
-      "weight": 2,
+      "weight": 3,
       "scope": "code",
       "pattern": "[\\u{1F300}-\\u{1FAFF}\\u{2600}-\\u{27BF}]",
       "flags": "u",
@@ -313,14 +313,14 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.241,
-        "pos": 0.333,
-        "neg": 0.092,
+        "J_banda": 0.313,
+        "pos": 0.407,
+        "neg": 0.093,
         "separa": true,
-        "decision": "Separa en banda (J 0.241) pero cae de 0.31 a 0.05 en la reserva. Pierde el sello de confianza alta, no la senal: 3 -> 2"
+        "decision": "Se revierte a 3. Con reserva 65/45 da 0.33 -> 0.27 y aguanta el criterio. El 0.31 -> 0.05 que motivo la bajada era ruido de una reserva de 10 positivos"
       },
       "tipo": "procedencia",
       "doctrina": "references/doctrina/suelo-de-oficio.md"
@@ -343,12 +343,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": -0.066,
-        "pos": 0,
-        "neg": 0.066,
+        "J_banda": -0.02,
+        "pos": 0.023,
+        "neg": 0.043,
         "separa": false
       }
     },
@@ -369,13 +369,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.102,
-        "pos": 0.128,
-        "neg": 0.026,
-        "separa": false
+        "J_banda": 0.081,
+        "pos": 0.093,
+        "neg": 0.012,
+        "separa": true
       },
       "tipo": "procedencia",
       "doctrina": "references/doctrina/direccion.md"
@@ -397,17 +397,17 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": -0.014,
-        "pos": 0.026,
-        "neg": 0.039,
+        "J_banda": -0.009,
+        "pos": 0.009,
+        "neg": 0.019,
         "separa": false
       },
       "tipo": "defecto",
       "doctrina": "references/doctrina/microcopy.md",
-      "motivo_defecto": "J -0.014 en banda sin separar (2.6% frente a 3.9%)"
+      "motivo_defecto": "no separa: tasas practicamente iguales en las dos clases"
     },
     {
       "id": "E5",
@@ -426,12 +426,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.128,
-        "pos": 0.128,
-        "neg": 0,
+        "J_banda": 0.125,
+        "pos": 0.131,
+        "neg": 0.006,
         "separa": true
       },
       "tipo": "procedencia",
@@ -454,13 +454,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.189,
-        "pos": 0.333,
-        "neg": 0.145,
-        "separa": false
+        "J_banda": 0.212,
+        "pos": 0.374,
+        "neg": 0.161,
+        "separa": true
       },
       "tipo": "procedencia",
       "doctrina": "references/doctrina/microcopy.md"
@@ -482,12 +482,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.317,
-        "pos": 0.949,
-        "neg": 0.632,
+        "J_banda": 0.399,
+        "pos": 0.977,
+        "neg": 0.578,
         "separa": true,
         "decision": "J 0.25 pero los intervalos vuelven a solaparse con n mayor: dispara en el 94% de lo generado y el 69% de lo humano"
       },
@@ -512,13 +512,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.038,
-        "pos": 0.051,
-        "neg": 0.013,
-        "separa": false,
+        "J_banda": 0.062,
+        "pos": 0.075,
+        "neg": 0.012,
+        "separa": true,
         "decision": "J 0.04 en banda (5% frente a 1%): los sintagmas de marketing casi no aparecen en repositorios de codigo, igual que le paso a P1 y P2"
       },
       "doctrina": "references/doctrina/direccion.md"
@@ -541,18 +541,18 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0,
-        "pos": 0,
+        "J_banda": 0.023,
+        "pos": 0.023,
         "neg": 0,
         "separa": false,
         "estado": "no_medible",
         "nota": "cero disparos en ambas clases; la cadencia aforistica es prosa de landing y el corpus son repositorios de codigo"
       },
       "doctrina": "references/doctrina/direccion.md",
-      "motivo_defecto": "cero disparos en ambas clases y peso 2. La cadencia aforistica es prosa de landing y el corpus son repositorios de codigo"
+      "motivo_defecto": "la cadencia aforistica es prosa de landing y el corpus son repositorios de codigo"
     },
     {
       "id": "E10",
@@ -572,11 +572,11 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.026,
-        "pos": 0.026,
+        "J_banda": 0.019,
+        "pos": 0.019,
         "neg": 0,
         "separa": false
       },
@@ -599,12 +599,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.517,
-        "pos": 0.846,
-        "neg": 0.329,
+        "J_banda": 0.545,
+        "pos": 0.836,
+        "neg": 0.292,
         "separa": true,
         "decision": "J 0.45 en banda, intervalos separados, confirmada con n mayor"
       },
@@ -628,12 +628,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.298,
-        "pos": 0.692,
-        "neg": 0.395,
+        "J_banda": 0.359,
+        "pos": 0.738,
+        "neg": 0.379,
         "separa": true
       },
       "tipo": "procedencia",
@@ -656,12 +656,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.571,
-        "pos": 0.821,
-        "neg": 0.25,
+        "J_banda": 0.54,
+        "pos": 0.813,
+        "neg": 0.273,
         "separa": true,
         "decision": "J 0.45 en banda con intervalos separados y n mayor; sube de 2 a 3"
       },
@@ -685,13 +685,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.187,
-        "pos": 0.41,
+        "J_banda": 0.314,
+        "pos": 0.537,
         "neg": 0.224,
-        "separa": false
+        "separa": true
       },
       "tipo": "procedencia",
       "doctrina": "references/doctrina/movimiento.md"
@@ -713,17 +713,17 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": -0.066,
-        "pos": 0,
-        "neg": 0.066,
+        "J_banda": -0.051,
+        "pos": 0.023,
+        "neg": 0.075,
         "separa": false
       },
       "tipo": "defecto",
       "doctrina": "references/doctrina/movimiento.md",
-      "motivo_defecto": "J -0.066 en banda sin separar: cero disparos en generado frente al 6.6% humano. Es la mas negativa del grupo"
+      "motivo_defecto": "no separa y apunta al reves: la curva de Material aparece mas en diseno humano"
     },
     {
       "id": "UX5",
@@ -742,12 +742,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": -0.002,
-        "pos": 0.077,
-        "neg": 0.079,
+        "J_banda": -0.004,
+        "pos": 0.089,
+        "neg": 0.093,
         "separa": false
       },
       "tipo": "defecto"
@@ -769,13 +769,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.09,
-        "pos": 0.564,
-        "neg": 0.474,
-        "separa": false,
+        "J_banda": 0.162,
+        "pos": 0.509,
+        "neg": 0.348,
+        "separa": true,
         "decision": "J 0.09 en banda con intervalos solapados (56% frente a 47%), cuando en la medicion anterior daba 0.34 y separaba. Baja de 3 a 2. Es el riesgo que declaraba el informe: la J de una regla ajustada con n pequena encoge al ampliar la muestra"
       },
       "tipo": "procedencia"
@@ -797,13 +797,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.215,
-        "pos": 0.333,
-        "neg": 0.118,
-        "separa": false
+        "J_banda": 0.231,
+        "pos": 0.355,
+        "neg": 0.124,
+        "separa": true
       },
       "tipo": "procedencia"
     },
@@ -824,17 +824,17 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.025,
-        "pos": 0.051,
-        "neg": 0.026,
+        "J_banda": 0.011,
+        "pos": 0.023,
+        "neg": 0.012,
         "separa": false
       },
       "tipo": "defecto",
       "doctrina": "references/doctrina/composicion.md",
-      "motivo_defecto": "J 0.025 en banda sin separar (5.1% frente a 2.6%)"
+      "motivo_defecto": "no separa: la diferencia entre clases cabe dentro del intervalo"
     },
     {
       "id": "UX9",
@@ -853,12 +853,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.025,
-        "pos": 0.051,
-        "neg": 0.026,
+        "J_banda": -0.003,
+        "pos": 0.028,
+        "neg": 0.031,
         "separa": false
       },
       "tipo": "defecto"
@@ -880,12 +880,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.241,
-        "pos": 0.359,
-        "neg": 0.118,
+        "J_banda": 0.328,
+        "pos": 0.458,
+        "neg": 0.13,
         "separa": true
       },
       "tipo": "procedencia",
@@ -908,12 +908,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.241,
-        "pos": 0.359,
-        "neg": 0.118,
+        "J_banda": 0.147,
+        "pos": 0.252,
+        "neg": 0.106,
         "separa": true
       },
       "tipo": "procedencia",
@@ -936,17 +936,17 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": -0.001,
-        "pos": 0.051,
-        "neg": 0.053,
+        "J_banda": 0.005,
+        "pos": 0.042,
+        "neg": 0.037,
         "separa": false
       },
       "tipo": "defecto",
       "doctrina": "references/doctrina/composicion.md",
-      "motivo_defecto": "J -0.001 en banda sin separar (5.1% frente a 5.3%): tasas indistinguibles"
+      "motivo_defecto": "no separa: tasas indistinguibles"
     },
     {
       "id": "UX13",
@@ -966,12 +966,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.038,
-        "pos": 0.051,
-        "neg": 0.013,
+        "J_banda": 0.016,
+        "pos": 0.028,
+        "neg": 0.012,
         "separa": false
       },
       "doctrina": "references/doctrina/movimiento.md"
@@ -994,14 +994,14 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.269,
-        "pos": 0.282,
-        "neg": 0.013,
+        "J_banda": 0.307,
+        "pos": 0.332,
+        "neg": 0.025,
         "separa": true,
-        "decision": "J 0.27 separando en banda y 0.34 -> 0.05 en la reserva. El peso 2 se le dio por la banda sola, antes de tener reserva contra la que contrastarlo: 2 -> 1"
+        "decision": "Se mantiene en 1: con la reserva ampliada sigue sin aguantar (0.37 -> 0.17, por debajo del 50% exigido). Es la unica de las cinco cuyo desplome resiste al aumento de n"
       },
       "doctrina": "references/doctrina/movimiento.md"
     },
@@ -1022,17 +1022,17 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.009,
-        "pos": 0.154,
-        "neg": 0.145,
+        "J_banda": 0,
+        "pos": 0.15,
+        "neg": 0.149,
         "separa": false
       },
       "tipo": "defecto",
       "doctrina": "references/doctrina/movimiento.md",
-      "motivo_defecto": "J 0.009 en banda sin separar (15.4% frente a 14.5%). Dispara mucho en ambas clases, que es la forma mas cara de no discriminar"
+      "motivo_defecto": "no separa, y dispara mucho en ambas clases: la forma mas cara de no discriminar"
     },
     {
       "id": "AS2",
@@ -1051,13 +1051,13 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.102,
-        "pos": 0.128,
-        "neg": 0.026,
-        "separa": false
+        "J_banda": 0.083,
+        "pos": 0.107,
+        "neg": 0.025,
+        "separa": true
       },
       "sustrato": "CSS y clases de utilidad",
       "tipo": "procedencia",
@@ -1080,18 +1080,18 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": -0.001,
-        "pos": 0.026,
-        "neg": 0.026,
+        "J_banda": 0.033,
+        "pos": 0.051,
+        "neg": 0.019,
         "separa": false,
         "decision": "J -0.00: la estetica crema/serif/terracota no aparece en el corpus"
       },
       "tipo": "defecto",
       "doctrina": "references/doctrina/direccion.md",
-      "motivo_defecto": "J -0.001 en banda sin separar (2.6% frente a 2.6%): tasas identicas. La estetica crema/serif/terracota no aparece en el corpus"
+      "motivo_defecto": "no separa. La estetica crema/serif/terracota apenas aparece en el corpus"
     },
     {
       "id": "HM2",
@@ -1110,12 +1110,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.024,
-        "pos": 0.077,
-        "neg": 0.053,
+        "J_banda": -0.026,
+        "pos": 0.042,
+        "neg": 0.068,
         "separa": false
       },
       "tipo": "defecto",
@@ -1138,11 +1138,11 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.026,
-        "pos": 0.026,
+        "J_banda": 0.023,
+        "pos": 0.023,
         "neg": 0,
         "separa": false
       },
@@ -1155,7 +1155,7 @@
       "category": "Motion",
       "severity": "low",
       "applies": "ambos",
-      "weight": 1,
+      "weight": 2,
       "scope": "all",
       "pattern": "hover\\\\?:scale-1[01][05]\\b",
       "flags": "i",
@@ -1166,14 +1166,14 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.243,
-        "pos": 0.282,
-        "neg": 0.039,
+        "J_banda": 0.214,
+        "pos": 0.257,
+        "neg": 0.043,
         "separa": true,
-        "decision": "Separa en banda (J 0.243) y su J en la reserva es exactamente 0.00. El peso 2 no sobrevive fuera de muestra: 2 -> 1"
+        "decision": "Se revierte a 2. Con reserva 65/45 da 0.22 -> 0.20. El 0.33 -> 0.00 anterior no describia la regla, describia el tamano de la reserva"
       },
       "tipo": "procedencia",
       "doctrina": "references/doctrina/movimiento.md"
@@ -1195,16 +1195,16 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0,
-        "pos": 0,
+        "J_banda": 0.075,
+        "pos": 0.075,
         "neg": 0,
-        "separa": false
+        "separa": true
       },
       "tipo": "defecto",
-      "motivo_defecto": "cero disparos en ambas clases: sin oportunidad, no hay evidencia que alegar"
+      "motivo_defecto": "apenas tiene oportunidad de disparar en este corpus: sin ocasion de equivocarse no hay evidencia que alegar"
     },
     {
       "id": "P1",
@@ -1223,17 +1223,17 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0,
-        "pos": 0,
+        "J_banda": 0.005,
+        "pos": 0.005,
         "neg": 0,
         "separa": false,
         "decision": "J 0.00 en banda: la prosa de marketing casi no existe en repositorios de codigo"
       },
       "tipo": "defecto",
-      "motivo_defecto": "cero disparos en ambas clases: la prosa de marketing casi no existe en repositorios de codigo"
+      "motivo_defecto": "la prosa de marketing casi no existe en repositorios de codigo"
     },
     {
       "id": "P2",
@@ -1252,17 +1252,17 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0,
-        "pos": 0,
+        "J_banda": 0.005,
+        "pos": 0.005,
         "neg": 0,
         "separa": false,
         "decision": "J 0.00 en banda, mismo motivo que P1"
       },
       "tipo": "defecto",
-      "motivo_defecto": "cero disparos en ambas clases, mismo motivo que P1"
+      "motivo_defecto": "mismo motivo que P1: no hay prosa de landing en el corpus"
     },
     {
       "id": "P3",
@@ -1281,11 +1281,11 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.026,
-        "pos": 0.026,
+        "J_banda": 0.005,
+        "pos": 0.005,
         "neg": 0,
         "separa": false,
         "decision": "J 0.03 en banda"
@@ -1308,12 +1308,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.179,
-        "pos": 0.205,
-        "neg": 0.026,
+        "J_banda": 0.19,
+        "pos": 0.215,
+        "neg": 0.025,
         "separa": true,
         "decision": "J 0.18 en banda con 0% de falsos positivos: dispara en el 18% de lo generado y en ninguno humano"
       }
@@ -1335,11 +1335,11 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.026,
-        "pos": 0.026,
+        "J_banda": 0.005,
+        "pos": 0.005,
         "neg": 0,
         "separa": false
       }
@@ -1361,8 +1361,8 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
         "J_banda": 0,
         "pos": 0,
@@ -1371,7 +1371,7 @@
         "decision": "J 0.00 y dispara mas en humano fuera de banda. El comentario narrativo no aparece en el codigo publicado"
       },
       "tipo": "defecto",
-      "motivo_defecto": "cero disparos en ambas clases: el comentario narrativo no aparece en el codigo publicado"
+      "motivo_defecto": "el comentario narrativo no aparece en el codigo publicado"
     },
     {
       "id": "CS2",
@@ -1392,12 +1392,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": -0.028,
-        "pos": 0.077,
-        "neg": 0.105,
+        "J_banda": -0.02,
+        "pos": 0.098,
+        "neg": 0.118,
         "separa": false,
         "decision": "J -0.10: el catch vacio es MAS comun en codigo humano. Se reclasifica a defecto"
       }
@@ -1421,12 +1421,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": 0.368,
-        "pos": 0.513,
-        "neg": 0.145,
+        "J_banda": 0.253,
+        "pos": 0.421,
+        "neg": 0.168,
         "separa": true,
         "decision": "J 0.28 en banda (50% frente a 22%), la mas alta de las nuevas. Intervalos solapados, pero sube de 1 a 2"
       }
@@ -1449,12 +1449,12 @@
       "validado": {
         "corpus": "research/corpus.json",
         "n": {
-          "pos": 39,
-          "neg": 76
+          "pos": 214,
+          "neg": 161
         },
-        "J_banda": -0.056,
-        "pos": 0.128,
-        "neg": 0.184,
+        "J_banda": -0.085,
+        "pos": 0.107,
+        "neg": 0.193,
         "separa": false
       },
       "doctrina": "references/doctrina/color.md"
